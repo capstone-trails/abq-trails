@@ -34,9 +34,13 @@
 		<br>
 		trailDifficulty
 		<br>
+		trailHigh
+		<br>
 		trailLatitude
 		<br>
 		trailLength
+		<br>
+		trailLow
 		<br>
 		trailLongitude
 		<br>
@@ -51,14 +55,14 @@
 		photoTrailId (foreign key)
 		<br>
 		photoDateTime
+		<br>
+		photoUrl
 		<br><br>
 		<strong>tag</strong>
 		<br>
 		tagId (primary key)
 		<br>
 		tagName
-		<br>
-		tagValue
 		<br><br>
 		<strong>trailTag</strong>
 		<br>
@@ -67,7 +71,6 @@
 		trailTagProfileId (foreign key)
 		<br>
 		trailTagTagId (primary key)
-		<br>
 		<br><br>
 		<strong>rating</strong>
 		<br>
@@ -76,6 +79,8 @@
 		ratingTrailId (foreign key)
 		<br>
 		ratingValue
+		<br>
+		ratingDifficulty
 		<br><br>
 		<strong>Relationships</strong>
 		<br>
@@ -85,7 +90,13 @@
 		<br>
 		One profile can add many trail tags (1 to n)
 		<br>
+		One trail can have many photos (1 to n)
+		<br>
+		One trail can have many ratings (1 to n)
+		<br>
 		Many trails can have many tags (m to n)
+		<br>
+		Many profiles can rate many trails (m to n)
 		<br><br>
 		<h2>ERD</h2>
 		<img src="img/abq-trails-diagram.jpg" alt="erd" style="height:70%; width:70%">
