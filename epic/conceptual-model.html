@@ -2,13 +2,13 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Title</title>
+		<title>Concept</title>
 	</head>
 	<body>
 		<h1>Conceptual Model</h1>
 		<strong>profile</strong>
 		<br>
-		profileId
+		profileId (primary key)
 		<br>
 		profileActivationToken
 		<br>
@@ -26,7 +26,7 @@
 		<br><br>
 		<strong>trail</strong>
 		<br>
-		trailId
+		trailId (primary key)
 		<br>
 		trailAvatarUrl
 		<br>
@@ -44,29 +44,35 @@
 		<br><br>
 		<strong>photo</strong>
 		<br>
-		photoProfileId
+		photoId (primary key)
 		<br>
-		photoTrailId
+		photoProfileId (foreign key)
+		<br>
+		photoTrailId (foreign key)
 		<br><br>
 		<strong>tag</strong>
 		<br>
-		tagBathroom
+		tagId (primary key)
 		<br>
-		tagBike
+		tagName
 		<br>
-		tagCamp
+		tagValue
+		<br><br>
+		<strong>trailTag</strong>
 		<br>
-		tagDog
+		trailTagProfileId (foreign key)
 		<br>
-		tagFire
+		trailTagTagId (foreign key)
 		<br>
-		tagFish
+		trailTagTraiId (foreign key)
+		<br><br>
+		<strong>rating</strong>
 		<br>
-		tagHandicap
+		ratingProfileId (foreign key)
 		<br>
-
-
-
-
+		ratingTrailId (foreign key)
+		<br>
+		ratingValue
+		<br>
 	</body>
 </html>
