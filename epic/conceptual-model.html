@@ -59,12 +59,12 @@
 		tagValue
 		<br><br>
 		<strong>trailTag</strong>
+		trailTagTraiId (primary key)
 		<br>
 		trailTagProfileId (foreign key)
 		<br>
 		trailTagTagId (foreign key)
 		<br>
-		trailTagTraiId (foreign key)
 		<br><br>
 		<strong>rating</strong>
 		<br>
@@ -78,10 +78,10 @@
 		<br>
 		One profile can search for many trails (1 to n)
 		<br>
-		Many profiles can add many photos (m to n)
+		One profile can add many photos (1 to n)
 		<br>
-		Many profiles can add many trail tags (m to n)
+		One profile can add many trail tags (m to n)
 		<br>
-		Many profiles can add ratings to many trails (m to n)
+		Many trails can have many tags (m to n)
 	</body>
 </html>
