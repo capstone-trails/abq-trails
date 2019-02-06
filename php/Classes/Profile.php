@@ -81,8 +81,21 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 		throw(new $exceptionType($exception->getMessage(), 0, $exception));
 	}
 }
-
-
+/**
+ * accessor method for profile id
+ *
+ * @return Uuid of profile Id
+ */
+	public function getProfileId() : Uuid {
+		return ($this->profileId);
+	}
+/**
+ * mutator method for profile id
+ *
+ * @param Uuid | string $newProfileId
+ * @throws \RangeException if $newProfileId is not correct length
+ * @throws \TypeError if $newprofileId is not a Uuid or string
+ */
 
 
 }
