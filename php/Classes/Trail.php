@@ -115,7 +115,14 @@ class Trail {
 	 * @throws \TypeError if $newTrailId is not a uuid or string
 	 **/
 	public function setTrailId($newTrailId) {
-
+		try {
+			$uuid = self::validateUuid($newTrailId);
+		} catch(\InvalidArgumentException | \RangeException | \ArgumentCountError | \TypeError | \Exception $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		//convert and store the trail id
+		$this->trailId = $uuid;
 	}
 
 
