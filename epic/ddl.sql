@@ -45,3 +45,29 @@ CREATE TABLE tag (
 	tagName VARCHAR(32),
 	PRIMARY KEY (tagId)
 );
+
+CREATE TABLE trailTag (
+	trailTagTagId BINARY(16) NOT NULL,
+	trailTagTrailId BINARY(16) NOT NULL,
+	trailTagProfileId BINARY(16) NOT NULL,
+	INDEX (trailTagTagId),
+	INDEX (trailTagTrailId),
+	INDEX (trailTagProfileId),
+	FOREIGN KEY (trailTagTagId) REFERENCES tag(tagId),
+	FOREIGN KEY (trailTagTrailId) REFERENCES trail(trailId),
+	FOREIGN KEY (trailTagProfileId) REFERENCES profile(profileId),
+	PRIMARY KEY (tagId, profileId)
+);
+
+CREATE TABLE rating (
+	ratingId BINARY(16) NOT NULL,
+	ratingProfileId BINARY(16) NOT NULL,
+	ratingTrailId BINARY(16) NOT NULL,
+	ratingDifficulty VARCHAR(16),
+	ratingValue VARCHAR(5),
+	INDEX (ratingProfileId),
+	INDEX (ratingTrailId),
+	FOREIGN KEY (ratingProfileId) REFERENCES profile(profileId),
+	FOREIGN KEY (ratingTrailId) REFERENCES trail(trailId),
+	PRIMARY KEY (ratingId)
+);
