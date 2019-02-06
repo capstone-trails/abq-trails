@@ -69,7 +69,21 @@ class Profile {
 public function __construct($newProfileId, $newProfileActivationToken, $newProfileAvatarUrl, $newProfileEmail, $newProfileFirstName, $newProfileHash, $newProfileLastName, $newProfileUsername) {
 	try {
 		$this->setProfileId($newProfileId);
+		$this->setProfileActivationToken($newProfileActivationToken);
+		$this->setProfileAvatarUrl($newProfileAvatarUrl);
+		$this->setProfileEmail($newProfileEmail);
+		$this->setProfileFirstName($newProfileFirstName);
+		$this->setProfileHash($newProfileHash);
+		$this->setProfileLastName($newProfileLastName);
+		$this->setProfileUsername($newProfileUsername);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		$exceptionType = get_class($exception);
+		throw(new $exceptionType($exception->getMessage(), 0, $exception));
 	}
-	}
+}
+
+
+
+
 }
 
