@@ -74,13 +74,29 @@ class Trail {
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if the data values are out of bounds (e.g. strings too long, negative integers)
 	 * @throws \ArgumentCountError when too few arguments are passed to the user-defined function
+	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other type of exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 
-
-
-
+	public function __construct($trailId, $trailAvatarUrl, $trailDescription, $trailHigh, $trailLatitude, $trailLength, $trailLongitude, $trailLow, $trailName) {
+		try {
+			$this->setTrailId($trailId);
+			$this->setTrailAvatarUrl($trailAvatarUrl);
+			$this->setTrailDescription($trailDescription);
+			$this->setTrailHigh($trailHigh);
+			$this->setTrailLatitude($trailLatitude);
+			$this->setTrailLength($trailLength);
+			$this->setTrailLongitude($trailLongitude);
+			$this->setTrailLow($trailLow);
+			$this->setTrailName($trailName);
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \ArgumentCountError | \TypeError | \Exception $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
 
 
 }
