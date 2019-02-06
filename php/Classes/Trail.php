@@ -1,6 +1,8 @@
 <?php
 namespace abqtrails;
 
+use http\Exception\InvalidArgumentException;
+
 /**
  * Trail Class
  *
@@ -27,7 +29,7 @@ class Trail {
 	 **/
 	private $trailDescription;
 	/**
-	 * measure of the highest point of the Trail, in feet
+	 * measure of the highest point of the Trail in feet
 	 * @var string $trailHigh
 	 **/
 	private $trailHigh;
@@ -47,7 +49,7 @@ class Trail {
 	 **/
 	private $trailLongitude;
 	/**
-	 * measure of the lowest point of the Trail, in feet
+	 * measure of the lowest point of the Trail in feet
 	 * @var string $trailLow
 	 **/
 	private $trailLow;
@@ -56,6 +58,25 @@ class Trail {
 	 * @var string $trailName
 	 **/
 	private $trailName;
+
+	/**
+	 * constructor for this Trail class
+	 *
+	 * @param string|Uuid $trailId, id of this Trail
+	 * @param string|Url $trailAvatarUrl, url of this Trail's avatar picture
+	 * @param string $trailDescription, description of this Trail
+	 * @param string $trailHigh, measure of the highest point of this Trail in feet
+	 * @param string $trailLatitude, measure of this Trail in degrees/minutes/seconds
+	 * @param float $trailLength, measure of this Trail in miles
+	 * @param string $trailLongitude, measure of this Trail in degrees/minutes/seconds
+	 * @param string $trailLow, measure of the lowest point of this Trail in feet
+	 * @param string $trailName, the name of this Trail
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if the data values are out of bounds (e.g. strings too long, negative integers)
+	 * @throws \ArgumentCountError when too few arguments are passed to the user-defined function
+	 * @throws \Exception if some other type of exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
 
 
 
