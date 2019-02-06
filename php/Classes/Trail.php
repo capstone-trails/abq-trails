@@ -98,5 +98,25 @@ class Trail {
 		}
 	}
 
+	/**
+	 * accessor method for trail id
+	 *
+	 * @return Uuid value of trail id
+	 **/
+	public function getTrailId() : Uuid {
+		return($this->trailId);
+	}
+
+	/**
+	 * mutator method for trail id
+	 *
+	 * @param Uuid|string $newTrailId new value of trail id
+	 * @throws \RangeException if $newTrailId is not positive
+	 * @throws \TypeError if $newTrailId is not a uuid or string
+	 **/
+	public function setTrailId($newTrailId) {
+
+	}
+
 
 }
