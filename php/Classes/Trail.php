@@ -33,10 +33,33 @@ class Trail {
 	private $trailHigh;
 	/**
 	 * measure of the latitude coordinate of the Trail, in degrees/minutes/seconds
-	 * @var $trailLatitude
+	 * @var string $trailLatitude
 	 **/
 	private $trailLatitude;
 	/**
-	 *
+	 * measure of the length of the Trail, in miles
+	 * @var float $trailLength
 	 **/
+	private $trailLength;
+	/**
+	 * measure of the longitude of the Trail, in degrees/minutes/seconds
+	 * @var string $trailLongitude
+	 **/
+	private $trailLongitude;
+	/**
+	 * measure of the lowest point of the Trail, in feet
+	 * @var string $trailLow
+	 **/
+	private $trailLow;
+	/**
+	 * the name of this Trail
+	 * @var string $trailName
+	 **/
+	private $trailName;
+
+
+
+
+
+
 }
