@@ -34,6 +34,12 @@ CREATE TABLE photo (
 	photoId BINARY(16),
 	photoProfileId BINARY(16),
 	photoTrailId BINARY(16),
-	photoDateTime,
-	photoUrl
+	photoDateTime DATETIME(6),
+	photoUrl VARCHAR(255),
+	UNIQUE (photoId),
+	UNIQUE (photoDateTime),
+	UNIQUE (photoUrl),
+	INDEX (photoProfileId),
+	INDEX (photoTrailId),
+	PRIMARY KEY (photoId)
 );
