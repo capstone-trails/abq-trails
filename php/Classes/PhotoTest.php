@@ -21,7 +21,7 @@ require_once __DIR__ . '/composer/autoload_real.php';
 class photoTest extends abq-trailsTest {
 	/**
 	 * ProfileUser that created the photo; this is for foreign key relations
-	 * @var ProfileUserId profileUserId
+	 * @var Profile profileUserId
 	 **/
 	protected $profileUserId = null;
 
@@ -30,7 +30,7 @@ class photoTest extends abq-trailsTest {
 	 * valid profileUser Id to create the profileUserId object to own the test
 	 * @var $VALID_ID
 	 */
-	protected $VALID_PROFILE USER_ID;
+	protected $VALID_PROFILE USER ID;
 
 	/**
 	 * content of the photo
@@ -51,14 +51,14 @@ class photoTest extends abq-trailsTest {
 	protected $VALID_PHOTOURL = null;
 
 	/**
-	 * Valid timestamp to use as sunrisePhotoDateTime
+	 * Valid timestamp to use as sunrisePhotoDate
 	 */
 	protected $VALID_SUNRISEDATETIME = null;
 
 	/**
-	 * Valid timestamp to use as sunsetPhotoDateTime
+	 * Valid timestamp to use as sunsetPhotoDate
 	 */
-	protected $VALID_SUNSETDATETIME = null;
+	protected $VALID_SUNSETDATE = null;
 
 	/**
 	 * create dependent objects before running each test
@@ -79,11 +79,11 @@ class photoTest extends abq-trailsTest {
 
 		//format the sunrise date time to use for testing
 		$this->VALID_SUNRISEDATETIME = new \photoDateTime();
-		$this->VALID_SUNRISEDATETIME->sub(new \DateTimeInterval("P10D"));
+		$this->VALID_SUNRISEDATETIME->sub(new \DateInterval("P10D"));
 
 		//format the sunset date time to use for testing
 		$this->VALID_SUNSETDATETIME = new\photoDateTime();
-		$this->VALID_SUNSETDATETIME->add(new \DateTmeInterval("P10D"));
+		$this->VALID_SUNSETDATETIME->add(new \DateInterval("P10D"));
 
 
 
@@ -98,7 +98,7 @@ class photoTest extends abq-trailsTest {
 
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new photo($photoId, $this->profileUserId->getProfileUserId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATETIME);
+		$photo = new photo($photoId, $this->profile->getProfileUserId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATETIME);
 		$photo->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
