@@ -136,7 +136,20 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 /**
  * mutator method for profile avatar url
  *
- * @param | string
+ * @param | string $newProfileAvatarUrl
+ * @throws \RangeException if avatar url is greater than 255 characters
+ * @throws\InvalidArgumentException if empty
  */
+	public function setProfileAvatarUrl ($newProfileAvatarUrl) {
+		$newProfileAvatarUrl = trim($newProfileAvatarUrl);
+		$newProfileAvatarUrl = filter_var($newProfileAvatarUrl, FILTER_SANITIZE_STRING);
+		if(strenlen ($newProfileAvatarUrl) > 255) {
+		throw(new \RangeException("avatar url is too long"));
+		}
+		if(empty($newProfileAvatarUrl) === true) {
+			throw (new \InvalidArgumentException("profile avatar URL is empty"));
+		}
+		$this->profileAvatarUrl = $newProfileAvatarUrl;
+	}
 }
 
