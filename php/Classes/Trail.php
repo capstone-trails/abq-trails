@@ -182,8 +182,36 @@ class Trail {
 		$this->trailDescription = $newTrailDescription;
 	}
 
+	/**
+	 * accessor methor for trail high
+	 *
+	 * @return string highest point of trail measured in feet
+	 **/
+	/**
+	 * @return string
+	 */
+	public function getTrailHigh(): string {
+		return $this->trailHigh;
+	}
 
+	/**
+	 * mutator method for trail high
+	 *
+	 * @param string $newTrailHigh new value of trail highest point
+	 * @throws \InvalidArgumentException if $newTrailHigh uses invalid characters
+	 * @throws \TypeError is $newTrailHigh is not a string
+	 **/
+	public function setTrailHigh($newTrailHigh) {
+		//verify that trail highest point data is secure
+		$newTrailHigh = trim($newTrailHigh);
+		$newTrailHigh = filter_var($newTrailHigh, FILTER_SANITIZE_NUMBER_INT);
+		if(empty($newTrailHigh) === true) {
+			throw(new \InvalidArgumentException("highest point data is empty or insecure"));
+		}
 
+		//store the highest point data
+		$this->trailHigh = $newTrailHigh;
+	}
 
 
 
