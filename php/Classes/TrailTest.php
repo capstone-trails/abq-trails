@@ -24,7 +24,7 @@ class TrailTest extends AbqTrailsTest {
 	 * valid trail id to use
 	 * @var string $VALID_TRAIL_ID
 	 **/
-	protected $VALID_TRAIL_ID = "00001";
+	protected $VALID_TRAIL_ID = "nananananananana";
 	/**
 	 * valid trail avatar url to use
 	 * @var string $VALID_TRAIL_AVATAR_URL
@@ -35,6 +35,21 @@ class TrailTest extends AbqTrailsTest {
 	 * @var string $VALID_TRAIL_DESCRIPTION
 	 **/
 	protected $VALID_TRAIL_DESCRIPTION = "Located on the west face of the Sandia Mountains";
+	/**
+	 * valid trail highest elevation in feet
+	 * @var string $VALID_TRAIL_HIGH
+	 **/
+	protected $VALID_TRAIL_HIGH = "10,378";
+	/**
+	 * valid trail latitude coordinate
+	 * @var string $VALID_TRAIL_LATITUDE
+	 **/
+	protected $VALID_TRAIL_LATITUDE = "35.2197 N";
+	/**
+	 * valid trail length
+	 * @var string $VALID_TRAIL_LENGTH
+	 **/
+	protected $VALID_TRAIL_LENGTH = "13.3";
 
 
 	/**
