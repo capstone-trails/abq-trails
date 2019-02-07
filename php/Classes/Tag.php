@@ -92,6 +92,18 @@ class tag{
 		//verify the tag name is secure
 		$newTagName = trim($newTagName);
 		$newTagName = filter_var($$newTagName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newTagName)=== true)
+		if(empty($newTagName)=== true) {
+			throw (new \InvalidArgumentException("Tag name is empty or insecure"));
+		}
+
+		// verify the tag name will fit in the database
+		if(strlen($newTagName) > 32){
+			throw (new \RangeException("Tag name too large"));
+		}
+
+		// store the tweet content
+		$this->tagName = $newTagName;
 	}
+
+
 }
