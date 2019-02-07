@@ -115,6 +115,44 @@ class rating {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		//convert and store the profile
+		//convert and store the profile id
+		$this->ratingProfileId = $uuid;
+	}
+
+
+	/**
+	 * accessor method for ratingTrailId
+	 *
+	 * @return Uuid value of rating trail id
+	 **/
+	public function getRatingTrailId() : Uuid{
+		return($this->ratingTrailId);
+	}
+	/**
+	 * mutator method for rating trail id
+	 *
+	 * @param string|Uuid $newRatingTrailId
+	 * @throws \RangeException if $newTrailId is not positive
+	 * @throws \TypeError if $newRatingTrailId is not an integer
+	 **/
+	public function setRatingTrailId ($newRatingTrailId) : void {
+		try {
+			$uuid = self::validateUuid($newRatingTrailId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		//convert and store the profile id
+		$this->ratingTrailId = $uuid;
+	}
+
+
+	/**
+	 * accessor method for rating difficulty
+	 *
+	 * @return string value of rating difficulty
+	 **/
+	public function getRatingDifficulty() : string {
+		return($this->RatingDifficulty);
 	}
 }
