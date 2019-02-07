@@ -141,7 +141,7 @@ class Trail {
 	 * @param Url|string $newTrailAvatarUrl new value of trail avatar url
 	 * @throws \InvalidArgumentException if $newTrailAvatarUrl uses invalid characters
 	 * @throws \TypeError if $newTrailAvatarUrl is not a string
-	 */
+	 **/
 	public function setTrailAvatarUrl($newTrailAvatarUrl) {
 			//verify the url is secure
 			$newTrailAvatarUrl = trim($newTrailAvatarUrl);
@@ -153,4 +153,42 @@ class Trail {
 			//store the url
 			$this->trailAvatarUrl = $newTrailAvatarUrl;
 	}
+
+	/**
+	 * accessor method for trail description
+	 *
+	 * @return string single sentence description of trail
+	 **/
+	public function getTrailDescription() {
+		return($this->trailDescription);
+	}
+
+	/**
+	 * mutator method for trail description
+	 *
+	 * @param string $newTrailDescription new value of trail description
+	 * @throws \InvalidArgumentException if $newTrailDescription uses invalid characters
+	 * @throws \TypeError if $newTrailDescription is not a string
+	 **/
+	public function setTrailDescription($newTrailDescription) {
+		//verify description is secure
+		$newTrailDescription = trim($newTrailDescription);
+		$newTrailDescription = filter_var($newTrailDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newTrailDescription) === true) {
+			throw(new \InvalidArgumentException("description is empty or insecure"));
+		}
+
+		//store the description
+		$this->trailDescription = $newTrailDescription;
+	}
+
+
+
+
+
+
+
+
+
+
 }
