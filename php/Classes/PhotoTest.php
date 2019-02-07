@@ -1,13 +1,13 @@
 <?php
 namespace abqtrails;
 
-use abqtrails\Photo\uuid\vendor;
+require_once("autoload.php");
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 
 // grab the uuid generator
-require_once __DIR__ . '/composer/autoload_real.php';
+require_once("../../vendor/autoload.php");
 
 /**
  * Full PHPUnit test for the photo class
