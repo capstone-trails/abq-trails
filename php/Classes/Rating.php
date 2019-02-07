@@ -190,4 +190,26 @@ class rating {
 	public function getRatingValue(): string {
 		return ($this->RatingValue);
 	}
+	/**
+	 * mutator method for rating value
+	 *
+	 * @param string $newRatingValue
+	 * @throws \InvalidArgumentException if $newRatingValue
+	 * @throws \RangeException if $newRatingValue
+	 * @throws \TypeError if $newRatingValue is not a string
+	 **/
+	public function setRatingValue(string $newRatingValue) : void {
+		// verify the rating value is secure
+		$newRatingValue = trim($newRatingValue);
+		$newRatingValue = filter_var($newRatingValue, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newRatingValue) === true){
+			throw (new \InvalidArgumentException("rating value is empty or insecure"));
+		}
+		// verify the rating value will fit in the database
+		if (strlen($newRatingValue) > 5) {
+			throw (new \RangeException("rating value is too large"));
+		}
+		// store the rating value
+		$this->ratingDifficulty = $newRatingValue;
+	}
 }
