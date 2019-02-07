@@ -1,14 +1,14 @@
 <?php
-namespace abqtrails;
+namespace Abqtrails;
 
 //our autoloader
 require_once("autoload.php");
 //composer autoloader
 require_once("../../vendor/autoload.php");
 
-use Trail;
-use ValidateUuid;
-use ValidateDate;
+use \abqtrails\Trail;
+use \abqtrails\ValidateUuid;
+use \abqtrails\ValidateDate;
 
 /**
  * Full PHPUnit test for the Trail class

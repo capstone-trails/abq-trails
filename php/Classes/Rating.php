@@ -1,5 +1,5 @@
 <?php
-namespace abqtrails;
+namespace Abqtrails;
 use mysql_xdevapi\Exception;
 use Ramsey\Uuid\Uuid;
 

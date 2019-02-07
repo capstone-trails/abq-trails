@@ -1,5 +1,5 @@
 <?php
-namespace abqtrails;
+namespace Abqtrails;
 /**
  *
  * This profile is used to input and view data and photos on ABQ Trails web application

@@ -1,5 +1,5 @@
 <?php
-namespace abqtrails;
+namespace Abqtrails;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
@@ -10,7 +10,7 @@ use PHPUnit\DbUnit\Operation\{Composite, Factory, Operation};
 //grab the encrypted properties file
 require_once("/etc/apache2/capstone-mysql/Secret.php");
 
-require_once ("../../vendor/autoload.php");
+
 
 /**
  * Abstract class contain universal and project specific mySQL parameters

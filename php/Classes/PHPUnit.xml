@@ -1,6 +1,6 @@
 <phpunit>
 	<testsuites>
-		<testsuite name="AbqTrailsTest">
+		<testsuite name="Abqtrails">
 			<file>PhotoTest.php</file>
 			<file>ProfileTest.php</file>
 			<file>TrailTest.php</file>

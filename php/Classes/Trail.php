@@ -1,5 +1,5 @@
 <?php
-namespace abqtrails;
+namespace Abqtrails;
 
 //our autoloader
 require_once("autoload.php");

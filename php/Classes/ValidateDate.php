@@ -1,5 +1,5 @@
 <?php
-namespace abqtrails;
+namespace Abqtrails;
 /**
  * Trait to Validate a mySQL Date
  *

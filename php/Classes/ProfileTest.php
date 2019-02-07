@@ -1,6 +1,6 @@
 <?php
 
-namespace abqtrails;
+namespace Abqtrails;
 
 use \abqtrails\Profile;
 

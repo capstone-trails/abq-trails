@@ -1,5 +1,5 @@
 <?php
-namespace  abqtrails;
+namespace  Abqtrails;
 /**
  * This trait will inject a method to validate mySQL style attributes in photo.
  * convert a string representation to a photo object or throw an exception.

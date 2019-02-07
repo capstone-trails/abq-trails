@@ -1,5 +1,5 @@
 <?php
-namespace abqtrails;
+namespace Abqtrails;
 require_once("../../vendor/autoload.php");
 use Ramsey\Uuid\Uuid;
 /**
