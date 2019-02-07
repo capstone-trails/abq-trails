@@ -113,5 +113,30 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 	public function getProfileActivationToken() : string {
 		return ($this->profileActivationToken);
 	}
+/**
+ * mutator method for profile activation token
+ *
+ * @param string $newProfileActivationToken
+ * @throws \RangeException if activation token is not 32 characters
+ * @throws \TypeError if activation token is not a string
+ */
+	public function setProfileActivationToken ($newProfileActivationToken) {
+	if(strenlen ($newProfileActivationToken) !== 32) {
+		throw(new \RangeException("must be 32 characters"));
+	}
+	$this->profileActivationToken = $newProfileActivationToken;
+}
+/**
+ * accessor method for profile avatar url
+ *@return string profile avatar url
+ */
+	public function getProfileAvatarUrl() : string {
+		return ($this->profileAvatarUrl);
+	}
+/**
+ * mutator method for profile avatar url
+ *
+ * @param | string
+ */
 }
 
