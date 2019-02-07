@@ -352,3 +352,17 @@ class photoTest extends abq-trailsTest {
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTODATETIME->getTimestamp());
 	}
 }
+<phpunit>
+	<testsuites>
+		<testsuite name="PhotoId abq-trails">
+			<file>PhotoProfileUserIdTest.php</file>
+			<file>PhotoTest.php</file>
+			<file>FavoriteTest.php</file>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">..</directory>
+		</whitelist>
+	</filter>
+</phpunit>
