@@ -166,7 +166,7 @@ class tag{
 	 * @return Tag|null Tag found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
-	 **/
+	 //
 	public static function getTagByTagId(\PDO $pdo, $tagId) : ?Tag {
 		// sanitize the tagId before searching
 		try {
@@ -196,4 +196,5 @@ class tag{
 		}
 		return($tag);
 	}
+	**/
 }
