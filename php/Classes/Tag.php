@@ -31,5 +31,43 @@ class tag{
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
+	public function __construct($newTagId, string $newTagName) {
+		try {
+			$this->setTagId($newTagId);
+			$this->setTagName($newTagName);
+		}
+		//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(),0,$exception));
+		}
+	}
 
+	/**
+	 * accessor method for tag id
+	 *
+	 * @return Uuid value of tag id
+	 **/
+	public function getTagId() : Uuid {
+		return($this->tagId);
+	}
+
+	/**
+	 * mutator method for tag id
+	 *
+	 * @param Uuid|string $newTagId new value of tag id
+	 * @throws \TypeError if $newTagId is not positive
+	 * @throws \TypeError if $newTagId is not a Uuid or string
+	 **/
+	public function setTagId($newTagId) : void {
+		try {
+			$uuid = self::validateUuid($newTagId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(),0));
+		}
+
+		//convert and store the tag id
+		$this->tagId = $uuid;
+	}
 }
