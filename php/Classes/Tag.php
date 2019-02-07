@@ -144,6 +144,17 @@ class tag{
 	/**
 	 * updates this Tag in mySQL
 	 *
-	 * @param \PDO $
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE tag SET tagId = :tagId, tagName = :tagName WHERE tagId = :tagId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["tagId"=> $this->getBytes(),"tagName" => $this->tagName];
+		$statement->execute($parameters);
+	}
 }
