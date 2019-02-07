@@ -59,23 +59,23 @@ class photoTest extends AbqTrailsTest {
 		// run the default setUp() method first
 		parent::setUp();
 		$password = "abc123";
-		$this->VALID_PROFILE_ID = password_id($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_PROFILE_ID = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 
 
 		// create and insert a Profile to own the test photo
-		$this->profileUserId = new ProfileUserId(generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "test@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
-		$this->profileUserId->insert($this->getPDO());
+		$this->profile = new ProfileUserId(generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "test@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
+		$this->profile->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit test was setup...)
-		$this->VALID_PHOTODATETIME = new \photoDateTime();
+		$this->VALID_PHOTODATETIME = new \DateTime();
 
 		//format the sunrise date time to use for testing
-		$this->VALID_SUNRISEDATETIME = new \photoDateTime();
+		$this->VALID_SUNRISEDATETIME = new \DateTime();
 		$this->VALID_SUNRISEDATETIME->sub(new \DateInterval("P10D"));
 
 		//format the sunset date time to use for testing
-		$this->VALID_SUNSETDATETIME = new\photoDateTime();
-		$this->VALID_SUNSETDATETIME->add(new \DateInterval("P10D"));
+		$this->VALID_SUNSETDATE = new\DateTime();
+		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
 
 
 
@@ -94,7 +94,7 @@ class photoTest extends AbqTrailsTest {
 		$photo->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoPhoto = photo::getphotoByPhotoId($this->getPDO(), $photo->getPhotoId());
+		$pdoPhoto = photo::getPhotoByPhotoId($this->getPDO(), $photo->getPhotoId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertEquals($pdoPhoto->getPhotoId(), $PhotoId);
 		$this->assertEquals($pdoPhoto->getPhotoProfileUserId(), $this->profile->getProfileUserId());
