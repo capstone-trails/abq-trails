@@ -52,11 +52,11 @@ class rating {
 	 **/
 	public function __construct($newRatingId, $newRatingProfileId, $newRatingTrailId, string $newRatingDifficulty, string $newRatingValue) {
 		try {
-			$this->ratingId($newRatingId);
-			$this->ratingProfileId($newRatingProfileId);
-			$this->ratingTrailId($newRatingTrailId);
-			$this->ratingDifficulty($newRatingDifficulty);
-			$this->ratingValue($newRatingValue);
+			$this->setRatingId($newRatingId);
+			$this->setRatingProfileId($newRatingProfileId);
+			$this->setRatingTrailId($newRatingTrailId);
+			$this->setRatingDifficulty($newRatingDifficulty);
+			$this->setRatingValue($newRatingValue);
 		} // determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
@@ -155,7 +155,7 @@ class rating {
 	 * @return string value of rating difficulty
 	 **/
 	public function getRatingDifficulty(): string {
-		return ($this->RatingDifficulty);
+		return ($this->ratingDifficulty);
 	}
 
 	/**
@@ -188,7 +188,7 @@ class rating {
 	 * @return string value of rating value
 	 **/
 	public function getRatingValue(): string {
-		return ($this->RatingValue);
+		return ($this->ratingValue);
 	}
 	/**
 	 * mutator method for rating value
