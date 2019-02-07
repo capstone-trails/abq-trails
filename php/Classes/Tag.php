@@ -186,7 +186,14 @@ class tag{
 		try {
 			$tag = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row
+			$row = $statement->fetch();
+			if($row !== false){
+				$tag = new Tag($row["tagId"], $row["tagName"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(),0,$exception));
 		}
+		return($tag);
 	}
 }
