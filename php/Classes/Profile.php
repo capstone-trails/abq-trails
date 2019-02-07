@@ -202,7 +202,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 			throw(new \RangeException("First name cannot be more than 32 characters"));
 		}
 		if(empty($newProfileFirstName) === true) {
-			throw (new \ InvalidArgumentException("First name required"));
+			throw (new \InvalidArgumentException("First name required"));
 		}
 	$this->profileFirstName = $newProfileFirstName;
 	}
@@ -223,10 +223,10 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
  */
 	public function setProfileHash($newProfileHash) : void {
 		if(strlen($newProfileHash) !== 97){
-			throw(new \ RangeException("must be 97 characters"));
+			throw(new \RangeException("must be 97 characters"));
 		}
 		if(empty($newProfileHash) === true) {
-			throw(new \ InvalidArgumentException("hash is empty"));
+			throw(new \InvalidArgumentException("hash is empty"));
 		}
 		$this->profileHash = $newProfileHash;
 	}
@@ -252,7 +252,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 			throw(new \RangeException("Last name cannot be more than 32 characters"));
 		}
 		if(empty($newProfileLastName) === true) {
-			throw(new \ InvalidArgumentException("Last name required"));
+			throw(new \InvalidArgumentException("Last name required"));
 		}
 		$this->profileLastName = $newProfileLastName;
 	}
@@ -266,7 +266,21 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 		return($this->profileUsername);
 	}
 /**
- *mutator method for
+ *mutator method for profile username
+ * @param string $newProfileUsername
+ * @throws \RangeException if greater than 32 characters
+ * @throws \InvalidArgumentException if empty
  */
+	public function setProfileUsername ($newProfileUsername) : void {
+		$newProfileUsername = trim($newProfileUsername);
+		$newProfileUsername = filter_var($newProfileUsername, FILTER_SANITIZE_STRING);
+		if(strlen($newProfileUsername) > 32){
+			throw(new \RangeException("Username must be 32 characters or less"));
+		}
+		if(empty($newProfileUsername) === true){
+			throw(new \InvalidArgumentException("Username required"));
+		}
+		$this->profileUsername = $newProfileUsername;
+	}
 }
 
