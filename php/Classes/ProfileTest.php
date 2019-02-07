@@ -23,7 +23,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * valid profile activation
 	 * @var string $VALID_PROFILE_ACTIVATION_TOKEN
 	 */
-	protected $VALID_PROFILE_ACTIVATION_TOKEN = "hahahahahahahahahahahahahahahaha";
+	protected $VALID_PROFILE_ACTIVATION_TOKEN;
 	/**
 	 * valid profile avatar url
 	 * @var string $VALID_PROFILE_AVATAR_URL
@@ -58,7 +58,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * valid profile hash
 	 * @var string $VALID_PROFILE_HASH
 	 */
-	protected $VALID_PROFILE_HASH = "nanananananananananananananananananananananananananananananananananananananananananananananananaa";
+	protected $VALID_PROFILE_HASH;
 	/**
 	 * valid profile last name
 	 * @var string $VALID_PROFILE_LAST_NAME
@@ -83,4 +83,15 @@ class ProfileTest extends AbqTrailsTest {
 	/**
 	 * setup to create hash
 	 */
+	public final function setUp() : void {
+		parent::setUp();
+
+		$password = "coffee12345";
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 97]);
+		$this->VALID_PROFILE_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
+	}
+	public function testInsertValidProfile() : void {
+
+	}
+
 }
