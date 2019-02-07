@@ -2,6 +2,7 @@
 namespace abqtrails;
 
 use http\Exception\InvalidArgumentException;
+use http\Url;
 
 /**
  * Trail Class
@@ -125,5 +126,31 @@ class Trail {
 		$this->trailId = $uuid;
 	}
 
+	/**
+	 * accessor method for trail avatar url
+	 *
+	 * @return string url address of the trail avatar picture
+	 **/
+	public function getTrailAvatarUrl() : Url {
+		return($this->trailAvatarUrl);
+	}
 
+	/**
+	 * mutator method for trail avatar url
+	 *
+	 * @param Url|string $newTrailAvatarUrl new value of trail avatar url
+	 * @throws \InvalidArgumentException if $newTrailAvatarUrl uses invalid characters
+	 * @throws \TypeError if $newTrailAvatarUrl is not a string
+	 */
+	public function setTrailAvatarUrl($newTrailAvatarUrl) {
+			//verify the url is secure
+			$newTrailAvatarUrl = trim($newTrailAvatarUrl);
+			$newTrailAvatarUrl = filter_var($newTrailAvatarUrl, FILTER_SANITIZE_URL);
+			if(empty($newTrailAvatarUrl) === true) {
+				throw(new\InvalidArgumentException("url is empty or insecure"));
+			}
+
+			//store the url
+			$this->trailAvatarUrl = $newTrailAvatarUrl;
+	}
 }
