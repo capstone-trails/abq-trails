@@ -293,7 +293,33 @@ class Trail {
 		$this->trailLongitude = $newTrailLongitude;
 	}
 
+	/**
+	 * accessor method for trail lowest point
+	 *
+	 * @return string trail lowest point in feet
+	 **/
+	public function getTrailLow() {
+		return $this->trailLow;
+	}
 
+	/**
+	 * mutator method for trail lowest point
+	 *
+	 * @param string $newTrailLow new value of the trail lowest point
+	 * @throws \InvalidArgumentException if $newTrailLow uses invalid characters
+	 * @throws \RangeException if $newTrailLow is negative, zero or null
+	 * @throws \TypeError if $newTrailLow is not a string
+	 **/
+	public function setTrailLow() {
+		$newTrailLow = trim($newTrailLow);
+		$newTrailLow = filter_var($newTrailLow, FILTER_SANITIZE_NUMBER_INT);
+		if(empty($newTrailLow) === true) {
+			throw(new \InvalidArgumentException("lowest point data is empty or insecure"));
+		}
+
+		//store trail lowest point data
+		$this->trailLow = $newTrailLow;
+	}
 
 
 
