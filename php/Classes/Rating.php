@@ -1,6 +1,7 @@
 <?php
 namespace abqtrails;
 use mysql_xdevapi\Exception;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Class rating
@@ -65,6 +66,20 @@ class rating {
 
 
 	/**
-	 * accessor method for
+	 * accessor method for rating id
+	 *
+	 * @return Uuid value of rating id
 	 **/
+	public function getRating() : Uuid {
+		return($this->ratingId);
+	}
+
+	/**
+	 * mutator method for rating id
+	 *
+	 * @param Uuid|string $newRatingId
+	 * @throws \RangeException if $newRatingId
+	 * @throws \TypeError if $newRatingId is not a uuid or string
+	 **/
+
 }
