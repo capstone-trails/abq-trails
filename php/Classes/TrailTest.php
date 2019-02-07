@@ -18,3 +18,44 @@ require_once("../../vendor/autoload.php");
  * @see \abqtrails\Trail
  * @author Scott Wells <swells19@cnm.edu>
  **/
+
+class TrailTest extends AbqTrailsTest {
+	/**
+	 * Trail that will be put into database
+	 * @var $trail trail
+	 **/
+	private $trail = null;
+
+	/**
+	 * Url that will be put into the database
+	 * @var $avatarUrl trail avatar url
+	 **/
+	private $avatarUrl = null;
+
+	/**
+	 * Description that will be put into the database
+	 * @var $trailDescription trail description
+	 **/
+	private $trailDescription = null;
+
+	/**
+	 * High trail elevation that will be put into the database
+	 * @var $trailHigh trail highest point in feet
+	 **/
+	private $trailHigh = null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
