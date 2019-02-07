@@ -20,6 +20,7 @@ class tag{
 	 **/
 	private $tagName;
 
+
 	/**
 	 * constructor for this Tag
 	 *
@@ -43,6 +44,7 @@ class tag{
 		}
 	}
 
+
 	/**
 	 * accessor method for tag id
 	 *
@@ -51,7 +53,6 @@ class tag{
 	public function getTagId() : Uuid {
 		return($this->tagId);
 	}
-
 	/**
 	 * mutator method for tag id
 	 *
@@ -71,6 +72,7 @@ class tag{
 		$this->tagId = $uuid;
 	}
 
+
 	/**
 	 * accessor method for tag name
 	 *
@@ -79,7 +81,6 @@ class tag{
 	public function getTagName() : string {
 		return($this->tagName);
 	}
-
 	/**
 	 * mutator method for tag name
 	 *
@@ -95,15 +96,14 @@ class tag{
 		if(empty($newTagName)=== true) {
 			throw (new \InvalidArgumentException("Tag name is empty or insecure"));
 		}
-
 		// verify the tag name will fit in the database
 		if(strlen($newTagName) > 32){
 			throw (new \RangeException("Tag name too large"));
 		}
-
-		// store the tweet content
+		// store the tag content
 		$this->tagName = $newTagName;
 	}
+
 
 	/**
 	 * inserts this Tag into mySQL
@@ -111,17 +111,17 @@ class tag{
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
+	 * //
 	public function insert(\PDO $pdo) : void {
-
 		// create query template
 		$query = "INSERT INTO tag(tagId, tagName) VALUES(:tagId, tagName)";
 		$statement = $pdo->prepare($query);
-
 		// bind the member variables to the plane holders in the template
 		$parameters = ["tagId" => $this->tagId->getBytes(), "tagName"=> $this->tagName->getBytes()];
 		$statement->execute($parameters);
 	}
+	 **/
+
 
 	/**
 	 * deletes this tag from mySQL
@@ -129,17 +129,17 @@ class tag{
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
+	 * //
 	public function delete(\PDO $pdo) : void{
-
 		// create query template
 		$query = "DELETE FROM tag WHERE tagId = :tagId";
 		$statement = $pdo->prepare($query);
-
 		// bind the member variables to the place holder in the template
 		$parameters = ["tagId"=>$this->tagId->getBytes()];
 		$statement->execute($parameters);
 	}
+	 **/
+
 
 	/**
 	 * updates this Tag in mySQL
@@ -147,14 +147,46 @@ class tag{
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
+	 * //
 	public function update(\PDO $pdo) : void {
-
 		// create query template
 		$query = "UPDATE tag SET tagId = :tagId, tagName = :tagName WHERE tagId = :tagId";
 		$statement = $pdo->prepare($query);
-
 		$parameters = ["tagId"=> $this->getBytes(),"tagName" => $this->tagName];
 		$statement->execute($parameters);
+	}
+	 **/
+
+
+	/**
+	 * gets the Tag by tagId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $tagId tag id to search for
+	 * @return Tag|null Tag found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getTagByTagId(\PDO $pdo, $tagId) : ?Tag {
+		// sanitize the tagId before searching
+		try {
+			$tagId = self::validateUuid($tagId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			throw (new \PDOException($exception->getMessage(),0,$exception));
+		}
+		// create query template
+		$query = "SELECT tagId, tagName FROM tag WHERE tagId = :tagId";
+		$statement = $pdo->prepare($query);
+
+		// bind the tag id to the place holder in the template
+		$parameters = ["tagId"=> $tagId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the tag from mySQL
+		try {
+			$tag = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row
+		}
 	}
 }
