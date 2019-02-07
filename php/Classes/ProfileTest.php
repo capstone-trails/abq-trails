@@ -1,8 +1,7 @@
 <?php
 
 namespace abqtrails;
-
-use \abqtrails\Trail;
+use \abqtrails\Profile;
 
 require_once("autoload.php");
 
@@ -24,10 +23,21 @@ class ProfileTest extends AbqTrailsTest {
  * valid profile activation
  * @var string $VALID_PROFILE_ACTIVATION_TOKEN
  */
-	protected $VALID_PROFILE_ACTIVATION_TOKEN = "nanananananananananananananananananananananananananananananananananananananananananananananananaa";
+	protected $VALID_PROFILE_ACTIVATION_TOKEN = "hahahahahahahahahahahahahahahaha";
 /**
  * valid profile avatar url
  * @var string $VALID_PROFILE_AVATAR_URL
  */
-	protected $VALID_PROFILE_AVATAR_URL ="";
+	protected $VALID_PROFILE_AVATAR_URL = "https://www.testavatarurlabqtrails.co";
+/**
+ * valid profile email address
+ * @var string $VALID_PROFILE_EMAIL
+ */
+	protected $VALID_PROFILE_EMAIL = "newusertest@abqtrails.com";
+/**
+ * valid profile hash
+ * @var string $VALID_PROFILE_HASH
+ */
+	protected $VALID_PROFILE_HASH = "nanananananananananananananananananananananananananananananananananananananananananananananananaa";
+
 }

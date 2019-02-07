@@ -225,6 +225,10 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 		if(strlen($newProfileHash) !== 97){
 			throw(new \RangeException("must be 97 characters"));
 		}
+		$profileHashInfo = password_get_info($newProfileHash);
+		if($profileHashInfo["algoName"] !== "argon2i") {
+			throw(new \InvalidArgumentException("profile hash is not a valid hash"));
+		}
 		if(empty($newProfileHash) === true) {
 			throw(new \InvalidArgumentException("hash is empty"));
 		}
