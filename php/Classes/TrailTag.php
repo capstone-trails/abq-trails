@@ -7,8 +7,14 @@ namespace abqtrails;
  * @author Cassandra Romero <cromero278@cnm.edu>
  *
  */
-class trailTag {
+class TrailTag {
 /**
- * id for trail
+ * this is the id that connects the trail tag to the tag this is a primary key
  */
+	private $trailTagTagId;
+/**
+ * this is the id that connects the trail tag to the trail this is a primary key
+ */
+	private $trailTagTrailId;
+/**
 }

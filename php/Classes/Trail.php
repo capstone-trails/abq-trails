@@ -347,5 +347,4 @@ class Trail {
 		//store trail name
 		$this->trailName = $newTrailName;
 	}
-
 }
