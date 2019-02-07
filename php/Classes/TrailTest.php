@@ -21,61 +21,30 @@ require_once("../../vendor/autoload.php");
 
 class TrailTest extends AbqTrailsTest {
 	/**
-	 * Trail that will be put into database
-	 * @var $trail trail
+	 * valid trail id to use
+	 * @var string $VALID_TRAIL_ID
 	 **/
-	private $trail = null;
+	protected $VALID_TRAIL_ID = "00001";
+	/**
+	 * valid trail avatar url to use
+	 * @var string $VALID_TRAIL_AVATAR_URL
+	 **/
+	protected $VALID_TRAIL_AVATAR_URL = "https://picture.com/00001/";
+	/**
+	 * valid trail description to use
+	 * @var string $VALID_TRAIL_DESCRIPTION
+	 **/
+	protected $VALID_TRAIL_DESCRIPTION = "Located on the west face of the Sandia Mountains";
+
 
 	/**
-	 * Url that will be put into the database
-	 * @var $avatarUrl trail avatar url
+	 * create dependent objects before running each test
 	 **/
-	private $avatarUrl = null;
+	public final function setUp() : void {
+		//run the default setUp() method first
+		parent::setUp();
 
-	/**
-	 * Description that will be put into the database
-	 * @var $trailDescription trail description
-	 **/
-	private $trailDescription = null;
-
-	/**
-	 * High trail elevation that will be put into the database
-	 * @var $trailHigh trail highest point in feet
-	 **/
-	private $trailHigh = null;
-
-	/**
-	 * Latitude trail coordinate that will be put into the database
-	 * @var $trailLatitude trail latitude data
-	 **/
-	private $trailLatitude = null;
-
-	/**
-	 * Length trail total length in feet that will be put into the database
-	 * @var $trailLength
-	 **/
-	private $trailLength = null;
-
-	/**
-	 * Longitude trail coordinate that will be put into the database
-	 * @var $trailLongitude trail longitude data
-	 **/
-	private $trailLongitude = null;
-
-	/**
-	 * Low trail elevation that will be put into the database
-	 * @var $trailLow trail lowest point in feet
-	 **/
-	private $trailLow = null;
-
-	/**
-	 * Name trail name
-	 * @var $trailName name of trail
-	 **/
-	private $trailName = null;
-
-
-
+	}
 
 
 
