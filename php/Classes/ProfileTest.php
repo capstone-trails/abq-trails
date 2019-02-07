@@ -55,18 +55,32 @@ class ProfileTest extends AbqTrailsTest {
 	 */
 	protected $VALID_PROFILE_FIRST_NAME_2 = "Fancy";
 	/**
- * valid profile hash
- * @var string $VALID_PROFILE_HASH
- */
+	 * valid profile hash
+	 * @var string $VALID_PROFILE_HASH
+	 */
 	protected $VALID_PROFILE_HASH = "nanananananananananananananananananananananananananananananananananananananananananananananananaa";
-/**
- * valid profile last name
- * @var string $VALID_PROFILE_LAST_NAME
- */
+	/**
+	 * valid profile last name
+	 * @var string $VALID_PROFILE_LAST_NAME
+	 */
 	protected $VALID_PROFILE_LAST_NAME = "Reagan";
-/**
- * valid profile username
- * @var string $VALID_PROFILE_USERNAME
- */
+	/*
+	 * updated profile last name
+	 * @var string $VALID_PROFILE_LAST_NAME_2
+	 */
+	protected $VALID_PROFILE_LAST_NAME_2 = "Solo";
+	/**
+	 * valid profile username
+	 * @var string $VALID_PROFILE_USERNAME
+	 */
 	protected $VALID_PROFILE_USERNAME = "thefirstlady123";
+	/*
+	 * updated profile username
+	 * @var string $VALID_PROFILE_USERNAME_2
+	 */
+	protected $VALID_PROFILE_USERNAME_2 = "notthefirstlady999";
+
+	/**
+	 * setup to create hash
+	 */
 }
