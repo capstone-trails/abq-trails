@@ -36,6 +36,7 @@ class rating {
 	 **/
 	private $ratingValue;
 
+
 	/**
 	 * constructor for this Rating
 	 *
@@ -73,7 +74,6 @@ class rating {
 	public function getRating() : Uuid {
 		return($this->ratingId);
 	}
-
 	/**
 	 * mutator method for rating id
 	 *
@@ -88,8 +88,33 @@ class rating {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-
 		// convert and store the rating id
 		$this->ratingId = $uuid;
+	}
+
+
+	/**
+	 * accessor method for ratingProfileId
+	 *
+	 * @return Uuid value of rating profile id
+	 **/
+	public function getRatingProfileId() : Uuid{
+		return($this->ratingProfileId);
+	}
+	/**
+	 * mutator method for rating profile id
+	 *
+	 * @param string|Uuid $newRatingProfileId
+	 * @throws \RangeException if $newProfileId is not positive
+	 * @throws \TypeError if $newRatingProfileId is not an integer
+	 **/
+	public function setRatingProfileId ($newRatingProfileId) : void {
+		try {
+			$uuid = self::validateUuid($newRatingProfileId);
+			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		//convert and store the profile
 	}
 }
