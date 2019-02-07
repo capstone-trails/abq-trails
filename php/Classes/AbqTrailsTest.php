@@ -98,5 +98,13 @@ abstract class AbqTrailsTest extends TestCase {
 		return($this->connection);
 	}
 
+	/**
+	 * returns the actual PDO object; this is a convenience method
+	 *
+	 * @return \PDO active PDO object
+	 **/
+	public final function getPDO() {
+		return($this->getConnection()->getConnection());
+	}
 
 }
