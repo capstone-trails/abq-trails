@@ -62,6 +62,18 @@ class TrailTest extends AbqTrailsTest {
 	 **/
 	private $trailLongitude = null;
 
+	/**
+	 * Low trail elevation that will be put into the database
+	 * @var $trailLow trail lowest point in feet
+	 **/
+	private $trailLow = null;
+
+	/**
+	 * Name trail name
+	 * @var $trailName name of trail
+	 **/
+	private $trailName = null;
+
 
 
 
