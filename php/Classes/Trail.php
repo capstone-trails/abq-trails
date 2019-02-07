@@ -310,7 +310,7 @@ class Trail {
 	 * @throws \RangeException if $newTrailLow is negative, zero or null
 	 * @throws \TypeError if $newTrailLow is not a string
 	 **/
-	public function setTrailLow() {
+	public function setTrailLow($newTrailLow) {
 		$newTrailLow = trim($newTrailLow);
 		$newTrailLow = filter_var($newTrailLow, FILTER_SANITIZE_NUMBER_INT);
 		if(empty($newTrailLow) === true) {
@@ -321,7 +321,31 @@ class Trail {
 		$this->trailLow = $newTrailLow;
 	}
 
+	/**
+	 * accessor method for trail name
+	 *
+	 * @return string name of the trail
+	 **/
+	public function getTrailName() : string {
+		return $this->trailName;
+	}
 
+	/**
+	 * mutator method for trail name
+	 *
+	 * @param string $newTrailName new value of the trail name
+	 * @throws \InvalidArgumentException if $newTrailName uses invalid characters
+	 * @throws \TypeError if $newTrailName is not a string
+	 **/
+	public function setTrailName($newTrailName) {
+		$newTrailName = trim($newTrailName);
+		$newTrailName = filter_var($newTrailName, FILTER_SANITIZE_STRING);
+		if(empty($newTrailName) === true) {
+			throw(new \InvalidArgumentException("name is empty or insecure"));
+		}
 
+		//store trail name
+		$this->trailName = $newTrailName;
+	}
 
 }
