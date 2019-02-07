@@ -50,7 +50,21 @@ class TrailTest extends AbqTrailsTest {
 	 * @var string $VALID_TRAIL_LENGTH
 	 **/
 	protected $VALID_TRAIL_LENGTH = "13.3";
-
+	/**
+	 * valid trail longitude coordinate
+	 * @var string $VALID_TRAIL_LONGITUDE
+	 **/
+	protected $VALID_TRAIL_LONGITUDE = "106.4808 W";
+	/**
+	 * valid trail lowest elevation in feet
+	 * @var string $VALID_TRAIL_LOW
+	 **/
+	protected $VALID_TRAIL_LOW = "7060";
+	/**
+	 * valid trail name
+	 * @var string $VALID_TRAIL_NAME
+	 **/
+	protected $VALID_TRAIL_NAME = "La Luz Trail";
 
 	/**
 	 * create dependent objects before running each test
