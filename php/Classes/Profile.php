@@ -141,7 +141,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
  * @throws \RangeException if avatar url is greater than 255 characters
  * @throws\InvalidArgumentException if empty
  */
-	public function setProfileAvatarUrl ($newProfileAvatarUrl) {
+	public function setProfileAvatarUrl ($newProfileAvatarUrl) : void {
 		$newProfileAvatarUrl = trim($newProfileAvatarUrl);
 		$newProfileAvatarUrl = filter_var($newProfileAvatarUrl, FILTER_SANITIZE_STRING);
 		if(strenlen ($newProfileAvatarUrl) > 255) {
@@ -205,6 +205,30 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 			throw (new \ InvalidArgumentException("First name required"));
 		}
 	$this->profileFirstName = $newProfileFirstName;
+	}
+/**
+ * accessor method profileHash
+ *
+ * @return string profile hash password
+ */
+	public function getProfileHash () : string {
+		return($this->profileHash);
+	}
+/**
+ * mutator method for profile hash
+ *
+ * @param string $newProfileHash
+ * @throws \RangeException if not exactly 97 characters
+ * @throws \InvalidArgumentException if empty
+ */
+	public function setProfileHash($newProfileHash) : void {
+		if(strenlgen($newProfileHash) !== 97){
+			throw(new \ RangeException("must be 97 characters"));
+		}
+		if(empty($newProfileHash) === true) {
+			throw(new \ InvalidArgumentException("hash is empty"));
+		}
+		$this->profileHash = $newProfileHash;
 	}
 
 }
