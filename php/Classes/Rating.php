@@ -155,4 +155,15 @@ class rating {
 	public function getRatingDifficulty() : string {
 		return($this->RatingDifficulty);
 	}
+	/**
+	 * mutator method for rating difficulty
+	 *
+	 * @param string $newRatingDifficulty
+	 * @throws \InvalidArgumentException if $newRatingDifficulty
+	 * @throws \RangeException if $newRatingDifficulty
+	 * @throws \TypeError if $newRatingDifficulty is not a string
+	 **/
+	public function setRatingDifficulty(string $newRatingDifficulty) : void {
+		// verify the rating difficulty is secure
+	}
 }
