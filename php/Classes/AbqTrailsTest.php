@@ -29,3 +29,39 @@ require_once ("../../vendor/autoload.php");
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  * @updated (for project) Scott Wells <swells19@cnm.edu>
  **/
+abstract class AbqTrailsTest extends TestCase {
+	use TestCaseTrait;
+
+	/**
+	 * PHPUnit database connection interface
+	 * @var Connection $connection
+	 **/
+	private $connection = null;
+
+	/**
+	 * assembles the table from the schema and provides it to PHPUnit
+	 *
+	 * @return QueryDataSet assembled schema for PHPUnit
+	 **/
+	public final function getDataSet() : QueryDataSet {
+		$dataset = new QueryDataSet($this->getConnection());
+
+		//add all the tables for the project her
+		//THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!
+		$dataset->addTable("profile");
+		$dataset->addTable("trail");
+		$dataset->addTable("photo");
+		$dataset->addTable("rating");
+		$dataset->addTable("tag");
+		$dataset->addTable("trailTag");
+		return($dataset);
+	}
+
+
+
+
+
+
+
+
+}

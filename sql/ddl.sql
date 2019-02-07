@@ -40,6 +40,19 @@ CREATE TABLE photo (
 	PRIMARY KEY (photoId)
 );
 
+CREATE TABLE rating (
+	ratingId BINARY(16) NOT NULL,
+	ratingProfileId BINARY(16) NOT NULL,
+	ratingTrailId BINARY(16) NOT NULL,
+	ratingDifficulty VARCHAR(16),
+	ratingValue VARCHAR(5),
+	INDEX (ratingProfileId),
+	INDEX (ratingTrailId),
+	FOREIGN KEY (ratingProfileId) REFERENCES profile(profileId),
+	FOREIGN KEY (ratingTrailId) REFERENCES trail(trailId),
+	PRIMARY KEY (ratingId)
+);
+
 CREATE TABLE tag (
 	tagId BINARY(16) NOT NULL,
 	tagName VARCHAR(32)NOT NULL,
@@ -57,17 +70,4 @@ CREATE TABLE trailTag (
 	FOREIGN KEY (trailTagTrailId) REFERENCES trail(trailId),
 	FOREIGN KEY (trailTagProfileId) REFERENCES profile(profileId),
 	PRIMARY KEY (tagId, profileId)
-);
-
-CREATE TABLE rating (
-	ratingId BINARY(16) NOT NULL,
-	ratingProfileId BINARY(16) NOT NULL,
-	ratingTrailId BINARY(16) NOT NULL,
-	ratingDifficulty VARCHAR(16),
-	ratingValue VARCHAR(5),
-	INDEX (ratingProfileId),
-	INDEX (ratingTrailId),
-	FOREIGN KEY (ratingProfileId) REFERENCES profile(profileId),
-	FOREIGN KEY (ratingTrailId) REFERENCES trail(trailId),
-	PRIMARY KEY (ratingId)
 );
