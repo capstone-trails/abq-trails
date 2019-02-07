@@ -71,9 +71,32 @@ abstract class AbqTrailsTest extends TestCase {
 		]);
 	}
 
+	/**
+	 * templates the tearDown method that runs after each test; this method expunges the database after each run
+	 *
+	 * @return Operation delete command for the database
+	 **/
+	public final function getTearDownOperation() : Operation {
+		return(Factor::DELETE_ALL());
+	}
 
+	/**
+	 * sets up the database connection and provides it to PHPUnit
+	 *
+	 * @see https://phpunit.de/manual/current/en/database.html#database.configuration-of-a-phpunit-database-testcase
+	 * @return Connection PHPUnit database connection interface
+	 **/
+	public final function getConnection() : Connection {
+		//if the connection hasn't been established, create it
+		if($this->connection === null) {
+			//connect to mySQL and provide the interface to PHPUnit
 
-
+			$secrets = new Secrets("/etc/apache2/capstone-mysql/ddctwitter.ini");
+			$pdo = $secrets->getPdoObject();
+			$this->connection = $this->createDefaultDBConnection($pdo, $secrets->getDatabse());
+		}
+		return($this->connection);
+	}
 
 
 }
