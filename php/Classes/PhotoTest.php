@@ -1,7 +1,7 @@
 <?php
 namespace abqtrails;
 
-use abqtrails\Photo;
+use abqtrails\Photo\uuid\vendor;
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
