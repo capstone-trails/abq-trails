@@ -196,6 +196,7 @@ class Trail {
 	 *
 	 * @param string $newTrailHigh new value of trail highest point
 	 * @throws \InvalidArgumentException if $newTrailHigh uses invalid characters
+	 * @throws \RangeException if $newTrailHigh is negative, zero or null
 	 * @throws \TypeError if $newTrailHigh is not a string
 	 **/
 	public function setTrailHigh($newTrailHigh) {
@@ -223,14 +224,13 @@ class Trail {
 	 * mutator method for trail latitude
 	 *
 	 * @param string $newTrailLatitude new value of the trail latitude
-	 *
 	 * @throws \InvalidArgumentException if $newTrailLatitude uses invalid characters
 	 * @throws \TypeError if $newTrailLatitude is not a string
 	 **/
 	public function setTrailLatitude($newTrailLatitude) {
 		//verify that trail latitude data is secure
 		$newTrailLatitude = trim($newTrailLatitude);
-		$newTrailLatitude = filter_var($newTrailLatitude, FILTER_SANITIZE_NUMBER_INT);
+		$newTrailLatitude = filter_var($newTrailLatitude, FILTER_SANITIZE_NUMBER_FLOAT);
 		if(empty($newTrailLatitude) === true) {
 			throw(new \InvalidArgumentException("latitude data is empty or insecure"));
 		}
@@ -239,6 +239,34 @@ class Trail {
 		$this->trailLatitude = $newTrailLatitude;
 	}
 
+	/**
+	 * accessor method for trail length
+	 *
+	 * @return string|float trail length in miles
+	 **/
+	public function getTrailLength() : float {
+		return $this->trailLength;
+	}
+
+	/**
+	 * mutator method for trail length
+	 *
+	 * @param string|float $newTrailLength new value of the trail length
+	 * @throws \InvalidArgumentException if $newTrailLength uses invalid characters
+	 * @throws \RangeException if $newTrailLength is a negative number, zero or null
+	 * @throws \TypeError if $newTrailLength is not a string
+	 **/
+	public function setTrailLength() {
+		//verify that trail length data is secure
+		$newTrailLength = trim($newTrailLength);
+		$newTrailLength = filter_var($newTrailLength, FILTER_SANITIZE_NUMBER_INT);
+		if(empty($newTrailLength) === true) {
+			throw(new \InvalidArgumentException("length is empty or insecure"));
+		}
+
+		//store the length data
+		$this->trailLength = $newTrailLength;
+	}
 
 
 
