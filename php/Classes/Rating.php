@@ -13,25 +13,33 @@ class rating {
 	 **/
 	private $ratingId;
 	/**
-	 * id for this Rating
+	 * id of the profile that rated the trail; this is a foreign key
 	 * @var Uuid $ratingProfileId
 	 **/
 	private $ratingProfileId;
 	/**
-	 * id for this Rating
+	 * id of the trail being rated; this is a foreign key
 	 * @var Uuid $ratingTrailId
 	 **/
 	private $ratingTrailId;
 	/**
-	 * id for this Rating
-	 * @var Uuid $ratingDifficulty
+	 * what the difficultly of the trail is
+	 * @var $ratingDifficulty
 	 **/
 	private $ratingDifficulty;
 	/**
-	 * id for this Rating
-	 * @var Uuid $ratingDifficulty
+	 * what might be on the trail
+	 * @var $ratingValue
 	 **/
 	private $ratingValue;
 
-
+	/**
+	 * constructor for this Rating
+	 *
+	 * @param string|Uuid $newRatingId
+	 * @param string|Uuid $newRatingProfileId
+	 * @param string|Uuid $newRatingTrailId
+	 * @param string $newRatingDifficulty
+	 * @param string $newRatingValue
+	 **/
 }
