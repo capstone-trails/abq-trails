@@ -48,5 +48,5 @@ class rating {
 	 * @throws \TypeError if some other exception occurs
 	 * @Documention https://php.net/manual/en/language.oop5.decon.php
 	 **/
-
+//test
 }
