@@ -81,5 +81,15 @@ class rating {
 	 * @throws \RangeException if $newRatingId
 	 * @throws \TypeError if $newRatingId is not a uuid or string
 	 **/
+	public function setRatingId ( $newRatingId) : void {
+		try {
+			$uuid = self::validateUuid($newRatingId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 
+		// convert and store the rating id
+		$this->ratingId = $uuid;
+	}
 }
