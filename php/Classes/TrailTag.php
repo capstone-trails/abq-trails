@@ -66,4 +66,29 @@ class TrailTag {
 		}
 		$this->trailTagTagId = $uuid;
 	}
+
+	/**
+	 *accessor method for trail tag trail id
+	 *
+	 * @return Uuid value for trail tag trail id
+	 */
+	public function getTrailTagTrailId() : Uuid {
+		return($this->trailTagTrailId);
+	}
+/**
+ * mutator method for trail tag trail id
+ * @param Uuid | string $newTrailTagTrailId
+ * @throws \RangeException if not exact length
+ * @throws \InvalidArgumentException if empty
+ * @throws \TypeError if not Uuid or string
+ */
+	public function setTrailTagTrailId($newTrailTagTrailId) : void {
+		try {
+			$uuid = self::valudateUuid($newTrailTagTrailId);
+		} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->trailTagTrailId = $uuid;
+	}
 }
