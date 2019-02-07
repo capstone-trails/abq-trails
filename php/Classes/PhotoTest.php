@@ -253,47 +253,47 @@ class TweetTest extends abq-trailsTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("photo");
 
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		// create a new photo and insert to into mySQL
+		$photoId = generateUuidV4();
+		$photo = new Tweet($photoId, $this->profile->getProfileUserId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATETIME);
+		$photo->insert($this->getPDO());
 
-		// delete the Tweet from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$tweet->delete($this->getPDO());
+		// delete the photo from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
+		$photo->delete($this->getPDO());
 
-		// grab the data from mySQL and enforce the Tweet does not exist
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
-		$this->assertNull($pdoTweet);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("tweet"));
+		// grab the data from mySQL and enforce the photo does not exist
+		$pdoPhoto = photo::getPhotoByPhotoId($this->getPDO(), $photo->getPhotoId());
+		$this->assertNull($pdoPhoto);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("photo"));
 	}
 
 	/**
-	 * test inserting a Tweet and regrabbing it from mySQL
+	 * test inserting a photo and regrabbing it from mySQL
 	 **/
-	public function testGetValidTweetByTweetProfileId() {
+	public function testGetValidPhotoByPhotoProfileUserId() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
+		$numRows = $this->getConnection()->getRowCount("photo");
 
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		// create a new photo and insert to into mySQL
+		$photoId = generateUuidV4();
+		$photo = new Tweet($photoId, $this->profile->getProfileUserId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATETIME);
+		$photo->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getTweetByTweetProfileId($this->getPDO(), $tweet->getTweetProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$results = photo::getPhotoByPhotoProfileUserId($this->getPDO(), $photo->getPhotoProfileUserId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Tweet", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\abq-trails\\photo", $results);
 
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
+		$pdoPhoto = $results[0];
 
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
+		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
+		$this->assertEquals($pdoPhoto->getPhotoProfileUSerId(), $this->profile->getProfileUSerId());
+		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTOURL);
 		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTODATETIME->getTimestamp());
 	}
 
 	/**
