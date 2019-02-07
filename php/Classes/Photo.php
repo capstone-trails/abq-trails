@@ -286,95 +286,95 @@ class Photo() {
 		// bind the photo profile user id to the place holder in the template
 		$parameters = ["photoProfileUserId" => $photoProfileUserId->getBytes()];
 		$statement->execute($parameters);
-		// build an array of tweets
-		$tweets = new \SplFixedArray($statement->rowCount());
+		// build an array of photos
+		$photos = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
-				$tweets[$tweets->key()] = $tweet;
-				$tweets->next();
+				$photo = new photo($row["photoId"], $row["photoProfileUserId"], $row["photoUrl"], $row["photoDateTime"]);
+				$photos[$photos->key()] = $photo;
+				$photos->next();
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($tweets);
+		return($photos);
 	}
 
 	/**
-	 * gets the Tweet by content
+	 * gets the photo by url
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param string $tweetContent tweet content to search for
-	 * @return \SplFixedArray SplFixedArray of Tweets found
+	 * @param string $photoUrl photo url to search for
+	 * @return \SplFixedArray SplFixedArray of photos found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getTweetByTweetContent(\PDO $pdo, string $tweetContent) : \SplFixedArray {
+	public static function getphotoByPhotoUrl(\PDO $pdo, string $photoUrl) : \SplFixedArray {
 		// sanitize the description before searching
-		$tweetContent = trim($tweetContent);
-		$tweetContent = filter_var($tweetContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($tweetContent) === true) {
-			throw(new \PDOException("tweet content is invalid"));
+		$photoUrl = trim($photoUrl);
+		$photoUrl = filter_var($photoUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($photoUrl) === true) {
+			throw(new \PDOException("photo url is invalid"));
 		}
 
 		// escape any mySQL wild cards
-		$tweetContent = str_replace("_", "\\_", str_replace("%", "\\%", $tweetContent));
+		$photoUrl = str_replace("_", "\\_", str_replace("%", "\\%", $photoUrl));
 
 		// create query template
-		$query = "SELECT tweetId, tweetProfileId, tweetContent, tweetDate FROM tweet WHERE tweetContent LIKE :tweetContent";
+		$query = "SELECT photoId, photoProfileUserId, photoUrl, photoDateTime FROM photo WHERE photoUrl LIKE :photoUrl";
 		$statement = $pdo->prepare($query);
 
-		// bind the tweet content to the place holder in the template
-		$tweetContent = "%$tweetContent%";
-		$parameters = ["tweetContent" => $tweetContent];
+		// bind the photo url to the place holder in the template
+		$photoUrl = "%$photoUrl%";
+		$parameters = ["photoUrl" => $photoUrl];
 		$statement->execute($parameters);
 
-		// build an array of tweets
-		$tweets = new \SplFixedArray($statement->rowCount());
+		// build an array of photos
+		$photos = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
-				$tweets[$tweets->key()] = $tweet;
-				$tweets->next();
+				$tweet = new photo($row["photoId"], $row["photoProfileUserId"], $row["photoUrl"], $row["photoDateTime"]);
+				$photos[$photos->key()] = $photo;
+				$photos->next();
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($tweets);
+		return($photos);
 	}
 
 	/**
-	 * gets all Tweets
+	 * gets all photos
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @return \SplFixedArray SplFixedArray of Tweets found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getAllTweets(\PDO $pdo) : \SPLFixedArray {
+	public static function getAllPhotos(\PDO $pdo) : \SPLFixedArray {
 		// create query template
-		$query = "SELECT tweetId, tweetProfileId, tweetContent, tweetDate FROM tweet";
+		$query = "SELECT photoId, photoProfileUserId, photoUrl, photoDateTIme FROM photo";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
 		// build an array of tweets
-		$tweets = new \SplFixedArray($statement->rowCount());
+		$photos = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
-				$tweets[$tweets->key()] = $tweet;
-				$tweets->next();
+				$tweet = new photo($row["photoId"], $row["photoProfileUserId"], $row["photoUrl"], $row["photoDateTime"]);
+				$photos[$photos->key()] = $photo;
+				$photos->next();
 			} catch(\Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return ($tweets);
+		return ($photos);
 	}
 
 	/**
@@ -385,10 +385,10 @@ class Photo() {
 	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
 
-		$fields["tweetId"] = $this->tweetId->toString();
-		$fields["tweetProfileId"] = $this->tweetProfileId->toString();
+		$fields["photoId"] = $this->photoId->toString();
+		$fields["photoProfileUserId"] = $this->photoProfileUserId->toString();
 
-		//format the date so that the front end can consume it
-		$fields["tweetDate"] = round(floatval($this->tweetDate->format("U.u")) * 1000);
+		//format the date time so that the front end can consume it
+		$fields["photoDateTime"] = round(floatval($this->photoDateTime->format("U.u")) * 1000);
 		return($fields);
 	}
