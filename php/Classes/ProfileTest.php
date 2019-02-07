@@ -1,6 +1,7 @@
 <?php
 
 namespace abqtrails;
+
 use \abqtrails\Profile;
 
 require_once("autoload.php");
@@ -14,11 +15,6 @@ require_once("../../vendor/autoload.php");
  * @author Cassandra Romero <cromero278@cnm.edu>
  */
 class ProfileTest extends AbqTrailsTest {
-	/**
-	 * valid profile id
-	 * @var string $VALID_PROFILE_ID
-	 */
-	protected $VALID_PROFILE_ID = "nananananananana";
 	/**
 	 * valid profile activation
 	 * @var string $VALID_PROFILE_ACTIVATION_TOKEN
@@ -90,7 +86,13 @@ class ProfileTest extends AbqTrailsTest {
 		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 97]);
 		$this->VALID_PROFILE_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
 	}
+	/*
+	 * test inserting a Profile into mySQL database
+	 */
 	public function testInsertValidProfile() : void {
+		$numRows = $this->getConnection()->getRowCount("profile");
+		$profileId = generateUuidV4();
+		$profile = new \abqtrails\Profile($profileId, $profileActivationToken, $profileAvatarUrl, );
 
 	}
 

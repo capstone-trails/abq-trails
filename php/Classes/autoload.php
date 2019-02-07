@@ -1,4 +1,5 @@
 <?php
+namespace abqtrails;
 /**
  * PSR-4 Compliant Autoloader
  *
