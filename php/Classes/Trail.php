@@ -253,7 +253,7 @@ class Trail {
 	 * @throws \RangeException if $newTrailLength is a negative number, zero or null
 	 * @throws \TypeError if $newTrailLength is not a string
 	 **/
-	public function setTrailLength() {
+	public function setTrailLength($newTrailLength) {
 		//verify that trail length data is secure
 		$newTrailLength = trim($newTrailLength);
 		$newTrailLength = filter_var($newTrailLength, FILTER_SANITIZE_NUMBER_INT);
