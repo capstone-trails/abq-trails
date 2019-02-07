@@ -49,9 +49,9 @@ class Photo() {
 	 public function __construct($newPhototId, $newPhotoProfileUserId, string $newPhotoUrl, $newPhotoDateTime = null){
 	 try {
 		$this->setPhotoId($newPhotoId);
-		$this->setTweetProfileId($newPhotoProfileUserId);
-		$this->setTweetContent($newPhotoUrl);
-		$this->setTweetDate($newPhotoDateTime);
+		$this->setphotoProfileUserId($newPhotoProfileUserId);
+		$this->setPhotoUrl($newPhotoUrl);
+		$this->setPhotoDateTime($newPhotoDateTime);
 	}
 	//determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -61,10 +61,10 @@ class Photo() {
 }
 	public function __construct($newPhotoId, $newPhotoProfileUserId, string $newPhotoUrl, $newPhotoDateTime = null) {
 	try {
-		$this->setTweetId($newPhotoId);
-		$this->setTweetProfileId($newPhotoProfileUserId);
-		$this->setTweetContent($newPhotoUrl);
-		$this->setTweetDate($newPhotoDateTime);
+		$this->setPhotoId($newPhotoId);
+		$this->setPhotoProfileUserId($newPhotoProfileUserId);
+		$this->setPhotoUrl($newPhotoUrl);
+		$this->setPhotoDateTime($newPhotoDateTime);
 	}
 		//determine what exception type was thrown
 	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -171,7 +171,7 @@ class Photo() {
 	 * @throws \TypeError if $newPhotodatetime is not a string
 	 **/
 	public function setPhotoDateTime(string $newPhotoDateTime) : void {
-		// verify the tweet content is secure
+		// verify the photo url is secure
 		$newPhotoDateTime = trim($newPhotoDateTime);
 		$newPhotoDateTime = filter_var($newPhotoDateTime, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newPhotoDateTime) === true) {
@@ -336,7 +336,7 @@ class Photo() {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$tweet = new photo($row["photoId"], $row["photoProfileUserId"], $row["photoUrl"], $row["photoDateTime"]);
+				$photo = new photo($row["photoId"], $row["photoProfileUserId"], $row["photoUrl"], $row["photoDateTime"]);
 				$photos[$photos->key()] = $photo;
 				$photos->next();
 			} catch(\Exception $exception) {
@@ -351,7 +351,7 @@ class Photo() {
 	 * gets all photos
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @return \SplFixedArray SplFixedArray of Tweets found or null if not found
+	 * @return \SplFixedArray SplFixedArray of photos found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
@@ -361,12 +361,12 @@ class Photo() {
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
-		// build an array of tweets
+		// build an array of photos
 		$photos = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$tweet = new photo($row["photoId"], $row["photoProfileUserId"], $row["photoUrl"], $row["photoDateTime"]);
+				$photo = new photo($row["photoId"], $row["photoProfileUserId"], $row["photoUrl"], $row["photoDateTime"]);
 				$photos[$photos->key()] = $photo;
 				$photos->next();
 			} catch(\Exception $exception) {
