@@ -121,7 +121,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
  * @throws \TypeError if activation token is not a string
  */
 	public function setProfileActivationToken ($newProfileActivationToken) {
-	if(strenlen ($newProfileActivationToken) !== 32) {
+	if(strlen ($newProfileActivationToken) !== 32) {
 		throw(new \RangeException("must be 32 characters"));
 	}
 	$this->profileActivationToken = $newProfileActivationToken;
@@ -144,7 +144,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 	public function setProfileAvatarUrl ($newProfileAvatarUrl) : void {
 		$newProfileAvatarUrl = trim($newProfileAvatarUrl);
 		$newProfileAvatarUrl = filter_var($newProfileAvatarUrl, FILTER_SANITIZE_STRING);
-		if(strenlen ($newProfileAvatarUrl) > 255) {
+		if(strlen ($newProfileAvatarUrl) > 255) {
 			throw(new \RangeException("avatar url is too long"));
 		}
 		if(empty($newProfileAvatarUrl) === true) {
@@ -171,7 +171,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 	public function setProfileEmail($newProfileEmail): void {
 		$newProfileEmail = trim($newProfileEmail);
 		$newProfileEmail = filter_var($newProfileEmail,FILTER_SANITIZE_EMAIL);
-		if(strenlen($newProfileEmail) > 128) {
+		if(strlen($newProfileEmail) > 128) {
 			throw(new \RangeException("Email must be less than 128 characters"));
 		}
 		if(empty($newProfileEmail) === true){
@@ -198,7 +198,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 	public function setProfileFirstName($newProfileFirstName) : void {
 		$newProfileFirstName = trim($newProfileFirstName);
 		$newProfileFirstName = filter_var($newProfileFirstName,FILTER_SANITIZE_STRING);
-		if(strenlen($newProfileFirstName) > 32) {
+		if(strlen($newProfileFirstName) > 32) {
 			throw(new \RangeException("First name cannot be more than 32 characters"));
 		}
 		if(empty($newProfileFirstName) === true) {
@@ -222,7 +222,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
  * @throws \InvalidArgumentException if empty
  */
 	public function setProfileHash($newProfileHash) : void {
-		if(strenlgen($newProfileHash) !== 97){
+		if(strlen($newProfileHash) !== 97){
 			throw(new \ RangeException("must be 97 characters"));
 		}
 		if(empty($newProfileHash) === true) {
@@ -248,13 +248,25 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 	public function setProfileLastName($newProfileLastName) : void {
 		$newProfileLastName = trim($newProfileLastName);
 		$newProfileLastName = filter_var($newProfileLastName, FILTER_SANITIZE_STRING);
-		if(strenlen($newProfileLastName) > 32){
+		if(strlen($newProfileLastName) > 32) {
 			throw(new \RangeException("Last name cannot be more than 32 characters"));
 		}
-		if(empty($newProfileLastName) === true){
+		if(empty($newProfileLastName) === true) {
 			throw(new \ InvalidArgumentException("Last name required"));
 		}
 		$this->profileLastName = $newProfileLastName;
 	}
+
+/**
+ * accessor method for profile username
+ *
+ * @return string for profile username
+ */
+	public function getProfileUsername () : string {
+		return($this->profileUsername);
+	}
+/**
+ *mutator method for
+ */
 }
 
