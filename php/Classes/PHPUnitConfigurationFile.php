@@ -1,9 +1,10 @@
 <phpunit>
 	<testsuites>
-		<testsuite name="Photo abq-trails">
+		<testsuite name="AbqTrailsTest">
+			<file>PhotoTest.php</file>
 			<file>ProfileTest.php</file>
-			<file>TweetTest.php</file>
-			<file>FavoriteTest.php</file>
+			<file>TrailTest.php</file>
+			<file>TagTest.php</file>
 		</testsuite>
 	</testsuites>
 	<filter>
