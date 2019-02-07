@@ -96,7 +96,22 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
  * @throws \RangeException if $newProfileId is not correct length
  * @throws \TypeError if $newprofileId is not a Uuid or string
  */
-
-
+	public function setProfileId ($newProfileId) {
+		try
+			{$uuid = self::validateUuid($newProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+			$this->profileId = $uuid;
+	}
+/**
+ * accessor method for profile activation token
+ * @return string characters in activation token
+ *
+ */
+	public function getProfileActivationToken() : string {
+		return ($this->profileActivationToken);
+	}
 }
 
