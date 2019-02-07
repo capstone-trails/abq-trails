@@ -187,9 +187,6 @@ class Trail {
 	 *
 	 * @return string highest point of trail measured in feet
 	 **/
-	/**
-	 * @return string
-	 */
 	public function getTrailHigh(): string {
 		return $this->trailHigh;
 	}
@@ -199,7 +196,7 @@ class Trail {
 	 *
 	 * @param string $newTrailHigh new value of trail highest point
 	 * @throws \InvalidArgumentException if $newTrailHigh uses invalid characters
-	 * @throws \TypeError is $newTrailHigh is not a string
+	 * @throws \TypeError if $newTrailHigh is not a string
 	 **/
 	public function setTrailHigh($newTrailHigh) {
 		//verify that trail highest point data is secure
@@ -213,8 +210,34 @@ class Trail {
 		$this->trailHigh = $newTrailHigh;
 	}
 
+	/**
+	 * accessor method for trail latitude
+	 *
+	 * @return string trail latitude in degrees, minutes, seconds
+	 **/
+	public function getTrailLatitude() {
+		return $this->trailLatitude;
+	}
 
+	/**
+	 * mutator method for trail latitude
+	 *
+	 * @param string $newTrailLatitude new value of the trail latitude
+	 *
+	 * @throws \InvalidArgumentException if $newTrailLatitude uses invalid characters
+	 * @throws \TypeError if $newTrailLatitude is not a string
+	 **/
+	public function setTrailLatitude($newTrailLatitude) {
+		//verify that trail latitude data is secure
+		$newTrailLatitude = trim($newTrailLatitude);
+		$newTrailLatitude = filter_var($newTrailLatitude, FILTER_SANITIZE_NUMBER_INT);
+		if(empty($newTrailLatitude) === true) {
+			throw(new \InvalidArgumentException("latitude data is empty or insecure"));
+		}
 
+		//store the latitude data
+		$this->trailLatitude = $newTrailLatitude;
+	}
 
 
 
