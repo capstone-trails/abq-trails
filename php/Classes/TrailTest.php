@@ -1,9 +1,11 @@
 <?php
 namespace abqtrails;
 
-use \abqtrails\Trail;
+use abqtrails\Trail;
+use abqtrails\ValidateUuid;
+use abqtrails\ValidateDate;
 
-//grab the class in question
+//grab the class or trait in question
 require_once("autoload.php");
 
 //grab the uuid generator
@@ -21,20 +23,25 @@ require_once("../../vendor/autoload.php");
 
 class TrailTest extends AbqTrailsTest {
 	/**
-	 * valid trail id to use
-	 * @var string $VALID_TRAIL_ID
-	 **/
-	protected $VALID_TRAIL_ID = "nananananananana";
-	/**
 	 * valid trail avatar url to use
 	 * @var string $VALID_TRAIL_AVATAR_URL
 	 **/
-	protected $VALID_TRAIL_AVATAR_URL = "https://picture.com/00001/";
+	protected $VALID_TRAIL_AVATAR_URL = "https://www.fs.usda.gov/Internet/FSE_MEDIA/fseprd563249.jpg";
+	/**
+	 * content of the updated avatar url
+	 * @var string $VALID_TRAIL_AVATAR_URL
+	 **/
+	protected $VALID_TRAIL_AVATAR_URL_2 = "https://www.fs.usda.gov/Internet/FSE_MEDIA/fseprd563247.jpg";
 	/**
 	 * valid trail description to use
 	 * @var string $VALID_TRAIL_DESCRIPTION
 	 **/
 	protected $VALID_TRAIL_DESCRIPTION = "Located on the west face of the Sandia Mountains";
+	/**
+	 * valid trail description to use
+	 * @var string $VALID_TRAIL_DESCRIPTION
+	 **/
+	protected $VALID_TRAIL_DESCRIPTION_2 = "Heavily trafficked out and back trail located near Albuquerque, NM";
 	/**
 	 * valid trail highest elevation in feet
 	 * @var string $VALID_TRAIL_HIGH
@@ -65,14 +72,25 @@ class TrailTest extends AbqTrailsTest {
 	 * @var string $VALID_TRAIL_NAME
 	 **/
 	protected $VALID_TRAIL_NAME = "La Luz Trail";
+	/**
+	 * valid trail name
+	 * @var string $VALID_TRAIL_NAME
+	 **/
+	protected $VALID_TRAIL_NAME_2 = "La Luz Trailhead";
 
 	/**
-	 * create dependent objects before running each test
+	 * test inserting a valid Trail and verify that the actual mySQL data matches
 	 **/
-	public final function setUp() : void {
-		//run the default setUp() method first
-		parent::setUp();
-
+	public function testInsertValidTrail() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("trail");
+		$trailId = generateUuidV4();
+		$trail = new Trail($trailId, $VALID_TRAIL_AVATAR_URL, $VALID_TRAIL_AVATAR_URL_2, $VALID_TRAIL_DESCRIPTION, $VALID_TRAIL_DESCRIPTION_2, $VALID_TRAIL_HIGH, $VALID_TRAIL_LATITUDE, $VALID_TRAIL_LENGTH, $VALID_TRAIL_LONGITUDE, $VALID_TRAIL_LOW, $VALID_TRAIL_NAME, $VALID_TRAIL_NAME_2);
+		$trail->insert($this->getPDO());
+		//grab the data from mySQL and enforce the fields match our expectations
+		$pdoTrail = Trail::getTrailByTrailId($this->getPDO(), $trail->getTrailId());
+		$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
+		$this->assertsEquals($pdoTrail->getTrailId(), $trailId);
 	}
 
 
