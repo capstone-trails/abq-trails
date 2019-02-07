@@ -1,7 +1,14 @@
 <?php
+namespace abqtrails;
 /**
- * Created by PhpStorm.
- * User: Pure-Manage
- * Date: 2/7/2019
- * Time: 10:27 AM
+ *
+ * This profile is used to input and view data and photos on ABQ Trails web application
+ *
+ * @author Cassandra Romero <cromero278@cnm.edu>
+ *
  */
+class trailTag {
+/**
+ * id for trail
+ */
+}
