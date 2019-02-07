@@ -196,7 +196,15 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
  * @throws \InvalidArgumentException if first name is empty
  */
 	public function setProfileFirstName($newProfileFirstName) : void {
-
+		$newProfileFirstName = trim($newProfileFirstName);
+		$newProfileFirstName = filter_var($newProfileFirstName,FILTER_SANITIZE_STRING);
+		if(strenlen($newProfileFirstName) > 32) {
+			throw(new \RangeException("Name cannot be more than 32 characters"));
+		}
+		if(empty($newProfileFirstName) === true) {
+			throw (new \ InvalidArgumentException("First name required"));
+		}
+	$this->profileFirstName = $newProfileFirstName;
 	}
 
 }
