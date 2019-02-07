@@ -18,25 +18,17 @@ require_once __DIR__ . '/composer/autoload_real.php';
  * @see photo
  * @author Ronald Luna <rluna41@cnm.edu>
  **/
-class photoTest extends abq-trailsTest {
+class photoTest extends AbqTrailsTest {
 	/**
 	 * ProfileUser that created the photo; this is for foreign key relations
 	 * @var Profile profileUserId
 	 **/
 	protected $profileUserId = null;
-
-
-	/**
-	 * valid profileUser Id to create the profileUserId object to own the test
-	 * @var $VALID_ID
-	 */
-	protected $VALID_PROFILE USER ID;
-
 	/**
 	 * content of the photo
 	 * @var string $VALID_PHOTOURL
 	 **/
-	protected $VALID_PHOTOURL = "PHPUnit test passing";
+	protected $VALID_PHOTO_URL = "PHPUnit test passing";
 
 	/**
 	 * content of the updated photo
