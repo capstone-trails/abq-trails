@@ -74,55 +74,321 @@ class Photo() {
 	/**
 	 * accessor method for photo id
 	 *
-	 * @return Uuid value of tweet id
+	 * @return Uuid value of photo id
 	 **/
-	public function getTweetId() : Uuid {
-		return($this->tweetId);
+	public function getPhotoId() : Uuid {
+		return($this->photoId);
 	}
 
 	/**
-	 * mutator method for tweet id
+	 * mutator method for photo id
 	 *
-	 * @param Uuid|string $newTweetId new value of tweet id
-	 * @throws \RangeException if $newTweetId is not positive
-	 * @throws \TypeError if $newTweetId is not a uuid or string
+	 * @param Uuid|string $newPhotoId new value of photo id
+	 * @throws \RangeException if $newPhotoId is not positive
+	 * @throws \TypeError if $newPhotoId is not a uuid or string
 	 **/
-	public function setTweetId( $newTweetId) : void {
+	public function setPhotoId( $newPhotoId) : void {
 		try {
-			$uuid = self::validateUuid($newTweetId);
+			$uuid = self::validateUuid($newPhotoId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 
-		// convert and store the tweet id
-		$this->tweetId = $uuid;
+		// convert and store the photo id
+		$this->photoId = $uuid;
 	}
 
 	/**
-	 * accessor method for tweet profile id
+	 * accessor method for photo profile user id
 	 *
-	 * @return Uuid value of tweet profile id
+	 * @return Uuid value of photo profile user id
 	 **/
-	public function getTweetProfileId() : Uuid{
-		return($this->tweetProfileId);
+	public function getPhotoProfileUserId() : Uuid{
+		return($this->photoProfileUserId);
 	}
 
 	/**
-	 * mutator method for tweet profile id
+	 * mutator method for photo profile user id
 	 *
-	 * @param string | Uuid $newTweetProfileId new value of tweet profile id
-	 * @throws \RangeException if $newProfileId is not positive
-	 * @throws \TypeError if $newTweetProfileId is not an integer
+	 * @param string | Uuid $newPhotoProfileUserId new value of photo profile user id
+	 * @throws \RangeException if $newProfileUserId is not positive
+	 * @throws \TypeError if $newPhotoProfileUserId is not an integer
 	 **/
-	public function setTweetProfileId( $newTweetProfileId) : void {
+	public function setPhotoProfileUserId( $newPhotoProfileUserId) : void {
 		try {
-			$uuid = self::validateUuid($newTweetProfileId);
+			$uuid = self::validateUuid($newPhotoProfileUserId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 
-		// convert and store the profile id
-		$this->tweetProfileId = $uuid;
+		// convert and store the profile user id
+		$this->photoProfileUserId = $uuid;
+	}
+	/**
+	 * accessor method for photo url
+	 *
+	 * @return Uuid value of photo url
+	 **/
+	public function getPhotoUrl() : Uuid{
+		return($this->photoUrl);
+	}
+
+	/**
+	 * mutator method for photo url
+	 *
+	 * @param string | Uuid $newPhotoUrl new value of photo url
+	 * @throws \RangeException if $newPhotoUrl is not positive
+	 * @throws \TypeError if $newPhotoUrl is not an integer
+	 **/
+	public function setPhotoUrl( $newPhotoUrl) : void {
+		try {
+			$uuid = self::validateUuid($newPhotoUrl);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+
+		// convert and store the photo url
+		$this->photoUrl = $uuid;
+	}
+	/**
+	 * accessor method for photo date time
+	 *
+	 * @return string value of photo date time
+	 **/
+	public function getPhotoDatetime() : string {
+		return($this->photoDateTime);
+	}
+
+	/**
+	 * mutator method for photo date time
+	 *
+	 * @param string $newPhotoDateTime new value of photo date time
+	 * @throws \InvalidArgumentException if $newPhotoDateTime is not a string or insecure
+	 * @throws \RangeException if $newPhotoDateTime is > 140 characters
+	 * @throws \TypeError if $newPhotodatetime is not a string
+	 **/
+	public function setPhotoDateTime(string $newPhotoDateTime) : void {
+		// verify the tweet content is secure
+		$newPhotoDateTime = trim($newPhotoDateTime);
+		$newPhotoDateTime = filter_var($newPhotoDateTime, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newPhotoDateTime) === true) {
+			throw(new \InvalidArgumentException("photo date time is empty or insecure"));
+		}
+
+		// verify the photo date time will fit in the database
+		if(strlen($newPhotoDateTime) > 140) {
+			throw(new \RangeException("photo date time too large"));
+		}
+
+		// store the photo date time
+		$this->photoDateTime = $newPhotoDateTime;
+	}
+	/**
+	 * deletes this photo from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query = "DELETE FROM photo WHERE photoId = :photoId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["photoId" => $this->photoId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this photo in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE photo SET photoProfileUserId = :photoProfileUserId, photoUrl = :photoUrl, photoDatetime = :photoDateTIme WHERE photoId = :photoId";
+		$statement = $pdo->prepare($query);
+
+
+		$formattedDateTime = $this->photoDate->format("Y-m-d H:i:s.u");
+		$parameters = ["photoId" => $this->photoId->getBytes(),"photoProfileUserId" => $this->photoProfileUserId->getBytes(), "photoUrl" => $this->photoUrl, "photoDateTime" => $formattedDateTime];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * gets the photo by photoId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $photoId photo id to search for
+	 * @return photo|null photo found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getPhotoByPhotoId(\PDO $pdo, $photoId) : ?Photo {
+		// sanitize the photoId before searching
+		try {
+			$photoId = self::validateUuid($photoId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT photoId, photoProfileUserId, photoUrl, photoDateTime FROM photo WHERE photoId = :photoId";
+		$statement = $pdo->prepare($query);
+
+		// bind the photo id to the place holder in the template
+		$parameters = ["photoId" => $photoId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the photo from mySQL
+		try {
+			$photo = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$photo = new photo($row["photoId"], $row["photoProfileUserId"], $row["photoUrl"], $row["photoDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($photo);
+	}
+
+	/**
+	 * gets the photo by profile user id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $photoProfileUserId profile user id to search by
+	 * @return \SplFixedArray SplFixedArray of photos found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getPhotoByPhotoProfileUserId(\PDO $pdo, $photoProfileUserId) : \SplFixedArray {
+
+		try {
+			$photoProfileUserId = self::validateUuid($photoProfileUSerId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT photoId, photoProfileUserId, photoUrl, photoDateTIme FROM photo WHERE photoProfileUSerId = :photoProfileUserId";
+		$statement = $pdo->prepare($query);
+		// bind the photo profile user id to the place holder in the template
+		$parameters = ["photoProfileUserId" => $photoProfileUserId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of tweets
+		$tweets = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
+				$tweets[$tweets->key()] = $tweet;
+				$tweets->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($tweets);
+	}
+
+	/**
+	 * gets the Tweet by content
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $tweetContent tweet content to search for
+	 * @return \SplFixedArray SplFixedArray of Tweets found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getTweetByTweetContent(\PDO $pdo, string $tweetContent) : \SplFixedArray {
+		// sanitize the description before searching
+		$tweetContent = trim($tweetContent);
+		$tweetContent = filter_var($tweetContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($tweetContent) === true) {
+			throw(new \PDOException("tweet content is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$tweetContent = str_replace("_", "\\_", str_replace("%", "\\%", $tweetContent));
+
+		// create query template
+		$query = "SELECT tweetId, tweetProfileId, tweetContent, tweetDate FROM tweet WHERE tweetContent LIKE :tweetContent";
+		$statement = $pdo->prepare($query);
+
+		// bind the tweet content to the place holder in the template
+		$tweetContent = "%$tweetContent%";
+		$parameters = ["tweetContent" => $tweetContent];
+		$statement->execute($parameters);
+
+		// build an array of tweets
+		$tweets = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
+				$tweets[$tweets->key()] = $tweet;
+				$tweets->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($tweets);
+	}
+
+	/**
+	 * gets all Tweets
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Tweets found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllTweets(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT tweetId, tweetProfileId, tweetContent, tweetDate FROM tweet";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of tweets
+		$tweets = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$tweet = new Tweet($row["tweetId"], $row["tweetProfileId"], $row["tweetContent"], $row["tweetDate"]);
+				$tweets[$tweets->key()] = $tweet;
+				$tweets->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($tweets);
+	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["tweetId"] = $this->tweetId->toString();
+		$fields["tweetProfileId"] = $this->tweetProfileId->toString();
+
+		//format the date so that the front end can consume it
+		$fields["tweetDate"] = round(floatval($this->tweetDate->format("U.u")) * 1000);
+		return($fields);
 	}
