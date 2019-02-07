@@ -129,7 +129,7 @@ class photoTest extends abq-trailsTest {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoPhoto = photo::getphotoByPhotoId($this->getPDO(), $photo->getPhotoId());
-		$this->assertEquals($pdophoto->getPhotoId(), $photoId);
+		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertEquals($pdoPhoto->getPhotoProfileUserId(), $this->profile->getProfileUserId());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTOURL2);
