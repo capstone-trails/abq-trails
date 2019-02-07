@@ -92,7 +92,7 @@ class ProfileTest extends AbqTrailsTest {
 	public function testInsertValidProfile() : void {
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new \abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
+		$profile = new \Abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
 			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
 			$this->VALID_PROFILE_USERNAME);
 		$profile->insert($this->getPDO());
@@ -107,5 +107,17 @@ class ProfileTest extends AbqTrailsTest {
 		$this->assertEquals($pdoProfile->getProfileLastName(), $this->VALID_PROFILE_LAST_NAME);
 		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_PROFILE_USERNAME);
 	}
-
+	public function testUpdateValidProfile(){
+		$numRows = $this->getConnection()->getRowCount("profile");
+		$profileId = generateUuidV4();
+		$profile = new \abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
+			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
+			$this->VALID_PROFILE_USERNAME);
+		$profile->insert($this->getPDO());
+		$profile->setProfileAvatarUrl($this->VALID_PROFILE_AVATAR_URL_2);
+		$profile->setProfileEmail($this->VALID_PROFILE_EMAIL_2);
+		$profile->setProfileFirstName($this->VALID_PROFILE_FIRST_NAME_2);
+		$profile->setProfileLastName($this->VALID_PROFILE_LAST_NAME_2);
+		$profile->setProfileUsername($this->VALID_PROFILE_USERNAME_2);
+	}
 }
