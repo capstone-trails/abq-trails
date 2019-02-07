@@ -1,6 +1,8 @@
 <?php
 namespace abqtrails;
 
+use function PHPSTORM_META\type;
+
 /**
  * Trail Class
  *
@@ -285,7 +287,7 @@ class Trail {
 		//verfiy that trail longitude data is secure
 		$newTrailLongitude = trim($newTrailLongitude);
 		$newTrailLongitude = filter_var($newTrailLongitude, FILTER_SANITIZE_NUMBER_FLOAT);
-		if(empty($newTrailLongitude) === true) {
+		if(!is_float($newTrailLongitude)) {
 			throw(new \InvalidArgumentException("longitude is empty or insecure"));
 		}
 
@@ -313,8 +315,8 @@ class Trail {
 	public function setTrailLow($newTrailLow) {
 		$newTrailLow = trim($newTrailLow);
 		$newTrailLow = filter_var($newTrailLow, FILTER_SANITIZE_NUMBER_INT);
-		if(empty($newTrailLow) === true ) {
-			throw(new \InvalidArgumentException("lowest point data is empty or insecure"));
+		if(!is_integer($newTrailLow) ) {
+			throw(new \InvalidArgumentException("lowest point data is not a number or insecure"));
 		}
 
 		//store trail lowest point data
