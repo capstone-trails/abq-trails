@@ -35,9 +35,23 @@ class ProfileTest extends AbqTrailsTest {
  */
 	protected $VALID_PROFILE_EMAIL = "newusertest@abqtrails.com";
 /**
+ * valid profile first name
+ * @var string $VALID_PROFILE_FIRST_NAME
+ */
+	protected $VALID_PROFILE_FIRST_NAME = "Nancy";
+/**
  * valid profile hash
  * @var string $VALID_PROFILE_HASH
  */
 	protected $VALID_PROFILE_HASH = "nanananananananananananananananananananananananananananananananananananananananananananananananaa";
-
+/**
+ * valid profile last name
+ * @var string $VALID_PROFILE_LAST_NAME
+ */
+	protected $VALID_PROFILE_LAST_NAME = "Reagan";
+/**
+ * valid profile username
+ * @var string $VALID_PROFILE_USERNAME
+ */
+	protected $VALID_PROFILE_USERNAME = "thefirstlady123";
 }
