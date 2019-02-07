@@ -165,5 +165,18 @@ class rating {
 	 **/
 	public function setRatingDifficulty(string $newRatingDifficulty) : void {
 		// verify the rating difficulty is secure
+		$newRatingDifficulty = trim($newRatingDifficulty);
+		$newRatingDifficulty = filter_var($newRatingDifficulty, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newRatingDifficulty) === true){
+			throw (new \InvalidArgumentException("rating difficulty is empty or insecure"));
+		}
+		// verify the rating content will fit in the database
+		if (strlen($newRatingDifficulty) > 16) {
+			throw (new \RangeException("rating difficulty is too large"));
+		}
+		// store the rating difficulty
+		$this->ratingDifficulty = $newRatingDifficulty;
 	}
+
+
 }
