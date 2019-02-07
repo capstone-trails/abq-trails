@@ -1,7 +1,12 @@
 <?php
 namespace abqtrails;
 
-use function PHPSTORM_META\type;
+//our autoloader
+require_once("autoload.php");
+//composer autoloader
+require_once("../../vendor/autoload.php");
+
+use Ramsey\Uuid\Uuid;
 
 /**
  * Trail Class
@@ -12,6 +17,11 @@ use function PHPSTORM_META\type;
  * @version 1.0.0
  **/
 class Trail {
+	//use ValidateDate;
+	use ValidateDate;
+
+	//use ValidateUuid;
+	use ValidateUuid;
 
 	/**
 	 * id for this Trail; this is a primary key

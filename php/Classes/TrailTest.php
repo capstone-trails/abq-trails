@@ -1,15 +1,14 @@
 <?php
 namespace abqtrails;
 
-use abqtrails\Trail;
-use abqtrails\ValidateUuid;
-use abqtrails\ValidateDate;
-
-//grab the class or trait in question
+//our autoloader
 require_once("autoload.php");
-
-//grab the uuid generator
+//composer autoloader
 require_once("../../vendor/autoload.php");
+
+use Trail;
+use ValidateUuid;
+use ValidateDate;
 
 /**
  * Full PHPUnit test for the Trail class
@@ -85,7 +84,7 @@ class TrailTest extends AbqTrailsTest {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trail");
 		$trailId = generateUuidV4();
-		$trail = new Trail($trailId, $VALID_TRAIL_AVATAR_URL, $VALID_TRAIL_AVATAR_URL_2, $VALID_TRAIL_DESCRIPTION, $VALID_TRAIL_DESCRIPTION_2, $VALID_TRAIL_HIGH, $VALID_TRAIL_LATITUDE, $VALID_TRAIL_LENGTH, $VALID_TRAIL_LONGITUDE, $VALID_TRAIL_LOW, $VALID_TRAIL_NAME, $VALID_TRAIL_NAME_2);
+		$trail = new \abqtrails\Trail($trailId, $VALID_TRAIL_AVATAR_URL, $VALID_TRAIL_AVATAR_URL_2, $VALID_TRAIL_DESCRIPTION, $VALID_TRAIL_DESCRIPTION_2, $VALID_TRAIL_HIGH, $VALID_TRAIL_LATITUDE, $VALID_TRAIL_LENGTH, $VALID_TRAIL_LONGITUDE, $VALID_TRAIL_LOW, $VALID_TRAIL_NAME, $VALID_TRAIL_NAME_2);
 		$trail->insert($this->getPDO());
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoTrail = Trail::getTrailByTrailId($this->getPDO(), $trail->getTrailId());
