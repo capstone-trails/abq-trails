@@ -104,6 +104,8 @@ class ProfileTest extends AbqTrailsTest {
 		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
 		$this->assertEquals($pdoProfile->getprofileFirstName(), $this->VALID_PROFILE_FIRST_NAME);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
+		$this->assertEquals($pdoProfile->getProfileLastName(), $this->VALID_PROFILE_LAST_NAME);
+		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_PROFILE_USERNAME);
 	}
 
 }
