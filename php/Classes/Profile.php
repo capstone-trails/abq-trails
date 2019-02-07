@@ -128,7 +128,8 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 }
 /**
  * accessor method for profile avatar url
- *@return string profile avatar url
+ *
+ * @return string profile avatar url
  */
 	public function getProfileAvatarUrl() : string {
 		return ($this->profileAvatarUrl);
@@ -153,6 +154,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 	}
 /**
  * accessor method for profile email
+ *
  * @return string profile email address
  */
 	public function getProfileEmail() : string {
@@ -161,14 +163,14 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 /**
  * mutator method for profile email address
  *
- * @param string $profileEmailAddress
+ * @param string $newProfileEmail
  * @throws \RangeException if string length is greater than 128 characters
  * @throws \InvalidArgumentException if email is empty
  */
-	/**
-	 * @param mixed $profileEmail
-	 */
+
 	public function setProfileEmail($newProfileEmail): void {
+		$newProfileEmail = trim($newProfileEmail);
+		$newProfileEmail = filter_var($newProfileEmail,FILTER_SANITIZE_EMAIL);
 		if(strenlen($newProfileEmail) > 128) {
 			throw(new \RangeException("Email must be less than 128 characters"));
 		}
@@ -176,6 +178,25 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 			throw(new \InvalidArgumentException("Email is empty"));
 		}
 		$this->profileEmail = $newProfileEmail;
+	}
+/**
+ *
+ * accessor method for profile first name
+ *
+ * @return string profile first name
+ */
+	public function getProfileFirstName() : string {
+		return($this->profileFirstName);
+	}
+/**
+ * mutator method for profile first name
+ *
+ * @param string $newProfileFirstName
+ * @throws \RangeException if string length is greater than 32 characters
+ * @throws \InvalidArgumentException if first name is empty
+ */
+	public function setProfileFirstName($newProfileFirstName) : void {
+
 	}
 
 }
