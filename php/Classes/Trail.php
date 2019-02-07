@@ -265,6 +265,37 @@ class Trail {
 		$this->trailLength = $newTrailLength;
 	}
 
+	/**
+	 * accessor method for trail longitude
+	 *
+	 * @return string|float trail longitude in degrees, minutes, seconds
+	 **/
+	public function getTrailLongitude() {
+		return $this->trailLongitude;
+	}
+
+	/**
+	 * mutator method for trail longitude
+	 *
+	 * @param string|float $newTrailLongitude new value of the trail longitude
+	 * @throws \InvalidArgumentException if $newTrailLongitude uses invalid characters
+	 * @throws \TypeError if $newTrailLongitude is not a string
+	 **/
+	public function setTrailLongitude($newTrailLongitude) {
+		//verfiy that trail longitude data is secure
+		$newTrailLongitude = trim($newTrailLongitude);
+		$newTrailLongitude = filter_var($newTrailLongitude, FILTER_SANITIZE_NUMBER_FLOAT);
+		if(empty($newTrailLongitude) === true) {
+			throw(new \InvalidArgumentException("longitude is empty or insecure"));
+		}
+
+		//store longitude data
+		$this->trailLongitude = $newTrailLongitude;
+	}
+
+
+
+
 
 
 }
