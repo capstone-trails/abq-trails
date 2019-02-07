@@ -199,7 +199,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 		$newProfileFirstName = trim($newProfileFirstName);
 		$newProfileFirstName = filter_var($newProfileFirstName,FILTER_SANITIZE_STRING);
 		if(strenlen($newProfileFirstName) > 32) {
-			throw(new \RangeException("Name cannot be more than 32 characters"));
+			throw(new \RangeException("First name cannot be more than 32 characters"));
 		}
 		if(empty($newProfileFirstName) === true) {
 			throw (new \ InvalidArgumentException("First name required"));
@@ -230,6 +230,31 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 		}
 		$this->profileHash = $newProfileHash;
 	}
+/**
+ *accessor method for profile last name
+ *
+ *@return string of profile last name
+ */
+	public function getProfileLastName() : string {
+		return($this->profileLastName);
 
+	}
+/**
+ * mutator method for profile last name
+ * @param string $newProfileLastName
+ * @throws \RangeException if string length is greater than 32 characters
+ * @throws \InvalidArgumentException if last name is empty
+ */
+	public function setProfileLastName($newProfileLastName) : void {
+		$newProfileLastName = trim($newProfileLastName);
+		$newProfileLastName = filter_var($newProfileLastName, FILTER_SANITIZE_STRING);
+		if(strenlen($newProfileLastName) > 32){
+			throw(new \RangeException("Last name cannot be more than 32 characters"));
+		}
+		if(empty($newProfileLastName) === true){
+			throw(new \ InvalidArgumentException("Last name required"));
+		}
+		$this->profileLastName = $newProfileLastName;
+	}
 }
 
