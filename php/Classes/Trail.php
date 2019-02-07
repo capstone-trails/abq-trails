@@ -1,9 +1,6 @@
 <?php
 namespace abqtrails;
 
-use http\Exception\InvalidArgumentException;
-use http\Url;
-
 /**
  * Trail Class
  *
@@ -244,7 +241,7 @@ class Trail {
 	 *
 	 * @return string|float trail length in miles
 	 **/
-	public function getTrailLength() : float {
+	public function getTrailLength() {
 		return $this->trailLength;
 	}
 
