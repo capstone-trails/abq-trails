@@ -1,5 +1,7 @@
 <?php
 namespace abqtrails;
+use mysql_xdevapi\Exception;
+
 /**
  * Class rating
  * @package abqtrails
@@ -36,10 +38,15 @@ class rating {
 	/**
 	 * constructor for this Rating
 	 *
-	 * @param string|Uuid $newRatingId
-	 * @param string|Uuid $newRatingProfileId
-	 * @param string|Uuid $newRatingTrailId
-	 * @param string $newRatingDifficulty
-	 * @param string $newRatingValue
+	 * @param string|Uuid $newRatingId id of this rating or null if a new rating
+	 * @param string|Uuid $newRatingProfileId id of the profile that's making the rating
+	 * @param string|Uuid $newRatingTrailId id of the trail that's being rated
+	 * @param string $newRatingDifficulty string that tells how difficult the trail is
+	 * @param string $newRatingValue string that tells what might be on the trails.
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if some other exception occurs
+	 * @Documention https://php.net/manual/en/language.oop5.decon.php
 	 **/
+
 }
