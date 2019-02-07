@@ -48,5 +48,23 @@ class rating {
 	 * @throws \TypeError if some other exception occurs
 	 * @Documention https://php.net/manual/en/language.oop5.decon.php
 	 **/
-//test
+	public function __construct($newRatingId, $newRatingProfileId, $newRatingTrailId, string $newRatingDifficulty, string $newRatingValue) {
+	try {
+		$this->ratingId($newRatingId);
+		$this->ratingProfileId($newRatingProfileId);
+		$this->ratingTrailId($newRatingTrailId);
+		$this->ratingDifficulty($newRatingDifficulty);
+		$this->ratingValue($newRatingValue);
+	}
+	// determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+
+	/**
+	 * accessor method for
+	 **/
 }
