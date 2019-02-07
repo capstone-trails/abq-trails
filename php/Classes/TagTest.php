@@ -1,7 +1,7 @@
 <?php
 namespace abqtrails;
 
-use abqtrails/Tag;
+use \abqtrails\Tag;
 
 //grab the class under scrutiny
 require_once("autoload.php");
@@ -20,6 +20,24 @@ require_once("../../vendor/autoload.php");
  **/
 class TagTest extends  AbqTrailsTest {
 	/**
-	 * Profile that created
+	 * name of the Tag
+	 * @var string $VALID_TAGNAME
 	 **/
+	protected $VALID_TAGNAME = "Gorgeous View";
+
+	/**
+	 * name of the updated Tag
+	 * @var string $VALID_TAGNAME
+	 **/
+	protected $VALID_TAGNAME2 = "Wheelchair Friendly";
+
+
+	/**
+	 * create dependent objects before running each test
+	 **/
+	public final function setUp() : void {
+		//run the default setUp() method first
+		parent::setUp();
+		$password = "ab"
+	}
 }
