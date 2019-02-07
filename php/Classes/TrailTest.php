@@ -44,6 +44,23 @@ class TrailTest extends AbqTrailsTest {
 	 **/
 	private $trailHigh = null;
 
+	/**
+	 * Latitude trail coordinate that will be put into the database
+	 * @var $trailLatitude trail latitude data
+	 **/
+	private $trailLatitude = null;
+
+	/**
+	 * Length trail total length in feet that will be put into the database
+	 * @var $trailLength
+	 **/
+	private $trailLength = null;
+
+	/**
+	 * Longitude trail coordinate that will be put into the database
+	 * @var $trailLongitude trail longitude data
+	 **/
+	private $trailLongitude = null;
 
 
 
