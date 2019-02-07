@@ -70,4 +70,28 @@ class tag{
 		//convert and store the tag id
 		$this->tagId = $uuid;
 	}
+
+	/**
+	 * accessor method for tag name
+	 *
+	 * @return string value of tag name
+	 **/
+	public function getTagName() : string {
+		return($this->tagName);
+	}
+
+	/**
+	 * mutator method for tag name
+	 *
+	 * @param string $newTagName new value of tag name
+	 * @throws \InvalidArgumentException if $newTagName
+	 * @throws \RangeException if $newTagName is > 32 characters
+	 * @throws \TypeError if $newTagName is not a string
+	 **/
+	public function setTagName(string $newTagName) : void {
+		//verify the tag name is secure
+		$newTagName = trim($newTagName);
+		$newTagName = filter_var($$newTagName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newTagName)=== true)
+	}
 }
