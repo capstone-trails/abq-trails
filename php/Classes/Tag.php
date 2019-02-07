@@ -16,7 +16,7 @@ class tag{
 	private $tagId;
 	/**
 	 * name of the tag
-	 * @var varchar $tagName
+	 * @varchar $tagName
 	 **/
 	private $tagName;
 
