@@ -5,10 +5,10 @@ CREATE TABLE profile (
 	profileActivationToken CHAR(32) NOT NUll,
 	profileAvatarUrl VARCHAR(255) NOT NULL,
 	profileEmail VARCHAR(128) NOT NULL,
-	profileFirstName VARCHAR(32),
-	profileHash CHAR(97),
-	profileLastName VARCHAR(32),
-	profileUsername VARCHAR(32),
+	profileFirstName VARCHAR(32) NOT NULL,
+	profileHash CHAR(97) NOT NULL,
+	profileLastName VARCHAR(32) NOT NULL,
+	profileUsername VARCHAR(32) NOT NULL,
 	UNIQUE (profileEmail),
 	UNIQUE (profileUsername)
 	PRIMARY KEY (profileId)
@@ -20,7 +20,7 @@ CREATE TABLE trail (
 	trailDescription VARCHAR(280),
 	trailHigh VARCHAR(8),
 	trailLatitude DECIMAL(9, 6) NOT NULL,
-	trailLength DECIMAL(9, 6) NOT NULL,
+	trailLength DECIMAL(9, 6),
 	trailLongitude DECIMAL(9, 6) NOT NULL,
 	trailLow VARCHAR(8),
 	trailName VARCHAR(128) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE photo (
 
 CREATE TABLE tag (
 	tagId BINARY(16) NOT NULL,
-	tagName VARCHAR(32),
+	tagName VARCHAR(32)NOT NULL,
 	PRIMARY KEY (tagId)
 );
 

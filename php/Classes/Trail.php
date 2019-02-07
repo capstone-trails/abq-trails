@@ -313,7 +313,7 @@ class Trail {
 	public function setTrailLow($newTrailLow) {
 		$newTrailLow = trim($newTrailLow);
 		$newTrailLow = filter_var($newTrailLow, FILTER_SANITIZE_NUMBER_INT);
-		if(empty($newTrailLow) === true) {
+		if(empty($newTrailLow) === true ) {
 			throw(new \InvalidArgumentException("lowest point data is empty or insecure"));
 		}
 
