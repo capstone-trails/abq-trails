@@ -92,8 +92,18 @@ class ProfileTest extends AbqTrailsTest {
 	public function testInsertValidProfile() : void {
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new \abqtrails\Profile($profileId, $profileActivationToken, $profileAvatarUrl, );
-
+		$profile = new \abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
+			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
+			$this->VALID_PROFILE_USERNAME);
+		$profile->insert($this->getPDO());
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILE_ACTIVATION_TOKEN);
+		$this->assertEquals($pdoProfile->getProfileAvatarUrl(), $this->VALID_PROFILE_AVATAR_URL);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL);
+		$this->assertEquals($pdoProfile->getprofileFirstName(), $this->VALID_PROFILE_FIRST_NAME);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
 	}
 
 }
