@@ -107,6 +107,11 @@ class ProfileTest extends AbqTrailsTest {
 		$this->assertEquals($pdoProfile->getProfileLastName(), $this->VALID_PROFILE_LAST_NAME);
 		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_PROFILE_USERNAME);
 	}
+
+	/**
+	 * public inserting and updated a profile
+	 */
+
 	public function testUpdateValidProfile(){
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
@@ -119,5 +124,25 @@ class ProfileTest extends AbqTrailsTest {
 		$profile->setProfileFirstName($this->VALID_PROFILE_FIRST_NAME_2);
 		$profile->setProfileLastName($this->VALID_PROFILE_LAST_NAME_2);
 		$profile->setProfileUsername($this->VALID_PROFILE_USERNAME_2);
+		$profile->update($this->getPDO());
+
+		$pdoProfile = $profile :: getProfileByProfileId($this->getPDO(), $profile, getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILE_ACTIVATION_TOKEN);
+		$this->assertEquals($pdoProfile->getProfileAvatarUrl(), $this->VALID_PROFILE_AVATAR_URL_2);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_PROFILE_EMAIL_2);
+		$this->assertEquals($pdoProfile->getProfileFirstName(), $this->VALID_PROFILE_FIRST_NAME_2);
+		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
+		$this->assertEquals($pdoProfile->getProfileLastName(), $this->VALID_PROFILE_LAST_NAME_2);
+		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_PROFILE_USERNAME_2);
 	}
-}
+
+	/**
+	 * public function creating and then deleting a profile
+	 */
+	public function testDeleteValidProfile() : void {
+
+	}
+
+	}
