@@ -142,6 +142,17 @@ class ProfileTest extends AbqTrailsTest {
 	 * public function creating and then deleting a profile
 	 */
 	public function testDeleteValidProfile() : void {
+		$numRows = $this->getConnection()->getRowCount("profile");
+		$profileId = generateUuidV4();
+		$profile = new \abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
+			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
+			$this->VALID_PROFILE_USERNAME);
+		$profile->insert($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$profile->delete($this->getPDO());
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertNull($pdoProfile);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
 
 	}
 
