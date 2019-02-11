@@ -8,9 +8,9 @@ require_once("../../vendor/autoload.php");
 
 
 /**
- * Full PHPUnit test for the Trail class
+ * Full PHPUnit Tests for the Trail class
  *
- * This is a complete PHPUnit test of the Trail class. It is complete because *ALL* mySQL/PDO enabled methods are tested
+ * This is a complete PHPUnit Tests of the Trail class. It is complete because *ALL* mySQL/PDO enabled methods are tested
  * for both invalid and valid inputs.
  *
  * @see \Abqtrails\Trail
@@ -86,7 +86,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test inserting a valid Trail and verify that the actual mySQL data matches
+	 * Tests inserting a valid Trail and verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidTrail() {
 		//count the number of rows and save it for later
@@ -169,7 +169,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test creating a Trail and then deleting it
+	 * Tests creating a Trail and then deleting it
 	 **/
 	public function testDeleteValidTrail() : void {
 		//count the number of rows and save it for later
@@ -199,7 +199,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test inserting a Trail and regrabbing it from mySQL
+	 * Tests inserting a Trail and regrabbing it from mySQL
 	 **/
 	public function testGetValidTrailByTrailId() : void {
 		//count the number of rows and save it for later
@@ -237,7 +237,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test grabbing a Trail that does not exist
+	 * Tests grabbing a Trail that does not exist
 	 **/
 	public function testGetInvalidTrailByTrailId() : void {
 		//grab trail id that exceeds maximum amount of characters
@@ -247,7 +247,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test grabbing Trail by trail description
+	 * Tests grabbing Trail by trail description
 	 **/
 	public function testGetValidTrailByTrailDescription() {
 		//count number of rows and save it for later
@@ -290,7 +290,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test grabbing a Trail by trail description that does not exist
+	 * Tests grabbing a Trail by trail description that does not exist
 	 **/
 	public function testGetInvalidTrailDescription() : void {
 		//grab trail id that exceeds maximum amount of characters
@@ -300,7 +300,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test grabbing a Trail by trail name
+	 * Tests grabbing a Trail by trail name
 	 **/
 	public function testGetValidTrailByTrailName() {
 		//count number of rows and save it for later
@@ -343,7 +343,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test grabbing a Trail by trail name that does not exist
+	 * Tests grabbing a Trail by trail name that does not exist
 	 **/
 	public function testGetInvalidTrailName() : void {
 		//grab trail id that exceeds maximum amount of characters
@@ -353,7 +353,7 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test grabbing all valid Trails
+	 * Tests grabbing all valid Trails
 	 **/
 	public function testGetAllValidTrails() : void {
 		//count the number of rows and save it for later

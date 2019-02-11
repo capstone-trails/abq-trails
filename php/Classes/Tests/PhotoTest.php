@@ -5,9 +5,9 @@ require_once("autoload.php");
 
 require_once("../../vendor/autoload.php");
 /**
- * Full PHPUnit test for the photo class
+ * Full PHPUnit Tests for the photo class
  *
- * This is a complete PHPUnit test of the photo class. It is complete because *ALL* mySQL/PDO enabled methods
+ * This is a complete PHPUnit Tests of the photo class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
  * @see photo
@@ -23,13 +23,13 @@ class photoTest extends AbqTrailsTest {
 	 * content of the photo
 	 * @var string $VALID_PHOTOURL
 	 **/
-	protected $VALID_PHOTO_URL = "PHPUnit test passing";
+	protected $VALID_PHOTO_URL = "PHPUnit Tests passing";
 
 	/**
 	 * content of the updated photo
 	 * @var string $VALID_PHOTOURL2
 	 **/
-	protected $VALID_PHOTOURL2 = "PHPUnit test still passing";
+	protected $VALID_PHOTOURL2 = "PHPUnit Tests still passing";
 
 	/**
 	 * timestamp of the photo; this starts as null and is assigned later
@@ -48,7 +48,7 @@ class photoTest extends AbqTrailsTest {
 	protected $VALID_SUNSETDATE = null;
 
 	/**
-	 * create dependent objects before running each test
+	 * create dependent objects before running each Tests
 	 **/
 	public final function setUp()  : void {
 		// run the default setUp() method first
@@ -57,11 +57,11 @@ class photoTest extends AbqTrailsTest {
 		$this->VALID_PROFILE_ID = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 
 
-		// create and insert a Profile to own the test photo
-		$this->profile = new ProfileUserId(generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "test@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
+		// create and insert a Profile to own the Tests photo
+		$this->profile = new ProfileUserId(generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "Tests@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
 		$this->profile->insert($this->getPDO());
 
-		// calculate the date (just use the time the unit test was setup...)
+		// calculate the date (just use the time the unit Tests was setup...)
 		$this->VALID_PHOTODATETIME = new \DateTime();
 
 		//format the sunrise date time to use for testing
@@ -77,7 +77,7 @@ class photoTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test inserting a valid photo and verify that the actual mySQL data matches
+	 * Tests inserting a valid photo and verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidPhoto() : void {
 		// count the number of rows and save it for later
@@ -99,7 +99,7 @@ class photoTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test inserting a photo, editing it, and then updating it
+	 * Tests inserting a photo, editing it, and then updating it
 	 **/
 	public function testUpdateValidPhoto() : void {
 		// count the number of rows and save it for later
@@ -126,7 +126,7 @@ class photoTest extends AbqTrailsTest {
 
 
 	/**
-	 * test creating a photo and then deleting it
+	 * Tests creating a photo and then deleting it
 	 **/
 	public function testDeleteValidPhoto() : void {
 		// count the number of rows and save it for later
@@ -148,7 +148,7 @@ class photoTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test inserting a photo and regrabbing it from mySQL
+	 * Tests inserting a photo and regrabbing it from mySQL
 	 **/
 	public function testGetValidPhotoByPhotoProfileUserId() {
 		// count the number of rows and save it for later
@@ -176,7 +176,7 @@ class photoTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test grabbing a photo by photo content
+	 * Tests grabbing a photo by photo content
 	 **/
 	public function testGetValidPhotoByPhotoUrl() : void {
 		// count the number of rows and save it for later
@@ -192,7 +192,7 @@ class photoTest extends AbqTrailsTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertCount(1, $results);
 
-		// enforce no other objects are bleeding into the test
+		// enforce no other objects are bleeding into the Tests
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\abq-trails\\photo", $results);
 
 		// grab the result from the array and validate it
@@ -205,7 +205,7 @@ class photoTest extends AbqTrailsTest {
 	}
 
 	/**
-	 * test grabbing all photos
+	 * Tests grabbing all photos
 	 **/
 	public function testGetAllValidPhotos() : void {
 		// count the number of rows and save it for later

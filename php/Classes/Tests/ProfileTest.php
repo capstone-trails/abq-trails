@@ -6,7 +6,7 @@ require_once("autoload.php");
 require_once("../../vendor/autoload.php");
 
 /**
- * Unit test for Profile Class
+ * Unit Tests for Profile Class
  *
  * @see \CapstoneTrails\AbqTrails\Profile
  * @author Cassandra Romero <cromero278@cnm.edu>
@@ -36,7 +36,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * updated profile email
 	 * @var string $VALID_PROFILE_EMAIL_2
 	 */
-	protected $VALID_PROFILE_EMAIL_2 = "sameusernewemail@test.com";
+	protected $VALID_PROFILE_EMAIL_2 = "sameusernewemail@Tests.com";
 	/**
 	 * valid profile first name
 	 * @var string $VALID_PROFILE_FIRST_NAME
@@ -84,7 +84,7 @@ class ProfileTest extends AbqTrailsTest {
 		$this->VALID_PROFILE_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
 	}
 	/*
-	 * test inserting a Profile into mySQL database
+	 * Tests inserting a Profile into mySQL database
 	 */
 	public function testInsertValidProfile() : void {
 		$numRows = $this->getConnection()->getRowCount("profile");

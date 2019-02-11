@@ -12,7 +12,7 @@ require_once("../../vendor/autoload.php");
 /**
  * Full PHPUnit for the Tag class
  *
- * This is a complete PHPUnit test of the tweet class. It is complete because *ALL* mySQL/PDO enabled methods
+ * This is a complete PHPUnit Tests of the tweet class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
  * @see Tag
@@ -33,7 +33,7 @@ class TagTest extends  AbqTrailsTest {
 
 
 	/**
-	 * test inserting a valid Tag and verify that the actual mySQL data matches
+	 * Tests inserting a valid Tag and verify that the actual mySQL data matches
 	 **/
 	public final function testInsertValidTag() : void {
 		// counts the number of rows and saves it for later
@@ -49,7 +49,7 @@ class TagTest extends  AbqTrailsTest {
 		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2 );
 	}
 	/**
-	 * test inserting a Tag, editing it, and then updating it
+	 * Tests inserting a Tag, editing it, and then updating it
 	 **/
 	public function testUpdateValidTag() {
 		// count the number of rows and save it for later
