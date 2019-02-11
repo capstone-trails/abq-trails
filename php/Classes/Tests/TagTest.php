@@ -105,5 +105,19 @@ class TagTest extends  AbqTrailsTest {
 		$tag = Tag::getTagByTagId($this->getPDO(), $fakeTagId);
 		$this->assertNull($tag);
 	}
-	/
+	/**
+	 * test grabbing a Tag by name
+	 **/
+	public function testGetValidTagByName() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("tag");
+		$tagId = generateUuidV4();
+		$tag = new Tag($tagId, $this->VALID_TAGNAME_1, $this->VALID_TAGNAME_2);
+		$tag->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoTag = Tag::getTagByTagName($this->getPDO(), $tag->getTagName());
+		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("tag"));
+		$this->assertEquals($pdoTag->getTagName1(), $this->VALID_TAGNAME_1);
+		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2);
+	}
 }
