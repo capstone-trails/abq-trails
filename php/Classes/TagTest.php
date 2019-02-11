@@ -33,11 +33,16 @@ class TagTest extends  AbqTrailsTest {
 
 
 	/**
-	 * create dependent objects before running each test
+	 * test inserting a valid Tag and verify that the actual mySQL data matches
 	 **/
-	public final function setUp() : void {
-		//run the default setUp() method first
-		parent::setUp();
-		$password = "ab"
+	public final function testInsertValidTag() : void {
+		// counts the number of rows and saves it for later
+		$numRows = $this->getConnection()->getRowCount("tag");
+		$tagId = generateUuidV4();
+		$tag = new Tag($tag, $this->VALID_TAGNAME);
+		$tag->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our experience
+		$pdoTag = Tag::getTagByTagId($this->getPDO(),$tag->getTagId());
+		$this->assertEquals(numRows +1)
 	}
 }
