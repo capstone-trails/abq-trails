@@ -36,4 +36,17 @@ class RatingTest extends AbqTrailsTest {
 	 * @var string $VALID_DIFFICULTY_2
 	 **/
 	protected $VALID_DIFFICULTY_2 = "Hard";
+
+	/**
+	 * test inserting a valid Rating and verify that the actual mySQL matches
+	 **/
+	public function testInsertValidRating() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("Rating");
+		$ratingId = generateUuidV4();
+		$rating = new Rating($ratingId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$rating ->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoRating = Rating::getRatingByRatingId($this->getPDO(), $rating->getRatingProfileId())
+	}
 }
