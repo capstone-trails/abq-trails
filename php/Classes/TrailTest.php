@@ -2,6 +2,8 @@
 namespace Abqtrails;
 
 //our autoloader
+use phpDocumentor\Reflection\DocBlock\Tags\Generic;
+
 require_once("autoload.php");
 //composer autoloader
 require_once("../../vendor/autoload.php");
@@ -90,6 +92,7 @@ class TrailTest extends AbqTrailsTest {
 	public function testInsertValidTrail() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trail");
+		//create a new trail and save it into mySQL
 		$trailId = generateUuidV4();
 		$trail = new Trail(
 			$trailId,
@@ -122,8 +125,30 @@ class TrailTest extends AbqTrailsTest {
 		$this->assertsEquals($pdoTrail->getTrailName2(), $this->VALID_TRAIL_NAME_2);
 	}
 
-
-
+	/**
+	 * Test inserting a Trail, editing, and then updating it
+	 **/
+	public function testUpdateValidTrail() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("trail");
+		//create a new trail and insert it into mySQL
+		$trailId = generateUuidV4();
+		$trail = new Trail(
+			$trailId,
+			$this->VALID_TRAIL_AVATAR_URL,
+			$this->VALID_TRAIL_AVATAR_URL_2,
+			$this->VALID_TRAIL_DESCRIPTION,
+			$this->VALID_TRAIL_DESCRIPTION_2,
+			$this->VALID_TRAIL_HIGH,
+			$this->VALID_TRAIL_LATITUDE,
+			$this->VALID_TRAIL_LENGTH,
+			$this->VALID_TRAIL_LONGITUDE,
+			$this->VALID_TRAIL_LOW,
+			$this->VALID_TRAIL_NAME,
+			$this->VALID_TRAIL_NAME_2);
+		$trail->insert($this->getPDO());
+		//edit the profile and insert it into mysql
+	}
 
 
 
