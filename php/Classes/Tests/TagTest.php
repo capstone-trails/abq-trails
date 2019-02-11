@@ -9,7 +9,7 @@ require_once(dirname(__DIR__, 1) . "/autoload.php");
 /**
  * Full PHPUnit for the Tag class
  *
- * This is a complete PHPUnit Tests of the tweet class. It is complete because *ALL* mySQL/PDO enabled methods
+ * This is a complete PHPUnit Tests of the Tag class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
  * @see Tag
