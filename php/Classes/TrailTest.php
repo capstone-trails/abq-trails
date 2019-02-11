@@ -2,8 +2,6 @@
 namespace Abqtrails;
 
 //our autoloader
-use phpDocumentor\Reflection\DocBlock\Tags\Generic;
-
 require_once("autoload.php");
 //composer autoloader
 require_once("../../vendor/autoload.php");
@@ -269,7 +267,7 @@ class TrailTest extends AbqTrailsTest {
 			$this->VALID_TRAIL_NAME_2);
 		$trail->insert($this->getPDO());
 		//grab the data from mySQL
-		$results = Profile::getTrailByTrailName($this->getPDO(), $this->VALID_TRAIL_NAME);
+		$results = Trail::getTrailByTrailName($this->getPDO(), $this->VALID_TRAIL_NAME);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		//enforce no other objects are bleeding into Trail
 		$this->assertContainsOnlyInstancesOf("Abqtrails", $results);
@@ -288,4 +286,52 @@ class TrailTest extends AbqTrailsTest {
 		$this->assertEquals($pdoTrail->getTrailLow(), $this->VALID_TRAIL_LOW);
 		$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME);
 		$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME_2);
+	}
+
+	/**
+	 * test grabbing Trail by trail description
+	 **/
+	public function testGetValidTrailByTrailDescription() {
+		//count number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("trail");
+		$trail = generateUuidV4();
+			$trail = new Trail(
+				$trailId,
+				$this->VALID_TRAIL_AVATAR_URL,
+				$this->VALID_TRAIL_AVATAR_URL_2,
+				$this->VALID_TRAIL_DESCRIPTION,
+				$this->VALID_TRAIL_DESCRIPTION_2,
+				$this->VALID_TRAIL_HIGH,
+				$this->VALID_TRAIL_LATITUDE,
+				$this->VALID_TRAIL_LENGTH,
+				$this->VALID_TRAIL_LONGITUDE,
+				$this->VALID_TRAIL_LOW,
+				$this->VALID_TRAIL_NAME,
+				$this->VALID_TRAIL_NAME_2);
+			$trail->insert($this->getPDO());
+			//grab the data from mySQL
+			$reults = Trail::getTrailByTrailDescription($this->getPDO(), $this->VALID_TRAIL_DESCRIPTION);
+			$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
+			//enforce no other objects are bleeding into Trail
+			$this->assertContainsOnlyInstancesOf("Abqtrails", $reults);
+			//enforce results meet expectations
+			$pdoTrails = $results[0];
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
+			$this->assertEquals($pdoTrail->getTrailId(), $trailId);
+			$this->assertEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL);
+			$this->assertEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL_2);
+			$this->assertEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION);
+			$this->assertEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION_2);
+			$this->assertEquals($pdoTrail->getTrailHigh(), $this->VALID_TRAIL_HIGH);
+			$this->assertEquals($pdoTrail->getTrailLatitude(), $this->VALID_TRAIL_LATITUDE);
+			$this->assertEquals($pdoTrail->getTrailLength(), $this->VALID_TRAIL_LENGTH);
+			$this->assertEquals($pdoTrail->getTrailLongitude(), $this->VALID_TRAIL_LONGITUDE);
+			$this->assertEquals($pdoTrail->getTrailLow(), $this->VALID_TRAIL_LOW);
+			$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME);
+			$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME_2);
+	}
+
+	/**
+
 }
+
