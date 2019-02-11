@@ -6,17 +6,13 @@ require_once("autoload.php");
 //composer autoloader
 require_once("../../vendor/autoload.php");
 
-use \abqtrails\Trail;
-use \abqtrails\ValidateUuid;
-use \abqtrails\ValidateDate;
-
 /**
  * Full PHPUnit test for the Trail class
  *
  * This is a complete PHPUnit test of the Trail class. It is complete because *ALL* mySQL/PDO enabled methods are tested
  * for both invalid and valid inputs.
  *
- * @see \abqtrails\Trail
+ * @see \Abqtrails\Trail
  * @author Scott Wells <swells19@cnm.edu>
  **/
 
@@ -78,22 +74,53 @@ class TrailTest extends AbqTrailsTest {
 	protected $VALID_TRAIL_NAME_2 = "La Luz Trailhead";
 
 	/**
+	 * run the setUp operation to create secure user and hash password
+	 **/
+	public final function setUp(): void {
+		parent::setUp();
+		//
+		$password = "mysql12345";
+		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+	}
+
+	/**
 	 * test inserting a valid Trail and verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidTrail() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trail");
 		$trailId = generateUuidV4();
-		$trail = new \abqtrails\Trail($trailId, $VALID_TRAIL_AVATAR_URL, $VALID_TRAIL_AVATAR_URL_2, $VALID_TRAIL_DESCRIPTION, $VALID_TRAIL_DESCRIPTION_2, $VALID_TRAIL_HIGH, $VALID_TRAIL_LATITUDE, $VALID_TRAIL_LENGTH, $VALID_TRAIL_LONGITUDE, $VALID_TRAIL_LOW, $VALID_TRAIL_NAME, $VALID_TRAIL_NAME_2);
+		$trail = new Trail(
+			$trailId,
+			$this->VALID_TRAIL_AVATAR_URL,
+			$this->VALID_TRAIL_AVATAR_URL_2,
+			$this->VALID_TRAIL_DESCRIPTION,
+			$this->VALID_TRAIL_DESCRIPTION_2,
+			$this->VALID_TRAIL_HIGH,
+			$this->VALID_TRAIL_LATITUDE,
+			$this->VALID_TRAIL_LENGTH,
+			$this->VALID_TRAIL_LONGITUDE,
+			$this->VALID_TRAIL_LOW,
+			$this->VALID_TRAIL_NAME,
+			$this->VALID_TRAIL_NAME_2);
 		$trail->insert($this->getPDO());
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoTrail = Trail::getTrailByTrailId($this->getPDO(), $trail->getTrailId());
 		$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertsEquals($pdoTrail->getTrailId(), $trailId);
+		$this->assertsEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL);
+		$this->assertsEquals($pdoTrail->getTrailAvatarUrl2(), $this->VALID_TRAIL_AVATAR_URL_2);
+		$this->assertsEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION);
+		$this->assertsEquals($pdoTrail->getTrailDescription2(), $this->VALID_TRAIL_DESCRIPTION_2);
+		$this->assertsEquals($pdoTrail->getTrailHigh(), $this->VALID_TRAIL_HIGH);
+		$this->assertsEquals($pdoTrail->getTrailLatitude(), $this->VALID_TRAIL_LATITUDE);
+		$this->assertsEquals($pdoTrail->getTrailLength(), $this->VALID_TRAIL_LENGTH);
+		$this->assertsEquals($pdoTrail->getTrailLongitude(), $this->VALID_TRAIL_LONGITUDE);
+		$this->assertsEquals($pdoTrail->getTrailLow(), $this->VALID_TRAIL_LOW);
+		$this->assertsEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME);
+		$this->assertsEquals($pdoTrail->getTrailName2(), $this->VALID_TRAIL_NAME_2);
 	}
-
-
-
 
 
 
