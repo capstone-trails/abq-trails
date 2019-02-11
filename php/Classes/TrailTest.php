@@ -228,4 +228,15 @@ class TrailTest extends AbqTrailsTest {
 		$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME);
 	}
 
+	/**
+	 * test grabbing a Trail that does not exist
+	 **/
+	public function testGetInvalidTrailByTrailId() : void {
+		//grab trail id that exceeds maximum amount of characters
+		$fakeTrailId = generateUuidV4();
+		$trail = Trail::getTrailByTrailId($this->getPDO(), $fakeTrailId);
+		$this->assertNull($trail);
+	}
+
+
 }
