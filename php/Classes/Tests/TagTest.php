@@ -99,4 +99,14 @@ class TagTest extends  AbqTrailsTest {
 		$this->assertEquals($pdoTag->getTagName1(), $this->VALID_TAGNAME_1);
 		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2);
 	}
+	/**
+	 * test grabbing a Tag that does not exist
+	 **/
+	public function testGetInvalidTagByTagId() : void {
+		// grab a profile id that exceeds the maximum allowable tag id
+		$fakeTagId = generateUuidV4();
+		$tag = Tag::getTagByTagId($this->getPDO(), $fakeTagId);
+		$this->assertNull($tag);
+	}
+	/
 }
