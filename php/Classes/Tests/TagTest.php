@@ -116,8 +116,16 @@ class TagTest extends  AbqTrailsTest {
 		$tag->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoTag = Tag::getTagByTagName($this->getPDO(), $tag->getTagName());
-		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("tag"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
 		$this->assertEquals($pdoTag->getTagName1(), $this->VALID_TAGNAME_1);
 		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2);
+	}
+	/**
+	 * test grabbing a Tag by an name that does not exist
+	 **/
+	public function testGetInvalidTagByName() : void {
+		// grab an name that does not exist
+		$tag = Tag::getProfileByTagName($this->getPDO(), "does@not.exist");
+		$this->assertNull($tag);
 	}
 }
