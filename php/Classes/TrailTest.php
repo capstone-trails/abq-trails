@@ -113,16 +113,13 @@ class TrailTest extends AbqTrailsTest {
 		$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertsEquals($pdoTrail->getTrailId(), $trailId);
 		$this->assertsEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL);
-		$this->assertsEquals($pdoTrail->getTrailAvatarUrl2(), $this->VALID_TRAIL_AVATAR_URL_2);
 		$this->assertsEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION);
-		$this->assertsEquals($pdoTrail->getTrailDescription2(), $this->VALID_TRAIL_DESCRIPTION_2);
 		$this->assertsEquals($pdoTrail->getTrailHigh(), $this->VALID_TRAIL_HIGH);
 		$this->assertsEquals($pdoTrail->getTrailLatitude(), $this->VALID_TRAIL_LATITUDE);
 		$this->assertsEquals($pdoTrail->getTrailLength(), $this->VALID_TRAIL_LENGTH);
 		$this->assertsEquals($pdoTrail->getTrailLongitude(), $this->VALID_TRAIL_LONGITUDE);
 		$this->assertsEquals($pdoTrail->getTrailLow(), $this->VALID_TRAIL_LOW);
 		$this->assertsEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME);
-		$this->assertsEquals($pdoTrail->getTrailName2(), $this->VALID_TRAIL_NAME_2);
 	}
 
 	/**
@@ -148,6 +145,22 @@ class TrailTest extends AbqTrailsTest {
 			$this->VALID_TRAIL_NAME_2);
 		$trail->insert($this->getPDO());
 		//edit the profile and insert it into mysql
+		$trail->setTrailAvatarUrl($this->VALID_TRAIL_AVATAR_URL_2);
+		$trail->setTrailDescription($this->VALID_TRAIL_DESCRIPTION_2);
+		$trail->setTrailName($this->VALID_TRAIL_NAME_2);
+		$trail->update($this->getPDO());
+		//grab the data from mySQL and enforce that the fields match our expectations
+		$pdoTrail = Trail::getTrailByTrailId($this->getPDO(), $trail->getTrailId());
+		$this->assertsEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
+		$this->assertsEquals($pdoTrail->getTrailId(), $trailId);
+		$this->assertsEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL);
+		$this->assertsEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION);
+		$this->assertsEquals($pdoTrail->getTrailHigh(), $this->VALID_TRAIL_HIGH);
+		$this->assertsEquals($pdoTrail->getTrailLatitude(), $this->VALID_TRAIL_LATITUDE);
+		$this->assertsEquals($pdoTrail->getTrailLength(), $this->VALID_TRAIL_LENGTH);
+		$this->assertsEquals($pdoTrail->getTrailLongitude(), $this->VALID_TRAIL_LONGITUDE);
+		$this->assertsEquals($pdoTrail->getTrailLow(), $this->VALID_TRAIL_LOW);
+		$this->assertsEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME);
 	}
 
 
