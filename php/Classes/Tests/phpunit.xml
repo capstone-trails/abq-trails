@@ -1,10 +1,10 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="CapstoneTrails\AbqTrails">
-			<file>ProfileTest.php</file>
+			<!--<file>ProfileTest.php</file>-->
 			<file>TrailTest.php</file>
-			<file>TagTest.php</file>
-			<file>PhotoTest.php</file>
+			<!--<file>TagTest.php</file>-->
+			<!--<file>PhotoTest.php</file>-->
 		</testsuite>
 	</testsuites>
 	<filter>
