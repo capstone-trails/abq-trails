@@ -13,7 +13,7 @@ require_once("../../vendor/autoload.php");
  * @see photo
  * @author Ronald Luna <rluna41@cnm.edu>
  **/
-class photoTest extends AbqTrailsTest {
+class PhotoTest extends AbqTrailsTest {
 	/**
 	 * ProfileUser that created the photo; this is for foreign key relations
 	 * @var Profile profileUserId
