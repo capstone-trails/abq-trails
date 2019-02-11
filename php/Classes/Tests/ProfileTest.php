@@ -1,9 +1,9 @@
 <?php
 namespace CapstoneTrails\AbqTrails;
 
-require_once("autoload.php");
+require_once("../autoload.php");
 //composer autoloader
-require_once("../../vendor/autoload.php");
+require_once("../../../vendor/autoload.php");
 
 /**
  * Unit Tests for Profile Class
