@@ -1,5 +1,5 @@
 <?php
-namespace CapstoneTrails\AbqTrails;
+namespace CapstoneTrails\AbqTrails\Tests;
 
 require_once(dirname(__DIR__, 1) . "/autoload.php");
 /**

@@ -1,5 +1,5 @@
 <?php
-namespace CapstoneTrails\AbqTrails;
+namespace CapstoneTrails\AbqTrails\Tests;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
@@ -10,8 +10,7 @@ use PHPUnit\DbUnit\Operation\{Composite, Factory, Operation};
 //grab the encrypted properties file
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
-require_once(dirname(__DIR__, 1) . "/autoload.php");
-
+require_once(dirname(__DIR__) . "/../../vendor/autoload.php");
 
 
 /**

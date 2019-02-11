@@ -1,5 +1,5 @@
 <?php
-namespace CapstoneTrails\AbqTrails;
+namespace CapstoneTrails\AbqTrails\Tests;
 
 //use \abqtrails\Tag;
 
