@@ -164,6 +164,7 @@ class ProfileTest extends AbqTrailsTest {
 		$profile = new \abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
 			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
 			$this->VALID_PROFILE_USERNAME);
+		$profile->insert($this->getPDO());
 		$results = Profile:: getProfileByProfileUsername($this->getPDO(), $this->VALID_PROFILE_USERNAME);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertContainsOnlyInstancesOf("\Abqtrails\Profile", $results);
