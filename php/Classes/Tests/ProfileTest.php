@@ -21,7 +21,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * valid profile avatar url
 	 * @var string $VALID_PROFILE_AVATAR_URL
 	 */
-	protected $VALID_PROFILE_AVATAR_URL = "https://www.testavatarurlabqtrails.co";
+	protected $VALID_PROFILE_AVATAR_URL = "https://www.testavatarurlabqtrails.com";
 	/**
 	 * updated profile avatar url
 	 * @var string $VALID_PROFILE_AVATAR_URL_2
