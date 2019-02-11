@@ -8,7 +8,7 @@ use PHPUnit\DbUnit\Database\Connection;
 use PHPUnit\DbUnit\Operation\{Composite, Factory, Operation};
 
 //grab the encrypted properties file
-require_once("/etc/apache2/capstone-mysql/Secret.php");
+require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
 
 
