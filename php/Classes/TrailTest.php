@@ -6,6 +6,7 @@ require_once("autoload.php");
 //composer autoloader
 require_once("../../vendor/autoload.php");
 
+
 /**
  * Full PHPUnit test for the Trail class
  *
@@ -289,6 +290,16 @@ class TrailTest extends AbqTrailsTest {
 	}
 
 	/**
+	 * test grabbing a Trail by trail name that does not exist
+	 **/
+	public function testGetInvalidTrailName() : void {
+		//grab trail id that exceeds maximum amount of characters
+		$fakeTrailName = "A Goofy Trail";
+		$trail = Trail::getTrailByTrailName($this->getPDO(), $fakeTrailName);
+		$this->assertNull($trail);
+	}
+
+	/**
 	 * test grabbing Trail by trail description
 	 **/
 	public function testGetValidTrailByTrailDescription() {
@@ -331,7 +342,14 @@ class TrailTest extends AbqTrailsTest {
 			$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME_2);
 	}
 
-	/**
-
+		/**
+		 * test grabbing a Trail by trail description that does not exist
+		 **/
+		public function testGetInvalidTrailDescription() : void {
+			//grab trail id that exceeds maximum amount of characters
+			$fakeTrailDescription = "some goofy description";
+			$trail = Trail::getTrailByTrailName($this->getPDO(), $fakeTrailDescription);
+			$this->assertNull($trail);
+		}
 }
 
