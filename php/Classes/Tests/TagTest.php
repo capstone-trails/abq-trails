@@ -68,4 +68,25 @@ class TagTest extends  AbqTrailsTest {
 		$this->assertEquals($pdoTag->getTagName1(), $this->VALID_TAGNAME_1_2);
 		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2_2);
 	}
+	/**
+	 * test creating a Tag and then deleting it
+	 **/
+	public function testDeleteValidTag() : void {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowsCount("tag");
+		$tagId = generateUuidV4();
+		$tag = new Tag($tagId, $this->VALID_TAGNAME_1, $this->VALID_TAGNAME_2);
+		$tag->insert($this->getPDO());
+		// delete the Tag from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
+		$tag->delete($this->getPDO());
+		// grab the data from mySQL and enforce the Tag does not exist
+		$pdoTag = Tag::getTagByTagId($this->getPDO(), $tag->getTagId());
+	}
+	/**
+	 * test inserting a Tag and regrabbing it from it from SQL
+	 **/
+	public function testGetValidTagByTagId() : void {
+
+	}
 }
