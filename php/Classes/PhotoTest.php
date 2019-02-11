@@ -3,12 +3,7 @@ namespace CapstoneTrails\AbqTrails;
 
 require_once("autoload.php");
 
-// grab the class under scrutiny
-require_once(dirname(__DIR__) . "/autoload.php");
-
-// grab the uuid generator
 require_once("../../vendor/autoload.php");
-
 /**
  * Full PHPUnit test for the photo class
  *

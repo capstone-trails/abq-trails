@@ -8,7 +8,7 @@ require_once("../../vendor/autoload.php");
 /**
  * Unit test for Profile Class
  *
- * @see \abqtrails\Profile
+ * @see \CapstoneTrails\AbqTrails\Profile
  * @author Cassandra Romero <cromero278@cnm.edu>
  */
 class ProfileTest extends AbqTrailsTest {
@@ -122,7 +122,6 @@ class ProfileTest extends AbqTrailsTest {
 		$profile->setProfileLastName($this->VALID_PROFILE_LAST_NAME_2);
 		$profile->setProfileUsername($this->VALID_PROFILE_USERNAME_2);
 		$profile->update($this->getPDO());
-
 		$pdoProfile = $profile :: getProfileByProfileId($this->getPDO(), $profile, getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
@@ -220,7 +219,7 @@ class ProfileTest extends AbqTrailsTest {
 		$profile->insert($this->getPDO());
 		$results = Profile:: getProfileByProfileUsername($this->getPDO(), $this->VALID_PROFILE_USERNAME);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-		$this->assertContainsOnlyInstancesOf("\\AbqTrails\\Profile", $results);
+		$this->assertContainsOnlyInstancesOf("\\CapstoneTrails\\AbqTrails\\Profile", $results);
 		$pdoProfile = $results[0];
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
@@ -252,7 +251,7 @@ class ProfileTest extends AbqTrailsTest {
 		$results = Profile::getAllProfiles($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("\\AbqTrails\\Profile", $results);
+		$this->assertContainsOnlyInstancesOf("\\CapstoneTrails\\AbqTrails\\Profile", $results);
 		$pdoProfile = $results[0];
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILE_ACTIVATION_TOKEN);
