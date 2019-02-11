@@ -238,5 +238,29 @@ class TrailTest extends AbqTrailsTest {
 		$this->assertNull($trail);
 	}
 
+	/**
+	 * test grabbing a trail by trail name
+	 **/
+	public function testGetValidTrailByTrailName() {
+		//count number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("trail");
+		$trail = generateUuidV4();
+		$trail = new Trail(
+			$trailId,
+			$this->VALID_TRAIL_AVATAR_URL,
+			$this->VALID_TRAIL_AVATAR_URL_2,
+			$this->VALID_TRAIL_DESCRIPTION,
+			$this->VALID_TRAIL_DESCRIPTION_2,
+			$this->VALID_TRAIL_HIGH,
+			$this->VALID_TRAIL_LATITUDE,
+			$this->VALID_TRAIL_LENGTH,
+			$this->VALID_TRAIL_LONGITUDE,
+			$this->VALID_TRAIL_LOW,
+			$this->VALID_TRAIL_NAME,
+			$this->VALID_TRAIL_NAME_2);
+		$trail->insert($this->getPDO());
+		//grab the data from mySQL
+	}
+
 
 }
