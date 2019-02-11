@@ -8,7 +8,7 @@ require_once(dirname(__DIR__, 1) . "/autoload.php");
  * This is a complete PHPUnit Tests of the photo class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
- * @see photo
+ * @see Photo
  * @author Ronald Luna <rluna41@cnm.edu>
  **/
 class PhotoTest extends AbqTrailsTest {
@@ -83,7 +83,7 @@ class PhotoTest extends AbqTrailsTest {
 
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new photo($photoId, $this->profile->getProfileUserId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATETIME);
+		$photo = new Photo($photoId, $this->profile->getProfileUserId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATETIME);
 		$photo->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations

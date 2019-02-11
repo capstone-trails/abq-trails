@@ -2,7 +2,6 @@
 namespace CapstoneTrails\AbqTrails;
 
 require_once(dirname(__DIR__, 1) . "/autoload.php");
-
 /**
  * Unit Tests for Profile Class
  *
