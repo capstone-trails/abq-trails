@@ -15,3 +15,25 @@ require_once(dirname(__DIR__, 1) . "/autoload.php");
  * @see Rating
  * @author Robert Dominguez
  **/
+class RatingTest extends AbqTrailsTest {
+	/**
+	 * valid rating about to use
+	 * @var string $VALID_VALUE
+	 **/
+	protected $VALID_VALUE = "Dog-Friendly";
+	/**
+	 * content of the updated Rating
+	 * @var string $VALID_VALUE_2
+	 **/
+	protected $VALID_VALUE_2 = "Wheelchair accessible";
+	/**
+	 * valid rating Difficulty
+	 * @var string $VALID_DIFFICULTY
+	 **/
+	protected $VALID_DIFFICULTY = "Medium";
+	/**
+	 * content of the updated difficulty
+	 * @var string $VALID_DIFFICULTY_2
+	 **/
+	protected $VALID_DIFFICULTY_2 = "Hard";
+}
