@@ -13,7 +13,7 @@ require_once("../../../vendor/autoload.php");
  * This is a complete PHPUnit Tests of the Trail class. It is complete because *ALL* mySQL/PDO enabled methods are tested
  * for both invalid and valid inputs.
  *
- * @see \Abqtrails\Trail
+ * @see \CapstoneTrails\AbqTrails\Trail
  * @author Scott Wells <swells19@cnm.edu>
  **/
 
