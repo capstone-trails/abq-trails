@@ -1,7 +1,8 @@
 <?php
 namespace Abqtrails;
-require_once("autoload.php");
 
+require_once("autoload.php");
+//composer autoloader
 require_once("../../vendor/autoload.php");
 /**
  *

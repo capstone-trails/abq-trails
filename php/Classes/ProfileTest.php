@@ -2,10 +2,8 @@
 
 namespace Abqtrails;
 
-use \abqtrails\Profile;
-
 require_once("autoload.php");
-
+//composer autoloader
 require_once("../../vendor/autoload.php");
 
 /**
@@ -183,14 +181,13 @@ class ProfileTest extends AbqTrailsTest {
 	 * public function that gets a profile that does not exist
 	 */
 	public function testGetInvalidProfileByProfileId() : void {
-		// grab a profile id that exceeds the maximum allowable profile id
 		$fakeProfileId = generateUuidV4();
 		$profile = Profile::getProfileByProfileId($this->getPDO(), $fakeProfileId );
 		$this->assertNull($profile);
 	}
-/*
- * public function that gets profile by profile email
- */
+	/*
+ 	* public function that gets profile by profile email
+ 	*/
 	public function getProfileByProfileEmail() {
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
@@ -208,5 +205,12 @@ class ProfileTest extends AbqTrailsTest {
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_PROFILE_HASH);
 		$this->assertEquals($pdoProfile->getProfileLastName(), $this->VALID_PROFILE_LAST_NAME);
 		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_PROFILE_USERNAME);
+	}
+	/*
+	 * public function that gets a profile by an email that does not exist
+	 */
+	public function testGetInvalidProfileByEmail() : void {
+		$profile = Profile::getProfileByProfileEmail($this->getPDO(), "invalid@email.co");
+		$this->assertNull($profile);
 	}
 }
