@@ -188,7 +188,9 @@ class ProfileTest extends AbqTrailsTest {
 		$profile = Profile::getProfileByProfileId($this->getPDO(), $fakeProfileId );
 		$this->assertNull($profile);
 	}
-
+/*
+ * public function that gets profile by profile email
+ */
 	public function getProfileByProfileEmail() {
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
