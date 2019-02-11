@@ -1,5 +1,5 @@
 <?php
-namespace Abqtrails;
+namespace CapstoneTrails\AbqTrails;
 use mysql_xdevapi\Exception;
 use Ramsey\Uuid\Uuid;
 

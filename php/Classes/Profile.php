@@ -1,5 +1,5 @@
 <?php
-namespace Abqtrails;
+namespace CapstoneTrails\AbqTrails;
 
 require_once("autoload.php");
 //composer autoloader

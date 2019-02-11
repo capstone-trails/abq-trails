@@ -1,7 +1,7 @@
 <?php
-namespace abqtrails;
+namespace CapstoneTrails\AbqTrails;
 
-use \abqtrails\Tag;
+//use \abqtrails\Tag;
 
 //grab the class under scrutiny
 require_once("autoload.php");

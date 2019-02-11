@@ -1,5 +1,5 @@
 <?php
-namespace Abqtrails;
+namespace CapstoneTrails\AbqTrails;
 /**
  * Trait to Validate a mySQL Date
  *

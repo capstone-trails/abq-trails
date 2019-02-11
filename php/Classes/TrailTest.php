@@ -1,5 +1,5 @@
 <?php
-namespace Abqtrails;
+namespace CapstoneTrails\AbqTrails;
 
 //our autoloader
 require_once("autoload.php");

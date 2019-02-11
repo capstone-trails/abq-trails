@@ -1,5 +1,5 @@
 <?php
-namespace Abqtrails;
+namespace CapstoneTrails\AbqTrails;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;

@@ -1,5 +1,6 @@
 <?php
-namespace Abqtrails;
+namespace CapstoneTrails\AbqTrails;
+
 require_once("../../vendor/autoload.php");
 use Ramsey\Uuid\Uuid;
 /**
