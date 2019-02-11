@@ -2,7 +2,7 @@
 namespace CapstoneTrails\AbqTrails;
 
 //our autoloader
-require_once("../autoload.php");
+require_once(dirname(__DIR__, 1) . "autoload.php");
 //composer autoloader
 require_once("../../../vendor/autoload.php");
 
