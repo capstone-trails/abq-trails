@@ -1,7 +1,11 @@
 <?php
 namespace CapstoneTrails\AbqTrails\Tests;
 
-require_once(dirname(__DIR__, 1) . "/autoload.php");
+use CapstoneTrails\AbqTrails\Profile;
+
+require_once(dirname(__DIR__) . "/autoload.php");
+
+require_once(dirname(__DIR__, 1) . "/../lib/uuid.php");
 /**
  * Unit Tests for Profile Class
  *

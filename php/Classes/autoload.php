@@ -1,4 +1,6 @@
 <?php
+namespace CapstoneTrails\AbqTrails\Classes;
+
 /**
  * PSR-4 Compliant Autoloader
  *

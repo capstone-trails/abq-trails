@@ -14,9 +14,9 @@ require_once(dirname(__DIR__, 1) . "/autoload.php");
 class PhotoTest extends AbqTrailsTest {
 	/**
 	 * ProfileUser that created the photo; this is for foreign key relations
-	 * @var Profile profileUserId
+	 * @var $photoId
 	 **/
-	protected $profileUserId = null;
+	protected $photoId = null;
 	/**
 	 * content of the photo
 	 * @var string $VALID_PHOTOURL

@@ -4,7 +4,6 @@ namespace CapstoneTrails\AbqTrails;
 //our autoloader
 require_once("autoload.php");
 //composer autoloader
-require_once("../../vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
