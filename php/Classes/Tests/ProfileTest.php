@@ -2,9 +2,10 @@
 namespace CapstoneTrails\AbqTrails\Tests;
 
 use CapstoneTrails\AbqTrails\Classes\Profile;
-use CapstoneTrails\AbqTrails\Trail;
 
 require_once(dirname(__DIR__, 1) . "/autoload.php");
+
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 /**
  * Unit Tests for Profile Class
  *
@@ -81,7 +82,7 @@ class ProfileTest extends AbqTrailsTest {
 
 		$password = "coffee12345";
 		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 97]);
-		$this->VALID_PROFILE_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
+		$this->VALID_PROFILE_ACTIVATION_TOKEN = bin2hex(random_bytes(32));
 	}
 	/*
 	 * Tests inserting a Profile into mySQL database
