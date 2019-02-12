@@ -144,6 +144,21 @@ class RatingTest extends AbqTrailsTest {
 	 * test grabbing a rating by rating value
 	 **/
 	public function testGetValidRatingByValue(){
-
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("rating");
+		$ratingProfileId = generateUuidV4();
+		$ratingTrailId = generateUuidV4();
+		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$rating->insert($this->getPDO());
+		//grab the data from MySQL
+		$pdoRating = Rating::getRatingByRatingValue($this->getPDO(), $rating->getRatingValue());
+		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("rating"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoRating->getRatingProfileId(), $ratingProfileId);
+		$this->assertEquals($pdoRating->getRatingTrailId(), $ratingTrailId);
+		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
+		$this->assertEquals($pdoRating->getRatingValue2(), $this->VALID_VALUE_2);
+		$this->assertEquals($pdoRating->getRatingDiffculty(), $this->VALID_DIFFICULTY);
+		$this->assertEquals($pdoRating->getRatingDiffculty2(), $this->VALID_DIFFICULTY_2);
 	}
 }
