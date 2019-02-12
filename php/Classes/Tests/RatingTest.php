@@ -4,6 +4,8 @@ namespace CapstoneTrails\AbqTrails\Tests;
 //use \abqtrails\Tag;
 
 //grab the class under scrutiny
+use function CapstoneTrails\AbqTrails\Php\Lib\generateUuidV4;
+
 require_once(dirname(__DIR__, 1) . "/autoload.php");
 
 /**
@@ -83,4 +85,29 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($pdoRating->getRatingDiffculty(), $this->VALID_DIFFICULTY);
 		$this->assertEquals($pdoRating->getRatingDiffculty2(), $this->VALID_DIFFICULTY_2);
 	}
+
+	/**
+	 * test creating a Rating and then deleting it
+	 **/
+	public function testDeleteValidRating() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("rating");
+		$ratingProfileId = generateUuidV4();
+		$ratingTrailId = generateUuidV4();
+		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$rating->insert($this->getPDO());
+		// delete the Rating from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
+		$rating->delete($this->getPDO());
+		// grab the data from mySQL and enforce the Rating does not exist
+		$pdoRating = Rating::getRatingByRatingProfileId($this->getPDO(), $rating->getRatingId());
+		$pdoRating = Rating::getRatingByRatingTrailId($this->getPDO(), $rating->getRatingId());
+		$this->assertNull($pdoRating);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("rating"));
+	}
+
+	/**
+	 * test inserting a Rating and regrabbing it from mySQL
+	 **/
+
 }
