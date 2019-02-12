@@ -22,7 +22,11 @@ class PhotoTest extends AbqTrailsTest {
 	 * @var string $VALID_PHOTOURL
 	 **/
 	protected $VALID_PHOTO_URL = "PHPUnit Tests passing";
-
+	/**
+	 * Profile that created the photo; this is a foreign key relations
+	 * @var $Profile
+	 **/
+	protected $profile = null;
 	/**
 	 * content of the updated photo
 	 * @var string $VALID_PHOTOURL2
@@ -56,8 +60,8 @@ class PhotoTest extends AbqTrailsTest {
 
 
 		// create and insert a Profile to own the Tests photo
-		$this->profile = new ProfileUserId(generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "Tests@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
-		$this->profile->insert($this->getPDO());
+		$this->profile = new Profile (generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "Tests@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
+		$this->profile ->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit Tests was setup...)
 		$this->VALID_PHOTODATETIME = new \DateTime();
