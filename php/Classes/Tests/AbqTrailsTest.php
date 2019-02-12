@@ -8,7 +8,7 @@ use PHPUnit\DbUnit\Database\Connection;
 use PHPUnit\DbUnit\Operation\{Composite, Factory, Operation};
 
 //grab the encrypted properties file
-require_once("/etc/apache2/capstone-mysql/Secrets.php");
+require_once("/etc/apache2/capst	one-mysql/Secrets.php");
 
 require_once(dirname(__DIR__) . "/../../vendor/autoload.php");
 
@@ -92,7 +92,7 @@ abstract class AbqTrailsTest extends TestCase {
 		if($this->connection === null) {
 			//connect to mySQL and provide the interface to PHPUnit
 
-			$secrets = new Secrets("/etc/apache2/capstone-mysql/ddctwitter.ini");
+			$secrets = new \Secrets("/etc/apache2/capstone-mysql/ddctwitter.ini");
 			$pdo = $secrets->getPdoObject();
 			$this->connection = $this->createDefaultDBConnection($pdo, $secrets->getDatabse());
 		}
