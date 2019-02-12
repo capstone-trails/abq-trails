@@ -61,10 +61,11 @@ class RatingTest extends AbqTrailsTest {
 	 **/
 	public function testUpdateValidRating(){
 		// count the number of number of rows and save it for later
-		$numbRows = $this->getConnection()->getRowCount("rating");
+		$numRows = $this->getConnection()->getRowCount("rating");
 		// create a new Rating and insert to into mySQL
-		$ratingId = generateUuidV4();
-		$rating = new Rating($ratingId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$ratingProfileId = generateUuidV4();
+		$ratingTrailId = generateUuidV4();
+		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
 		$rating->insert($this->getPDO());
 		// edit the rating update it in mySQL
 		$rating->setRatingValue($this->VALID_VALUE);
