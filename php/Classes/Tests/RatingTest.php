@@ -43,11 +43,13 @@ class RatingTest extends AbqTrailsTest {
 	public function testInsertValidRating() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("Rating");
-		$ratingId = generateUuidV4();
-		$rating = new Rating($ratingId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$ratingProfileId = generateUuidV4();
+		$ratingTrailId = generateUuidV4();
+		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
 		$rating ->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoRating = Rating::getRatingByRatingId($this->getPDO(), $rating->getRatingProfileId());
+		$pdoRating = Rating::getRatingByRatingProfileId($this->getPDO(), $rating->getRatingProfileId());
+		$pdoRating = Rating::getRatingByRatingTrailId($this->getPDO(), $rating->getRatingTrailId());
 		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
 		$this->assertEquals($pdoRating->getRatingValue2(), $this->VALID_VALUE_2);
 		$this->assertEquals($pdoRating->getRatingDiffculty(), $this->VALID_DIFFICULTY);
@@ -69,5 +71,15 @@ class RatingTest extends AbqTrailsTest {
 		$rating->setRatingValue2($this->VALID_VALUE_2);
 		$rating->setRatingDifficulty($this->VALID_DIFFICULTY);
 		$rating->setRatingDifficulty2($this->VALID_DIFFICULTY_2);
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoRating = Rating::getRatingByRatingProfileId($this->getPDO(),$rating->getRatingProfileId());
+		$pdoRating = Rating::getRatingByRatingTrailId($this->getPDO(),$rating->getRatingTrailId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
+		$this->assertEquals($pdoRating->getRatingProfileId(), $ratingProfileId);
+		$this->assertEquals($pdoRating->getRatingTrailId(), $ratingTrailId);
+		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
+		$this->assertEquals($pdoRating->getRatingValue2(), $this->VALID_VALUE_2);
+		$this->assertEquals($pdoRating->getRatingDiffculty(), $this->VALID_DIFFICULTY);
+		$this->assertEquals($pdoRating->getRatingDiffculty2(), $this->VALID_DIFFICULTY_2);
 	}
 }

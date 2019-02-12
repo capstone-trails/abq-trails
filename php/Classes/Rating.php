@@ -212,4 +212,23 @@ class rating {
 		// store the rating value
 		$this->ratingDifficulty = $newRatingValue;
 	}
+
+	/**
+	 * gets the Rating by profile id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $ratingProfileId
+	 * @return \SplFixedArray SplFixedArray of Ratings found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public function getRatingByRatingProfileId(\PDO $pdo, $ratingProfileId) : \SplFixedArray{
+		try {
+			$ratingProfileId = self::validateUuid($ratingProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT ";
+	}
 }
