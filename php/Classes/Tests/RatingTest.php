@@ -53,4 +53,21 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($pdoRating->getRatingDiffculty(), $this->VALID_DIFFICULTY);
 		$this->assertEquals($pdoRating->getRatingDiffculty2(), $this->VALID_DIFFICULTY_2);
 	}
+
+	/**
+	 * test inserting a Rating, editing it and then updating it
+	 **/
+	public function testUpdateValidRating(){
+		// count the number of number of rows and save it for later
+		$numbRows = $this->getConnection()->getRowCount("rating");
+		// create a new Rating and insert to into mySQL
+		$ratingId = generateUuidV4();
+		$rating = new Rating($ratingId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$rating->insert($this->getPDO());
+		// edit the rating update it in mySQL
+		$rating->setRatingValue($this->VALID_VALUE);
+		$rating->setRatingValue2($this->VALID_VALUE_2);
+		$rating->setRatingDifficulty($this->VALID_DIFFICULTY);
+		$rating->setRatingDifficulty2($this->VALID_DIFFICULTY_2);
+	}
 }
