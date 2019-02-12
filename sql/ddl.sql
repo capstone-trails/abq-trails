@@ -1,4 +1,11 @@
-ALTER DATABASE ddl CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER DATABASE trails CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+DROP TABLE IF EXISTS trailTag;
+DROP TABLE IF EXISTS tag;
+DROP TABLE IF EXISTS rating;
+DROP TABLE IF EXISTS photo;
+DROP TABLE IF EXISTS trail;
+DROP TABLE IF EXISTS profile;
 
 CREATE TABLE profile (
 	profileId BINARY(16) NOT NULL,
@@ -10,7 +17,7 @@ CREATE TABLE profile (
 	profileLastName VARCHAR(32) NOT NULL,
 	profileUsername VARCHAR(32) NOT NULL,
 	UNIQUE (profileEmail),
-	UNIQUE (profileUsername)
+	UNIQUE (profileUsername),
 	PRIMARY KEY (profileId)
 );
 
@@ -69,5 +76,5 @@ CREATE TABLE trailTag (
 	FOREIGN KEY (trailTagTagId) REFERENCES tag(tagId),
 	FOREIGN KEY (trailTagTrailId) REFERENCES trail(trailId),
 	FOREIGN KEY (trailTagProfileId) REFERENCES profile(profileId),
-	PRIMARY KEY (tagId, profileId)
+	PRIMARY KEY (trailTagTagId, trailTagTrailId)
 );
