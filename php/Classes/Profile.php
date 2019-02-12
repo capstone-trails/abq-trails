@@ -290,5 +290,23 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 		}
 		$this->profileUsername = $newProfileUsername;
 	}
+	public static function getAllProfiles(\PDO $pdo) : \SplFixedArray {
+		$query = "SELECT profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		$profiles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !==false) {
+			try {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileFirstName"], $row["profileHash"], $row["profileLastName"], $row["profileUsername"]);
+				$profiles[$profiles->key()] = $profile;
+				$profiles->next();
+			}catch(\Exception $exception) {
+					throw(new \PDOException($exception->getMessage(), 0, $exception));
+				}
+		}
+		return ($profiles);
+	}
 }
 
