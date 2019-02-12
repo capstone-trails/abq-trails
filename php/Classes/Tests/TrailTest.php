@@ -2,6 +2,7 @@
 namespace CapstoneTrails\AbqTrails\Tests;
 
 use CapstoneTrails\AbqTrails\Classes\Trail;
+use function CapstoneTrails\AbqTrails\Php\Lib\generateUuidV4;
 use CapstoneTrails\AbqTrails\Tests\Secret;
 
 //our autoloader
