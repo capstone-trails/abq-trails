@@ -5,6 +5,7 @@ namespace CapstoneTrails\AbqTrails\Tests;
 
 //grab the class under scrutiny
 use function CapstoneTrails\AbqTrails\Php\Lib\generateUuidV4;
+use CapstoneTrails\AbqTrails\Profile;
 
 require_once(dirname(__DIR__, 1) . "/autoload.php");
 
@@ -128,4 +129,21 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($pdoRating->getRatingDiffculty2(), $this->VALID_DIFFICULTY_2);
 	}
 
+	/**
+	 * test grabbing a Rating that does not exist
+	 **/
+	public function testGetInvalidRatingByRating() : void {
+		// grab a rating id that exceeds the maximum allowable profile id
+		$fakeRatingId = generateUuidV4();
+		$rating = Profile::getRatingByRatingProfileId($this->getPDO(), $fakeRatingId );
+		$rating = Profile::getRatingByRatingTrailId($this->getPDO(), $fakeRatingId );
+		$this->assertNull($rating);
+	}
+
+	/**
+	 * test grabbing a rating by rating value
+	 **/
+	public function testGetValidRatingByValue(){
+
+	}
 }
