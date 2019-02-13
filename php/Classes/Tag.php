@@ -220,6 +220,27 @@ class tag{
 		}
 		// escape any mySQL wild cards
 		$tagName = str_replace("_", "\\_", str_replace("%", "\\%", $tagName));
+		// create query template
+		$query = "SELECT tagId, tagName FROM tag WHERE tagName LIKE :tagName";
+		$statement = $pdo->prepare($query);
+		// bind the tag name to the place holder in the template
+		$tagName = "%tagName%";
+		$parameters = ["execute" => $tagName];
+		$statement->execute($parameters);
+		// build an array of tags
+		$tags = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false){
+			try {
+				$tag = new Tag($row["tagId"], $row["tagName"]);
+				$tags[$tags->key()] = $tag;
+				$tags->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw (new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($tags);
 	}
 
 
