@@ -460,7 +460,25 @@ class Trail implements \JsonSerializable {
 		//bind the trail id
 		$parameters = ["trailId" => $trailId->getBytes()];
 		$statement->execute($parameters);
+
+		//grab trail from mySQL
+		try {
+			$trail = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$trail = new Trail($row["trailId"], $row["trailAvatarUrl"], $row["trailDescription"], $row["trailHigh"], $row["trailLatitude"], $row["trailLength"], $row["trailLongitude"], $row["trailLow"], $row["trailName"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row could not be converted, throw it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($trail);
 	}
+
+	/**
+	 * get trail by name
+	 **/
 
 	/**
 	 * formats the state variables for JSON serialization
