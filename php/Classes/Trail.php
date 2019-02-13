@@ -383,7 +383,7 @@ class Trail implements \JsonSerializable {
 		//bind the member variables to the place holders in the template
 		$parameters = [
 			"trailId" => $this->trailId->getBytes(),
-			"trailAvatar" => $this->trailAvatarUrl,
+			"trailAvatarUrl" => $this->trailAvatarUrl,
 			"trailDescription" => $this->trailDescription,
 			"trailHigh" => $this->trailHigh,
 			"trailLatitude" => $this->trailLatitude,
