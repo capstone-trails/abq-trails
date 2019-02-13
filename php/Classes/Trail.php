@@ -367,7 +367,7 @@ class Trail implements \JsonSerializable {
 		//store trail name
 		$this->trailName = $newTrailName;
 	}
-//todo getTrailbyName getTrailbyLength getTrailByRating?? getTrailByDistance??
+//todo getTrailbyLength getTrailByRating?? getTrailByDistance??
 	/**
 	 * inserts trail into mySQL
 	 *
@@ -477,8 +477,48 @@ class Trail implements \JsonSerializable {
 	}
 
 	/**
-	 * get trail by name
+	 * get trail by trail name
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $trailName trail name for searching
+	 * @return \SplFixedArray SplFixedArray of beers found
+	 * @throws \PDOException when mySQL related errors occur
 	 **/
+	public static function getTrailByTrailName(\PDO $pdo, string $trailName) : \SplFixedArray {
+		//sanitize the description before searching
+		$trailName = trim($trailName);
+		$trailName = filter_var($trailName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($trailName) === true) {
+			throw(new \PDOException("trail content is invalid"));
+		}
+
+		//escape any mySQL wild cards
+		$trailName = str_replace("_", "\\_", str_replace("%", "\\%", $trailName));
+
+		//create query template
+		$query = "SELECT trailId, trailAvatarUrl, trailDescription, trailHigh, trailLatitude, trailLength, trailLongitude, trailLow, trailName FROM trail WHERE trailName LIKE :trailName";
+		$statement = $pdo->prepare($query);
+
+		//bind the trail name
+		$trailName = "%$trailName%";
+		$parameters = ["trailName" => $trailName];
+		$statement->execute($parameters);
+
+		//build an array of trails
+		$trails = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$trail = new Trail($row["trailId"], $row["trailAvatarUrl"], $row["trailDescription"], $row["trailHigh"], $row["trailLatitude"], $row["trailLength"], $row["trailLongitude"], $row["trailLow"], $row["trailName"]);
+				$trails[$trails->key()] = $trail;
+				$trails->next();
+			} catch(\Exception $exception) {
+				//if the row could not be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($trails);
+	}
 
 	/**
 	 * formats the state variables for JSON serialization
