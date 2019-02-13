@@ -1,14 +1,10 @@
 <?php
 namespace CapstoneTrails\AbqTrails\Tests;
 
-namespace CapstoneTrails\AbqTrails\Tests;
+use CapstoneTrails\AbqTrails\Classes\TrailTag;
 
-use CapstoneTrails\AbqTrails\TrailTag;
+require_once(dirname(__DIR__, 1) . "/autoload.php");
 
-//our autoloader
-require_once(dirname(__DIR__) . "/autoload.php");
-
-require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 class TrailTagTest extends  AbqTrailsTest {
 

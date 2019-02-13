@@ -295,6 +295,133 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 		}
 		$this->profileUsername = $newProfileUsername;
 	}
+
+	public function insert(\PDO $pdo) : void {
+		$query = "INSERT INTO profile(profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername) 
+VALUES(:profileId, :profileActivationToken, :profileAvatarUrl, :profileEmail, :profileFirstName, :profileHash, :profileLastName, :profileUsername)";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" =>$this->profileActivationToken, "profileAvatarUrl" => $this->profileAvatarUrl, "profileEmail" => $this->profileEmail,
+			"profileFirstName" => $this->profileFirstName, "profileHash" => $this->profileHash, "profileLastName" => $this->profileLastName, "profileUsername" => $this->profileUsername];
+		$statement->execute($parameters);
+	}
+	public function delete(\PDO $pdo) : void {
+		// create query template
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	public function update(\PDO $pdo) : void {
+		// create query template
+		$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileAvatarUrl = :profileAvatarUrl, profileEmail = :profileEmail, profileFirstName = :profileFirstName, profileHash = :profileHash, profileLastName = :profileLastName, profileUsername = :profileUsername WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["profileActivationToken" =>$this->profileActivationToken, "profileAvatarUrl" => $this->profileAvatarUrl, "profileEmail" => $this->profileEmail,
+			"profileFirstName" => $this->profileFirstName, "profileHash" => $this->profileHash, "profileLastName" => $this->profileLastName, "profileUsername" => $this->profileUsername, "profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+	public static function getProfileByProfileId(\PDO $pdo, $profileId) : ?Profile {
+		// sanitize the profileId before searching
+		try {
+			$profileId = self::validateUuid($profileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		$query = "SELECT profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername FROM profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["profileId" => $profileId->getBytes()];
+		$statement->execute($parameters);
+
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileFirstName"], $row["profileHash"], $row["profileLastName"], $row["profileUsername"]);
+			}
+		} catch(\Exception $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($profile);
+	}
+	public static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken) {
+		if(ctype_xdigit($profileActivationToken) === false) {
+			throw(new \InvalidArgumentException("profile activation token is empty or in the wrong format"));
+		}
+		$query = "SELECT profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername FROM profile WHERE profileActivationToken = :profileActivationToken";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["profileActivationToken" => $profileActivationToken];
+		$statement->execute($parameters);
+
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileFirstName"], $row["profileHash"], $row["profileLastName"], $row["profileUsername"]);
+			}
+		} catch(\Exception $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($profile);
+	}
+	public static function getProfileByProfileEmail(\PDO $pdo, $profileEmail) : ?Profile {
+
+		$profileEmail = trim($profileEmail);
+		$profileEmail = filter_var($profileEmail, FILTER_SANITIZE_EMAIL, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		$query = "SELECT profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername FROM profile WHERE profileEmail = :profileEmail";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["profileEmail" => $profileEmail];
+		$statement->execute($parameters);
+
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileFirstName"], $row["profileHash"], $row["profileLastName"], $row["profileUsername"]);
+				}
+			} catch(\Exception $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($profile);
+		}
+
+	public static function getProfileByProfileUsername(\PDO $pdo, string $profileUsername) : \SplFixedArray {
+		// sanitize the description before searching
+		$profileUsername = trim($profileUsername);
+		$profileUsername = filter_var($profileUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($profileUsername) === true) {
+			throw(new \PDOException("profile username is invalid"));
+		}
+
+		$profileUsername = str_replace("_", "\\_", str_replace("%", "\\%", $profileUsername));
+
+		$query = "SELECT profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername FROM profile WHERE profileUsername LIKE :profileUsername ";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileUsername" => $profileUsername];
+		$statement->execute($parameters);
+
+		$profiles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !==false) {
+			try {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileFirstName"], $row["profileHash"], $row["profileLastName"], $row["profileUsername"]);
+				$profiles[$profiles->key()] = $profile;
+				$profiles->next();
+			}catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($profiles);
+	}
 	public static function getAllProfiles(\PDO $pdo) : \SplFixedArray {
 		$query = "SELECT profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername";
 		$statement = $pdo->prepare($query);
