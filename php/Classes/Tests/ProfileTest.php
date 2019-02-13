@@ -83,8 +83,8 @@ class ProfileTest extends AbqTrailsTest {
 		parent::setUp();
 
 		$password = "coffee12345";
-		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 97]);
-		$this->VALID_PROFILE_ACTIVATION_TOKEN = bin2hex(random_bytes(32));
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_PROFILE_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
 	}
 	/*
 	 * Tests inserting a Profile into mySQL database
@@ -95,6 +95,7 @@ class ProfileTest extends AbqTrailsTest {
 		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
 			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
 			$this->VALID_PROFILE_USERNAME);
+		var_dump($profileId);
 		$profile->insert($this->getPDO());
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
@@ -115,7 +116,7 @@ class ProfileTest extends AbqTrailsTest {
 	public function testUpdateValidProfile(){
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new \abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
+		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
 			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
 			$this->VALID_PROFILE_USERNAME);
 		$profile->insert($this->getPDO());
@@ -143,7 +144,7 @@ class ProfileTest extends AbqTrailsTest {
 	public function testDeleteValidProfile() : void {
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new \abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
+		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
 			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
 			$this->VALID_PROFILE_USERNAME);
 		$profile->insert($this->getPDO());
@@ -216,7 +217,7 @@ class ProfileTest extends AbqTrailsTest {
 	public function testGetProfileByProfileUsername() {
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new \abqtrails\Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
+		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
 			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
 			$this->VALID_PROFILE_USERNAME);
 		$profile->insert($this->getPDO());

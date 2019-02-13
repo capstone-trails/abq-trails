@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
  * @author Scott Wells <swells19@cnm.edu>
  * @version 1.0.0
  **/
-class Trail {
+class Trail implements \JsonSerializable {
 	//use ValidateDate;
 	use ValidateDate;
 
@@ -358,5 +358,18 @@ class Trail {
 
 		//store trail name
 		$this->trailName = $newTrailName;
+	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["trailId"] = $this->trailId->toString();
+		return($fields);
+
 	}
 }
