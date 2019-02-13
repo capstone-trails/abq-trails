@@ -201,9 +201,9 @@ class Trail implements \JsonSerializable {
 	}
 
 	/**
-	 * accessor methor for trail high
+	 * accessor method for trail high
 	 *
-	 * @return string highest point of trail measured in feet
+	 * @return int highest point of trail measured in feet
 	 **/
 	public function getTrailHigh(): int {
 		return $this->trailHigh;
@@ -259,26 +259,25 @@ class Trail implements \JsonSerializable {
 	/**
 	 * accessor method for trail length
 	 *
-	 * @return string|float trail length in miles
+	 * @return float Trail length in miles
 	 **/
-	public function getTrailLength() {
+	public function getTrailLength() : float {
 		return $this->trailLength;
 	}
 
 	/**
 	 * mutator method for trail length
 	 *
-	 * @param string|float $newTrailLength new value of the trail length
-	 * @throws \InvalidArgumentException if $newTrailLength uses invalid characters
-	 * @throws \RangeException if $newTrailLength is a negative number, zero or null
-	 * @throws \TypeError if $newTrailLength is not a string
+	 * @param float $newTrailLength new value of the trail length\
+	 * @throws \RangeException if $newTrailLength is a negative number, zero or null\
 	 **/
-	public function setTrailLength($newTrailLength) {
-		//verify that trail length data is secure
+	public function setTrailLength(int $newTrailLength) : void {
+		//verify that trail length data is valid and secure
 		$newTrailLength = trim($newTrailLength);
-		$newTrailLength = filter_var($newTrailLength, FILTER_SANITIZE_NUMBER_INT);
-		if(empty($newTrailLength) === true) {
-			throw(new \InvalidArgumentException("length is empty or insecure"));
+		$newTrailLength = filter_var($newTrailLength, FILTER_SANITIZE_NUMBER_FLOAT);
+
+		if($newTrailLength <= 0) {
+			throw(new \RangeException("trail length is less than zero"));
 		}
 
 		//store the length data
