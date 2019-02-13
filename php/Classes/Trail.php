@@ -369,6 +369,35 @@ class Trail implements \JsonSerializable {
 	}
 //todo add insert update delete getTrailbyTrailId getTrailbyName getTrailbyLength getTrailByRating?? getTrailByDistance??
 	/**
+	 * inserts trail into mySQL
+	 *
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+		//create query template
+		$query = "INSERT INTO trail(trailId, trailAvatarUrl, trailDescription, trailHigh, trailLatitude, trailLength, trailLongitude, trailLow, trailName)";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place holders in the template
+		$parameters = [
+			"trailId" => $this->trailId->getBytes(),
+			"trailAvatar" => $this->trailAvatarUrl,
+			"trailDescription" => $this->trailDescription,
+			"trailHigh" => $this->trailHigh,
+			"trailLatitude" => $this->trailLatitude,
+			"trailLength" => $this->trailLength,
+			"trailLongitude" => $this->trailLongitude,
+			"trailLow" => $this->trailLow,
+			"trailName" => $this->trailName,
+		];
+		$statement->execute($parameters);
+	}
+
+
+
+
+	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
