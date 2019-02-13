@@ -273,4 +273,39 @@ class TrailTag {
 		}
 		return($trailTags);
 	}
+	/**
+* gets trail tag by trail tag profile id
+* @param \PDO $pdo PDO connection object
+* @param Uuid $trailTagProfileId to search by
+* @return \SplFixedArray of trail tags found
+* @throws \PDOException when mySQL related issues occur
+* @throws \TypeError when variables are not the correct type of data
+*/
+	public static function getTrailTagByTrailTagProfileId (\PDO $pdo, Uuid $trailTagProfileId) : \SplFixedArray{
+		try {
+			$trailTagProfileId = self::validateUuid($trailTagProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create query template
+		$query = "SELECT trailTagTagId, trailTagTrailId, trailTagProfileId FROM trailTag WHERE trailTagProfileId = :trailTagProfileId";
+		$statement = $pdo->prepare($query);
+		//bind the trailTagTagId and trailTagTrailId to the placeholder
+		$parameters = ["trailTagProfileId" => $trailTagProfileId];
+		$statement->execute($parameters);
+		//build array of trail tags
+		$trailTags = new\SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$trailTag = new TrailTag($row["trailTagTagId"], $row["trailTagTrailId"], $row["trailTagProfileId"]);
+				$trailTags[$trailTags->key()] = $trailTag;
+				$trailTags->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($trailTags);
+	}
 }
