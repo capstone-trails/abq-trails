@@ -41,7 +41,6 @@ class rating {
 	/**
 	 * constructor for this Rating
 	 *
-	 * @param string|Uuid $newRatingId id of this rating or null if a new rating
 	 * @param string|Uuid $newRatingProfileId id of the profile that's making the rating
 	 * @param string|Uuid $newRatingTrailId id of the trail that's being rated
 	 * @param string $newRatingDifficulty string that tells how difficult the trail is
@@ -51,9 +50,8 @@ class rating {
 	 * @throws \TypeError if some other exception occurs
 	 * @Documention https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newRatingId, $newRatingProfileId, $newRatingTrailId, string $newRatingDifficulty, string $newRatingValue) {
+	public function __construct($newRatingProfileId, $newRatingTrailId, string $newRatingDifficulty, string $newRatingValue) {
 		try {
-			$this->setRatingId($newRatingId);
 			$this->setRatingProfileId($newRatingProfileId);
 			$this->setRatingTrailId($newRatingTrailId);
 			$this->setRatingDifficulty($newRatingDifficulty);
@@ -74,7 +72,6 @@ class rating {
 	public function getRatingProfileId(): Uuid {
 		return ($this->ratingProfileId);
 	}
-
 	/**
 	 * mutator method for rating profile id
 	 *
@@ -102,9 +99,8 @@ class rating {
 	public function getRatingTrailId(): Uuid {
 		return ($this->ratingTrailId);
 	}
-
 	/**
-	 * mutator method for rating trail idgbngfn
+	 * mutator method for rating trail id
 	 *
 	 * @param string|Uuid $newRatingTrailId
 	 * @throws \RangeException if $newTrailId is not positive
@@ -130,7 +126,6 @@ class rating {
 	public function getRatingDifficulty(): string {
 		return ($this->ratingDifficulty);
 	}
-
 	/**
 	 * mutator method for rating difficulty
 	 *
@@ -164,7 +159,6 @@ class rating {
 	public function getRatingValue(): string {
 		return ($this->ratingValue);
 	}
-
 	/**
 	 * mutator method for rating value
 	 *
@@ -273,6 +267,7 @@ class rating {
 		}
 		return($ratings);
 	}
+
 
 	/**
 	 * gets the Rating by trail id

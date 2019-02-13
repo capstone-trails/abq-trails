@@ -182,11 +182,9 @@ class tag{
 		// create query template
 		$query = "SELECT tagId, tagName FROM tag WHERE tagId = :tagId";
 		$statement = $pdo->prepare($query);
-
 		// bind the tag id to the place holder in the template
 		$parameters = ["tagId"=> $tagId->getBytes()];
 		$statement->execute($parameters);
-
 		// grab the tag from mySQL
 		try {
 			$tag = null;
@@ -199,7 +197,22 @@ class tag{
 			// if the row couldn't be converted, rethrow it
 			throw (new \PDOException($exception->getMessage(),0,$exception));
 		}
+
+
 		//todo add getAll and maybe a getByName
+		/**
+		 * gets all Tags
+		 *
+		 * @param \PDO $pdo PDO connections object
+		 * @return \SplFixedArray SplFixedArray of Tags found or null if not found
+		 * @throws \PDOException when mySQL related errors occurs
+		 * @throws \TypeError when variables are not correct data type
+		 **/
+		public static function getAllTags(\PDO $pdo) : \SPLFixedArray {
+
+		}
+
+
 		return($tag);
 	}
 }
