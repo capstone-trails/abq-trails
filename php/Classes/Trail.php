@@ -30,7 +30,7 @@ class Trail implements \JsonSerializable {
 	private $trailId;
 	/**
 	 * url for Trail avatar photo
-	 * @var Url $trailAvatarUrl
+	 * @var string $trailAvatarUrl
 	 **/
 	private $trailAvatarUrl;
 	/**
@@ -73,7 +73,7 @@ class Trail implements \JsonSerializable {
 	 * constructor for this Trail class
 	 *
 	 * @param string|Uuid $trailId, id of this Trail
-	 * @param string|Url $trailAvatarUrl, url of this Trail's avatar picture
+	 * @param string $trailAvatarUrl, url of this Trail's avatar picture
 	 * @param string $trailDescription, description of this Trail
 	 * @param int $trailHigh, measure of the highest point of this Trail in feet
 	 * @param float $trailLatitude, measure of this Trail in degrees/minutes/seconds
