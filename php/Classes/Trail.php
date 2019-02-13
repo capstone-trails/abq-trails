@@ -367,7 +367,7 @@ class Trail implements \JsonSerializable {
 		//store trail name
 		$this->trailName = $newTrailName;
 	}
-//todo add update delete getTrailbyTrailId getTrailbyName getTrailbyLength getTrailByRating?? getTrailByDistance??
+//todo add update getTrailbyTrailId getTrailbyName getTrailbyLength getTrailByRating?? getTrailByDistance??
 	/**
 	 * inserts trail into mySQL
 	 *
@@ -410,6 +410,31 @@ class Trail implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * updates trail in mySQL
+	 *
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+		//create query template
+		$query = "UPDATE trail SET trailAvatarUrl = :trailAvatarUrl, trailDescription = :trailDescription, trailHigh = :trailHigh, trailLatitude = :trailLatitude, trailLength = :trailLength, trailLongitude = :trailLongitude, trailLow = :trailLow, trailName = :trailName WHERE trailId = :trailId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = [
+			"trailId" => $this->trailId->getBytes(),
+			"trailAvatar" => $this->trailAvatarUrl,
+			"trailDescription" => $this->trailDescription,
+			"trailHigh" => $this->trailHigh,
+			"trailLatitude" => $this->trailLatitude,
+			"trailLength" => $this->trailLength,
+			"trailLongitude" => $this->trailLongitude,
+			"trailLow" => $this->trailLow,
+			"trailName" => $this->trailName,
+		];
+		$statement->execute($parameters);
+	}
 
 
 	/**
