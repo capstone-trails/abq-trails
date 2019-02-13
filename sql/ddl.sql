@@ -9,8 +9,8 @@ DROP TABLE IF EXISTS profile;
 
 CREATE TABLE profile (
 	profileId BINARY(16) NOT NULL,
-	profileActivationToken CHAR(32) NOT NUll,
-	profileAvatarUrl VARCHAR(255) NOT NULL,
+	profileActivationToken CHAR(32),
+	profileAvatarUrl VARCHAR(255),
 	profileEmail VARCHAR(128) NOT NULL,
 	profileFirstName VARCHAR(32) NOT NULL,
 	profileHash CHAR(97) NOT NULL,
