@@ -43,27 +43,27 @@ class TrailTest extends AbqTrailsTest {
 	 * valid trail highest elevation in feet
 	 * @var string $VALID_TRAIL_HIGH
 	 **/
-	protected $VALID_TRAIL_HIGH = "10,378";
+	protected $VALID_TRAIL_HIGH = 10378;
 	/**
 	 * valid trail latitude coordinate
 	 * @var string $VALID_TRAIL_LATITUDE
 	 **/
-	protected $VALID_TRAIL_LATITUDE = "35.2197 N";
+	protected $VALID_TRAIL_LATITUDE = 35.2197;
 	/**
 	 * valid trail length
 	 * @var string $VALID_TRAIL_LENGTH
 	 **/
-	protected $VALID_TRAIL_LENGTH = "13.3";
+	protected $VALID_TRAIL_LENGTH = 13.3;
 	/**
 	 * valid trail longitude coordinate
 	 * @var string $VALID_TRAIL_LONGITUDE
 	 **/
-	protected $VALID_TRAIL_LONGITUDE = "106.4808 W";
+	protected $VALID_TRAIL_LONGITUDE = 106.4808;
 	/**
 	 * valid trail lowest elevation in feet
 	 * @var string $VALID_TRAIL_LOW
 	 **/
-	protected $VALID_TRAIL_LOW = "7060";
+	protected $VALID_TRAIL_LOW = 7060;
 	/**
 	 * valid trail name
 	 * @var string $VALID_TRAIL_NAME
@@ -79,11 +79,19 @@ class TrailTest extends AbqTrailsTest {
 	 * run the setUp operation to create secure user and hash password
 	 **/
 	public final function setUp(): void {
-		parent::setUp();
-		//
-		$password = "mysql12345";
-		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+		//create and insert a Trail to test against
+		$this->trail = new Trail(
+			generateUuidV4(),
+			"https://www.fs.usda.gov/Internet/FSE_MEDIA/fseprd563249.jpg",
+			"Located on the west face of the Sandia Mountains",
+			10378,
+			35.2197,
+			13.3,
+			106.4808,
+			7060,
+			"La Luz Trail"
+			);
+		$this->trail->insert($this->getPDO());
 	}
 
 	/**

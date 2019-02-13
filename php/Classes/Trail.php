@@ -86,7 +86,7 @@ class Trail implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 
-	public function __construct($trailId, string $trailAvatarUrl, ?string $trailDescription, ?string $trailHigh, $trailLatitude, $trailLength, $trailLongitude, ?string $trailLow, string $trailName) {
+	public function __construct($trailId, string $trailAvatarUrl, ?string $trailDescription, ?int $trailHigh, $trailLatitude, $trailLength, $trailLongitude, ?int $trailLow, string $trailName) {
 		try {
 			$this->setTrailId($trailId);
 			$this->setTrailAvatarUrl($trailAvatarUrl);
@@ -219,7 +219,7 @@ class Trail implements \JsonSerializable {
 		$newTrailHigh = trim($newTrailHigh);
 		$newTrailHigh = filter_var($newTrailHigh, FILTER_SANITIZE_NUMBER_INT);
 
-		if($newTrailHigh <= 0 || $newTrailHigh >= 32767) {
+		if($newTrailHigh < -32767 || $newTrailHigh > 32767) {
 			throw(new \RangeException("trail high is out of range"));
 		}
 
@@ -519,7 +519,7 @@ class Trail implements \JsonSerializable {
 		}
 		return($trails);
 	}
-	//todo getTrailbyLength getTrailByRating?? getTrailByDistance??
+
 	/**
 	 * get trail by trail length
 	 *
@@ -573,5 +573,6 @@ class Trail implements \JsonSerializable {
 		return($fields);
 	}
 
+	//todo getTrailByRating?? getTrailByDistance??
 
 }
