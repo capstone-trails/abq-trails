@@ -24,47 +24,47 @@ class Trail implements \JsonSerializable {
 	use ValidateUuid;
 
 	/**
-	 * id for this Trail; this is a primary key
+	 * id for Trail; this is a primary key
 	 * @var Uuid $trailId
 	 **/
 	private $trailId;
 	/**
-	 * url for this Trail avatar photo
+	 * url for Trail avatar photo
 	 * @var Url $trailAvatarUrl
 	 **/
 	private $trailAvatarUrl;
 	/**
-	 * description of this Trail, to be included with Trail name
+	 * description of Trail
 	 * @var string $trailDescription
 	 **/
 	private $trailDescription;
 	/**
 	 * measure of the highest point of the Trail in feet
-	 * @var string $trailHigh
+	 * @var int $trailHigh
 	 **/
 	private $trailHigh;
 	/**
-	 * measure of the latitude coordinate of the Trail, in degrees/minutes/seconds
-	 * @var string $trailLatitude
+	 * measure of the latitude coordinate of the Trail in degrees
+	 * @var float $trailLatitude
 	 **/
 	private $trailLatitude;
 	/**
-	 * measure of the length of the Trail, in miles
+	 * measure of the length of the Trail in miles
 	 * @var float $trailLength
 	 **/
 	private $trailLength;
 	/**
-	 * measure of the longitude of the Trail, in degrees/minutes/seconds
-	 * @var string $trailLongitude
+	 * measure of the longitude of the Trail in degrees
+	 * @var float $trailLongitude
 	 **/
 	private $trailLongitude;
 	/**
 	 * measure of the lowest point of the Trail in feet
-	 * @var string $trailLow
+	 * @var int $trailLow
 	 **/
 	private $trailLow;
 	/**
-	 * the name of this Trail
+	 * name of Trail
 	 * @var string $trailName
 	 **/
 	private $trailName;
@@ -75,15 +75,14 @@ class Trail implements \JsonSerializable {
 	 * @param string|Uuid $trailId, id of this Trail
 	 * @param string|Url $trailAvatarUrl, url of this Trail's avatar picture
 	 * @param string $trailDescription, description of this Trail
-	 * @param string $trailHigh, measure of the highest point of this Trail in feet
-	 * @param string $trailLatitude, measure of this Trail in degrees/minutes/seconds
+	 * @param int $trailHigh, measure of the highest point of this Trail in feet
+	 * @param float $trailLatitude, measure of this Trail in degrees/minutes/seconds
 	 * @param float $trailLength, measure of this Trail in miles
-	 * @param string $trailLongitude, measure of this Trail in degrees/minutes/seconds
-	 * @param string $trailLow, measure of the lowest point of this Trail in feet
+	 * @param float $trailLongitude, measure of this Trail in degrees/minutes/seconds
+	 * @param int $trailLow, measure of the lowest point of this Trail in feet
 	 * @param string $trailName, the name of this Trail
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if the data values are out of bounds (e.g. strings too long, negative integers)
-	 * @throws \ArgumentCountError when too few arguments are passed to the user-defined function
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other type of exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
@@ -102,7 +101,7 @@ class Trail implements \JsonSerializable {
 			$this->setTrailName($trailName);
 		}
 			//determine what exception type was thrown
-		catch(\InvalidArgumentException | \RangeException | \ArgumentCountError | \TypeError | \Exception $exception) {
+		catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -124,10 +123,10 @@ class Trail implements \JsonSerializable {
 	 * @throws \RangeException if $newTrailId is not positive
 	 * @throws \TypeError if $newTrailId is not a uuid or string
 	 **/
-	public function setTrailId($newTrailId) {
+	public function setTrailId($newTrailId) : void {
 		try {
 			$uuid = self::validateUuid($newTrailId);
-		} catch(\InvalidArgumentException | \RangeException | \ArgumentCountError | \TypeError | \Exception $exception) {
+		} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -140,7 +139,7 @@ class Trail implements \JsonSerializable {
 	 *
 	 * @return string url address of the trail avatar picture
 	 **/
-	public function getTrailAvatarUrl() : Url {
+	public function getTrailAvatarUrl() : string {
 		return($this->trailAvatarUrl);
 	}
 
@@ -148,15 +147,20 @@ class Trail implements \JsonSerializable {
 	 * mutator method for trail avatar url
 	 *
 	 * @param Url|string $newTrailAvatarUrl new value of trail avatar url
-	 * @throws \InvalidArgumentException if $newTrailAvatarUrl uses invalid characters
+	 * @throws \InvalidArgumentException if $newTrailAvatarUrl uses invalid characters or is too big
 	 * @throws \TypeError if $newTrailAvatarUrl is not a string
 	 **/
-	public function setTrailAvatarUrl($newTrailAvatarUrl) {
-			//verify the url is secure
+	public function setTrailAvatarUrl($newTrailAvatarUrl) : void {
+			if($newTrailAvatarUrl === null) {
+				$this->trailAvatarUrl = null;
+			}
+
+			//verify the url right size and secure
 			$newTrailAvatarUrl = trim($newTrailAvatarUrl);
 			$newTrailAvatarUrl = filter_var($newTrailAvatarUrl, FILTER_SANITIZE_URL);
-			if(empty($newTrailAvatarUrl) === true) {
-				throw(new\InvalidArgumentException("url is empty or insecure"));
+
+			if(empty($newTrailAvatarUrl) > 255) {
+				throw(new \InvalidArgumentException("url is too large or insecure"));
 			}
 
 			//store the url
@@ -168,7 +172,7 @@ class Trail implements \JsonSerializable {
 	 *
 	 * @return string single sentence description of trail
 	 **/
-	public function getTrailDescription() {
+	public function getTrailDescription() : string {
 		return($this->trailDescription);
 	}
 
@@ -179,12 +183,17 @@ class Trail implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newTrailDescription uses invalid characters
 	 * @throws \TypeError if $newTrailDescription is not a string
 	 **/
-	public function setTrailDescription($newTrailDescription) {
-		//verify description is secure
+	public function setTrailDescription($newTrailDescription) : void {
+		if($newTrailDescription === null) {
+			$this->trailDescription = null;
+		}
+
+		//verify description is not too big and secure
 		$newTrailDescription = trim($newTrailDescription);
 		$newTrailDescription = filter_var($newTrailDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newTrailDescription) === true) {
-			throw(new \InvalidArgumentException("description is empty or insecure"));
+
+		if($newTrailDescription > 280) {
+			throw(new \InvalidArgumentException("description is too large or insecure"));
 		}
 
 		//store the description
@@ -196,24 +205,23 @@ class Trail implements \JsonSerializable {
 	 *
 	 * @return string highest point of trail measured in feet
 	 **/
-	public function getTrailHigh(): string {
+	public function getTrailHigh(): int {
 		return $this->trailHigh;
 	}
 
 	/**
 	 * mutator method for trail high
 	 *
-	 * @param string $newTrailHigh new value of trail highest point
-	 * @throws \InvalidArgumentException if $newTrailHigh uses invalid characters
+	 * @param int $newTrailHigh new value of trail highest point
 	 * @throws \RangeException if $newTrailHigh is negative, zero or null
-	 * @throws \TypeError if $newTrailHigh is not a string
 	 **/
-	public function setTrailHigh($newTrailHigh) {
-		//verify that trail highest point data is secure
+	public function setTrailHigh(int $newTrailHigh) : void {
+		//verify that trail highest point data is valid and secure
 		$newTrailHigh = trim($newTrailHigh);
 		$newTrailHigh = filter_var($newTrailHigh, FILTER_SANITIZE_NUMBER_INT);
-		if(empty($newTrailHigh) === true) {
-			throw(new \InvalidArgumentException("highest point data is empty or insecure"));
+
+		if($newTrailHigh <= 0) {
+			throw(new \RangeException("trail high is out of range"));
 		}
 
 		//store the highest point data
@@ -223,25 +231,25 @@ class Trail implements \JsonSerializable {
 	/**
 	 * accessor method for trail latitude
 	 *
-	 * @return string trail latitude in degrees, minutes, seconds
+	 * @return float Trail latitude in degrees between -90 and 90
 	 **/
-	public function getTrailLatitude() {
+	public function getTrailLatitude() : float {
 		return $this->trailLatitude;
 	}
 
 	/**
 	 * mutator method for trail latitude
 	 *
-	 * @param string $newTrailLatitude new value of the trail latitude
-	 * @throws \InvalidArgumentException if $newTrailLatitude uses invalid characters
-	 * @throws \TypeError if $newTrailLatitude is not a string
+	 * @param float $newTrailLatitude new value of the trail latitude
+	 * @throws \RangeException if $newTrailLatitude is outside of range
 	 **/
-	public function setTrailLatitude($newTrailLatitude) {
-		//verify that trail latitude data is secure
+	public function setTrailLatitude($newTrailLatitude) : void {
+		//verify that trail latitude is valid and secure
 		$newTrailLatitude = trim($newTrailLatitude);
 		$newTrailLatitude = filter_var($newTrailLatitude, FILTER_SANITIZE_NUMBER_FLOAT);
-		if(empty($newTrailLatitude) === true) {
-			throw(new \InvalidArgumentException("latitude data is empty or insecure"));
+
+		if($newTrailLatitude < -90 || $newTrailLatitude > 90) {
+			throw(new \RangeException("trail latitude is out of range"));
 		}
 
 		//store the latitude data
@@ -280,28 +288,28 @@ class Trail implements \JsonSerializable {
 	/**
 	 * accessor method for trail longitude
 	 *
-	 * @return string|float trail longitude in degrees, minutes, seconds
+	 * @return float Trail longitude in degrees between -180 and 180
 	 **/
-	public function getTrailLongitude() {
+	public function getTrailLongitude() : float {
 		return $this->trailLongitude;
 	}
 
 	/**
 	 * mutator method for trail longitude
 	 *
-	 * @param string|float $newTrailLongitude new value of the trail longitude
-	 * @throws \InvalidArgumentException if $newTrailLongitude uses invalid characters
-	 * @throws \TypeError if $newTrailLongitude is not a string
+	 * @param float $newTrailLongitude new value of the trail longitude
+	 * @throws \RangeException if $newTrailLongitude is outside of range
 	 **/
-	public function setTrailLongitude($newTrailLongitude) {
-		//verfiy that trail longitude data is secure
+	public function setTrailLongitude($newTrailLongitude) : void {
+		//verify that trail longitude is valid and secure
 		$newTrailLongitude = trim($newTrailLongitude);
 		$newTrailLongitude = filter_var($newTrailLongitude, FILTER_SANITIZE_NUMBER_FLOAT);
-		if(!is_float($newTrailLongitude)) {
-			throw(new \InvalidArgumentException("longitude is empty or insecure"));
+
+		if($newTrailLongitude < -180 || $newTrailLongitude > 180) {
+			throw(new \RangeException("trail longitude is out of range"));
 		}
 
-		//store longitude data
+		//store the latitude data
 		$this->trailLongitude = $newTrailLongitude;
 	}
 
@@ -370,6 +378,7 @@ class Trail implements \JsonSerializable {
 
 		$fields["trailId"] = $this->trailId->toString();
 		return($fields);
-
 	}
+
+
 }
