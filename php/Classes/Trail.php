@@ -367,7 +367,7 @@ class Trail implements \JsonSerializable {
 		//store trail name
 		$this->trailName = $newTrailName;
 	}
-//todo add insert update delete getTrailbyTrailId getTrailbyName getTrailbyLength getTrailByRating?? getTrailByDistance??
+//todo add update delete getTrailbyTrailId getTrailbyName getTrailbyLength getTrailByRating?? getTrailByDistance??
 	/**
 	 * inserts trail into mySQL
 	 *
@@ -394,6 +394,21 @@ class Trail implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * deletes trail from mySQL
+	 *
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+		//create query template
+		$query = "DELETE FROM trail WHERE trailId = :trailId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place holder in the template
+		$parameters = ["trailId" => $this->trailId->getBytes()];
+		$statement->execute($parameters);
+	}
 
 
 
