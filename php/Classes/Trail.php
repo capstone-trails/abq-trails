@@ -17,10 +17,8 @@ use Ramsey\Uuid\Uuid;
  * @version 1.0.0
  **/
 class Trail implements \JsonSerializable {
-	//use ValidateDate;
-	use ValidateDate;
 
-	//use ValidateUuid;
+	use ValidateDate;
 	use ValidateUuid;
 
 	/**
@@ -88,9 +86,7 @@ class Trail implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 
-//todo add type hints
-
-	public function __construct($trailId, $trailAvatarUrl, $trailDescription, $trailHigh, $trailLatitude, $trailLength, $trailLongitude, $trailLow, $trailName) {
+	public function __construct($trailId, string $trailAvatarUrl, ?string $trailDescription, ?string $trailHigh, $trailLatitude, $trailLength, $trailLongitude, ?string $trailLow, string $trailName) {
 		try {
 			$this->setTrailId($trailId);
 			$this->setTrailAvatarUrl($trailAvatarUrl);
@@ -148,7 +144,7 @@ class Trail implements \JsonSerializable {
 	/**
 	 * mutator method for trail avatar url
 	 *
-	 * @param Url|string $newTrailAvatarUrl new value of trail avatar url
+	 * @param string $newTrailAvatarUrl new value of trail avatar url
 	 * @throws \InvalidArgumentException if $newTrailAvatarUrl uses invalid characters or is too big
 	 * @throws \TypeError if $newTrailAvatarUrl is not a string
 	 **/
@@ -185,7 +181,7 @@ class Trail implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newTrailDescription uses invalid characters
 	 * @throws \TypeError if $newTrailDescription is not a string
 	 **/
-	public function setTrailDescription($newTrailDescription) : void {
+	public function setTrailDescription(?string $newTrailDescription) : void {
 		if($newTrailDescription === null) {
 			$this->trailDescription = null;
 		}
@@ -217,13 +213,13 @@ class Trail implements \JsonSerializable {
 	 * @param int $newTrailHigh new value of trail highest point
 	 * @throws \RangeException if $newTrailHigh is negative, zero or null
 	 **/
-	//todo make sure trail high is in range
-	public function setTrailHigh(int $newTrailHigh) : void {
+
+	public function setTrailHigh(?int $newTrailHigh) : void {
 		//verify that trail highest point data is valid and secure
 		$newTrailHigh = trim($newTrailHigh);
 		$newTrailHigh = filter_var($newTrailHigh, FILTER_SANITIZE_NUMBER_INT);
 
-		if($newTrailHigh <= 0) {
+		if($newTrailHigh <= 0 || $newTrailHigh >= 32767) {
 			throw(new \RangeException("trail high is out of range"));
 		}
 
@@ -274,7 +270,7 @@ class Trail implements \JsonSerializable {
 	 * @param float $newTrailLength new value of the trail length\
 	 * @throws \RangeException if $newTrailLength is a negative number, zero or null\
 	 **/
-	public function setTrailLength(int $newTrailLength) : void {
+	public function setTrailLength($newTrailLength) : void {
 		//verify that trail length data is valid and secure
 		$newTrailLength = trim($newTrailLength);
 		$newTrailLength = filter_var($newTrailLength, FILTER_SANITIZE_NUMBER_FLOAT);
@@ -318,9 +314,9 @@ class Trail implements \JsonSerializable {
 	/**
 	 * accessor method for trail lowest point
 	 *
-	 * @return string trail lowest point in feet
+	 * @return int trail lowest point in feet
 	 **/
-	public function getTrailLow() {
+	public function getTrailLow() : int {
 		return $this->trailLow;
 	}
 
@@ -332,12 +328,13 @@ class Trail implements \JsonSerializable {
 	 * @throws \RangeException if $newTrailLow is negative, zero or null
 	 * @throws \TypeError if $newTrailLow is not a string
 	 **/
-	//todo make range exception
-	public function setTrailLow($newTrailLow) {
+	public function setTrailLow(?int $newTrailLow) {
+		//verify that trail highest point data is valid and secure
 		$newTrailLow = trim($newTrailLow);
 		$newTrailLow = filter_var($newTrailLow, FILTER_SANITIZE_NUMBER_INT);
-		if(!is_integer($newTrailLow) ) {
-			throw(new \InvalidArgumentException("lowest point data is not a number or insecure"));
+
+		if($newTrailLow <= 0 || $newTrailLow >= 32767) {
+			throw(new \RangeException("lowest point data is out of range"));
 		}
 
 		//store trail lowest point data
@@ -360,7 +357,7 @@ class Trail implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newTrailName uses invalid characters
 	 * @throws \TypeError if $newTrailName is not a string
 	 **/
-	public function setTrailName($newTrailName) {
+	public function setTrailName(string $newTrailName) {
 		$newTrailName = trim($newTrailName);
 		$newTrailName = filter_var($newTrailName, FILTER_SANITIZE_STRING);
 		if(empty($newTrailName) === true) {
