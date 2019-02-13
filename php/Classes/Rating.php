@@ -240,14 +240,55 @@ class rating {
 		$parameters = ["ratingProfileId" => $ratingProfileId->getBytes()];
 		$statement->execute($parameters);
 		// build an array of ratings
-		$rating = new \SplFixedArray($statement->rowCount());
+		$ratings = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false){
 			try {
 				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
 				$ratings[$ratings->key()] = $rating;
 				$ratings->next();
-			} catch(\Exception $)
+			} catch(\Exception $exception){
+				// if the row couldn't be converted, rethrow it
+				throw (new \PDOException($exception->getMessage(), 0, $exception));
+			}
 		}
+		return($ratings);
+	}
+
+	/**
+	 * gets the Rating by trail id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $ratingTrailId
+	 * @return \SplFixedArray SplFixedArray of Ratings found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public function getRatingByRatingTrailId(\PDO $pdo, $ratingTrailId) : \SplFixedArray{
+		try {
+			$ratingTrailId = self::validateUuid($ratingTrailId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingTrailId = :ratingTrailId";
+		$statement = $pdo->prepare($query);
+		// bind the rating trail id to the place holder in the template
+		$parameters = ["ratingTrailId" => $ratingTrailId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of ratings
+		$ratings = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false){
+			try {
+				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
+				$ratings[$ratings->key()] = $rating;
+				$ratings->next();
+			} catch(\Exception $exception){
+				// if the row couldn't be converted, rethrow it
+				throw (new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($ratings);
 	}
 }
