@@ -125,5 +125,37 @@ class TrailTag {
 		$this->trailTagProfileId = $uuid;
 	}
 	//todo add insert delete getTrailTagByTrailTrailIdAndTrailTagTagId getTrailTagByTagId getTrailByProfileId getTrailTagByTrailId
+/**
+* inserts this Profile into mySQL
+*
+* @param \PDO $pdo PDO connection object
+* @throws \PDOException when mySQL related errors occur
+* @throws \TypeError if $pdo is not a PDO connection object
+**/
+	public function insert (\PDO $pdo) : void {
+		//create query template
+		$query = "INSERT INTO trailTag(trailTagTagId, trailTagTrailId, trailTagProfileId) VALUES :trailTagTagId, :trailTagTrailId, :trailTagProfileId";
+		$statement = $pdo->prepare($query);
+
+		//bind variables to place holders in the template
+		$parameters = ["trailTagTagId" => $this->trailTagTagId, "trailTagTrailId" => $this->trailTagTrailId, "trailTagProfileId" => $this->trailTagProfileId];
+		$statement->execute($parameters);
+	}
+	/**
+	 * deletes this Profile from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete (\PDO $pdo) : void {
+		//create query template
+		$query = "DELETE FROM trailTag WHERE trailTagTagId = :trailTagTagId AND trailTagTrailId = :trailTagTrailId ";
+		$statement = $pdo->prepare($query);
+
+		//bind variable to place holders
+		$parameters = ["trailTagTagId" => $this->trailTagTagId, "trailTagTrailId" => $this->trailTagTrailId, "trailTagProfileId" => $this->trailTagProfileId];
+		$statement->execute($parameters);
+	}
 
 }
