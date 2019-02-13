@@ -169,6 +169,21 @@ class TrailTag {
  *
  */
 	public static function getTrailTagByTrailTagTagIdAndTrailTagTrailId (\PDO $pdo, Uuid $trailTagTagId, Uuid $trailTagTrailId) : \SplFixedArray{
-
+		try {
+			$trailTagTagId = self::validateUuid($trailTagTagId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		try {
+			$trailTagTrailId = self::validateUuid($trailTagTrailId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		//create query template
+		$query = "SELECT trailTagTagId, trailTagTrailId, trailTagProfileId FROM trailTag WHERE trailTagTagId = :trailTagTagId AND trailTagTrailId = :trailTagTrailId";
+		$statement = $pdo->prepare($query);
+		//bind the trailTagTagId and trailTagTrailId to the placeholder
+		$parameters = ["trailTagTagId" => $trailTagTagId, "trailTagTrailId" => $trailTagTrailId];
+		$statement->execute($parameters);
 	}
 }
