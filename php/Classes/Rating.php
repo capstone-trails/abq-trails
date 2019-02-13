@@ -17,11 +17,6 @@ use Ramsey\Uuid\Uuid;
 class rating {
 	use ValidateUuid;
 	/**
-	 * id for this Rating; this is the primary key
-	 * @var Uuid $ratingId
-	 **/
-	private $ratingId;
-	/**
 	 * id of the profile that rated the trail; this is a foreign key
 	 * @var Uuid $ratingProfileId
 	 **/
@@ -68,34 +63,6 @@ class rating {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-	}
-
-
-	/**
-	 * accessor method for rating id
-	 *
-	 * @return Uuid value of rating id
-	 **/
-	public function getRating(): Uuid {
-		return ($this->ratingId);
-	}
-
-	/**
-	 * mutator method for rating id
-	 *
-	 * @param Uuid|string $newRatingId
-	 * @throws \RangeException if $newRatingId
-	 * @throws \TypeError if $newRatingId is not a uuid or string
-	 **/
-	public function setRatingId($newRatingId): void {
-		try {
-			$uuid = self::validateUuid($newRatingId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw (new $exceptionType($exception->getMessage(), 0, $exception));
-		}
-		// convert and store the rating id
-		$this->ratingId = $uuid;
 	}
 
 
@@ -197,6 +164,7 @@ class rating {
 	public function getRatingValue(): string {
 		return ($this->ratingValue);
 	}
+
 	/**
 	 * mutator method for rating value
 	 *
@@ -220,7 +188,51 @@ class rating {
 		// store the rating value
 		$this->ratingDifficulty = $newRatingValue;
 	}
+
+
 	//todo add insert update delete getRatingByRatingProfileIdAndRatingTrailId
+	/**
+	 * inserts this Rating into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occurs
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+		//create query template
+		$query = "INSERT INTO rating(ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty) VALUES (:ratingProfileId, :ratingTrailId, ratingValue, ratingDifficulty)";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(), "ratingTrailId" => $this->ratingTrailId->getBytes(), "ratingValue" => $this->ratingValue, "ratingDifficulty" => $this->ratingDifficulty];
+		$statement->execute($parameters);
+	}
+
+
+	/**
+	 * deletes this Rating from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+		//create query template
+		$query = "DELETE FROM rating WHERE ";
+	}
+
+
+	/**
+	 * updates this Rating in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+
+	}
+
+
 	/**
 	 * gets the Rating by profile id
 	 *
@@ -230,14 +242,14 @@ class rating {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not correct data type
 	 **/
-	public function getRatingByRatingProfileId(\PDO $pdo, $ratingProfileId) : \SplFixedArray{
+	public function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, $ratingProfileId) : \SplFixedArray{
 		try {
 			$ratingProfileId = self::validateUuid($ratingProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId";
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
 		$statement = $pdo->prepare($query);
 		// bind the rating profile id to the place holder in the template
 		$parameters = ["ratingProfileId" => $ratingProfileId->getBytes()];

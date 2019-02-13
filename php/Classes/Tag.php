@@ -199,6 +199,7 @@ class tag{
 			// if the row couldn't be converted, rethrow it
 			throw (new \PDOException($exception->getMessage(),0,$exception));
 		}
+		//todo add getAll and maybe a getByName
 		return($tag);
 	}
 }
