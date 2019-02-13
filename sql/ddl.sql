@@ -26,9 +26,9 @@ CREATE TABLE trail (
 	trailAvatarUrl VARCHAR(255) NOT NULL,
 	trailDescription VARCHAR(280),
 	trailHigh SMALLINT,
-	trailLatitude DECIMAL(9, 6) NOT NULL,
-	trailLength DECIMAL(5, 2),
-	trailLongitude DECIMAL(9, 6) NOT NULL,
+	trailLatitude DECIMAL(10, 8) NOT NULL,
+	trailLength DECIMAL(5, 1),
+	trailLongitude DECIMAL(11, 8) NOT NULL,
 	trailLow SMALLINT,
 	trailName VARCHAR(128) NOT NULL,
 	PRIMARY KEY (trailId)

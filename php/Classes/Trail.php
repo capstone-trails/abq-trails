@@ -74,9 +74,9 @@ class Trail implements \JsonSerializable {
 	 * @param string $trailAvatarUrl, url of this Trail's avatar picture
 	 * @param string $trailDescription, description of this Trail
 	 * @param int $trailHigh, measure of the highest point of this Trail in feet
-	 * @param float $trailLatitude, measure of this Trail in degrees/minutes/seconds
+	 * @param float $trailLatitude, measure of this Trail in degrees
 	 * @param float $trailLength, measure of this Trail in miles
-	 * @param float $trailLongitude, measure of this Trail in degrees/minutes/seconds
+	 * @param float $trailLongitude, measure of this Trail in degrees
 	 * @param int $trailLow, measure of the lowest point of this Trail in feet
 	 * @param string $trailName, the name of this Trail
 	 * @throws \InvalidArgumentException if data types are not valid
@@ -98,6 +98,7 @@ class Trail implements \JsonSerializable {
 			$this->setTrailLow($trailLow);
 			$this->setTrailName($trailName);
 		}
+
 			//determine what exception type was thrown
 		catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
 			$exceptionType = get_class($exception);
@@ -247,7 +248,7 @@ class Trail implements \JsonSerializable {
 		$newTrailLatitude = trim($newTrailLatitude);
 		$newTrailLatitude = filter_var($newTrailLatitude, FILTER_SANITIZE_NUMBER_FLOAT);
 
-		if($newTrailLatitude < -90 || $newTrailLatitude > 90) {
+		if(($newTrailLatitude > -90) && ($newTrailLatitude < 90)) {
 			throw(new \RangeException("trail latitude is out of range"));
 		}
 
@@ -303,7 +304,7 @@ class Trail implements \JsonSerializable {
 		$newTrailLongitude = trim($newTrailLongitude);
 		$newTrailLongitude = filter_var($newTrailLongitude, FILTER_SANITIZE_NUMBER_FLOAT);
 
-		if($newTrailLongitude < -180 || $newTrailLongitude > 180) {
+		if(($newTrailLongitude > -180) && ($newTrailLongitude < 180)) {
 			throw(new \RangeException("trail longitude is out of range"));
 		}
 
