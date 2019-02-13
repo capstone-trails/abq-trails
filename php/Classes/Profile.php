@@ -16,6 +16,8 @@ use Ramsey\Uuid\Uuid;
  *
  */
 class Profile {
+	//use Validate Uuid
+	use ValidateUuid;
 /**
  * id for user profile, this is a primary key
  * @var Uuid $profileId
