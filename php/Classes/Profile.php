@@ -75,6 +75,7 @@ class Profile {
  * @throws \TypeError if data types violate type hints
  * @throws \Exception if some other exception occurs
  **/
+//todo add type hints and make profile activation token nullable
 public function __construct($newProfileId, $newProfileActivationToken, $newProfileAvatarUrl, $newProfileEmail, $newProfileFirstName, $newProfileHash, $newProfileLastName, $newProfileUsername) {
 	try {
 		$this->setProfileId($newProfileId);
@@ -129,6 +130,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
  * @throws \RangeException if activation token is not 32 characters
  * @throws \TypeError if activation token is not a string
  */
+//todo make activation token nullable and treat activation token like hexadecimal
 	public function setProfileActivationToken ($newProfileActivationToken) {
 	if(strlen ($newProfileActivationToken) !== 32) {
 		throw(new \RangeException("must be 32 characters"));
@@ -295,7 +297,7 @@ public function __construct($newProfileId, $newProfileActivationToken, $newProfi
 		}
 		$this->profileUsername = $newProfileUsername;
 	}
-
+//todo add docblocks
 	public function insert(\PDO $pdo) : void {
 		$query = "INSERT INTO profile(profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername) 
 VALUES(:profileId, :profileActivationToken, :profileAvatarUrl, :profileEmail, :profileFirstName, :profileHash, :profileLastName, :profileUsername)";
@@ -422,23 +424,23 @@ VALUES(:profileId, :profileActivationToken, :profileAvatarUrl, :profileEmail, :p
 		}
 		return ($profiles);
 	}
-	public static function getAllProfiles(\PDO $pdo) : \SplFixedArray {
-		$query = "SELECT profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername";
-		$statement = $pdo->prepare($query);
-		$statement->execute();
-
-		$profiles = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !==false) {
-			try {
-				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileFirstName"], $row["profileHash"], $row["profileLastName"], $row["profileUsername"]);
-				$profiles[$profiles->key()] = $profile;
-				$profiles->next();
-			}catch(\Exception $exception) {
-					throw(new \PDOException($exception->getMessage(), 0, $exception));
-				}
-		}
-		return ($profiles);
-	}
+//	public static function getAllProfiles(\PDO $pdo) : \SplFixedArray {
+//		$query = "SELECT profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername";
+//		$statement = $pdo->prepare($query);
+//		$statement->execute();
+//
+//		$profiles = new \SplFixedArray($statement->rowCount());
+//		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+//		while(($row = $statement->fetch()) !==false) {
+//			try {
+//				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileFirstName"], $row["profileHash"], $row["profileLastName"], $row["profileUsername"]);
+//				$profiles[$profiles->key()] = $profile;
+//				$profiles->next();
+//			}catch(\Exception $exception) {
+//					throw(new \PDOException($exception->getMessage(), 0, $exception));
+//				}
+//		}
+//		return ($profiles);
+//	}
 }
 

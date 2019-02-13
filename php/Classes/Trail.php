@@ -88,6 +88,8 @@ class Trail implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 
+//todo add type hints
+
 	public function __construct($trailId, $trailAvatarUrl, $trailDescription, $trailHigh, $trailLatitude, $trailLength, $trailLongitude, $trailLow, $trailName) {
 		try {
 			$this->setTrailId($trailId);
@@ -215,6 +217,7 @@ class Trail implements \JsonSerializable {
 	 * @param int $newTrailHigh new value of trail highest point
 	 * @throws \RangeException if $newTrailHigh is negative, zero or null
 	 **/
+	//todo make sure trail high is in range
 	public function setTrailHigh(int $newTrailHigh) : void {
 		//verify that trail highest point data is valid and secure
 		$newTrailHigh = trim($newTrailHigh);
@@ -329,6 +332,7 @@ class Trail implements \JsonSerializable {
 	 * @throws \RangeException if $newTrailLow is negative, zero or null
 	 * @throws \TypeError if $newTrailLow is not a string
 	 **/
+	//todo make range exception
 	public function setTrailLow($newTrailLow) {
 		$newTrailLow = trim($newTrailLow);
 		$newTrailLow = filter_var($newTrailLow, FILTER_SANITIZE_NUMBER_INT);
@@ -366,7 +370,7 @@ class Trail implements \JsonSerializable {
 		//store trail name
 		$this->trailName = $newTrailName;
 	}
-
+//todo add insert update delete getTrailbyTrailId getTrailbyName getTrailbyLength getTrailByRating?? getTrailByDistance??
 	/**
 	 * formats the state variables for JSON serialization
 	 *

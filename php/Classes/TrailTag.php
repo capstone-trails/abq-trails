@@ -16,6 +16,7 @@ use Ramsey\Uuid\Uuid;
  *
  */
 class TrailTag {
+	use ValidateUuid;
 /**
  * this is the id that connects the trail tag to the tag this is a primary key
  */
@@ -67,7 +68,7 @@ class TrailTag {
  */
 	public function setTrailTagTagId($newTrailTagTagId) : void {
 		try{
-			$uuid = self::valudateUuid($newTrailTagTagId);
+			$uuid = self::validateUuid($newTrailTagTagId);
 		} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
@@ -92,7 +93,7 @@ class TrailTag {
  */
 	public function setTrailTagTrailId($newTrailTagTrailId) : void {
 		try {
-			$uuid = self::valudateUuid($newTrailTagTrailId);
+			$uuid = self::validateUuid($newTrailTagTrailId);
 		} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
@@ -123,4 +124,6 @@ class TrailTag {
 		}
 		$this->trailTagProfileId = $uuid;
 	}
+	//todo add insert delete getTrailTagByTrailTrailIdAndTrailTagTagId getTrailTagByTagId getTrailByProfileId getTrailTagByTrailId
+
 }

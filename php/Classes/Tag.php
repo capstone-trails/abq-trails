@@ -125,7 +125,7 @@ class tag{
 		$query = "INSERT INTO tag(tagId, tagName) VALUES(:tagId, tagName)";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the plane holders in the template
-		$parameters = ["tagId" => $this->tagId->getBytes(), "tagName"=> $this->tagName->getBytes()];
+		$parameters = ["tagId" => $this->tagId->getBytes(), "tagName"=> $this->tagName];
 		$statement->execute($parameters);
 	}
 
@@ -156,7 +156,7 @@ class tag{
 	 **/
 	public function update(\PDO $pdo) : void {
 		// create query template
-		$query = "UPDATE tag SET tagId = :tagId, tagName = :tagName WHERE tagId = :tagId";
+		$query = "UPDATE tag SET tagName = :tagName WHERE tagId = :tagId";
 		$statement = $pdo->prepare($query);
 		$parameters = ["tagId"=> $this->getBytes(),"tagName" => $this->tagName];
 		$statement->execute($parameters);

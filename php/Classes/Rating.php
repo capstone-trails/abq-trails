@@ -15,6 +15,7 @@ use Ramsey\Uuid\Uuid;
  * @author Robert Dominguez <rdominguez45@cnm.edu
  **/
 class rating {
+	use ValidateUuid;
 	/**
 	 * id for this Rating; this is the primary key
 	 * @var Uuid $ratingId
@@ -171,6 +172,7 @@ class rating {
 	 * @throws \RangeException if $newRatingDifficulty
 	 * @throws \TypeError if $newRatingDifficulty is not a string
 	 **/
+	//todo treat difficulty like an integer
 	public function setRatingDifficulty(string $newRatingDifficulty): void {
 		// verify the rating difficulty is secure
 		$newRatingDifficulty = trim($newRatingDifficulty);
@@ -203,6 +205,7 @@ class rating {
 	 * @throws \RangeException if $newRatingValue
 	 * @throws \TypeError if $newRatingValue is not a string
 	 **/
+	//todo treat value like an integer
 	public function setRatingValue(string $newRatingValue) : void {
 		// verify the rating value is secure
 		$newRatingValue = trim($newRatingValue);
@@ -217,7 +220,7 @@ class rating {
 		// store the rating value
 		$this->ratingDifficulty = $newRatingValue;
 	}
-
+	//todo add insert update delete getRatingByRatingProfileIdAndRatingTrailId
 	/**
 	 * gets the Rating by profile id
 	 *
