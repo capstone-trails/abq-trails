@@ -1,6 +1,6 @@
 {
   "require": {
-    "php": "*",
+    "php": "7.3",
     "ext-json": "*",
     "ext-pdo": "*",
     "ramsey/uuid": "@stable",

@@ -104,7 +104,7 @@ class rating {
 	}
 
 	/**
-	 * mutator method for rating trail id
+	 * mutator method for rating trail idgbngfn
 	 *
 	 * @param string|Uuid $newRatingTrailId
 	 * @throws \RangeException if $newTrailId is not positive
@@ -229,7 +229,11 @@ class rating {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function update(\PDO $pdo) : void {
-
+		// create query template
+		$query = "UPDATE rating SET ratingProfieId = :ratingProfileId, ratingTrailId = :ratingTrailId, ratingValue = :ratingValue, ratingDifficulty = :ratingDifficulty";
+		$statement = $pdo->prepare($query);
+		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(),"ratingTrailId" => $this->ratingTrailId->getBytes(), "ratingValue" => $this->ratingValue, "ratingDifficulty => $this->ratingDifficulty"];
+		$statement->execute($parameters);
 	}
 
 
