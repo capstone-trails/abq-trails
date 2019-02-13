@@ -1,6 +1,13 @@
 <?php
 namespace CapstoneTrails\AbqTrails;
-use mysql_xdevapi\Exception;
+
+//our autoloader
+require_once("autoload.php");
+//composer autoloader
+require_once(dirname(__DIR__,2) . "/vendor/autoload.php");
+
+use Ramsey\Uuid\Uuid;
+
 
 /**
  * Class tag
@@ -9,6 +16,7 @@ use mysql_xdevapi\Exception;
  * @author Robert Dominguez <rdominguez45@cnm.edu
  **/
 class tag{
+	use ValidateUuid;
 	/**
 	 * id for this Tag; this is the primary key
 	 * @var Uuid $tagId
@@ -111,7 +119,7 @@ class tag{
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 * //
+	 **/
 	public function insert(\PDO $pdo) : void {
 		// create query template
 		$query = "INSERT INTO tag(tagId, tagName) VALUES(:tagId, tagName)";
@@ -120,7 +128,6 @@ class tag{
 		$parameters = ["tagId" => $this->tagId->getBytes(), "tagName"=> $this->tagName->getBytes()];
 		$statement->execute($parameters);
 	}
-	 **/
 
 
 	/**
@@ -129,7 +136,7 @@ class tag{
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 * //
+	 **/
 	public function delete(\PDO $pdo) : void{
 		// create query template
 		$query = "DELETE FROM tag WHERE tagId = :tagId";
@@ -138,7 +145,6 @@ class tag{
 		$parameters = ["tagId"=>$this->tagId->getBytes()];
 		$statement->execute($parameters);
 	}
-	 **/
 
 
 	/**
@@ -147,7 +153,7 @@ class tag{
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
-	 * //
+	 **/
 	public function update(\PDO $pdo) : void {
 		// create query template
 		$query = "UPDATE tag SET tagId = :tagId, tagName = :tagName WHERE tagId = :tagId";
@@ -155,7 +161,6 @@ class tag{
 		$parameters = ["tagId"=> $this->getBytes(),"tagName" => $this->tagName];
 		$statement->execute($parameters);
 	}
-	 **/
 
 
 	/**
@@ -166,7 +171,7 @@ class tag{
 	 * @return Tag|null Tag found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
-	 //
+	 **/
 	public static function getTagByTagId(\PDO $pdo, $tagId) : ?Tag {
 		// sanitize the tagId before searching
 		try {
@@ -196,5 +201,4 @@ class tag{
 		}
 		return($tag);
 	}
-	**/
 }

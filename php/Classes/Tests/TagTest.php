@@ -4,7 +4,7 @@ namespace CapstoneTrails\AbqTrails\Tests;
 use CapstoneTrails\AbqTrails\Tag;
 
 //our autoloader
-require_once(dirname(__DIR__) . "/autoload.php");
+require_once(dirname(__DIR__, 1) . "/autoload.php");
 
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
