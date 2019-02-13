@@ -176,27 +176,28 @@ class tag{
 		// sanitize the tagId before searching
 		try {
 			$tagId = self::validateUuid($tagId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
-			throw (new \PDOException($exception->getMessage(),0,$exception));
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
 		$query = "SELECT tagId, tagName FROM tag WHERE tagId = :tagId";
 		$statement = $pdo->prepare($query);
 		// bind the tag id to the place holder in the template
-		$parameters = ["tagId"=> $tagId->getBytes()];
+		$parameters = ["tagId" => $tagId->getBytes()];
 		$statement->execute($parameters);
 		// grab the tag from mySQL
 		try {
 			$tag = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-			if($row !== false){
+			if($row !== false) {
 				$tag = new Tag($row["tagId"], $row["tagName"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
-			throw (new \PDOException($exception->getMessage(),0,$exception));
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
+	}
 
 
 		//todo add getAll and maybe a getByName
@@ -216,17 +217,19 @@ class tag{
 			// build an array of tags
 			$tags = new \SplFixedArray($statement->rowCount());
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			while(($row = $statement->fetch()) !== false){
+			while(($row = $statement->fetch()) !== false) {
 				try {
 					$tag = new Tag($row["tagId"], $row["tagName"]);
+					$tags[$tags->key()] = $tag;
+					$tags->next();
 				} catch(\Exception $exception){
 					// if the row couldn't be converted, rethrow it
 					throw (new \PDOException($exception->getMessage(), 0, $exception));
 				}
-			} return ($tags);
+			}
+			return ($tags);
 		}
 
 
-		return($tag);
-	}
+
 }

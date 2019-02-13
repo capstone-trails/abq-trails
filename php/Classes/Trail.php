@@ -378,7 +378,7 @@ class Trail implements \JsonSerializable {
 	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO trail(trailId, trailAvatarUrl, trailDescription, trailHigh, trailLatitude, trailLength, trailLongitude, trailLow, trailName)";
+		$query = "INSERT INTO trail(trailId, trailAvatarUrl, trailDescription, trailHigh, trailLatitude, trailLength, trailLongitude, trailLow, trailName) VALUES(:trailId, :trailAvatarUrl, :trailDescription, :trailHigh, :trailLatitude, :trailLength, :trailLongitude, :trailLow, :trailName)";
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the place holders in the template
 		$parameters = [
@@ -390,7 +390,7 @@ class Trail implements \JsonSerializable {
 			"trailLength" => $this->trailLength,
 			"trailLongitude" => $this->trailLongitude,
 			"trailLow" => $this->trailLow,
-			"trailName" => $this->trailName,
+			"trailName" => $this->trailName
 		];
 		$statement->execute($parameters);
 	}

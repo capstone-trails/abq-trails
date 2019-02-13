@@ -105,32 +105,33 @@ class TrailTest extends AbqTrailsTest {
 		$trail = new Trail(
 			$trailId,
 			$this->VALID_TRAIL_AVATAR_URL,
-			$this->VALID_TRAIL_AVATAR_URL_2,
+			//$this->VALID_TRAIL_AVATAR_URL_2,
 			$this->VALID_TRAIL_DESCRIPTION,
-			$this->VALID_TRAIL_DESCRIPTION_2,
+			//$this->VALID_TRAIL_DESCRIPTION_2,
 			$this->VALID_TRAIL_HIGH,
 			$this->VALID_TRAIL_LATITUDE,
 			$this->VALID_TRAIL_LENGTH,
 			$this->VALID_TRAIL_LONGITUDE,
 			$this->VALID_TRAIL_LOW,
 			$this->VALID_TRAIL_NAME,
-			$this->VALID_TRAIL_NAME_2);
+			//$this->VALID_TRAIL_NAME_2)
+		);
 		$trail->insert($this->getPDO());
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoTrail = Trail::getTrailByTrailId($this->getPDO(), $trail->getTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertEquals($pdoTrail->getTrailId(), $trailId);
 		$this->assertEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL);
-		$this->assertEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL_2);
+		//$this->assertEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL_2);
 		$this->assertEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION);
-		$this->assertEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION_2);
+		//$this->assertEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION_2);
 		$this->assertEquals($pdoTrail->getTrailHigh(), $this->VALID_TRAIL_HIGH);
 		$this->assertEquals($pdoTrail->getTrailLatitude(), $this->VALID_TRAIL_LATITUDE);
 		$this->assertEquals($pdoTrail->getTrailLength(), $this->VALID_TRAIL_LENGTH);
 		$this->assertEquals($pdoTrail->getTrailLongitude(), $this->VALID_TRAIL_LONGITUDE);
 		$this->assertEquals($pdoTrail->getTrailLow(), $this->VALID_TRAIL_LOW);
 		$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME);
-		$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME_2);
+		//$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME_2);
 	}
 
 	/**
