@@ -367,7 +367,7 @@ class Trail implements \JsonSerializable {
 		//store trail name
 		$this->trailName = $newTrailName;
 	}
-//todo getTrailbyLength getTrailByRating?? getTrailByDistance??
+
 	/**
 	 * inserts trail into mySQL
 	 *
@@ -511,6 +511,47 @@ class Trail implements \JsonSerializable {
 			try {
 				$trail = new Trail($row["trailId"], $row["trailAvatarUrl"], $row["trailDescription"], $row["trailHigh"], $row["trailLatitude"], $row["trailLength"], $row["trailLongitude"], $row["trailLow"], $row["trailName"]);
 				$trails[$trails->key()] = $trail;
+				$trails->next();
+			} catch(\Exception $exception) {
+				//if the row could not be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($trails);
+	}
+	//todo getTrailbyLength getTrailByRating?? getTrailByDistance??
+	/**
+	 * get trail by trail length
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray of trail found or null if not found
+	 * @throws \PDOException when mySQL errors occur
+	 **/
+	public static function getTrailByTrailLength(\PDO $pdo, float $trailLength) : \SplFixedArray {
+		//verify that trail length data is valid and secure
+		$trailLength = trim($trailLength);
+		$trailLength = filter_var($trailLength, FILTER_SANITIZE_NUMBER_FLOAT);
+
+		if($trailLength <= 0) {
+			throw(new \RangeException("trail length is less than zero"));
+		}
+
+		//create query template
+		$query = "SELECT trailId, trailAvatarUrl, trailDescription, trailHigh, trailLatitude, trailLength, trailLongitude, trailLow, trailName FROM trail WHERE trailLength LIKE :trailLength";
+		$statement = $pdo->prepare($query);
+
+		//bind the trail length
+		$trailLength = "%$trailLength%";
+		$parameters = ["trailLength" => $trailLength];
+		$statement->execute($parameters);
+
+		//build an array of trails
+		$trails = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$trail = new Trail($row["trailId"], $row["trailAvatarUrl"], $row["trailDescription"], $row["trailHigh"], $row["trailLatitude"], $row["trailLength"], $row["trailLongitude"], $row["trailLow"], $row["trailName"]);
+				$trails[$trails->key()] = $trails;
 				$trails->next();
 			} catch(\Exception $exception) {
 				//if the row could not be converted, rethrow it
