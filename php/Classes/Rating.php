@@ -229,6 +229,20 @@ class rating {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT ";
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the rating profile id to the place holder in the template
+		$parameters = ["ratingProfileId" => $ratingProfileId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of ratings
+		$rating = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false){
+			try {
+				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
+				$ratings[$ratings->key()] = $rating;
+				$ratings->next();
+			} catch(\Exception $)
+		}
 	}
 }
