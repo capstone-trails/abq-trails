@@ -1,5 +1,5 @@
 <?php
-namespace CapstoneTrails\AbqTrails\Php\Lib;
+//namespace CapstoneTrails\AbqTrails;
 
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 

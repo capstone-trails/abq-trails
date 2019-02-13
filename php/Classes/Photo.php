@@ -1,5 +1,13 @@
 <?php
-namespace  CapstoneTrails\AbqTrails;
+namespace CapstoneTrails\AbqTrails;
+
+//our autoloader
+require_once("autoload.php");
+//composer autoloader
+require_once(dirname(__DIR__,2) . "/vendor/autoload.php");
+
+use Ramsey\Uuid\Uuid;
+
 /**
  * This trait will inject a method to validate mySQL style attributes in photo.
  * convert a string representation to a photo object or throw an exception.

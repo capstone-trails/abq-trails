@@ -1,10 +1,12 @@
 <?php
 namespace CapstoneTrails\AbqTrails\Tests;
 
-//use \abqtrails\Tag;
+use CapstoneTrails\AbqTrails\Tag;
 
-//grab the class under scrutiny
-require_once(dirname(__DIR__, 1) . "/autoload.php");
+//our autoloader
+require_once(dirname(__DIR__) . "/autoload.php");
+
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
  * Full PHPUnit for the Tag class

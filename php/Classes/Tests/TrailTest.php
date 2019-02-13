@@ -1,12 +1,12 @@
 <?php
 namespace CapstoneTrails\AbqTrails\Tests;
 
-use CapstoneTrails\AbqTrails\Classes\Trail;
-use function CapstoneTrails\AbqTrails\Php\Lib\generateUuidV4;
-use CapstoneTrails\AbqTrails\Tests\Secret;
+use CapstoneTrails\AbqTrails\Trail;
 
 //our autoloader
-require_once(dirname(__DIR__, 1) . "/autoload.php");
+require_once(dirname(__DIR__) . "/autoload.php");
+
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
  * Full PHPUnit Tests for the Trail class

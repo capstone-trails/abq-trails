@@ -1,6 +1,11 @@
 <?php
 namespace CapstoneTrails\AbqTrails;
-use mysql_xdevapi\Exception;
+
+//our autoloader
+require_once("autoload.php");
+//composer autoloader
+require_once(dirname(__DIR__,2) . "/vendor/autoload.php");
+
 use Ramsey\Uuid\Uuid;
 
 /**

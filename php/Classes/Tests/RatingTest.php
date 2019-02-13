@@ -1,13 +1,12 @@
 <?php
 namespace CapstoneTrails\AbqTrails\Tests;
 
-//use \abqtrails\Tag;
+use CapstoneTrails\AbqTrails\Rating;
 
-//grab the class under scrutiny
-use function CapstoneTrails\AbqTrails\Php\Lib\generateUuidV4;
-use CapstoneTrails\AbqTrails\Profile;
+//our autoloader
+require_once(dirname(__DIR__) . "/autoload.php");
 
-require_once(dirname(__DIR__, 1) . "/autoload.php");
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
  * Full PHPUnit for the Rating class

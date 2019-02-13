@@ -1,7 +1,13 @@
 <?php
 namespace CapstoneTrails\AbqTrails\Tests;
 
-require_once(dirname(__DIR__, 1) . "/autoload.php");
+use CapstoneTrails\AbqTrails\Photo;
+
+//our autoloader
+require_once(dirname(__DIR__) . "/autoload.php");
+
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
+
 /**
  * Full PHPUnit Tests for the photo class
  *

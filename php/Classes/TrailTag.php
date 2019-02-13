@@ -1,5 +1,13 @@
 <?php
 namespace CapstoneTrails\AbqTrails;
+
+//our autoloader
+require_once("autoload.php");
+//composer autoloader
+require_once(dirname(__DIR__,2) . "/vendor/autoload.php");
+
+use Ramsey\Uuid\Uuid;
+
 /**
  *
  * This profile is used to input and view data and photos on ABQ Trails web application
