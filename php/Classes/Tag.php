@@ -209,7 +209,21 @@ class tag{
 		 * @throws \TypeError when variables are not correct data type
 		 **/
 		public static function getAllTags(\PDO $pdo) : \SPLFixedArray {
-
+			// create query template
+			$query = "SELECT tagId, tagName FROM tag";
+			$statement = $pdo->prepare($query);
+			$statement->execute();
+			// build an array of tags
+			$tags = new \SplFixedArray($statement->rowCount());
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			while(($row = $statement->fetch()) !== false){
+				try {
+					$tag = new Tag($row["tagId"], $row["tagName"]);
+				} catch(\Exception $exception){
+					// if the row couldn't be converted, rethrow it
+					throw (new \PDOException($exception->getMessage(), 0, $exception));
+				}
+			} return ($tags);
 		}
 
 
