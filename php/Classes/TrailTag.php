@@ -274,13 +274,13 @@ class TrailTag {
 		return($trailTags);
 	}
 	/**
-* gets trail tag by trail tag profile id
-* @param \PDO $pdo PDO connection object
-* @param Uuid $trailTagProfileId to search by
-* @return \SplFixedArray of trail tags found
-* @throws \PDOException when mySQL related issues occur
-* @throws \TypeError when variables are not the correct type of data
-*/
+	* gets trail tag by trail tag profile id
+	* @param \PDO $pdo PDO connection object
+	* @param Uuid $trailTagProfileId to search by
+	* @return \SplFixedArray of trail tags found
+	* @throws \PDOException when mySQL related issues occur
+	* @throws \TypeError when variables are not the correct type of data
+	*/
 	public static function getTrailTagByTrailTagProfileId (\PDO $pdo, Uuid $trailTagProfileId) : \SplFixedArray{
 		try {
 			$trailTagProfileId = self::validateUuid($trailTagProfileId);
