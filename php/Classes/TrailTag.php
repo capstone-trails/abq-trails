@@ -147,6 +147,7 @@ class TrailTag {
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
+	 *
 	 **/
 	public function delete (\PDO $pdo) : void {
 		//create query template
@@ -157,5 +158,17 @@ class TrailTag {
 		$parameters = ["trailTagTagId" => $this->trailTagTagId, "trailTagTrailId" => $this->trailTagTrailId, "trailTagProfileId" => $this->trailTagProfileId];
 		$statement->execute($parameters);
 	}
+/**
+ * gets the trailTag by the trail tag tag id and trail tag trail id
+ * @param \PDO $pdo PDO connection object
+ * @param string|uuid $trailTagTagId
+ * @param string|Uuid $trailTagTrailId
+ * @return \SplFixedArray of trail tags
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when variables are not the correct data type
+ *
+ */
+	public static function getTrailTagByTrailTagTagIdAndTrailTagTrailId (\PDO $pdo, Uuid $trailTagTagId, Uuid $trailTagTrailId) : \SplFixedArray{
 
+	}
 }
