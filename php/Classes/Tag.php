@@ -197,39 +197,58 @@ class tag{
 			// if the row couldn't be converted, rethrow it
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
+		return($tag);
 	}
 
 
-		//todo add getAll and maybe a getByName
-		/**
-		 * gets all Tags
-		 *
-		 * @param \PDO $pdo PDO connections object
-		 * @return \SplFixedArray SplFixedArray of Tags found or null if not found
-		 * @throws \PDOException when mySQL related errors occurs
-		 * @throws \TypeError when variables are not correct data type
-		 **/
-		public static function getAllTags(\PDO $pdo) : \SPLFixedArray {
-			// create query template
-			$query = "SELECT tagId, tagName FROM tag";
-			$statement = $pdo->prepare($query);
-			$statement->execute();
-			// build an array of tags
-			$tags = new \SplFixedArray($statement->rowCount());
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			while(($row = $statement->fetch()) !== false) {
-				try {
-					$tag = new Tag($row["tagId"], $row["tagName"]);
-					$tags[$tags->key()] = $tag;
-					$tags->next();
-				} catch(\Exception $exception){
-					// if the row couldn't be converted, rethrow it
-					throw (new \PDOException($exception->getMessage(), 0, $exception));
-				}
-			}
-			return ($tags);
+	//todo add getAll and maybe a getByName
+	/**
+	 * gets the Tag by name
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $tagName tag content to search for
+	 * @return \SplFixedArray SplFixedArray of Tag found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getTagByTagName(\PDO $pdo, string $tagName) : \SplFixedArray {
+		// sanitize the description before searching
+		$tagName = trim($tagName);
+		$tagName = filter_var($tagName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if (empty($tagName) === true){
+			throw (new \PDOException("tag name is invalid"));
 		}
+		// escape any mySQL wild cards
+		$tagName = str_replace("_", "\\_", str_replace("%", "\\%", $tagName));
+	}
 
 
-
+	/**
+	 * gets all Tags
+	 *
+	 * @param \PDO $pdo PDO connections object
+	 * @return \SplFixedArray SplFixedArray of Tags found or null if not found
+	 * @throws \PDOException when mySQL related errors occurs
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getAllTags(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT tagId, tagName FROM tag";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		// build an array of tags
+		$tags = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$tag = new Tag($row["tagId"], $row["tagName"]);
+				$tags[$tags->key()] = $tag;
+				$tags->next();
+			} catch(\Exception $exception){
+				// if the row couldn't be converted, rethrow it
+				throw (new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($tags);
+	}
 }
