@@ -15,7 +15,7 @@ use Ramsey\Uuid\Uuid;
  * @author Cassandra Romero <cromero278@cnm.edu>
  *
  */
-class Profile {
+class Profile implements \JsonSerializable {
 	//use Validate Uuid
 	use ValidateUuid;
 /**
@@ -495,6 +495,17 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
 			}
 		}
 		return ($profiles);
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+		$fields["profileId"] = $this->profileId->toString();
+		unset($fields['profileHash']);
+		return ($fields);
 	}
 }
 
