@@ -8,6 +8,8 @@ use CapstoneTrails\AbqTrails\Tag;
 
 require_once(dirname(__DIR__, 1) . "/autoload.php");
 
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
+
 /**
  * @see TrailTag
  *
@@ -49,6 +51,20 @@ class TrailTagTest extends  AbqTrailsTest {
 
 		//create and insert trail from trail tag
 		$this->trail = new Trail(generateUuidV4(), "www.faketrail.com/photo", "This trail is a fine trail", "1234", "35.0792", "5.2", "106.4847", "`1254`", "Copper Canyon");
-		$this->trail->insert($this->getPDO());d
+		$this->trail->insert($this->getPDO());
+
+		//create and insert new tag from trail tag
+		$this->tag = new Tag(generateUuidV4(), "Dog Friendly");
+		$this->tag->insert($this->getPDO());
+		}
+	/**
+	 * function that inserts a valid trail tag
+	 */
+		public function testInsertValidTrailTag (): void {
+			//count the number of rows
+			$numRows = $this->getConnection()->getRowCount("trailTag");
+			//create new trail tag and insert into mySQL
+			$trailTag = new TrailTag($this->profile->getProfileId(), $this->trail->getTrailId(), $this->tag->getTagId());
+			$trailTag->insert($this->getPDO());
 		}
 	}

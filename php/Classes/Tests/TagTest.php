@@ -38,7 +38,7 @@ class TagTest extends  AbqTrailsTest {
 		// counts the number of rows and saves it for later
 		$numRows = $this->getConnection()->getRowCount("tag");
 		$tagId = generateUuidV4();
-		$tag = new Tag($tagId, $this->VALID_TAGNAME, $this->VALID_TAGNAME_2);
+		$tag = new Tag($tagId, $this->VALID_TAGNAME);
 		$tag->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our experience
 		$pdoTag = Tag::getTagByTagId($this->getPDO(),$tag->getTagId());
