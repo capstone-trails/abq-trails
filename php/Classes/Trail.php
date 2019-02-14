@@ -573,6 +573,34 @@ class Trail implements \JsonSerializable {
 	}
 
 	/**
+	 * get every Trail
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray of trails found or null if not found
+	 * @throws \PDOException when mySQL errors occur
+	 **/
+	public static function getAllTrails(\PDO $pdo) : \SplFixedArray {
+		//create query template
+		$query = "SELECT trailId, trailAvatarUrl, trailDescription, trailHigh, trailLatitude, trailLength, trailLongitude, trailLow, trailName FROM trail";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		//build an array of trails
+		$trails = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$trail = new Trail(["trailId"], $row["trailAvatarUrl"], $row["trailDescription"], $row["trailHigh"], $row["trailLatitude"], $row["trailLength"], $row["trailLongitude"], $row["trailLow"], $row["trailName"]);
+				$trails[$trails->key()] = $trail;
+				$trails->next();
+			} catch(\Exception $exception) {
+				//if the row could not be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($trails);
+	}
+
+	/**
 	 * formats the state variables for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
