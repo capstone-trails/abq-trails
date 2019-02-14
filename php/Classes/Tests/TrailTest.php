@@ -148,11 +148,13 @@ class TrailTest extends AbqTrailsTest {
 			$this->VALID_TRAIL_NAME,
 			);
 		$trail->insert($this->getPDO());
+
 		//edit the profile and insert it into mysql
 		$trail->setTrailAvatarUrl($this->VALID_TRAIL_AVATAR_URL_2);
 		$trail->setTrailDescription($this->VALID_TRAIL_DESCRIPTION_2);
 		$trail->setTrailName($this->VALID_TRAIL_NAME_2);
 		$trail->update($this->getPDO());
+
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$pdoTrail = Trail::getTrailByTrailId($this->getPDO(), $trail->getTrailId());
 		$this->assertEquals($pdoTrail->getTrailId(), $trailId);
