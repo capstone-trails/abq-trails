@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
  * Class rating
  * @package abqtrails
  *
- * @author Robert Dominguez <rdominguez45@cnm.edu
+ * @author Robert Dominguez <rdominguez45@cnm.edu test
  **/
 class rating {
 	use ValidateUuid;
