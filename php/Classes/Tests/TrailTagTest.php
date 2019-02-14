@@ -16,6 +16,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 */
 
 class TrailTagTest extends  AbqTrailsTest {
+
 	/**
 	 * Tag from tag/trail tag relationship, primary key
 	 * @var Tag $tag
@@ -50,7 +51,7 @@ class TrailTagTest extends  AbqTrailsTest {
 		$this->profile->insert($this->getPDO());
 
 		//create and insert trail from trail tag
-		$this->trail = new Trail(generateUuidV4(), "www.faketrail.com/photo", "This trail is a fine trail", "1234", "35.0792", "5.2", "106.4847", "`1254`", "Copper Canyon");
+		$this->trail = new Trail(generateUuidV4(), "www.faketrail.com/photo", "This trail is a fine trail", 1234, 35.0792, 5.2, 106.4847, 1254, "Copper Canyon");
 		$this->trail->insert($this->getPDO());
 
 		//create and insert new tag from trail tag

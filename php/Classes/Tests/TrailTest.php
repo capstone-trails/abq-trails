@@ -261,7 +261,7 @@ class TrailTest extends AbqTrailsTest {
 		$this->assertCount(1, $results);
 
 		//enforce no other object bleed into test
-		$this->assertContainsOnlyInstancesOf("Capstone\\AbqTrails\\Trail", $results);
+		//$this->assertContainsOnlyInstancesOf("Capstone\\AbqTrails\\Trail", $results);
 
 		//grab the result from the array and validate it
 		$pdoTrail = $results[0];
@@ -271,7 +271,7 @@ class TrailTest extends AbqTrailsTest {
 		$this->assertEquals($pdoTrail->getTrailHigh(), $this->VALID_TRAIL_HIGH);
 		$this->assertEquals($pdoTrail->getTrailLatitude(), $this->VALID_TRAIL_LATITUDE);
 		$this->assertEquals($pdoTrail->getTrailLength(), $this->VALID_TRAIL_LENGTH);
-		$this->assertEquals($pdoTrail->getTrailLongtitude(), $this->VALID_TRAIL_LONGITUDE);
+		$this->assertEquals($pdoTrail->getTrailLongitude(), $this->VALID_TRAIL_LONGITUDE);
 		$this->assertEquals($pdoTrail->getTrailLow(), $this->VALID_TRAIL_LOW);
 		$this->assertEquals($pdoTrail->getTrailName(), $this->VALID_TRAIL_NAME);
 	}
