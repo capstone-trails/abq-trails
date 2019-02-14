@@ -172,16 +172,14 @@ class TrailTest extends AbqTrailsTest {
 		$trail = new Trail(
 			$trailId,
 			$this->VALID_TRAIL_AVATAR_URL,
-			$this->VALID_TRAIL_AVATAR_URL_2,
 			$this->VALID_TRAIL_DESCRIPTION,
-			$this->VALID_TRAIL_DESCRIPTION_2,
 			$this->VALID_TRAIL_HIGH,
 			$this->VALID_TRAIL_LATITUDE,
 			$this->VALID_TRAIL_LENGTH,
 			$this->VALID_TRAIL_LONGITUDE,
 			$this->VALID_TRAIL_LOW,
 			$this->VALID_TRAIL_NAME,
-			$this->VALID_TRAIL_NAME_2);
+			);
 		$trail->insert($this->getPDO());
 		//delete the trail from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
@@ -202,16 +200,14 @@ class TrailTest extends AbqTrailsTest {
 		$trail = new Trail(
 			$trailId,
 			$this->VALID_TRAIL_AVATAR_URL,
-			$this->VALID_TRAIL_AVATAR_URL_2,
 			$this->VALID_TRAIL_DESCRIPTION,
-			$this->VALID_TRAIL_DESCRIPTION_2,
 			$this->VALID_TRAIL_HIGH,
 			$this->VALID_TRAIL_LATITUDE,
 			$this->VALID_TRAIL_LENGTH,
 			$this->VALID_TRAIL_LONGITUDE,
 			$this->VALID_TRAIL_LOW,
-			$this->VALID_TRAIL_NAME,
-			$this->VALID_TRAIL_NAME_2);
+			$this->VALID_TRAIL_NAME
+		);
 		$trail->insert($this->getPDO());
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoTrail = Trail::getTrailByTrailId($this->getPDO(), $trail->getTrailId());
@@ -261,16 +257,14 @@ class TrailTest extends AbqTrailsTest {
 		$trail = new Trail(
 			$trailId,
 			$this->VALID_TRAIL_AVATAR_URL,
-			$this->VALID_TRAIL_AVATAR_URL_2,
 			$this->VALID_TRAIL_DESCRIPTION,
-			$this->VALID_TRAIL_DESCRIPTION_2,
 			$this->VALID_TRAIL_HIGH,
 			$this->VALID_TRAIL_LATITUDE,
 			$this->VALID_TRAIL_LENGTH,
 			$this->VALID_TRAIL_LONGITUDE,
 			$this->VALID_TRAIL_LOW,
-			$this->VALID_TRAIL_NAME,
-			$this->VALID_TRAIL_NAME_2);
+			$this->VALID_TRAIL_NAME
+			);
 		$trail = insert($this->getPDO());
 		//grab the data from mySQL and enforce the fields match our expectations
 		$results = Trail::getAllTrails($this->getPDO());

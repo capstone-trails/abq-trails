@@ -221,7 +221,10 @@ class Trail implements \JsonSerializable {
 		$newTrailHigh = trim($newTrailHigh);
 		$newTrailHigh = filter_var($newTrailHigh, FILTER_SANITIZE_NUMBER_INT);
 
-		if($newTrailHigh < -32768 || $newTrailHigh > 32767) {
+		if($newTrailHigh < -32768) {
+			throw(new \RangeException("trail high is out of range"));
+		}
+		if($newTrailHigh > 32767) {
 			throw(new \RangeException("trail high is out of range"));
 		}
 
