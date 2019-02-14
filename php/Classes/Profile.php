@@ -119,7 +119,7 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
  * @return string characters in activation token
  *
  */
-	public function getProfileActivationToken() : string {
+	public function getProfileActivationToken() : ?string {
 		return ($this->profileActivationToken);
 	}
 /**
@@ -303,21 +303,29 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
 		$this->profileUsername = $newProfileUsername;
 	}
 	/**
-	 * inserts this Profile into mySQL
+	 * inserts Profile into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function insert(\PDO $pdo) : void {
+	public function insert (\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO profile(profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername) 
-VALUES(:profileId, :profileActivationToken, :profileAvatarUrl, :profileEmail, :profileFirstName, :profileHash, :profileLastName, :profileUsername)";
+		$query = "INSERT INTO profile(profileId, profileActivationToken, profileAvatarUrl, profileEmail, profileFirstName, profileHash, profileLastName, profileUsername) VALUES(:profileId, :profileActivationToken, :profileAvatarUrl, :profileEmail, :profileFirstName, :profileHash, :profileLastName, :profileUsername)";
 		$statement = $pdo->prepare($query);
 		//bind variables to place holders in the template
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" =>$this->profileActivationToken, "profileAvatarUrl" => $this->profileAvatarUrl, "profileEmail" => $this->profileEmail,
-			"profileFirstName" => $this->profileFirstName, "profileHash" => $this->profileHash, "profileLastName" => $this->profileLastName, "profileUsername" => $this->profileUsername];
+		$parameters =
+			["profileId" => $this->profileId->getBytes(),
+			"profileActivationToken" => $this->profileActivationToken,
+			"profileAvatarUrl" => $this->profileAvatarUrl,
+			"profileEmail" => $this->profileEmail,
+			"profileFirstName" => $this->profileFirstName,
+			"profileHash" => $this->profileHash,
+			"profileLastName" => $this->profileLastName,
+			"profileUsername" => $this->profileUsername];
+		var_dump($parameters);
 		$statement->execute($parameters);
+
 	}
 	/**
 	 * deletes this Profile from mySQL

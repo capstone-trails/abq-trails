@@ -29,52 +29,52 @@ class ProfileTest extends AbqTrailsTest {
 	 * updated profile avatar url
 	 * @var string $VALID_PROFILE_AVATAR_URL_2
 	 */
-	protected $VALID_PROFILE_AVATAR_URL_2 = "https://www.igotanewavatar.com/1234";
+	protected $VALID_PROFILE_AVATAR_URL_2 = "www.abcdef123.com";
 	/**
 	 * valid profile email address
 	 * @var string $VALID_PROFILE_EMAIL
 	 */
-	protected $VALID_PROFILE_EMAIL = "newusertest@testtest.com";
+	protected $VALID_PROFILE_EMAIL = "abc3cdcom@test.com";
 	/**
 	 * updated profile email
 	 * @var string $VALID_PROFILE_EMAIL_2
 	 */
-	protected $VALID_PROFILE_EMAIL_2 = "sameusernewemail@Tests.com";
+	protected $VALID_PROFILE_EMAIL_2 = "abc4@test.com";
 	/**
 	 * valid profile first name
 	 * @var string $VALID_PROFILE_FIRST_NAME
 	 */
-	protected $VALID_PROFILE_FIRST_NAME = "Nancy";
+	protected $VALID_PROFILE_FIRST_NAME = "Jon";
 	/**
 	 * updated first name
 	 * @var string $VALID_PROFILE_FIRST_NAME_2
 	 */
-	protected $VALID_PROFILE_FIRST_NAME_2 = "Fancy";
+	protected $VALID_PROFILE_FIRST_NAME_2 = "Jane";
 	/**
 	 * valid profile hash
 	 * @var string $VALID_PROFILE_HASH
 	 */
-	protected $VALID_PROFILE_HASH;
+	protected $VALID_PROFILE_HASH = "mamamamamamamamamamamamamamamama";
 	/**
 	 * valid profile last name
 	 * @var string $VALID_PROFILE_LAST_NAME
 	 */
-	protected $VALID_PROFILE_LAST_NAME = "Reagan";
+	protected $VALID_PROFILE_LAST_NAME = "Smiths";
 	/*
 	 * updated profile last name
 	 * @var string $VALID_PROFILE_LAST_NAME_2
 	 */
-	protected $VALID_PROFILE_LAST_NAME_2 = "Solo";
+	protected $VALID_PROFILE_LAST_NAME_2 = "Doe";
 	/**
 	 * valid profile username
 	 * @var string $VALID_PROFILE_USERNAME
 	 */
-	protected $VALID_PROFILE_USERNAME = "thefirstlady123";
+	protected $VALID_PROFILE_USERNAME = "nam1";
 	/*
 	 * updated profile username
 	 * @var string $VALID_PROFILE_USERNAME_2
 	 */
-	protected $VALID_PROFILE_USERNAME_2 = "notthefirstlady999";
+	protected $VALID_PROFILE_USERNAME_2 = "name3";
 
 	/**
 	 * setup to create hash
@@ -95,7 +95,6 @@ class ProfileTest extends AbqTrailsTest {
 		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
 			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
 			$this->VALID_PROFILE_USERNAME);
-		var_dump($profileId);
 		$profile->insert($this->getPDO());
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
@@ -126,7 +125,7 @@ class ProfileTest extends AbqTrailsTest {
 		$profile->setProfileLastName($this->VALID_PROFILE_LAST_NAME_2);
 		$profile->setProfileUsername($this->VALID_PROFILE_USERNAME_2);
 		$profile->update($this->getPDO());
-		$pdoProfile = $profile :: getProfileByProfileId($this->getPDO(), $profile, getProfileId());
+		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILE_ACTIVATION_TOKEN);
