@@ -22,7 +22,7 @@ class TagTest extends  AbqTrailsTest {
 	 * name of the Tag
 	 * @var string $VALID_TAGNAME
 	 **/
-	protected $VALID_TAGNAME_1 = "Gorgeous View";
+	protected $VALID_TAGNAME = "Gorgeous View";
 
 	/**
 	 * name of the updated Tag
@@ -38,13 +38,13 @@ class TagTest extends  AbqTrailsTest {
 		// counts the number of rows and saves it for later
 		$numRows = $this->getConnection()->getRowCount("tag");
 		$tagId = generateUuidV4();
-		$tag = new Tag($tagId, $this->VALID_TAGNAME_1, $this->VALID_TAGNAME_2);
+		$tag = new Tag($tagId, $this->VALID_TAGNAME, $this->VALID_TAGNAME_2);
 		$tag->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our experience
 		$pdoTag = Tag::getTagByTagId($this->getPDO(),$tag->getTagId());
 		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("tag"));
 		$this->assertEquals($pdoTag->getTagId(), $tagId);
-		$this->assertEquals($pdoTag->getTagName1(), $this->VALID_TAGNAME_1);
+		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
 		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2 );
 	}
 	/**
@@ -55,17 +55,17 @@ class TagTest extends  AbqTrailsTest {
 		$numRows = $this->getConnection()->getRowCount("profile");
 		// create a new Tag and insert into mySQL
 		$tagId = generateUuidV4();
-		$tag = new Tag($tagId, $this->VALID_TAGNAME_1, $this->VALID_TAGNAME_2);
+		$tag = new Tag($tagId, $this->VALID_TAGNAME, $this->VALID_TAGNAME_2);
 		$tag-> insert($this->getPDO());
 		// edit the Tag and update it in mySQL
-		$tag->setTagName1($this->VALID_TAGNAME_1_2);
-		$tag->setTagName2($this->VALID_TAGNAME_2_2);
+		$tag->setTagName($this->VALID_TAGNAME);
+		$tag->setTagName2($this->VALID_TAGNAME_2);
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoTag = Tag::getTagByTagId($this->getPDO(), $tag->getTagId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
 		$this->assertEquals($pdoTag->getTagId(), $tagId);
-		$this->assertEquals($pdoTag->getTagName1(), $this->VALID_TAGNAME_1_2);
-		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2_2);
+		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
+		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2);
 	}
 	/**
 	 * test creating a Tag and then deleting it
@@ -74,7 +74,7 @@ class TagTest extends  AbqTrailsTest {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowsCount("tag");
 		$tagId = generateUuidV4();
-		$tag = new Tag($tagId, $this->VALID_TAGNAME_1, $this->VALID_TAGNAME_2);
+		$tag = new Tag($tagId, $this->VALID_TAGNAME, $this->VALID_TAGNAME_2);
 		$tag->insert($this->getPDO());
 		// delete the Tag from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
@@ -89,13 +89,13 @@ class TagTest extends  AbqTrailsTest {
 		// count the number of rows and save it for later
 		$numRows =$this->getConnection()->getRowCount("tag");
 		$tagId = generateUuidV4();
-		$tag = new Tag($tagId, $this->VALID_TAGNAME_1, $this->VALID_TAGNAME_2);
+		$tag = new Tag($tagId, $this->VALID_TAGNAME, $this->VALID_TAGNAME_2);
 		$tag->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoTag = Tag::getTagByTagId($this->getPDO(), $tag->getTagId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
 		$this->assertEquals($pdoTag->getTagId(), $tagId);
-		$this->assertEquals($pdoTag->getTagName1(), $this->VALID_TAGNAME_1);
+		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
 		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2);
 	}
 	/**
@@ -114,12 +114,12 @@ class TagTest extends  AbqTrailsTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("tag");
 		$tagId = generateUuidV4();
-		$tag = new Tag($tagId, $this->VALID_TAGNAME_1, $this->VALID_TAGNAME_2);
+		$tag = new Tag($tagId, $this->VALID_TAGNAME, $this->VALID_TAGNAME_2);
 		$tag->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoTag = Tag::getTagByTagName($this->getPDO(), $tag->getTagName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
-		$this->assertEquals($pdoTag->getTagName1(), $this->VALID_TAGNAME_1);
+		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
 		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2);
 	}
 	/**

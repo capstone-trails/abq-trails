@@ -4,7 +4,7 @@ namespace CapstoneTrails\AbqTrails\Tests;
 use CapstoneTrails\AbqTrails\Rating;
 
 //our autoloader
-require_once(dirname(__DIR__) . "/autoload.php");
+require_once(dirname(__DIR__, 1) . "/autoload.php");
 
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
@@ -30,33 +30,33 @@ class RatingTest extends AbqTrailsTest {
 	protected $VALID_VALUE_2 = "Wheelchair accessible";
 	/**
 	 * valid rating Difficulty
-	 * @var string $VALID_DIFFICULTY
+	 * @var int $VALID_DIFFICULTY
 	 **/
-	protected $VALID_DIFFICULTY = "Medium";
+	protected $VALID_DIFFICULTY = 3;
 	/**
 	 * content of the updated difficulty
-	 * @var string $VALID_DIFFICULTY_2
+	 * @var int $VALID_DIFFICULTY_2
 	 **/
-	protected $VALID_DIFFICULTY_2 = "Hard";
+	protected $VALID_DIFFICULTY_2 = 4;
+
 
 	/**
 	 * test inserting a valid Rating and verify that the actual mySQL matches
 	 **/
 	public function testInsertValidRating() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("Rating");
+		$numRows = $this->getConnection()->getRowCount("rating");
 		$ratingProfileId = generateUuidV4();
 		$ratingTrailId = generateUuidV4();
-		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_DIFFICULTY);
 		$rating ->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoRating = Rating::getRatingByRatingProfileId($this->getPDO(), $rating->getRatingProfileId());
-		$pdoRating = Rating::getRatingByRatingTrailId($this->getPDO(), $rating->getRatingTrailId());
+		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating-> getRatingProfileId() AND $rating-> getRatingTrailId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
-		$this->assertEquals($pdoRating->getRatingValue2(), $this->VALID_VALUE_2);
-		$this->assertEquals($pdoRating->getRatingDiffculty(), $this->VALID_DIFFICULTY);
-		$this->assertEquals($pdoRating->getRatingDiffculty2(), $this->VALID_DIFFICULTY_2);
+		$this->assertEquals($pdoRating->getRatingDifficulty(), $this->VALID_DIFFICULTY);
 	}
+
 
 	/**
 	 * test inserting a Rating, editing it and then updating it
@@ -86,6 +86,7 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($pdoRating->getRatingDiffculty2(), $this->VALID_DIFFICULTY_2);
 	}
 
+
 	/**
 	 * test creating a Rating and then deleting it
 	 **/
@@ -105,6 +106,7 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertNull($pdoRating);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("rating"));
 	}
+
 
 	/**
 	 * test inserting a Rating and regrabbing it from mySQL
@@ -128,6 +130,7 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($pdoRating->getRatingDiffculty2(), $this->VALID_DIFFICULTY_2);
 	}
 
+
 	/**
 	 * test grabbing a Rating that does not exist
 	 **/
@@ -138,6 +141,7 @@ class RatingTest extends AbqTrailsTest {
 		$rating = Profile::getRatingByRatingTrailId($this->getPDO(), $fakeRatingId );
 		$this->assertNull($rating);
 	}
+
 
 	/**
 	 * test grabbing a rating by rating value
