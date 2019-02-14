@@ -16,6 +16,7 @@ use Ramsey\Uuid\Uuid;
  *
  */
 class TrailTag {
+
 	use ValidateUuid;
 /**
  * this is the id that connects the trail tag to the tag this is a primary key
@@ -134,10 +135,10 @@ class TrailTag {
 **/
 	public function insert (\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO trailTag(trailTagTagId, trailTagTrailId, trailTagProfileId) VALUES(:trailTagTagId, :trailTagTrailId, :trailTagProfileId)";
+		$query = "INSERT INTO trailTag(trailTagTagId, trailTagTrailId, trailTagProfileId) VALUES (:trailTagTagId, :trailTagTrailId, :trailTagProfileId)";
 		$statement = $pdo->prepare($query);
 		//bind variables to place holders in the template
-		$parameters = ["trailTagTagId" => $this->trailTagTagId, "trailTagTrailId" => $this->trailTagTrailId, "trailTagProfileId" => $this->trailTagProfileId];
+		$parameters = ["trailTagTagId" => $this->trailTagTagId->getBytes(), "trailTagTrailId" => $this->trailTagTrailId->getBytes(), "trailTagProfileId" => $this->trailTagProfileId->getBytes()];
 		$statement->execute($parameters);
 	}
 	/**
