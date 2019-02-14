@@ -1,5 +1,6 @@
 ALTER DATABASE trails CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
+-- delete existing tables
 DROP TABLE IF EXISTS trailTag;
 DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS rating;
@@ -7,7 +8,9 @@ DROP TABLE IF EXISTS photo;
 DROP TABLE IF EXISTS trail;
 DROP TABLE IF EXISTS profile;
 
+-- create the profile entity
 CREATE TABLE profile (
+   -- profileId is the primary key
 	profileId BINARY(16) NOT NULL,
 	profileActivationToken CHAR(32),
 	profileAvatarUrl VARCHAR(255),
@@ -21,20 +24,24 @@ CREATE TABLE profile (
 	PRIMARY KEY (profileId)
 );
 
+-- create the trail entity
 CREATE TABLE trail (
+   -- trailId is the primary key
 	trailId BINARY(16) NOT NULL,
 	trailAvatarUrl VARCHAR(255) NOT NULL,
 	trailDescription VARCHAR(280),
 	trailHigh SMALLINT,
-	trailLatitude DECIMAL(6, 4) NOT NULL,
+	trailLatitude DECIMAL(12, 9) NOT NULL,
 	trailLength DECIMAL(5, 1),
-	trailLongitude DECIMAL(7, 4) NOT NULL,
+	trailLongitude DECIMAL(12, 9) NOT NULL,
 	trailLow SMALLINT,
 	trailName VARCHAR(128) NOT NULL,
 	PRIMARY KEY (trailId)
 );
 
+-- create the photo entity
 CREATE TABLE photo (
+   -- photoId is the primary key
 	photoId BINARY(16) NOT NULL,
 	photoProfileId BINARY(16) NOT NULL,
 	photoTrailId BINARY(16) NOT NULL,
@@ -47,7 +54,9 @@ CREATE TABLE photo (
 	PRIMARY KEY (photoId)
 );
 
+-- create the rating entity
 CREATE TABLE rating (
+   -- ratingId is the primary key
 	ratingId BINARY(16) NOT NULL,
 	ratingProfileId BINARY(16) NOT NULL,
 	ratingTrailId BINARY(16) NOT NULL,
@@ -60,13 +69,17 @@ CREATE TABLE rating (
 	PRIMARY KEY (ratingId)
 );
 
+-- create the tag entity
 CREATE TABLE tag (
+   -- tagId is the primary key
 	tagId BINARY(16) NOT NULL,
 	tagName VARCHAR(32)NOT NULL,
 	PRIMARY KEY (tagId)
 );
 
+-- create the trail tag entity
 CREATE TABLE trailTag (
+   -- this is try hard entity
 	trailTagTagId BINARY(16) NOT NULL,
 	trailTagTrailId BINARY(16) NOT NULL,
 	trailTagProfileId BINARY(16) NOT NULL,

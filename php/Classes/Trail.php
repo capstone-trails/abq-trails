@@ -87,7 +87,7 @@ class Trail implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 
-	public function __construct(Uuid $trailId, string $trailAvatarUrl, ?string $trailDescription, ?int $trailHigh, float $trailLatitude, float $trailLength, float $trailLongitude, ?int $trailLow, string $trailName) {
+	public function __construct($trailId, string $trailAvatarUrl, ?string $trailDescription, ?int $trailHigh, float $trailLatitude, float $trailLength, float $trailLongitude, ?int $trailLow, string $trailName) {
 		try {
 			$this->setTrailId($trailId);
 			$this->setTrailAvatarUrl($trailAvatarUrl);
@@ -221,7 +221,7 @@ class Trail implements \JsonSerializable {
 		$newTrailHigh = trim($newTrailHigh);
 		$newTrailHigh = filter_var($newTrailHigh, FILTER_SANITIZE_NUMBER_INT);
 
-		if($newTrailHigh < -32767 || $newTrailHigh > 32767) {
+		if($newTrailHigh < -32768 || $newTrailHigh > 32767) {
 			throw(new \RangeException("trail high is out of range"));
 		}
 
@@ -244,16 +244,16 @@ class Trail implements \JsonSerializable {
 	 * @param float $newTrailLatitude new value of the trail latitude
 	 * @throws \RangeException if $newTrailLatitude is outside of range
 	 **/
-	public function setTrailLatitude($newTrailLatitude) : void {
-		//verify that trail latitude is valid and secure
-		$newTrailLatitude = trim($newTrailLatitude);
-		$newTrailLatitude = filter_var($newTrailLatitude, FILTER_SANITIZE_NUMBER_FLOAT);
+	public function setTrailLatitude(float $newTrailLatitude) : void {
+//		//verify that trail latitude is valid and secure
+//		$newTrailLatitude = trim($newTrailLatitude);
+//		$newTrailLatitude = filter_var($newTrailLatitude, FILTER_SANITIZE_NUMBER_FLOAT);
 
-		if($newTrailLatitude < -90) {
-			throw(new \RangeException("trail latitude is out of range"));
+		if(floatval($newTrailLatitude) < -90) {
+			throw(new \RangeException("trail latitude is not between -90 and 90"));
 		}
-		if($newTrailLatitude > 90) {
-			throw(new \RangeException("trail latitude is out of range"));
+		if(floatval($newTrailLatitude) > 90) {
+			throw(new \RangeException("trail latitude is not between -90 and 90"));
 		}
 
 		//store the latitude data
@@ -275,13 +275,13 @@ class Trail implements \JsonSerializable {
 	 * @param float $newTrailLength new value of the trail length\
 	 * @throws \RangeException if $newTrailLength is a negative number, zero or null\
 	 **/
-	public function setTrailLength($newTrailLength) : void {
-		//verify that trail length data is valid and secure
-		$newTrailLength = trim($newTrailLength);
-		$newTrailLength = filter_var($newTrailLength, FILTER_SANITIZE_NUMBER_FLOAT);
+	public function setTrailLength(float $newTrailLength) : void {
+//		//verify that trail length data is valid and secure
+//		$newTrailLength = trim($newTrailLength);
+//		$newTrailLength = filter_var($newTrailLength, FILTER_SANITIZE_NUMBER_FLOAT);
 
-		if($newTrailLength <= 0) {
-			throw(new \RangeException("trail length is less than zero"));
+		if(floatval($newTrailLength) <= 0) {
+			throw(new \RangeException("trail length is less than 1"));
 		}
 
 		//store the length data
@@ -303,16 +303,16 @@ class Trail implements \JsonSerializable {
 	 * @param float $newTrailLongitude new value of the trail longitude
 	 * @throws \RangeException if $newTrailLongitude is outside of range
 	 **/
-	public function setTrailLongitude($newTrailLongitude) : void {
-		//verify that trail longitude is valid and secure
-		$newTrailLongitude = trim($newTrailLongitude);
-		$newTrailLongitude = filter_var($newTrailLongitude, FILTER_SANITIZE_NUMBER_FLOAT);
+	public function setTrailLongitude(float $newTrailLongitude) : void {
+//		//verify that trail longitude is valid and secure
+//		$newTrailLongitude = trim($newTrailLongitude);
+//		$newTrailLongitude = filter_var($newTrailLongitude, FILTER_SANITIZE_NUMBER_FLOAT);
 
-		if($newTrailLongitude < -180) {
-			throw(new \RangeException("trail longitude is out of range"));
+		if(floatval($newTrailLongitude) < -180) {
+			throw(new \RangeException("trail longitude is not between -180 and 180"));
 		}
-		if($newTrailLongitude > 180) {
-			throw(new \RangeException("trail longitude is out of range"));
+		if(floatval($newTrailLongitude) > 180) {
+			throw(new \RangeException("trail longitude is not between -180 and 180"));
 		}
 
 		//store the latitude data
@@ -336,12 +336,12 @@ class Trail implements \JsonSerializable {
 	 * @throws \RangeException if $newTrailLow is negative, zero or null
 	 * @throws \TypeError if $newTrailLow is not a string
 	 **/
-	public function setTrailLow(?int $newTrailLow) {
+	public function setTrailLow(?int $newTrailLow) : void {
 		//verify that trail highest point data is valid and secure
 		$newTrailLow = trim($newTrailLow);
 		$newTrailLow = filter_var($newTrailLow, FILTER_SANITIZE_NUMBER_INT);
 
-		if($newTrailLow <= 0 || $newTrailLow >= 32767) {
+		if($newTrailLow < -32768 || $newTrailLow >= 32767) {
 			throw(new \RangeException("lowest point data is out of range"));
 		}
 
