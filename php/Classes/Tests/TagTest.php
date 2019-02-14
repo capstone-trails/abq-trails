@@ -45,7 +45,6 @@ class TagTest extends  AbqTrailsTest {
 		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("tag"));
 		$this->assertEquals($pdoTag->getTagId(), $tagId);
 		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
-		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2 );
 	}
 	/**
 	 * Tests inserting a Tag, editing it, and then updating it
@@ -55,17 +54,15 @@ class TagTest extends  AbqTrailsTest {
 		$numRows = $this->getConnection()->getRowCount("profile");
 		// create a new Tag and insert into mySQL
 		$tagId = generateUuidV4();
-		$tag = new Tag($tagId, $this->VALID_TAGNAME, $this->VALID_TAGNAME_2);
+		$tag = new Tag($tagId, $this->VALID_TAGNAME);
 		$tag-> insert($this->getPDO());
 		// edit the Tag and update it in mySQL
-		$tag->setTagName($this->VALID_TAGNAME);
-		$tag->setTagName2($this->VALID_TAGNAME_2);
+		$tag->setTagName($this->VALID_TAGNAME_2);
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoTag = Tag::getTagByTagId($this->getPDO(), $tag->getTagId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
 		$this->assertEquals($pdoTag->getTagId(), $tagId);
-		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
-		$this->assertEquals($pdoTag->getTagName2(), $this->VALID_TAGNAME_2);
+		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME_2);
 	}
 	/**
 	 * test creating a Tag and then deleting it
