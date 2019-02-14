@@ -17,7 +17,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @see Tag
  * @author Robert Dominguez
  **/
-class TagTest extends  AbqTrailsTest {
+class TagTest extends AbqTrailsTest {
 	/**
 	 * name of the Tag
 	 * @var string $VALID_TAGNAME

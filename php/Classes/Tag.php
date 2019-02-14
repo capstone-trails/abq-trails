@@ -73,7 +73,7 @@ class tag{
 			$uuid = self::validateUuid($newTagId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
 			$exceptionType = get_class($exception);
-			throw (new $exceptionType($exception->getMessage(),0));
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 
 		//convert and store the tag id
@@ -100,7 +100,7 @@ class tag{
 	public function setTagName(string $newTagName) : void {
 		//verify the tag name is secure
 		$newTagName = trim($newTagName);
-		$newTagName = filter_var($$newTagName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newTagName = filter_var($newTagName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newTagName)=== true) {
 			throw (new \InvalidArgumentException("Tag name is empty or insecure"));
 		}
@@ -122,7 +122,7 @@ class tag{
 	 **/
 	public function insert(\PDO $pdo) : void {
 		// create query template
-		$query = "INSERT INTO tag(tagId, tagName) VALUES(:tagId, tagName)";
+		$query = "INSERT INTO tag(tagId, tagName) VALUES(:tagId, :tagName)";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the plane holders in the template
 		$parameters = ["tagId" => $this->tagId->getBytes(), "tagName"=> $this->tagName];
@@ -137,7 +137,7 @@ class tag{
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function delete(\PDO $pdo) : void{
+	public function delete(\PDO $pdo) : void {
 		// create query template
 		$query = "DELETE FROM tag WHERE tagId = :tagId";
 		$statement = $pdo->prepare($query);
@@ -185,9 +185,11 @@ class tag{
 		// create query template
 		$query = "SELECT tagId, tagName FROM tag WHERE tagId = :tagId";
 		$statement = $pdo->prepare($query);
+
 		// bind the tag id to the place holder in the template
 		$parameters = ["tagId" => $tagId->getBytes()];
 		$statement->execute($parameters);
+
 		// grab the tag from mySQL
 		try {
 			$tag = null;
@@ -226,10 +228,12 @@ class tag{
 		// create query template
 		$query = "SELECT tagId, tagName FROM tag WHERE tagName LIKE :tagName";
 		$statement = $pdo->prepare($query);
+
 		// bind the tag name to the place holder in the template
 		$tagName = "%$tagName%";
-		$parameters = ["execute" => $tagName];
+		$parameters = ["tagName" => $tagName];
 		$statement->execute($parameters);
+
 		// build an array of tags
 		$tags = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
