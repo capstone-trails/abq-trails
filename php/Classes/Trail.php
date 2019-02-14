@@ -6,6 +6,7 @@ require_once("autoload.php");
 //composer autoloader
 require_once(dirname(__DIR__,2) . "/vendor/autoload.php");
 
+use phpDocumentor\Reflection\Types\Integer;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -86,7 +87,7 @@ class Trail implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 
-	public function __construct($trailId, string $trailAvatarUrl, ?string $trailDescription, ?int $trailHigh, $trailLatitude, $trailLength, $trailLongitude, ?int $trailLow, string $trailName) {
+	public function __construct(Uuid $trailId, string $trailAvatarUrl, ?string $trailDescription, ?int $trailHigh, float $trailLatitude, float $trailLength, float $trailLongitude, ?int $trailLow, string $trailName) {
 		try {
 			$this->setTrailId($trailId);
 			$this->setTrailAvatarUrl($trailAvatarUrl);
@@ -231,7 +232,7 @@ class Trail implements \JsonSerializable {
 	/**
 	 * accessor method for trail latitude
 	 *
-	 * @return float Trail latitude in degrees between -90 and 90
+	 * @return float Trail latitude between -90 and 90
 	 **/
 	public function getTrailLatitude() : float {
 		return $this->trailLatitude;
@@ -248,7 +249,10 @@ class Trail implements \JsonSerializable {
 		$newTrailLatitude = trim($newTrailLatitude);
 		$newTrailLatitude = filter_var($newTrailLatitude, FILTER_SANITIZE_NUMBER_FLOAT);
 
-		if(($newTrailLatitude > -90) && ($newTrailLatitude < 90)) {
+		if($newTrailLatitude < -90) {
+			throw(new \RangeException("trail latitude is out of range"));
+		}
+		if($newTrailLatitude > 90) {
 			throw(new \RangeException("trail latitude is out of range"));
 		}
 
@@ -304,7 +308,10 @@ class Trail implements \JsonSerializable {
 		$newTrailLongitude = trim($newTrailLongitude);
 		$newTrailLongitude = filter_var($newTrailLongitude, FILTER_SANITIZE_NUMBER_FLOAT);
 
-		if(($newTrailLongitude > -180) && ($newTrailLongitude < 180)) {
+		if($newTrailLongitude < -180) {
+			throw(new \RangeException("trail longitude is out of range"));
+		}
+		if($newTrailLongitude > 180) {
 			throw(new \RangeException("trail longitude is out of range"));
 		}
 
