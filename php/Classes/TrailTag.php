@@ -134,9 +134,8 @@ class TrailTag {
 **/
 	public function insert (\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO trailTag(trailTagTagId, trailTagTrailId, trailTagProfileId) VALUES :trailTagTagId, :trailTagTrailId, :trailTagProfileId";
+		$query = "INSERT INTO trailTag(trailTagTagId, trailTagTrailId, trailTagProfileId) VALUES(:trailTagTagId, :trailTagTrailId, :trailTagProfileId)";
 		$statement = $pdo->prepare($query);
-
 		//bind variables to place holders in the template
 		$parameters = ["trailTagTagId" => $this->trailTagTagId, "trailTagTrailId" => $this->trailTagTrailId, "trailTagProfileId" => $this->trailTagProfileId];
 		$statement->execute($parameters);
@@ -255,7 +254,7 @@ class TrailTag {
 		$query = "SELECT trailTagTagId, trailTagTrailId, trailTagProfileId FROM trailTag WHERE trailTagTrailId = :trailTagTrailId";
 		$statement = $pdo->prepare($query);
 		//bind the trailTagTagId and trailTagTrailId to the placeholder
-		$parameters = ["trailTagTrailId" => $trailTagTrailId];
+		$parameters = ["trailTagTrailId" => $trailTagTrailId->getBytes()];
 		$statement->execute($parameters);
 
 		//build array of trail tags
@@ -291,7 +290,7 @@ class TrailTag {
 		$query = "SELECT trailTagTagId, trailTagTrailId, trailTagProfileId FROM trailTag WHERE trailTagProfileId = :trailTagProfileId";
 		$statement = $pdo->prepare($query);
 		//bind the trailTagTagId and trailTagTrailId to the placeholder
-		$parameters = ["trailTagProfileId" => $trailTagProfileId];
+		$parameters = ["trailTagProfileId" => $trailTagProfileId->getBytes()];
 		$statement->execute($parameters);
 		//build array of trail tags
 		$trailTags = new\SplFixedArray($statement->rowCount());

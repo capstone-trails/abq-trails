@@ -67,5 +67,13 @@ class TrailTagTest extends  AbqTrailsTest {
 			//create new trail tag and insert into mySQL
 			$trailTag = new TrailTag($this->profile->getProfileId(), $this->trail->getTrailId(), $this->tag->getTagId());
 			$trailTag->insert($this->getPDO());
+
+			//grab data from mySQL and enforce the fields match our expectations
+			$results = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($this->getPDO(), $this->tag->getTagId(), $this->trail->getTrailId());
+			$pdoTrailTag = $results[0];
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trailTag"));
+			$this->assertEquals($pdoTrailTag->getTrailTagTagId(), $this->tag->getTagId());
+			$this->assertEquals($pdoTrailTag->getTrailTagTrailId(), $this->trail->getTrailId());
+			$this->assertEquals($pdoTrailTag->getTrailTagProfileId(), $this->profile->getProfileId());
 		}
 	}
