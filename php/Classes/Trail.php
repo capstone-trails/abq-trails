@@ -589,7 +589,7 @@ class Trail implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$trail = new Trail(["trailId"], $row["trailAvatarUrl"], $row["trailDescription"], $row["trailHigh"], $row["trailLatitude"], $row["trailLength"], $row["trailLongitude"], $row["trailLow"], $row["trailName"]);
+				$trail = new Trail($row["trailId"], $row["trailAvatarUrl"], $row["trailDescription"], $row["trailHigh"], $row["trailLatitude"], $row["trailLength"], $row["trailLongitude"], $row["trailLow"], $row["trailName"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch(\Exception $exception) {

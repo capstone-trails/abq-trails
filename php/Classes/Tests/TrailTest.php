@@ -265,15 +265,15 @@ class TrailTest extends AbqTrailsTest {
 			$this->VALID_TRAIL_LOW,
 			$this->VALID_TRAIL_NAME
 			);
-		$trail = insert($this->getPDO());
+		$trail->insert($this->getPDO());
 		//grab the data from mySQL and enforce the fields match our expectations
 		$results = Trail::getAllTrails($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\Abqtrails\\Trail", $results);
+
 		//grab results from array and validate it
 		$pdoTrail = $results[0];
-
 		$this->assertEquals($pdoTrail->getTrailId(), $trailId);
 		$this->assertEquals($pdoTrail->getTrailAvatarUrl(), $this->VALID_TRAIL_AVATAR_URL);
 		$this->assertEquals($pdoTrail->getTrailDescription(), $this->VALID_TRAIL_DESCRIPTION);
