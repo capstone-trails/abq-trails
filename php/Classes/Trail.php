@@ -505,7 +505,7 @@ class Trail implements \JsonSerializable {
 
 		//escape any mySQL wild cards
 		$trailName = str_replace("_", "\\_", str_replace("%", "\\%", $trailName));
-
+		var_dump($trailName);
 		//create query template
 		$query = "SELECT trailId, trailAvatarUrl, trailDescription, trailHigh, trailLatitude, trailLength, trailLongitude, trailLow, trailName FROM trail WHERE trailName LIKE :trailName";
 		$statement = $pdo->prepare($query);
