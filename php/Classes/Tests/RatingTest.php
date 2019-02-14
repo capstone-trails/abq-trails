@@ -1,7 +1,7 @@
 <?php
 namespace CapstoneTrails\AbqTrails\Tests;
 
-use CapstoneTrails\AbqTrails\Rating;
+use CapstoneTrails\AbqTrails\{Rating, Profile, Trail};
 
 //our autoloader
 require_once(dirname(__DIR__, 1) . "/autoload.php");
@@ -39,6 +39,10 @@ class RatingTest extends AbqTrailsTest {
 	 **/
 	protected $VALID_DIFFICULTY_2 = 4;
 
+	/**
+	 * run the default setup operation to create a profile
+	 **/
+
 
 	/**
 	 * test inserting a valid Rating and verify that the actual mySQL matches
@@ -51,8 +55,9 @@ class RatingTest extends AbqTrailsTest {
 		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_DIFFICULTY);
 		$rating ->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating-> getRatingProfileId() AND $rating-> getRatingTrailId());
+		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->getRatingProfileId(), $rating->getRatingTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
+		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
 		$this->assertEquals($pdoRating->getRatingDifficulty(), $this->VALID_DIFFICULTY);
 	}
