@@ -124,7 +124,7 @@ class TagTest extends  AbqTrailsTest {
 	 **/
 	public function testGetInvalidTagByName() : void {
 		// grab an name that does not exist
-		$tag = Tag::getProfileByTagName($this->getPDO(), "does@not.exist");
+		$tag = Tag::getTagByTagName($this->getPDO(), "balls");
 		$this->assertNull($tag);
 	}
 }
