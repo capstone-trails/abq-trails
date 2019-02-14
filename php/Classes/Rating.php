@@ -211,7 +211,12 @@ class rating {
 	 **/
 	public function delete(\PDO $pdo) : void {
 		//create query template
-		$query = "DELETE FROM rating WHERE ";
+		$query = "DELETE FROM rating WHERE ratingProfileId AND ratingTrailId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the placeholder in the template
+		$parameters = ["ratingProfileId"=> $this->ratingProfileId, "rating"];
+		$statement->execute($parameters);
+
 	}
 
 
@@ -250,7 +255,7 @@ class rating {
 		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
 		$statement = $pdo->prepare($query);
 		// bind the rating profile id to the place holder in the template
-		$parameters = ["ratingProfileId" => $ratingProfileId->getBytes()];
+		$parameters = ["ratingProfileId" => $ratingProfileId, "ratingTrailId" => $ratingTrailId];
 		$statement->execute($parameters);
 		// build an array of ratings
 		$ratings = new \SplFixedArray($statement->rowCount());
