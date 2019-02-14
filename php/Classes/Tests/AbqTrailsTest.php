@@ -78,7 +78,7 @@ abstract class AbqTrailsTest extends TestCase {
 	 * @return Operation delete command for the database
 	 **/
 	public final function getTearDownOperation() : Operation {
-		return(Factor::DELETE_ALL());
+		return(Factory::DELETE_ALL());
 	}
 
 	/**

@@ -75,13 +75,11 @@ class ProfileTest extends AbqTrailsTest {
 	 * @var string $VALID_PROFILE_USERNAME_2
 	 */
 	protected $VALID_PROFILE_USERNAME_2 = "name3";
-
 	/**
 	 * setup to create hash
 	 */
 	public final function setUp() : void {
 		parent::setUp();
-
 		$password = "coffee12345";
 		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 		$this->VALID_PROFILE_ACTIVATION_TOKEN = bin2hex(random_bytes(16));
@@ -107,11 +105,9 @@ class ProfileTest extends AbqTrailsTest {
 		$this->assertEquals($pdoProfile->getProfileLastName(), $this->VALID_PROFILE_LAST_NAME);
 		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_PROFILE_USERNAME);
 	}
-
 	/**
 	 * public inserting and updated a profile
 	 */
-
 	public function testUpdateValidProfile(){
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
@@ -136,7 +132,6 @@ class ProfileTest extends AbqTrailsTest {
 		$this->assertEquals($pdoProfile->getProfileLastName(), $this->VALID_PROFILE_LAST_NAME_2);
 		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_PROFILE_USERNAME_2);
 	}
-
 	/**
 	 * public function creating and then deleting a profile
 	 */
@@ -220,10 +215,7 @@ class ProfileTest extends AbqTrailsTest {
 			$this->VALID_PROFILE_EMAIL, $this->VALID_PROFILE_FIRST_NAME, $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_LAST_NAME,
 			$this->VALID_PROFILE_USERNAME);
 		$profile->insert($this->getPDO());
-		$results = Profile:: getProfileByProfileUsername($this->getPDO(), $this->VALID_PROFILE_USERNAME);
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-		$this->assertContainsOnlyInstancesOf("\\CapstoneTrails\\AbqTrails\\Profile", $results);
-		$pdoProfile = $results[0];
+		$pdoProfile = Profile::getProfileByProfileUsername($this->getPDO(), $profile->getProfileUsername());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_PROFILE_ACTIVATION_TOKEN);
@@ -238,7 +230,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * public function that gets a profile that does not exist
 	 */
 	public function testGetInvalidProfileByUsername() : void {
-		$profile = Profile::getProfileByProfileUsername($this->getPDO(),"FakeUsername");
+		$profile = Profile::getProfileByProfileUsername($this->getPDO(), "abcdefg");
 		$this->assertNull($profile);
 	}
 }
