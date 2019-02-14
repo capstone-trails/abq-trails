@@ -158,7 +158,10 @@ class tag{
 		// create query template
 		$query = "UPDATE tag SET tagName = :tagName WHERE tagId = :tagId";
 		$statement = $pdo->prepare($query);
-		$parameters = ["tagId"=> $this->getBytes(),"tagName" => $this->tagName];
+		$parameters = [
+			"tagId"=> $this->tagId->getBytes(),
+			"tagName" => $this->tagName
+		];
 		$statement->execute($parameters);
 	}
 
@@ -224,7 +227,7 @@ class tag{
 		$query = "SELECT tagId, tagName FROM tag WHERE tagName LIKE :tagName";
 		$statement = $pdo->prepare($query);
 		// bind the tag name to the place holder in the template
-		$tagName = "%tagName%";
+		$tagName = "%$tagName%";
 		$parameters = ["execute" => $tagName];
 		$statement->execute($parameters);
 		// build an array of tags
