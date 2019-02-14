@@ -432,7 +432,7 @@ class Trail implements \JsonSerializable {
 
 		$parameters = [
 			"trailId" => $this->trailId->getBytes(),
-			"trailAvatar" => $this->trailAvatarUrl,
+			"trailAvatarUrl" => $this->trailAvatarUrl,
 			"trailDescription" => $this->trailDescription,
 			"trailHigh" => $this->trailHigh,
 			"trailLatitude" => $this->trailLatitude,
