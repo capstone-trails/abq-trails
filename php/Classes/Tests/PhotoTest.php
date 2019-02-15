@@ -2,6 +2,7 @@
 namespace CapstoneTrails\AbqTrails\Tests;
 
 use CapstoneTrails\AbqTrails\Photo;
+use CapstoneTrails\AbqTrails\Profile;
 
 //our autoloader
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -62,11 +63,12 @@ class PhotoTest extends AbqTrailsTest {
 		// run the default setUp() method first
 		parent::setUp();
 		$password = "abc123";
-		$this->VALID_PROFILE_ID = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 
 		// create and insert a Profile to own the Tests photo
-		$this->profile = new Profile (generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "Tests@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
+		$this->profile = new Profile (generateUuidV4(), $this->VALID_ACTIVATION,"https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "email@email.com", "Seymour", $this->VALID_PROFILE_HASH, "Butts","butts4life01");
 		$this->profile ->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit Tests was setup...)
