@@ -30,13 +30,13 @@ class PhotoTest extends AbqTrailsTest {
 	protected $VALID_PROFILE_HASH;
 
 	/**
-	 * content of the Tweet
+	 * content of the Photo
 	 * @var string $VALID_PHOTO
 	 **/
 	protected $VALID_PHOTO = "PHPUnit test passing";
 
 	/**
-	 * content of the updated Tweet
+	 * content of the updated Trail
 	 * @var string $VALID_TRAIL
 	 **/
 	protected $VALID_TRAIL = "PHPUnit test still passing";
@@ -58,21 +58,11 @@ class PhotoTest extends AbqTrailsTest {
 
 
 		// create and insert a Profile to own the Tests photo
-		$this->profile = new Profile (generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "Tests@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
-		$this->profile ->insert($this->getPDO());
+		$this->profile = new Profile (generateUuidV4(), null, "@handle", "https://email@email.com", "Chimp", $this->VALID_PROFILE_HASH, "Shrimp");
+		$this->profile->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit Tests was setup...)
 		$this->VALID_PHOTODATETIME = new \DateTime();
-
-		//format the sunrise date time to use for testing
-		$this->VALID_SUNRISEDATE = new \DateTime();
-		$this->VALID_SUNRISEDATE->sub(new \DateInterval("P10D"));
-
-		//format the sunset date time to use for testing
-		$this->VALID_SUNSETDATE = new\DateTime();
-		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
-
-
 
 	}
 
