@@ -247,7 +247,7 @@ class rating {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not correct data type
 	 **/
-	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, uuid $ratingProfileId, uuid $ratingTrailId) : \SplFixedArray{
+	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, uuid $ratingProfileId, uuid $ratingTrailId) : ?Rating {
 		try {
 			$ratingProfileId = self::validateUuid($ratingProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
@@ -259,19 +259,19 @@ class rating {
 		// bind the rating profile id to the place holder in the template
 		$parameters = ["ratingProfileId" => $ratingProfileId, "ratingTrailId" => $ratingTrailId];
 		$statement->execute($parameters);
-		// build an array of ratings
-		$ratings = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false){
+		// getting the rating from mySQL
 			try {
-				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
-				$ratings[$ratings->key()] = $rating;
-				$ratings->next();
+				$rating = null;
+				$statement->setFetchMode(\PDO::FETCH_ASSOC);
+				$row = $statement->fetch();
+				if ($row !== false){
+					$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
+				}
 			} catch(\Exception $exception){
 				// if the row couldn't be converted, rethrow it
 				throw (new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		}
-		return($ratings);
+
+		return($rating);
 	}
 }
