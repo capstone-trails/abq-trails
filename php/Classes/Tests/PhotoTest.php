@@ -3,7 +3,6 @@ namespace CapstoneTrails\AbqTrails\Tests;
 
 use CapstoneTrails\AbqTrails\Photo;
 use CapstoneTrails\AbqTrails\Profile;
-
 //our autoloader
 require_once(dirname(__DIR__) . "/autoload.php");
 
@@ -23,52 +22,35 @@ class PhotoTest extends AbqTrailsTest {
 	 * ProfileUser that created the photo; this is for foreign key relations
 	 * @var $photoId
 	 **/
-	protected $photoId = null;
+	protected $profile = null;
 	/**
-	 * content of the photo
-	 * @var string $VALID_PHOTOURL
+	 * content of the profile
+	 * @var string $VALID_PROFILE
 	 **/
-	protected $VALID_PHOTO_URL = "PHPUnit Tests passing";
+	protected $trail = null;
 	/**
 	 * Profile that created the photo; this is a foreign key relations
 	 * @var $Profile
 	 **/
-	protected $profile = null;
+	protected $photo = null;
 	/**
-	 * content of the updated photo
-	 * @var string $VALID_PHOTOURL2
-	 **/
-	protected $VALID_PHOTOURL2 = "PHPUnit Tests still passing";
-
-	/**
-	 * timestamp of the photo; this starts as null and is assigned later
-	 * @var \photoDateTime $VALID_PHOTODATETIME
-	 **/
-	protected $VALID_PHOTOURL = "http://puppy.com/img-01";
-
-	/**
-	 * Valid timestamp to use as sunrisePhotoDate
-	 */
-	protected $VALID_SUNRISEDATE = null;
-
-	/**
-	 * Valid timestamp to use as sunsetPhotoDate
-	 */
-	protected $VALID_SUNSETDATE = null;
-
+		protected $VALID_PROFILE_HASH
 	/**
 	 * create dependent objects before running each Tests
+	 **/
+	protected $VALID_ACTIVATIONTOKEN
+	/**
+	 *
 	 **/
 	public final function setUp()  : void {
 		// run the default setUp() method first
 		parent::setUp();
 		$password = "abc123";
-		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+		$this->VALID_PROFILE_ID = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 
 
 		// create and insert a Profile to own the Tests photo
-		$this->profile = new Profile (generateUuidV4(), $this->VALID_ACTIVATION,"https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "email@email.com", "Seymour", $this->VALID_PROFILE_HASH, "Butts","butts4life01");
+		$this->profile = new Profile (generateUuidV4(), null,"@handle", "https://media.giphy.com/media/3og0INyCmHlNylks9O/giphy.gif", "Tests@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212");
 		$this->profile ->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit Tests was setup...)
