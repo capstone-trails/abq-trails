@@ -19,28 +19,36 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  **/
 class PhotoTest extends AbqTrailsTest {
 	/**
-	 * ProfileUser that created the photo; this is for foreign key relations
-	 * @var $photoId
+	 * Profile that created the photo; this is for foreign key relations
+	 * @var Profile profile
 	 **/
 	protected $profile = null;
 	/**
-	 * content of the profile
-	 * @var string $VALID_PROFILE
+	 * valid profile hash to create the profile object to own the test
+	 * @var $VALID_HASH
+	 */
+	protected $VALID_PROFILE_HASH;
+
+	/**
+	 * content of the Tweet
+	 * @var string $VALID_PHOTO
 	 **/
-	protected $trail = null;
+	protected $VALID_PHOTO = "PHPUnit test passing";
+
 	/**
-	 * Profile that created the photo; this is a foreign key relations
-	 * @var $Profile
+	 * content of the updated Tweet
+	 * @var string $VALID_TRAIL
 	 **/
-	protected $photo = null;
+	protected $VALID_TRAIL = "PHPUnit test still passing";
+
 	/**
-		protected $VALID_PROFILE_HASH
-	/**
-	 * create dependent objects before running each Tests
+	 * timestamp of the Tweet; this starts as null and is assigned later
+	 * @var \DateTime $VALID_ACTIVATIONTOKEN
 	 **/
-	protected $VALID_ACTIVATIONTOKEN
+	protected $VALID_ACTIVATIONTOKEN = null;
+
 	/**
-	 *
+	 * create dependent objects before running each test
 	 **/
 	public final function setUp()  : void {
 		// run the default setUp() method first
