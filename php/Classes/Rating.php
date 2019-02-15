@@ -185,6 +185,54 @@ class rating {
 
 
 	//todo add insert update delete getRatingByRatingProfileIdAndRatingTrailId
+	/**
+	 * gets the Rating by profile id and trail id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $ratingProfileId
+	 * @param Uuid|string $ratingTrailId
+	 * @return Rating if found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, uuid $ratingProfileId, uuid $ratingTrailId) : ?Rating {
+		try {
+			$ratingProfileId = self::validateUuid($ratingProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
+		$statement = $pdo->prepare($query);
+		// bind the rating profile id to the place holder in the template
+		$parameters = ["ratingProfileId" => $ratingProfileId, "ratingTrailId" => $ratingTrailId];
+		$statement->execute($parameters);
+		// getting the rating from mySQL
+		try {
+			$rating = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false){
+				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
+			}
+		} catch(\Exception $exception){
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($rating);
+	}
+
+
+	/**
+	 * gets the Rating by profile id and trail id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $ratingProfileId
+	 * @param Uuid|string $ratingTrailId
+	 * @return Rating if found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
 
 
 	/**
@@ -234,44 +282,5 @@ class rating {
 		$statement = $pdo->prepare($query);
 		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(),"ratingTrailId" => $this->ratingTrailId->getBytes(), "ratingValue" => $this->ratingValue, "ratingDifficulty => $this->ratingDifficulty"];
 		$statement->execute($parameters);
-	}
-
-
-	/**
-	 * gets the Rating by profile id and trail id
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $ratingProfileId
-	 * @param Uuid|string $ratingTrailId
-	 * @return \SplFixedArray SplFixedArray of Ratings found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not correct data type
-	 **/
-	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, uuid $ratingProfileId, uuid $ratingTrailId) : ?Rating {
-		try {
-			$ratingProfileId = self::validateUuid($ratingProfileId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
-		$statement = $pdo->prepare($query);
-		// bind the rating profile id to the place holder in the template
-		$parameters = ["ratingProfileId" => $ratingProfileId, "ratingTrailId" => $ratingTrailId];
-		$statement->execute($parameters);
-		// getting the rating from mySQL
-			try {
-				$rating = null;
-				$statement->setFetchMode(\PDO::FETCH_ASSOC);
-				$row = $statement->fetch();
-				if ($row !== false){
-					$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
-				}
-			} catch(\Exception $exception){
-				// if the row couldn't be converted, rethrow it
-				throw (new \PDOException($exception->getMessage(), 0, $exception));
-			}
-
-		return($rating);
 	}
 }

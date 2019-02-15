@@ -63,11 +63,9 @@ class RatingTest extends AbqTrailsTest {
 		$password = "heythere123";
 		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
-
 		//create and insert a profile
 		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "www.blahblah.com/12222", "myname@man.com", "Matt", $this->VALID_HASH, "Damon", "mattDamon");
 		$this->profile->insert($this->getPDO());
-
 		//create and insert trail from trail tag
 		$this->trail = new Trail(generateUuidV4(), "www.faketrail.com/photo", "This trail is a fine trail", 1234, 35.0792, 5.2, 106.4847, 1254, "Copper Canyon");
 		$this->trail->insert($this->getPDO());
@@ -80,9 +78,7 @@ class RatingTest extends AbqTrailsTest {
 	public function testInsertValidRating() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
-		$ratingProfileId = generateUuidV4();
-		$ratingTrailId = generateUuidV4();
-		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_DIFFICULTY);
+		$rating = new Rating($this->trail->getTrailId(), $this->profile->getProfileId(), $this->VALID_VALUE, $this->VALID_DIFFICULTY);
 		$rating ->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->getRatingProfileId(), $rating->getRatingTrailId());
@@ -95,6 +91,7 @@ class RatingTest extends AbqTrailsTest {
 
 
 	/**
+	 * todo need fixing
 	 * test inserting a Rating, editing it and then updating it
 	 **/
 	public function testUpdateValidRating(){
@@ -103,7 +100,7 @@ class RatingTest extends AbqTrailsTest {
 		// create a new Rating and insert to into mySQL
 		$ratingProfileId = generateUuidV4();
 		$ratingTrailId = generateUuidV4();
-		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_DIFFICULTY);
 		$rating->insert($this->getPDO());
 		// edit the rating update it in mySQL
 		$rating->setRatingValue($this->VALID_VALUE);
@@ -119,6 +116,7 @@ class RatingTest extends AbqTrailsTest {
 
 
 	/**
+	 * todo need fixing
 	 * test creating a Rating and then deleting it
 	 **/
 	public function testDeleteValidRating() : void {
@@ -141,24 +139,23 @@ class RatingTest extends AbqTrailsTest {
 	/**
 	 * test inserting a Rating and regrabbing it from mySQL
 	 **/
-	public function testGetValidRatingByRatingProfileId() : void {
+	public function testGetValidRatingByRatingProfileIdAndRatingTrailId() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
-		$ratingProfileId = generateUuidV4();
-		$ratingTrailId = generateUuidV4();
-		$rating = new Rating($ratingProfileId, $ratingTrailId, $this->VALID_VALUE, $this->VALID_VALUE_2, $this->VALID_DIFFICULTY, $this->VALID_DIFFICULTY_2);
+		$rating = new Rating($this->trail->getTrailId(), $this->profile->getProfileId(), $this->VALID_VALUE, $this->VALID_DIFFICULTY);
 		$rating->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->getRatingProfileId(), $rating->getRatingTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
-		$this->assertEquals($pdoRating->getRatingProfileId(), $ratingProfileId);
-		$this->assertEquals($pdoRating->getRatingTrailId(), $ratingTrailId);
+		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
 		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
 		$this->assertEquals($pdoRating->getRatingDiffculty(), $this->VALID_DIFFICULTY);
 	}
 
 
 	/**
+	 * todo need fixing
 	 * test grabbing a Rating by an profile id and trail id that does not exist
 	 **/
 	public function testGetInvalidRatingByRatingProfileIdAndRatingTrailId() : void {
@@ -170,6 +167,7 @@ class RatingTest extends AbqTrailsTest {
 
 
 	/**
+	 * todo need fixing
 	 * test grabbing a rating by rating value
 	 **/
 	public function testGetValidRatingByValue(){
