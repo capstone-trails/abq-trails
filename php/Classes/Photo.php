@@ -25,7 +25,7 @@ class Photo {
 	 * id of the PhotoId that sent this photo; this is a primary key
 	 * @var Uuid $photoProfileUserId
 	 **/
-	private $photoProfileUserId;
+	private $photoProfileId;
 	/**
 	 * actual textual content of this photo
 	 * @var string $photoUrl
@@ -54,10 +54,10 @@ class Photo {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	 public function __construct($newPhotoId, $newPhotoProfileUserId, string $newPhotoUrl, $newPhotoDateTime = null) {
+	 public function __construct($newPhotoId, $newPhotoProfileId, string $newPhotoUrl, $newPhotoDateTime) {
 		 try {
 			 $this->setPhotoId($newPhotoId);
-			 $this->setphotoProfileUserId($newPhotoProfileUserId);
+			 $this->setphotoProfileId($newPhotoProfileId);
 			 $this->setPhotoUrl($newPhotoUrl);
 			 $this->setPhotoDateTime($newPhotoDateTime);
 		 } catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -99,7 +99,7 @@ class Photo {
 	 * @return Uuid value of photo profile user id
 	 **/
 	public function getPhotoProfileUserId() : Uuid{
-		return($this->photoProfileUserId);
+		return($this->photoProfileId);
 	}
 
 	/**
@@ -109,9 +109,9 @@ class Photo {
 	 * @throws \RangeException if $newProfileUserId is not positive
 	 * @throws \TypeError if $newPhotoProfileUserId is not an integer
 	 **/
-	public function setPhotoProfileUserId( $newPhotoProfileUserId) : void {
+	public function setPhotoProfileId( $newPhotoProfileId) : void {
 		try {
-			$uuid = self::validateUuid($newPhotoProfileUserId);
+			$uuid = self::validateUuid($newPhotoProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
@@ -131,13 +131,15 @@ class Photo {
 	/**
 	 * mutator method for photo url
 	 *
-	 * @param string | Uuid $newPhotoUrl new value of photo url
+	 * @param string $newPhotoUrl new value of photo url
 	 * @throws \RangeException if $newPhotoUrl is not positive
 	 * @throws \TypeError if $newPhotoUrl is not an integer
 	 **/
-	public function setPhotoUrl( $newPhotoUrl) : void {
+	public function setPhotoUrl($newPhotoUrl) : void {
 		$newPhotoUrl = trim($newPhotoUrl);
-		if(strlen($this->photoUrl) > 255){
+		$newPhotoUrl = filter_var($newPhotoUrl, FILTER_VALIDATE_URL);
+
+		if(strlen($newPhotoUrl) > 255){
 			throw(new \RangeException("Url too long"));
 		}
 		if(empty($newPhotoUrl) === true){
