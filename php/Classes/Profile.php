@@ -325,7 +325,6 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
 			"profileHash" => $this->profileHash,
 			"profileLastName" => $this->profileLastName,
 			"profileUsername" => $this->profileUsername];
-		var_dump($parameters);
 		$statement->execute($parameters);
 
 	}

@@ -32,9 +32,9 @@ class TrailTagTest extends  AbqTrailsTest {
 	 */
 	protected $profile = null;
 
-	protected $VALID_HASH;
+	protected $VALID_PROFILE_HASH;
 
-	protected $VALID_ACTIVATION;
+	protected $VALID_PROFILE_ACTIVATION;
 	/**
 	 * create dependent objects before running each test
 	 *
@@ -43,20 +43,20 @@ class TrailTagTest extends  AbqTrailsTest {
 	public final function setUp(): void {
 		parent::setUp();
 		$password = "heythere123";
-		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_PROFILE_ACTIVATION = bin2hex(random_bytes(16));
 
-		//create and insert a profile
-		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "www.blahblah.com/12222", "myname@man.com", "Matt", $this->VALID_HASH, "Damon", "mattDamon");
-		$this->profile->insert($this->getPDO());
+		//create and insert new tag from trail tag
+		$this->tag = new Tag(generateUuidV4(), "Dog Friendly");
+		$this->tag->insert($this->getPDO());
 
 		//create and insert trail from trail tag
 		$this->trail = new Trail(generateUuidV4(), "www.faketrail.com/photo", "This trail is a fine trail", 1234, 35.0792, 5.2, 106.4847, 1254, "Copper Canyon");
 		$this->trail->insert($this->getPDO());
 
-		//create and insert new tag from trail tag
-		$this->tag = new Tag(generateUuidV4(), "Dog Friendly");
-		$this->tag->insert($this->getPDO());
+		//create and insert a profile
+		$this->profile = new Profile(generateUuidV4(), $this->VALID_PROFILE_ACTIVATION, "www.blahblah.com/12222", "myname@man.com", "Matt", $this->VALID_PROFILE_HASH, "Damon", "mattDamon");
+		$this->profile->insert($this->getPDO());
 		}
 	/**
 	 * function that inserts a valid trail tag
@@ -70,12 +70,21 @@ class TrailTagTest extends  AbqTrailsTest {
 			$trailTag->insert($this->getPDO());
 			var_dump($trailTag);
 			//grab data from mySQL and enforce the fields match our expectations
-			$results = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($this->getPDO(), $this->tag->getTagId(), $this->trail->getTrailId());
-			var_dump($results);
-			$pdoTrailTag = $results[0];
+			$pdoTrailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($this->getPDO(), $this->tag->getTagId(), $this->trail->getTrailId());
 			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trailTag"));
 			$this->assertEquals($pdoTrailTag->getTrailTagTagId(), $this->tag->getTagId());
 			$this->assertEquals($pdoTrailTag->getTrailTagTrailId(), $this->trail->getTrailId());
 			$this->assertEquals($pdoTrailTag->getTrailTagProfileId(), $this->profile->getProfileId());
+		}
+		public function testDeleteValidTrailTag () : void {
+			//count the number of rows
+			$numRows = $this->getConnection()->getRowCount("trailTag");
+			//create a new trail tag and insert it into mySQL
+			$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailTag(), $this->profile->getProfileId());
+			$trailTag->delete($this->getPDO());
+			//assert number of rows
+			$pdoTrailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($this->getPDO(), $this->tag->getTagId(), $this->trail->getTrailId());
+			$this->assertCount(0, $pdoTrailTag);
+			$this->assertEquals($numRows, $this->getConnection()->getRowCount("trailTag"));
 		}
 	}
