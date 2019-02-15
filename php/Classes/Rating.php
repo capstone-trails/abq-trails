@@ -224,15 +224,44 @@ class rating {
 
 
 	/**
-	 * gets the Rating by profile id and trail id
+	 * gets the Rating by value
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $ratingProfileId
-	 * @param Uuid|string $ratingTrailId
+	 * @param String $ratingValue
 	 * @return Rating if found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not correct data type
 	 **/
+	public static function getRatingByRatingValue(\PDO $pdo, string $ratingValue) : ?Rating {
+		//sanitize the description before searching
+		$ratingValue = trim($ratingValue);
+		$ratingValue = filter_var($ratingValue, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if (empty($ratingValue) === true){
+			throw (new \PDOException("rating value is invalid"));
+		}
+		// escape any mySQL wild cards
+		$ratingValue = str_replace("_", "\\_", str_replace("%", "\\%", $ratingValue));
+		// create query template
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingValue LIKE :ratingValue";
+		$statement = $pdo->prepare($query);
+		// bind the rating value to the place holder in the template
+		$ratingValue = "%$ratingValue%";
+		$parameters = ["ratingValue" => $ratingValue];
+		$statement->execute($parameters);
+		// getting the rating from mySQL
+		try {
+			$rating = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false){
+				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
+			}
+		} catch(\Exception $exception){
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($rating);
+	}
 
 
 	/**
