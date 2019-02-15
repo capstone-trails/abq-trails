@@ -79,6 +79,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * setup to create hash
 	 */
 	public final function setUp() : void {
+		//count the number of rows
 		parent::setUp();
 		$password = "coffee12345";
 		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
@@ -88,6 +89,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * Tests inserting a Profile into mySQL database
 	 */
 	public function testInsertValidProfile() : void {
+		//count the number of rows
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
 		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
@@ -109,6 +111,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * public inserting and updated a profile
 	 */
 	public function testUpdateValidProfile(){
+		//count the number of rows
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
 		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
@@ -136,6 +139,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * public function creating and then deleting a profile
 	 */
 	public function testDeleteValidProfile() : void {
+		//count the number of rows
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
 		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
@@ -153,6 +157,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * public function that gets a profile by the activation token
 	 */
 	public function testGetProfileByActivationToken() : void {
+		//count the number of rows
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
 		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
@@ -181,6 +186,7 @@ class ProfileTest extends AbqTrailsTest {
  	* public function that gets profile by profile email
  	*/
 	public function testGetProfileByProfileEmail() {
+		//count the number of rows
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
 		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,
@@ -209,6 +215,7 @@ class ProfileTest extends AbqTrailsTest {
 	 * public function that gets profile by the username
 	 */
 	public function testGetProfileByProfileUsername() {
+		//count the number of rows
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
 		$profile = new Profile($profileId, $this->VALID_PROFILE_ACTIVATION_TOKEN, $this->VALID_PROFILE_AVATAR_URL,

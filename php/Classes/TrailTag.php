@@ -161,9 +161,8 @@ class TrailTag {
 		//create query template
 		$query = "DELETE FROM trailTag WHERE trailTagTagId = :trailTagTagId AND trailTagTrailId = :trailTagTrailId ";
 		$statement = $pdo->prepare($query);
-
 		//bind variable to place holders
-		$parameters = ["trailTagTagId" => $this->trailTagTagId->getBytes(), "trailTagTrailId" => $this->trailTagTrailId->getBytes(), "trailTagProfileId" => $this->trailTagProfileId->getBytes()];
+		$parameters = ["trailTagTagId" => $this->trailTagTagId->getBytes(), "trailTagTrailId" => $this->trailTagTrailId->getBytes()];
 		$statement->execute($parameters);
 	}
 

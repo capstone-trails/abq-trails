@@ -64,11 +64,9 @@ class TrailTagTest extends  AbqTrailsTest {
 		public function testInsertValidTrailTag (): void {
 			//count the number of rows
 			$numRows = $this->getConnection()->getRowCount("trailTag");
-
 			//create new trail tag and insert into mySQL
 			$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailId(), $this->profile->getProfileId());
 			$trailTag->insert($this->getPDO());
-			var_dump($trailTag);
 			//grab data from mySQL and enforce the fields match our expectations
 			$pdoTrailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($this->getPDO(), $this->tag->getTagId(), $this->trail->getTrailId());
 			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trailTag"));
@@ -76,15 +74,31 @@ class TrailTagTest extends  AbqTrailsTest {
 			$this->assertEquals($pdoTrailTag->getTrailTagTrailId(), $this->trail->getTrailId());
 			$this->assertEquals($pdoTrailTag->getTrailTagProfileId(), $this->profile->getProfileId());
 		}
+	/**
+	 * public function creating and then deleting a trail tag
+	 */
 		public function testDeleteValidTrailTag () : void {
 			//count the number of rows
 			$numRows = $this->getConnection()->getRowCount("trailTag");
 			//create a new trail tag and insert it into mySQL
-			$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailTag(), $this->profile->getProfileId());
+			$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailId(), $this->profile->getProfileId());
+			$trailTag->insert($this->getPDO());
+			//delete the trail tag
+			$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trailTag"));
 			$trailTag->delete($this->getPDO());
 			//assert number of rows
 			$pdoTrailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($this->getPDO(), $this->tag->getTagId(), $this->trail->getTrailId());
-			$this->assertCount(0, $pdoTrailTag);
+			$this->assertNull($pdoTrailTag);
 			$this->assertEquals($numRows, $this->getConnection()->getRowCount("trailTag"));
 		}
+	/**
+	 * public inserting a trail tag and getting it by trail tag tag id and trail tag trail id
+	 */
+	public function testGetValidTrailTagByTrailTagTagIdAndTrailTagTrailId () : void {
+		//count the number of rows
+		$numRows = $this->getConnection()->getRowCount("trailTag");
+		//create a new trail tag and insert it into mySQL
+		$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailId(), $this->profile->getProfileId());
+
+	}
 	}
