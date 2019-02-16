@@ -17,6 +17,11 @@ use Ramsey\Uuid\Uuid;
 class rating {
 	use ValidateUuid;
 	/**
+	 * id of the rating, primary key
+	 * @var Uuid $ratingId
+	 */
+		private $ratingId;
+	/**
 	 * id of the profile that rated the trail; this is a foreign key
 	 * @var Uuid $ratingProfileId
 	 **/
@@ -41,17 +46,19 @@ class rating {
 	/**
 	 * constructor for this Rating
 	 *
+	 * @param string|Uuid $newRatingId
 	 * @param string|Uuid $newRatingProfileId id of the profile that's making the rating
 	 * @param string|Uuid $newRatingTrailId id of the trail that's being rated
-	 * @param string $newRatingDifficulty string that tells how difficult the trail is
-	 * @param string $newRatingValue string that tells what might be on the trails.
+	 * @param int $newRatingDifficulty string that tells how difficult the trail is
+	 * @param int $newRatingValue that tells what might be on the trails.
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if some other exception occurs
 	 * @Documention https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newRatingProfileId, $newRatingTrailId, string $newRatingDifficulty, string $newRatingValue) {
+	public function __construct($newRatingId,$newRatingProfileId, $newRatingTrailId, int $newRatingDifficulty, int $newRatingValue) {
 		try {
+			$this->setRatingId($newRatingId);
 			$this->setRatingProfileId($newRatingProfileId);
 			$this->setRatingTrailId($newRatingTrailId);
 			$this->setRatingDifficulty($newRatingDifficulty);
@@ -62,8 +69,20 @@ class rating {
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 	}
+public function getRatingId() : Uuid {
+		return ($this->ratingId);
+}
 
-
+	public function setRatingId($newRatingId): void {
+		try {
+			$uuid = self::validateUuid($newRatingId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw (new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		//convert and store the profile id
+		$this->ratingId = $uuid;
+	}
 	/**
 	 * accessor method for ratingProfileId
 	 *
@@ -72,6 +91,7 @@ class rating {
 	public function getRatingProfileId(): Uuid {
 		return ($this->ratingProfileId);
 	}
+
 	/**
 	 * mutator method for rating profile id
 	 *
@@ -99,6 +119,7 @@ class rating {
 	public function getRatingTrailId(): Uuid {
 		return ($this->ratingTrailId);
 	}
+
 	/**
 	 * mutator method for rating trail id
 	 *
@@ -121,9 +142,9 @@ class rating {
 	/**
 	 * accessor method for rating difficulty
 	 *
-	 * @return string value of rating difficulty
+	 * @return int value of rating difficulty
 	 **/
-	public function getRatingDifficulty(): string {
+	public function getRatingDifficulty(): int {
 		return ($this->ratingDifficulty);
 	}
 	/**
@@ -154,9 +175,9 @@ class rating {
 	/**
 	 * accessor method for rating value
 	 *
-	 * @return string value of rating value
+	 * @return int value of rating value
 	 **/
-	public function getRatingValue(): string {
+	public function getRatingValue(): int {
 		return ($this->ratingValue);
 	}
 	/**
@@ -168,115 +189,38 @@ class rating {
 	 * @throws \TypeError if $newRatingValue is not a string
 	 **/
 	//todo treat value like an integer
-	public function setRatingValue(int $newRatingValue) : void {
+	public function setRatingValue(int $newRatingValue): void {
 		// verify the rating value is secure
 		$newRatingValue = trim($newRatingValue);
 		$newRatingValue = filter_var($newRatingValue, FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newRatingValue) === true){
+		if(empty($newRatingValue) === true) {
 			throw (new \InvalidArgumentException("rating value is empty or insecure"));
 		}
 		// verify the rating value will fit in the database
-		if (strlen($newRatingValue) > 5) {
+		if(strlen($newRatingValue) > 5) {
 			throw (new \RangeException("rating value is too large"));
 		}
 		// store the rating value
 		$this->ratingDifficulty = $newRatingValue;
 	}
-
-
-	//todo add insert update delete getRatingByRatingProfileIdAndRatingTrailId
-	/**
-	 * gets the Rating by profile id and trail id
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $ratingProfileId
-	 * @param Uuid|string $ratingTrailId
-	 * @return Rating if found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not correct data type
-	 **/
-	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, uuid $ratingProfileId, uuid $ratingTrailId) : ?Rating {
-		try {
-			$ratingProfileId = self::validateUuid($ratingProfileId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception){
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
-		$statement = $pdo->prepare($query);
-		// bind the rating profile id to the place holder in the template
-		$parameters = ["ratingProfileId" => $ratingProfileId, "ratingTrailId" => $ratingTrailId];
-		$statement->execute($parameters);
-		// getting the rating from mySQL
-		try {
-			$rating = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if ($row !== false){
-				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
-			}
-		} catch(\Exception $exception){
-			// if the row couldn't be converted, rethrow it
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return($rating);
-	}
-
-
-	/**
-	 * gets the Rating by value
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param String $ratingValue
-	 * @return Rating if found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not correct data type
-	 **/
-	public static function getRatingByRatingValue(\PDO $pdo, string $ratingValue) : ?Rating {
-		//sanitize the description before searching
-		$ratingValue = trim($ratingValue);
-		$ratingValue = filter_var($ratingValue, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if (empty($ratingValue) === true){
-			throw (new \PDOException("rating value is invalid"));
-		}
-		// escape any mySQL wild cards
-		$ratingValue = str_replace("_", "\\_", str_replace("%", "\\%", $ratingValue));
-		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingValue LIKE :ratingValue";
-		$statement = $pdo->prepare($query);
-		// bind the rating value to the place holder in the template
-		$ratingValue = "%$ratingValue%";
-		$parameters = ["ratingValue" => $ratingValue];
-		$statement->execute($parameters);
-		// getting the rating from mySQL
-		try {
-			$rating = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if ($row !== false){
-				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"],$row["ratingValue"],$row["ratingDifficulty"]);
-			}
-		} catch(\Exception $exception){
-			// if the row couldn't be converted, rethrow it
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return($rating);
-	}
-
-
-	/**
-	 * inserts this Rating into mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when mySQL related errors occurs
-	 * @throws \TypeError if $pdo is not a PDO connection object
-	 **/
+	//todo add insert update delete getRatingByRatingProfileIdAndRatingTrailId	/**
+	//	 * inserts this Rating into mySQL
+	//	 *
+	//	 * @param \PDO $pdo PDO connection object
+	//	 * @throws \PDOException when mySQL related errors occurs
+	//	 * @throws \TypeError if $pdo is not a PDO connection object
+	//	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO rating(ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty) VALUES (:ratingProfileId, :ratingTrailId, ratingValue, ratingDifficulty)";
+		$query = "INSERT INTO rating(ratingId, ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty) VALUES(:ratingProfileId, :ratingTrailId, ratingValue, ratingDifficulty)";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the place holders in the template
-		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(), "ratingTrailId" => $this->ratingTrailId->getBytes(), "ratingValue" => $this->ratingValue, "ratingDifficulty" => $this->ratingDifficulty];
+		$parameters = [
+			"ratingId" => $this->ratingId->getBytes(),
+			"ratingProfileId" => $this->ratingProfileId->getBytes(),
+			"ratingTrailId" => $this->ratingTrailId->getBytes(),
+			"ratingValue" => $this->ratingValue,
+			"ratingDifficulty" => $this->ratingDifficulty];
 		$statement->execute($parameters);
 	}
 
@@ -290,13 +234,12 @@ class rating {
 	 **/
 	public function delete(\PDO $pdo) : void {
 		//create query template
-		$query = "DELETE FROM rating WHERE ratingProfileId AND ratingTrailId";
+		$query = "DELETE FROM rating WHERE ratingId = :ratingId";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the placeholder in the template
-		$parameters = ["ratingProfileId"=> $this->ratingProfileId, "rating"];
+		$parameters = ["ratingId" => $this->ratingId];
 		$statement->execute($parameters);
 	}
-
 
 	/**
 	 * updates this Rating in mySQL
@@ -307,9 +250,78 @@ class rating {
 	 **/
 	public function update(\PDO $pdo) : void {
 		// create query template
-		$query = "UPDATE rating SET ratingProfieId = :ratingProfileId, ratingTrailId = :ratingTrailId, ratingValue = :ratingValue, ratingDifficulty = :ratingDifficulty";
+		$query = "UPDATE rating SET ratingProfileIdeId = :ratingProfileId, ratingTrailId = :ratingTrailId, ratingValue = :ratingValue, ratingDifficulty = :ratingDifficulty WHERE ratingId = :ratingId";
 		$statement = $pdo->prepare($query);
-		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(),"ratingTrailId" => $this->ratingTrailId->getBytes(), "ratingValue" => $this->ratingValue, "ratingDifficulty => $this->ratingDifficulty"];
+		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(),"ratingTrailId" => $this->ratingTrailId->getBytes(), "ratingValue" => $this->ratingValue, "ratingDifficulty => $this->ratingDifficulty", "ratingId" =>$this->ratingId];
 		$statement->execute($parameters);
+	}
+	/**
+	 * gets the Rating by profile id and trail id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $ratingProfileId
+	 * @param Uuid|string $ratingTrailId
+	 * @return Rating if found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, uuid $ratingProfileId, uuid $ratingTrailId): ?Rating {
+		try {
+			$ratingProfileId = self::validateUuid($ratingProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT ratingId, ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
+		$statement = $pdo->prepare($query);
+		// bind the rating profile id to the place holder in the template
+		$parameters = ["ratingProfileId" => $ratingProfileId, "ratingTrailId" => $ratingTrailId];
+		$statement->execute($parameters);
+		// getting the rating from mySQL
+		try {
+			$rating = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$rating = new Rating($row["ratingId"], $row["ratingProfileId"], $row["ratingTrailId"], $row["ratingValue"], $row["ratingDifficulty"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($rating);
+	}
+
+
+	/**
+	 * gets the Rating by value
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $ratingValue
+	 * @return Rating if found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getRatingByRatingValue(\PDO $pdo, int $ratingValue): ?Rating {
+		// create query template
+		$query = "SELECT ratingId, ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingValue = :ratingValue";
+		$statement = $pdo->prepare($query);
+		// bind the rating value to the place holder in the template
+		$ratingValue = "%$ratingValue%";
+		$parameters = ["ratingValue" => $ratingValue];
+		$statement->execute($parameters);
+		// getting the rating from mySQL
+		try {
+			$rating = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$rating = new rating($row["ratingId"],$row["ratingProfileId"], $row["ratingTrailId"], $row["ratingValue"], $row["ratingDifficulty"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($rating);
 	}
 }

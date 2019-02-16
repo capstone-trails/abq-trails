@@ -22,12 +22,12 @@ class RatingTest extends AbqTrailsTest {
 	 * valid rating about to use
 	 * @var string $VALID_VALUE
 	 **/
-	protected $VALID_VALUE = "Dog-Friendly";
+	protected $VALID_VALUE = 5;
 	/**
 	 * content of the updated Rating
 	 * @var string $VALID_VALUE_2
 	 **/
-	protected $VALID_VALUE_2 = "Wheelchair accessible";
+	protected $VALID_VALUE_2 = 5;
 	/**
 	 * valid rating Difficulty
 	 * @var int $VALID_DIFFICULTY
@@ -75,11 +75,11 @@ class RatingTest extends AbqTrailsTest {
 	/**
 	 * test inserting a valid Rating and verify that the actual mySQL matches
 	 **/
-	public function testInsertValidRating() : void {
+	public function testInsertValidRating(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
 		$rating = new Rating($this->trail->getTrailId(), $this->profile->getProfileId(), $this->VALID_VALUE, $this->VALID_DIFFICULTY);
-		$rating ->insert($this->getPDO());
+		$rating->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->getRatingProfileId(), $rating->getRatingTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
@@ -93,7 +93,7 @@ class RatingTest extends AbqTrailsTest {
 	/**
 	 * test inserting a Rating, editing it and then updating it
 	 **/
-	public function testUpdateValidRating(){
+	public function testUpdateValidRating() {
 		// count the number of number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
 		// create a new Rating and insert to into mySQL
@@ -115,7 +115,7 @@ class RatingTest extends AbqTrailsTest {
 	/**
 	 * test creating a Rating and then deleting it
 	 **/
-	public function testDeleteValidRating() : void {
+	public function testDeleteValidRating(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
 		$rating = new Rating($this->trail->getTrailId(), $this->profile->getProfileId(), $this->VALID_VALUE, $this->VALID_DIFFICULTY);
@@ -133,7 +133,7 @@ class RatingTest extends AbqTrailsTest {
 	/**
 	 * test inserting a Rating and regrabbing it from mySQL
 	 **/
-	public function testGetValidRatingByRatingProfileIdAndRatingTrailId() : void {
+	public function testGetValidRatingByRatingProfileIdAndRatingTrailId(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
 		$rating = new Rating($this->trail->getTrailId(), $this->profile->getProfileId(), $this->VALID_VALUE, $this->VALID_DIFFICULTY);
@@ -151,28 +151,18 @@ class RatingTest extends AbqTrailsTest {
 	/**
 	 * test grabbing a rating by rating value
 	 **/
-	public function testGetValidRatingByValue(){
+	public function testGetValidRatingByValue() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
 		$rating = new Rating($this->trail->getTrailId(), $this->profile->getProfileId(), $this->VALID_VALUE, $this->VALID_DIFFICULTY);
 		$rating->insert($this->getPDO());
 		//grab the data from MySQL
 		$pdoRating = Rating::getRatingByRatingValue($this->getPDO(), $rating->getRatingValue());
-		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("rating"));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
 		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
 		$this->assertEquals($pdoRating->getRatingDifficulty(), $this->VALID_DIFFICULTY);
-	}
-
-
-	/**
-	 * test grabbing a Rating by an profile id and trail id that does not exist
-	 **/
-	public function testGetInvalidRatingByRatingProfileIdAndRatingTrailId() : void {
-		// grab a rating id that exceeds the maximum allowable profile id
-		$rating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), "asdfg", "hjkl;");
-		$this->assertNull($rating);
 	}
 }
