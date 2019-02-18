@@ -23,7 +23,7 @@ class RatingTest extends AbqTrailsTest {
 	 * content of the updated difficulty
 	 * @var int $VALID_DIFFICULTY_2
 	 **/
-	protected $VALID_DIFFICULTY_2 = 4;
+	protected $VALID_DIFFICULTY_2 = 1;
 	/**
 	 * valid rating about to use
 	 * @var int $VALID_VALUE
@@ -33,7 +33,7 @@ class RatingTest extends AbqTrailsTest {
 	 * content of the updated Rating
 	 * @var int $VALID_VALUE_2
 	 **/
-	protected $VALID_VALUE_2 = 5;
+	protected $VALID_VALUE_2 = 3;
 	/**
 	 * valid rating Difficulty
 	 * @var int $VALID_DIFFICULTY
@@ -100,13 +100,12 @@ class RatingTest extends AbqTrailsTest {
 		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
 		$rating->insert($this->getPDO());
 		// edit the rating update it in mySQL
-		$rating->setRatingDifficulty($this->VALID_DIFFICULTY);
-		$rating->setRatingValue($this->VALID_VALUE);
+		$rating->setRatingDifficulty($this->VALID_DIFFICULTY_2);
+		$rating->setRatingValue($this->VALID_VALUE_2);
+		$rating->update($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $this->trail->getTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
-		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
 		$this->assertEquals($pdoRating->getRatingDifficulty(), $this->VALID_DIFFICULTY_2);
 		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE_2);
 	}
@@ -118,11 +117,15 @@ class RatingTest extends AbqTrailsTest {
 	public function testDeleteValidRating(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
+
+		//create a new rating and insert it into mySQL
 		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
 		$rating->insert($this->getPDO());
+
 		// delete the Rating from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$rating->delete($this->getPDO());
+
 		// grab the data from mySQL and enforce the Rating does not exist
 		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $this->trail->getTrailId());
 		$this->assertNull($pdoRating);
