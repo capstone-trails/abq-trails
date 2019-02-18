@@ -187,7 +187,7 @@ class rating {
 	//	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO rating(ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue) VALUES(:ratingProfileId, :ratingTrailId, ratingDifficulty, ratingValue)";
+		$query = "INSERT INTO rating(ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue) VALUES(:ratingProfileId, :ratingTrailId, :ratingDifficulty, :ratingValue)";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the place holders in the template
 		$parameters = [
@@ -195,7 +195,6 @@ class rating {
 			"ratingTrailId" => $this->ratingTrailId->getBytes(),
 			"ratingDifficulty" => $this->ratingDifficulty,
 			"ratingValue" => $this->ratingValue];
-		var_dump($parameters);
 		$statement->execute($parameters);
 	}
 

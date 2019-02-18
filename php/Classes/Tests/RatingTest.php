@@ -39,14 +39,14 @@ class RatingTest extends AbqTrailsTest {
 	 * @var int $VALID_DIFFICULTY
 	 **/
 	/**
-	 * Trail from trail/rating relationship, foreign key
-	 */
-	protected $trail = null;
-	/**
 	 * Profile from profile/rating relationship, foreign key
 	 * @var Profile $profile
 	 */
 	protected $profile = null;
+	/**
+	 * Trail from trail/rating relationship, foreign key
+	 */
+	protected $trail = null;
 
 	protected $VALID_HASH;
 
@@ -78,7 +78,7 @@ class RatingTest extends AbqTrailsTest {
 	public function testInsertValidRating(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
-		$rating = new Rating($this->trail->getTrailId(), $this->profile->getProfileId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
+		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
 		$rating->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->getRatingProfileId(), $rating->getRatingTrailId());
