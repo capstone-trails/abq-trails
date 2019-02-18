@@ -57,7 +57,6 @@ CREATE TABLE photo (
 -- create the rating entity
 CREATE TABLE rating (
    -- ratingId is the primary key
-	ratingId BINARY(16) NOT NULL,
 	ratingProfileId BINARY(16) NOT NULL,
 	ratingTrailId BINARY(16) NOT NULL,
 	ratingDifficulty TINYINT,
@@ -65,8 +64,7 @@ CREATE TABLE rating (
 	INDEX (ratingProfileId),
 	INDEX (ratingTrailId),
 	FOREIGN KEY (ratingProfileId) REFERENCES profile(profileId),
-	FOREIGN KEY (ratingTrailId) REFERENCES trail(trailId),
-	PRIMARY KEY (ratingId)
+	FOREIGN KEY (ratingTrailId) REFERENCES trail(trailId)
 );
 
 -- create the tag entity
