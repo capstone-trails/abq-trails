@@ -27,25 +27,25 @@ class Photo {
 	 **/
 	private $photoProfileId;
 	/**
+	 * id of photoProfileTrailId that sent this photo; this is a primary key
+	 * @Var \photoProfileTrailId $photoProfileTrailId
+	 **/
+	private $photoTrailId;
+	/**
+	 * photo date and time this photo was sent, in a PHP photoDateTime object
+	 * @var \DateTime $photoDatetime
+	 **/
+	private $photoDateTime;
+	/**
 	 * actual textual content of this photo
 	 * @var string $photoUrl
 	 **/
 	private $photoUrl;
 	/**
-	 * photo date and time this photo was sent, in a PHP photoDateTime object
-	 * @var \photoDateTime $photoDatetime
-	 **/
-	private $photoDateTime;
-	/**
-	 * id of photoProfileTrailId that sent this photo; this is a primary key
-	 * @Var \photoProfileTrailId $photoProfileTrailId
-	 **/
-	private $photoProfileTrailId;
-	/**
 	 * constructor for this photo
 	 *
 	 * @param string|Uuid $newPhotoId id of this photo or null if a new photo
-	 * @param string|Uuid $newPhotoProfileUserId id of the ProfileUserId that sent this photo
+	 * @param string|Uuid $newPhotoProfileId id of the ProfileUserId that sent this photo
 	 * @param string $newPhotoUrl string containing actual photo dataTime
 	 * @param string|null $newPhotoDateTime date and time photo was sent or null if set to current date and time
 	 * @throws \InvalidArgumentException if data types are not valid
@@ -54,10 +54,11 @@ class Photo {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	 public function __construct($newPhotoId, $newPhotoProfileId, string $newPhotoUrl, $newPhotoDateTime) {
+	 public function __construct($newPhotoId, $newPhotoProfileId, $photoTrailId, string $newPhotoUrl, $newPhotoDateTime) {
 		 try {
 			 $this->setPhotoId($newPhotoId);
 			 $this->setphotoProfileId($newPhotoProfileId);
+			 $this->setPhotoTrailId($newPhotoTrail);
 			 $this->setPhotoUrl($newPhotoUrl);
 			 $this->setPhotoDateTime($newPhotoDateTime);
 		 } catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -92,20 +93,19 @@ class Photo {
 		// convert and store the photo id
 		$this->photoId = $uuid;
 	}
-
 	/**
 	 * accessor method for photo profile user id
 	 *
 	 * @return Uuid value of photo profile user id
 	 **/
-	public function getPhotoProfileUserId() : Uuid{
+	public function getPhotoProfileId() : Uuid{
 		return($this->photoProfileId);
 	}
 
 	/**
 	 * mutator method for photo profile user id
 	 *
-	 * @param string | Uuid $newPhotoProfileUserId new value of photo profile user id
+	 * @param string | Uuid $newPhotoProfileId new value of photo profile user id
 	 * @throws \RangeException if $newProfileUserId is not positive
 	 * @throws \TypeError if $newPhotoProfileUserId is not an integer
 	 **/
@@ -116,9 +116,8 @@ class Photo {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-
 		// convert and store the profile user id
-		$this->photoProfileUserId = $uuid;
+		$this->photoProfileId = $uuid;
 	}
 	/**
 	 * accessor method for photo url
