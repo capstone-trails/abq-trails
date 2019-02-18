@@ -124,7 +124,7 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$rating->delete($this->getPDO());
 		// grab the data from mySQL and enforce the Rating does not exist
-		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->profile->getProfileId(), $rating->trail->getTrailId());
+		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $rating->trail->getTrailId());
 		$this->assertNull($pdoRating);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("rating"));
 	}
