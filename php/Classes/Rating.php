@@ -37,7 +37,6 @@ class rating {
 	 **/
 	private $ratingValue;
 
-
 	/**
 	 * constructor for this Rating
 	 *
@@ -48,7 +47,7 @@ class rating {
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if some other exception occurs
-	 * @Documention https://php.net/manual/en/language.oop5.decon.php
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 	public function __construct($newRatingProfileId, $newRatingTrailId, ?int $newRatingDifficulty, ?int $newRatingValue) {
 		try {
@@ -67,10 +66,9 @@ class rating {
 	 *
 	 * @return Uuid value of rating profile id
 	 **/
-	public function getRatingProfileId(): Uuid {
-		return ($this->ratingProfileId);
-	}
-
+public function getRatingProfileId() : Uuid {
+	return($this->ratingProfileId);
+}
 	/**
 	 * mutator method for rating profile id
 	 *
@@ -88,8 +86,6 @@ class rating {
 		//convert and store the profile id
 		$this->ratingProfileId = $uuid;
 	}
-
-
 	/**
 	 * accessor method for ratingTrailId
 	 *
@@ -113,7 +109,7 @@ class rating {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		//convert and store the profile id
+		//convert and store the trail id
 		$this->ratingTrailId = $uuid;
 	}
 	/**
@@ -211,7 +207,7 @@ class rating {
 		$query = "DELETE FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the placeholder in the template
-		$parameters = ["ratingProfileId" => $this->ratingProfileId, "ratingTrailId" => $this->ratingTrailId];
+		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(), "ratingTrailId" => $this->ratingTrailId->getBytes()];
 		$statement->execute($parameters);
 	}
 

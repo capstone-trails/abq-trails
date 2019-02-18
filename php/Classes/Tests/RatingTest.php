@@ -18,6 +18,20 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @author Robert Dominguez
  **/
 class RatingTest extends AbqTrailsTest {
+	/**
+	 * Profile from profile/rating relationship, foreign key
+	 * @var Profile $profile
+	 */
+	protected $profile = null;
+	/**
+	 * Trail from trail/rating relationship, foreign key
+	 */
+	protected $trail = null;
+
+	protected $VALID_PROFILE_ACTIVATION;
+
+	protected $VALID_PROFILE_HASH;
+
 	protected $VALID_DIFFICULTY = 3;
 	/**
 	 * content of the updated difficulty
@@ -39,21 +53,6 @@ class RatingTest extends AbqTrailsTest {
 	 * @var int $VALID_DIFFICULTY
 	 **/
 	/**
-	 * Profile from profile/rating relationship, foreign key
-	 * @var Profile $profile
-	 */
-	protected $profile = null;
-	/**
-	 * Trail from trail/rating relationship, foreign key
-	 */
-	protected $trail = null;
-
-	protected $VALID_HASH;
-
-	protected $VALID_ACTIVATION;
-
-
-	/**
 	 * create dependent objects before running each test
 	 *
 	 * @throws \Exception
@@ -61,17 +60,15 @@ class RatingTest extends AbqTrailsTest {
 	public final function setUp(): void {
 		parent::setUp();
 		$password = "heythere123";
-		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_PROFILE_ACTIVATION = bin2hex(random_bytes(16));
 		//create and insert a profile
-		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "www.blahblah.com/12222", "myname@man.com", "Matt", $this->VALID_HASH, "Damon", "mattDamon");
+		$this->profile = new Profile(generateUuidV4(), $this->VALID_PROFILE_ACTIVATION, "www.blahblah.com/12222", "myname@man.com", "Matt", $this->VALID_PROFILE_HASH, "Damon", "mattDamon");
 		$this->profile->insert($this->getPDO());
 		//create and insert trail from trail tag
 		$this->trail = new Trail(generateUuidV4(), "www.faketrail.com/photo", "This trail is a fine trail", 1234, 35.0792, 5.2, 106.4847, 1254, "Copper Canyon");
 		$this->trail->insert($this->getPDO());
 	}
-
-
 	/**
 	 * test inserting a valid Rating and verify that the actual mySQL matches
 	 **/
@@ -132,7 +129,6 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("rating"));
 	}
 
-
 	/**
 	 * test inserting a Rating and regrabbing it from mySQL
 	 **/
@@ -149,7 +145,6 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($pdoRating->getRatingDifficulty(), $this->VALID_DIFFICULTY);
 		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
 	}
-
 
 	/**
 	 * test grabbing a rating by rating value
