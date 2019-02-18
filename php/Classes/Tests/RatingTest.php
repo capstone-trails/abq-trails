@@ -81,7 +81,7 @@ class RatingTest extends AbqTrailsTest {
 		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
 		$rating->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->getRatingProfileId(), $rating->getRatingTrailId());
+		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $this->trail->getTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
@@ -103,7 +103,7 @@ class RatingTest extends AbqTrailsTest {
 		$rating->setRatingDifficulty($this->VALID_DIFFICULTY);
 		$rating->setRatingValue($this->VALID_VALUE);
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->getRatingProfileId(), $rating->getRatingTrailId());
+		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $this->trail->getTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
@@ -124,7 +124,7 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$rating->delete($this->getPDO());
 		// grab the data from mySQL and enforce the Rating does not exist
-		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $rating->trail->getTrailId());
+		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $this->trail->getTrailId());
 		$this->assertNull($pdoRating);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("rating"));
 	}
@@ -139,7 +139,7 @@ class RatingTest extends AbqTrailsTest {
 		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
 		$rating->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $rating->getRatingProfileId(), $rating->getRatingTrailId());
+		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $this->trail->getTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
