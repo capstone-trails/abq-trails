@@ -172,8 +172,8 @@ class rating {
 			throw (new \InvalidArgumentException("rating value is empty or insecure"));
 		}
 		// verify the rating value will fit in the database
-		if(strlen($newRatingValue) > 5) {
-			throw (new \RangeException("rating value is too large"));
+		if(intval($newRatingValue) > 5 || intval($newRatingValue) < 1) {
+			throw (new \RangeException(" invalid rating value"));
 		}
 		// store the rating value
 		$this->ratingDifficulty = $newRatingValue;
