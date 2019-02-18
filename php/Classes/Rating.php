@@ -272,26 +272,33 @@ public function getRatingProfileId() : Uuid {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not correct data type
 	 **/
-	public static function getRatingByRatingValue(\PDO $pdo, int $ratingValue): ?Rating {
+	public static function getRatingByRatingValue(\PDO $pdo, int $ratingValue): \SplFixedArray {
 		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingValue = :ratingValue";
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingValue LIKE :ratingValue";
 		$statement = $pdo->prepare($query);
+
 		// bind the rating value to the place holder in the template
 		$ratingValue = "%$ratingValue%";
 		$parameters = ["ratingValue" => $ratingValue];
 		$statement->execute($parameters);
-		// getting the rating from mySQL
-		try {
-			$rating = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$rating = new rating($row["ratingProfileId"], $row["ratingTrailId"], $row["ratingDifficulty"], $row["ratingValue"]);
+
+		//build an array of ratings
+		$ratings = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"], $row["ratingDifficulty"], $row["ratingValue"]);
+				$ratings[$ratings->key()] = $rating;
+				$ratings->next();
+			} catch(\Exception $exception) {
+				//if the row could not be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($rating);
+		return($ratings);
 	}
+
+
+
+
 }

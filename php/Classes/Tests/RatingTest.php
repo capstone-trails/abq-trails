@@ -152,11 +152,21 @@ class RatingTest extends AbqTrailsTest {
 	public function testGetValidRatingByValue() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
+
+		//create a new rating and insert it into mySQL
 		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
 		$rating->insert($this->getPDO());
+
 		//grab the data from MySQL
-		$pdoRating = Rating::getRatingByRatingValue($this->getPDO(), $rating->getRatingValue());
+		$results = Rating::getRatingByRatingValue($this->getPDO(), $rating->getRatingValue());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
+		$this->assertCount(1, $results);
+
+		//enforce no other objects bleed into the test
+		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\AbqTrails\\Rating", $results);
+
+		//grab the result from the array and validate it
+		$pdoRating = $results[0];
 		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
 		$this->assertEquals($pdoRating->getRatingDifficulty(), $this->VALID_DIFFICULTY);
