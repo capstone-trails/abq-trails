@@ -26,12 +26,12 @@ class RatingTest extends AbqTrailsTest {
 	protected $VALID_DIFFICULTY_2 = 4;
 	/**
 	 * valid rating about to use
-	 * @var string $VALID_VALUE
+	 * @var int $VALID_VALUE
 	 **/
 	protected $VALID_VALUE = 5;
 	/**
 	 * content of the updated Rating
-	 * @var string $VALID_VALUE_2
+	 * @var int $VALID_VALUE_2
 	 **/
 	protected $VALID_VALUE_2 = 5;
 	/**

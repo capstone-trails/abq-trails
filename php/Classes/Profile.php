@@ -103,7 +103,7 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
  *
  * @param Uuid | string $newProfileId
  * @throws \RangeException if $newProfileId is not correct length
- * @throws \TypeError if $newprofileId is not a Uuid or string
+ * @throws \TypeError if $newProfileId is not a Uuid or string
  */
 	public function setProfileId ($newProfileId) {
 		try

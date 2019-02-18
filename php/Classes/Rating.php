@@ -50,7 +50,7 @@ class rating {
 	 * @throws \TypeError if some other exception occurs
 	 * @Documention https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newRatingProfileId, $newRatingTrailId, int $newRatingDifficulty, int $newRatingValue) {
+	public function __construct($newRatingProfileId, $newRatingTrailId, ?int $newRatingDifficulty, ?int $newRatingValue) {
 		try {
 			$this->setRatingProfileId($newRatingProfileId);
 			$this->setRatingTrailId($newRatingTrailId);
@@ -116,8 +116,6 @@ class rating {
 		//convert and store the profile id
 		$this->ratingTrailId = $uuid;
 	}
-
-
 	/**
 	 * accessor method for rating difficulty
 	 *
@@ -135,7 +133,7 @@ class rating {
 	 * @throws \TypeError if $newRatingDifficulty is not a string
 	 **/
 	//todo treat difficulty like an integer
-	public function setRatingDifficulty(int $newRatingDifficulty): void {
+	public function setRatingDifficulty(?int $newRatingDifficulty): void {
 		// verify the rating difficulty is secure
 		$newRatingDifficulty = trim($newRatingDifficulty);
 		$newRatingDifficulty = filter_var($newRatingDifficulty, FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -149,8 +147,6 @@ class rating {
 		// store the rating difficulty
 		$this->ratingDifficulty = $newRatingDifficulty;
 	}
-
-
 	/**
 	 * accessor method for rating value
 	 *
@@ -168,7 +164,7 @@ class rating {
 	 * @throws \TypeError if $newRatingValue is not a string
 	 **/
 	//todo treat value like an integer
-	public function setRatingValue(int $newRatingValue): void {
+	public function setRatingValue(?int $newRatingValue): void {
 		// verify the rating value is secure
 		$newRatingValue = trim($newRatingValue);
 		$newRatingValue = filter_var($newRatingValue, FILTER_SANITIZE_NUMBER_INT, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -199,6 +195,7 @@ class rating {
 			"ratingTrailId" => $this->ratingTrailId->getBytes(),
 			"ratingDifficulty" => $this->ratingDifficulty,
 			"ratingValue" => $this->ratingValue];
+		var_dump($parameters);
 		$statement->execute($parameters);
 	}
 
