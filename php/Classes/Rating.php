@@ -228,9 +228,9 @@ class rating {
 	 **/
 	public function update(\PDO $pdo) : void {
 		// create query template
-		$query = "UPDATE rating SET ratingValue = :ratingValue, ratingDifficulty = :ratingDifficulty WHERE ratingProfileId = :ratingProfileId and ratingTrailId = :ratingTrailId";
+		$query = "UPDATE rating SET ratingDifficulty = :ratingDifficulty, ratingValue = :ratingValue WHERE ratingProfileId = :ratingProfileId and ratingTrailId = :ratingTrailId";
 		$statement = $pdo->prepare($query);
-		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(),"ratingTrailId" => $this->ratingTrailId->getBytes(), "ratingValue" => $this->ratingValue, "ratingDifficulty => $this->ratingDifficulty"];
+		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(),"ratingTrailId" => $this->ratingTrailId->getBytes(),"ratingDifficulty" => $this->ratingDifficulty, "ratingValue" => $this->ratingValue];
 		$statement->execute($parameters);
 	}
 	/**
@@ -250,7 +250,7 @@ class rating {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingProfileId = :ratingProfileId AND ratingTrailId = :ratingTrailId";
 		$statement = $pdo->prepare($query);
 		// bind the rating profile id to the place holder in the template
 		$parameters = ["ratingProfileId" => $ratingProfileId, "ratingTrailId" => $ratingTrailId];
@@ -261,7 +261,7 @@ class rating {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"], $row["ratingValue"], $row["ratingDifficulty"]);
+				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"], $row["ratingDifficulty"], $row["ratingValue"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -282,7 +282,7 @@ class rating {
 	 **/
 	public static function getRatingByRatingValue(\PDO $pdo, int $ratingValue): ?Rating {
 		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingValue, ratingDifficulty FROM rating WHERE ratingValue = :ratingValue";
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingValue = :ratingValue";
 		$statement = $pdo->prepare($query);
 		// bind the rating value to the place holder in the template
 		$ratingValue = "%$ratingValue%";
@@ -294,7 +294,7 @@ class rating {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$rating = new rating($row["ratingProfileId"], $row["ratingTrailId"], $row["ratingValue"], $row["ratingDifficulty"]);
+				$rating = new rating($row["ratingProfileId"], $row["ratingTrailId"], $row["ratingDifficulty"], $row["ratingValue"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
