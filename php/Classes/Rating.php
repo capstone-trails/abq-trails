@@ -176,7 +176,7 @@ class rating {
 			throw (new \RangeException(" invalid rating value"));
 		}
 		// store the rating value
-		$this->ratingDifficulty = $newRatingValue;
+		$this->ratingValue = $newRatingValue;
 	}
 	//todo add insert update delete getRatingByRatingProfileIdAndRatingTrailId	/**
 	//	 * inserts this Rating into mySQL
