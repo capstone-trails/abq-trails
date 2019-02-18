@@ -211,7 +211,7 @@ class rating {
 		$query = "DELETE FROM rating WHERE ratingProfileId = :ratingProfileId and ratingTrailId = :ratingTrailId";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the placeholder in the template
-		$parameters = ["ratingProfileId" => $this->ratingTrailId];
+		$parameters = ["ratingProfileId" => $this->ratingProfileId, "ratingTrailId" => $this->ratingTrailId];
 		$statement->execute($parameters);
 	}
 
