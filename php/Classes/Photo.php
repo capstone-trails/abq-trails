@@ -42,6 +42,7 @@ class Photo {
 	 * @var string $photoUrl
 	 **/
 	private $photoUrl;
+
 	/**
 	 * constructor for this photo
 	 *
@@ -95,6 +96,7 @@ class Photo {
 		// convert and store the photo id
 		$this->photoId = $uuid;
 	}
+
 	/**
 	 * accessor method for photo profile user id
 	 *
@@ -103,6 +105,7 @@ class Photo {
 	public function getPhotoProfileId() : Uuid{
 		return($this->photoProfileId);
 	}
+
 	/**
 	 * mutator method for photo profile user id
 	 *
@@ -128,6 +131,7 @@ class Photo {
 	public function getPhotoTrailId() : Uuid{
 		return($this->photoTrailId);
 	}
+
 	/**
 	 * mutator method for photo trail id
 	 *
@@ -145,6 +149,7 @@ class Photo {
 		// convert and store the profile user id
 		$this->photoTrailId = $uuid;
 	}
+
 	/**
 	 * accessor method for photo url
 	 *
@@ -247,6 +252,28 @@ class Photo {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * updates Photo in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+		//create query template
+		$query = "UPDATE photo SET photoProfileId = :photoProfileid, photoTrailId = :photoTrailId, photoDateTime = :photoDateTime, photoUrl = :photoUrl WHERE photoId = :photoId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = [
+			"photoId" => $this->photoId->getBytes(),
+			"photoProfileId" => $this->photoProfileId->getBytes(),
+			"photoTrailId" => $this->photoTrailId->getBytes(),
+			"photoDateTime" => $this->photoDateTime,
+			"photoUrl" => $this->photoUrl
+		];
+		$statement->execute($parameters);
+	}
 
 
 
@@ -289,4 +316,6 @@ public static function getPhotoTrailId(\PDO $pdo, $photoTrialId) : ?Photo {
 		throw(new \PDOException($exception->getMessage(), 0, $exception));
 	}
 	return($photo);
+}
+
 }
