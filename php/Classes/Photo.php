@@ -151,6 +151,39 @@ class Photo {
 	}
 
 	/**
+	 * accessor method for photo date time
+
+	 * @return  \DateTime value of photo date time
+	 **/
+	public function getPhotoDatetime() : \DateTime {
+		return($this->photoDateTime);
+	}
+
+	/**
+	 * mutator method for photo date time
+	 *
+	 * @param \DateTime $newPhotoDateTime new value of photo date time
+	 * @throws \InvalidArgumentException if $newPhotoDateTime is not a string or insecure
+	 * @throws \RangeException if $newPhotoDateTime is > 140 characters
+	 * @throws \TypeError if $newPhotoDateTime is not a string
+	 **/
+	public function setPhotoDateTime($newPhotoDateTime = null) : void {
+		// base case: if the date is null, use the current date and time
+		if($newPhotoDateTime === null) {
+			$this->photoDateTime = new \DateTime();
+			return;
+		}
+		try {
+			$newPhotoDateTime= self::validateDateTime($newPhotoDateTime);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		// store the photo date time
+		$this->photoDateTime = $newPhotoDateTime;
+	}
+
+	/**
 	 * accessor method for photo url
 	 *
 	 * @return string value of photo url
@@ -177,38 +210,6 @@ class Photo {
 			throw(new \InvalidArgumentException("Url is empty"));
 		}
 		$this->photoUrl = $newPhotoUrl;
-	}
-	/**
-	 * accessor method for photo date time
-
-	 * @return  \DateTime value of photo date time
-	 **/
-	public function getPhotoDatetime() : \DateTime {
-		return($this->photoDateTime);
-	}
-
-	/**
-	 * mutator method for photo date time
-	 *
-	 * @param string $newPhotoDateTime new value of photo date time
-	 * @throws \InvalidArgumentException if $newPhotoDateTime is not a string or insecure
-	 * @throws \RangeException if $newPhotoDateTime is > 140 characters
-	 * @throws \TypeError if $newPhotoDateTime is not a string
-	 **/
-	public function setPhotoDateTime($newPhotoDateTime = null) : void {
-		// base case: if the date is null, use the current date and time
-		if($newPhotoDateTime === null) {
-			$this->photoDateTime = new \DateTime();
-			return;
-		}
-		try {
-			$newPhotoDateTime= self::validateDateTime($newPhotoDateTime);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
-		}
-		// store the photo date time
-		$this->photoDateTime = $newPhotoDateTime;
 	}
 
 	/**
