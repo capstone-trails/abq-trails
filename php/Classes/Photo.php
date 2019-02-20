@@ -150,7 +150,8 @@ class Photo {
 	 *
 	 * @return string value of photo url
 	 **/
-	public function getPhotoUrl() : string {
+
+	public function getPhotoUrl() : Uuid{
 		return($this->photoUrl);
 	}
 	/**
