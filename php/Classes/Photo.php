@@ -306,33 +306,37 @@ class Photo {
 	* @throws \PDOException when mySQL related errors occur
 	* @throws \TypeError when variables are not correct data type
 	**/
-	public static function getPhotoByPhotoProfileId(\PDO $pdo, uuid $photoProfileId): ?Photo {
+	public static function getPhotoByPhotoProfileId(\PDO $pdo, $photoProfileId) : \SplFixedArray {
+		// sanitize the photoProfileId before searching
 		try {
 			$photoProfileId = self::validateUuid($photoProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		// create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId ";
-		$statement = $pdo->prepare($query);
-		// bind the photo profile id to the place holder in the template
-		$parameters = ["photoProfileId" => $photoProfileId->getBytes()];
-		$statement->execute($parameters);
-		// getting the photo from mySQL
-		try {
-			$photo = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoUrl"], $row["photoDateTime"]);
-			}
-		} catch(\Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return ($photo);
-	}
 
+		// create query template
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId";
+		$statement = $pdo->prepare($query);
+
+		// bind the photo id to the place holder in the template
+		$parameters = ["photoProfile" => $photoProfileId->getBytes()];
+		$statement->execute($parameters);
+
+		// build an array of Photos
+		$photos = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrialId"], $row["photoDateTime"], $row["photoUrl"]);
+				$photos[$photos->key()] = $photo;
+				$photos->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($photos);
+	}
 	/**
 	 * gets the  Photo by PhotoTrailId
 	 *
@@ -342,33 +346,38 @@ class Photo {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
-	public static function getPhotoByPhotoTrailId(\PDO $pdo, $photoTrailId) : ?Photo {
+	public static function getPhotoByPhotoTrailId(\PDO $pdo, $photoTrailId) : \SplFixedArray {
 		// sanitize the photoTrialId before searching
 		try {
 			$photoTrailId = self::validateUuid($photoTrailId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
+
 		// create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl";
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoTrailId = :photoTrailId";
 		$statement = $pdo->prepare($query);
+
 		// bind the photo id to the place holder in the template
 		$parameters = ["photoTrailId" => $photoTrailId->getBytes()];
 		$statement->execute($parameters);
-		// grab the photo from mySQL
-		try {
-			$photo = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+
+		// build an array of Photos
+		$photos = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrialId"], $row["photoDateTime"], $row["photoUrl"]);
+				$photos[$photos->key()] = $photo;
+				$photos->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($photo);
+		return($photos);
 	}
+
 	/**
 	 * formats the state variables for JSON serialization
 	 *
