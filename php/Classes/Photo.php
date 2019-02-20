@@ -152,7 +152,7 @@ class Photo {
 	 **/
 
 	public function getPhotoUrl() : Uuid{
-		return($this->photoUrl);
+		return($this->photo);
 	}
 	/**
 	 * mutator method for photo url
@@ -254,3 +254,20 @@ class Photo {
 
 
 }
+/**
+ * gets the  Photo by PhotoTrailId
+ *
+ * @param \PDO $pdo PDO connection object
+ * @param Uuid|string $photoTrailId trial id to search for
+ * @return photo|null photo found or null if not found
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when a variable are not the correct data type
+ **/
+public static function getPhotoTrailId(\PDO $pdo, $photoTrialId) : ?Photo {
+	// sanitize the photoTrialId before searching
+	try {
+		$photoTrialId = self::validateUuid($photoTrialId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
+
