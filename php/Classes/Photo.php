@@ -16,6 +16,7 @@ use Ramsey\Uuid\Uuid;
  **/
 
 class Photo {
+	use ValidateUuid;
 	/**
 	 * id for this photo; this is the primary key
 	 * @var Uuid $photoId
@@ -45,7 +46,8 @@ class Photo {
 	 * constructor for this photo
 	 *
 	 * @param string|Uuid $newPhotoId id of this photo or null if a new photo
-	 * @param string|Uuid $newPhotoProfileId id of the ProfileUserId that sent this photo
+	 * @param string|Uuid $newPhotoProfileId id of the photo trail Id that sent this photo
+	 * @param string|Uuid $newPhotoTrailId id of the photo Trail Id
 	 * @param string $newPhotoUrl string containing actual photo dataTime
 	 * @param string|null $newPhotoDateTime date and time photo was sent or null if set to current date and time
 	 * @throws \InvalidArgumentException if data types are not valid
@@ -54,11 +56,11 @@ class Photo {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	 public function __construct($newPhotoId, $newPhotoProfileId, $photoTrailId, string $newPhotoUrl, $newPhotoDateTime) {
+	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, string $newPhotoUrl, $newPhotoDateTime) {
 		 try {
 			 $this->setPhotoId($newPhotoId);
 			 $this->setphotoProfileId($newPhotoProfileId);
-			 $this->setPhotoTrailId($newPhotoTrail);
+			 $this->setPhotoTrailId($newPhotoTrailId);
 			 $this->setPhotoUrl($newPhotoUrl);
 			 $this->setPhotoDateTime($newPhotoDateTime);
 		 } catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -101,7 +103,6 @@ class Photo {
 	public function getPhotoProfileId() : Uuid{
 		return($this->photoProfileId);
 	}
-
 	/**
 	 * mutator method for photo profile user id
 	 *
@@ -120,11 +121,36 @@ class Photo {
 		$this->photoProfileId = $uuid;
 	}
 	/**
+	 * accessor method for photo trail id
+	 *
+	 * @return Uuid value of photo profile user id
+	 **/
+	public function getPhotoTrailId() : Uuid{
+		return($this->photoTrailId);
+	}
+	/**
+	 * mutator method for photo trail id
+	 *
+	 * @param string | Uuid $newPhotoTrailId new value of photo profile user id
+	 * @throws \RangeException if $newProfileUserId is not positive
+	 * @throws \TypeError if $newPhotoProfileUserId is not an integer
+	 **/
+	public function setPhotoTrailId( $newPhotoTrailId) : void {
+		try {
+			$uuid = self::validateUuid($newPhotoTrailId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		// convert and store the profile user id
+		$this->photoTrailId = $uuid;
+	}
+	/**
 	 * accessor method for photo url
 	 *
-	 * @return Uuid value of photo url
+	 * @return string value of photo url
 	 **/
-	public function getPhotoUrl() : Uuid{
+	public function getPhotoUrl() : string {
 		return($this->photoUrl);
 	}
 	/**
