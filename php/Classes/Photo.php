@@ -206,4 +206,30 @@ class Photo {
 		// store the photo date time
 		$this->photoDateTime = $newPhotoDateTime;
 	}
+
+	/**
+	 * inserts Photo into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+		//create query template
+		$query = "INSERT INTO photo(photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl) VALUES(:photoId, :photoProfileId, :photoTrailId, :photoDateTime, :photoUrl)";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = [
+			"photoId" => $this->photoId->getBytes(),
+			"photoProfileId" => $this->photoProfileId->getBytes(),
+			"photoTrailId" => $this->photoTrailId->getBytes(),
+			"photoDateTime" => $this->photoDateTime,
+			"photoUrl" => $this->photoUrl
+		];
+		$statement->execute($parameters);
+	}
+
+
+
 }
