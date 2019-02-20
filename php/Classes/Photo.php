@@ -50,7 +50,7 @@ class Photo {
 	 * @param string|Uuid $newPhotoProfileId id of the photo trail Id that sent this photo
 	 * @param string|Uuid $newPhotoTrailId id of the photo Trail Id
 	 * @param string $newPhotoUrl string containing actual photo dataTime
-	 * @param string|null $newPhotoDateTime date and time photo was sent or null if set to current date and time
+	 * @param \DateTime $newPhotoDateTime date and time photo was sent or null if set to current date and time
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
@@ -60,7 +60,7 @@ class Photo {
 	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, string $newPhotoUrl, $newPhotoDateTime = null) {
 		 try {
 			 $this->setPhotoId($newPhotoId);
-			 $this->setphotoProfileId($newPhotoProfileId);
+			 $this->setPhotoProfileId($newPhotoProfileId);
 			 $this->setPhotoTrailId($newPhotoTrailId);
 			 $this->setPhotoUrl($newPhotoUrl);
 			 $this->setPhotoDateTime($newPhotoDateTime);
