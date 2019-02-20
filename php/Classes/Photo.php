@@ -230,6 +230,27 @@ class Photo {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * deletes Photo from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+		//create query template
+		$query = "DELETE FROM photo WHERE photoId = :photoId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = ["photoId" => $this->photoId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+
+
+
+
 
 
 }
