@@ -3,6 +3,7 @@ namespace CapstoneTrails\AbqTrails\Tests;
 
 use CapstoneTrails\AbqTrails\Photo;
 use CapstoneTrails\AbqTrails\Profile;
+use CapstoneTrails\AbqTrails\Trail;
 //our autoloader
 require_once(dirname(__DIR__) . "/autoload.php");
 
@@ -24,68 +25,63 @@ class PhotoTest extends AbqTrailsTest {
 	 **/
 	protected $profile = null;
 	/**
+	 * Trail photo is attached to
+	 */
+	protected $trail = null;
+	/**
 	 * valid profile hash to create the profile object to own the test
 	 * @var $VALID_HASH
 	 */
-	protected $VALID_PROFILE_HASH;
-
 	/**
 	 * content of the Photo
 	 * @var string $VALID_PHOTO
 	 **/
-	protected $VALID_PHOTO = "PHPUnit test passing";
+	protected $VALID_PHOTO_URL = "www.testtest.com";
 
-	/**
-	 * content of the updated Trail
-	 * @var string $VALID_TRAIL
-	 **/
-	protected $VALID_TRAIL = "PHPUnit test still passing";
+	protected $VALID_PHOTO_URL_2 = "www.newurl.com/aaaa";
 
-	/**
-	 * timestamp of the Tweet; this starts as null and is assigned later
-	 * @var \DateTime $VALID_ACTIVATIONTOKEN
-	 **/
-	protected $VALID_ACTIVATIONTOKEN = null;
+	protected $VALID_PHOTO_DATE_TIME = null;
 
+	protected $VALID_PROFILE_HASH;
+
+	protected $VALID_PROFILE_ACTIVATION;
 	/**
 	 * create dependent objects before running each test
-	 **/
-	public final function setUp()  : void {
-		// run the default setUp() method first
+	 *
+	 * @throws \Exception
+	 */
+	public final function setUp(): void {
 		parent::setUp();
-		$password = "abc123";
-		$this->VALID_PROFILE_ID = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-
-
+		$password = "heythere123";
+		$this->VALID_PROFILE_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_PROFILE_ACTIVATION = bin2hex(random_bytes(16));
 		// create and insert a Profile to own the Tests photo
-		$this->profile = new Profile (generateUuidV4(), null, "@handle", "https://email@email.com", "Chimp", $this->VALID_PROFILE_HASH, "Shrimp");
+		$this->profile = new Profile(generateUuidV4(), $this->VALID_PROFILE_ACTIVATION, "@handle", "https://email@email.com", "Chimp", $this->VALID_PROFILE_HASH, "Shrimp", "namename");
 		$this->profile->insert($this->getPDO());
-
+		//create and insert trail from trail tag
+		$this->trail = new Trail(generateUuidV4(), "www.faketrail.com/photo", "This trail is a fine trail", 1234, 35.0792, 5.2, 106.4847, 1254, "Copper Canyon");
+		$this->trail->insert($this->getPDO());
 		// calculate the date (just use the time the unit Tests was setup...)
-		$this->VALID_PHOTODATETIME = new \DateTime();
-
+		$this->VALID_PHOTO_DATE_TIME = new \DateTime();
 	}
-
 	/**
 	 * Tests inserting a valid photo and verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidPhoto() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("photo");
-
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATETIME);
+		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
-
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoPhoto = photo::getPhotoByPhotoId($this->getPDO(), $photo->getPhotoId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTOURL);
 		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTODATE->getTimestamp());
+		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
+		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
 	}
 
 	/**
@@ -97,21 +93,20 @@ class PhotoTest extends AbqTrailsTest {
 
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photoId = new photo($photoId , $this->profile->getProfileId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATE);
+		$photoId = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photoId->insert($this->getPDO());
 
 		// edit the photo and update it in mySQL
-		$photoId->setPhotoUrl($this->VALID_PHOTOURL2);
+		$photoId->setPhotoUrl($this->VALID_PHOTO_URL_2);
 		$photoId->update($this->getPDO());
-
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoPhoto = photo::getphotoByPhotoId($this->getPDO(), $photoId->getPhotoId());
+		$pdoPhoto = Photo::getphotoByPhotoId($this->getPDO(), $photoId->getPhotoId());
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTOURL2);
 		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTODATE->getTimestamp());
+		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
+		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL_2);
 	}
 
 

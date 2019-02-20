@@ -273,6 +273,30 @@ class Photo {
 		];
 		$statement->execute($parameters);
 	}
+	public static function getPhotoByPhotoId(\PDO $pdo, uuid $photoId): ?Photo {
+		try {
+			$photoId = self::validateUuid($photoId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoId = :photoId";
+		$statement = $pdo->prepare($query);
+		//bind the photo id to the placeholder
+		$parameters = ["photoId" => $photoId->getBytes()];
+		$statement->execute($parameters);
+		try {
+			$photo = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoUrl"], $row["photoDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($photo);
+	}
 
 		/* gets the Photo by profile id
 	*
@@ -289,7 +313,7 @@ class Photo {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoUrl, photoDateTime FROM photo WHERE photoProfileId = :photoProfileId ";
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId ";
 		$statement = $pdo->prepare($query);
 		// bind the photo profile id to the place holder in the template
 		$parameters = ["photoProfileId" => $photoProfileId->getBytes()];
@@ -345,7 +369,6 @@ class Photo {
 		}
 		return($photo);
 	}
-
 	/**
 	 * formats the state variables for JSON serialization
 	 *
