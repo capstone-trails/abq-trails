@@ -107,6 +107,7 @@ class PhotoTest extends AbqTrailsTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
 		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoPhoto->getPhotoTrailId(), $this->trail->getTrailId);
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL_2);
 	}
@@ -151,6 +152,7 @@ class PhotoTest extends AbqTrailsTest {
 		$pdoPhoto = $results[0];
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoPhoto->getPhotoTrailId(), $this->trail->getTrailId);
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
@@ -176,6 +178,7 @@ class PhotoTest extends AbqTrailsTest {
 		$pdoPhoto = $results[0];
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoPhoto->getPhotoTrailId(), $this->trail->getTrailId);
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
