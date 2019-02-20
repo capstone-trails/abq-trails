@@ -120,7 +120,7 @@ class PhotoTest extends AbqTrailsTest {
 
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
+		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
 		// delete the photo from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
