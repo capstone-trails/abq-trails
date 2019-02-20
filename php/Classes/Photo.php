@@ -221,7 +221,7 @@ class Photo {
 	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO {photo(photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl) VALUES(:photoId, :photoProfileId, :photoTrailId, :photoDateTime, :photoUrl)";
+		$query = "INSERT INTO photo(photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl) VALUES(:photoId, :photoProfileId, :photoTrailId, :photoDateTime, :photoUrl)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
@@ -274,17 +274,32 @@ class Photo {
 		];
 		$statement->execute($parameters);
 	}
-	public static function getPhotoByPhotoId(\PDO $pdo, uuid $photoId): ?Photo {
+
+	/** gets the Photo by photo id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $photoId
+	 * @return photo if found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getPhotoByPhotoId(\PDO $pdo, $photoId): ?Photo {
+		//sanitize photoId before search
 		try {
 			$photoId = self::validateUuid($photoId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		$query = "SELECT {photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoId = :photoId";
+
+		//create query template
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoId = :photoId";
 		$statement = $pdo->prepare($query);
+
 		//bind the photo id to the placeholder
 		$parameters = ["photoId" => $photoId->getBytes()];
 		$statement->execute($parameters);
+
+		//grab photo from mySQL
 		try {
 			$photo = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -299,11 +314,11 @@ class Photo {
 		return ($photo);
 	}
 
-		/* gets the Photo by profile id
+	/** gets the Photo by profile id
 	*
 	* @param \PDO $pdo PDO connection object
 	* @param Uuid|string $photoProfileId
-	* @return photo if found
+	* @return \SplFixedArray SplFixedArray of photos found
 	* @throws \PDOException when mySQL related errors occur
 	* @throws \TypeError when variables are not correct data type
 	**/
@@ -316,7 +331,7 @@ class Photo {
 		}
 
 		// create query template
-		$query = "SELECT {photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId";
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId";
 		$statement = $pdo->prepare($query);
 
 		// bind the photo id to the place holder in the template
@@ -343,7 +358,7 @@ class Photo {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $photoTrailId trial id to search for
-	 * @return photo|null photo found or null if not found
+	 * @return \SplFixedArray SplFixedArray of photos found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
@@ -356,7 +371,7 @@ class Photo {
 		}
 
 		// create query template
-		$query = "SELECT {photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoTrailId = :photoTrailId";
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoTrailId = :photoTrailId";
 		$statement = $pdo->prepare($query);
 
 		// bind the photo id to the place holder in the template
