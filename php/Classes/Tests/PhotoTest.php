@@ -109,7 +109,6 @@ class PhotoTest extends AbqTrailsTest {
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL_2);
 	}
 
-
 	/**
 	 * Tests creating a photo and then deleting it
 	 **/
@@ -119,9 +118,8 @@ class PhotoTest extends AbqTrailsTest {
 
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new photo($photoId, $this->profile->getProfileId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATE);
+		$photo = new photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
-
 		// delete the photo from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$photo->delete($this->getPDO());
@@ -131,30 +129,26 @@ class PhotoTest extends AbqTrailsTest {
 		$this->assertNull($pdoPhoto);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("photo"));
 	}
-
 	/**
 	 * Tests inserting a photo and regrabbing it from mySQL
 	 **/
-	public function testGetValidPhotoByPhotoProfileUserId() {
+	public function testGetValidPhotoByPhotoProfileId() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("photo");
-
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new photo($photoId, $this->profile->getProfileUserId(), $this->VALID_PHOTOURL, $this->VALID_PHOTODATE);
+		$photo = new photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = photo::getPhotoByPhotoProfileUserId($this->getPDO(), $photo->getPhotoProfileUserId());
+		$results = Photo::getPhotoByPhotoProfileId($this->getPDO(), $photo->getPhotoProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\abq-trails\\photo", $results);
-
+		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\AbqTrails\\Rating", $results);
 		// grab the result from the array and validate it
 		$pdoPhoto = $results[0];
-
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
-		$this->assertEquals($pdoPhoto->getPhotoProfileUSerId(), $this->profile->getProfileUSerId());
+		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTOURL);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTODATE->getTimestamp());
