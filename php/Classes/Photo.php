@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
 
 class Photo {
 	use ValidateUuid;
+	use ValidateDate;
 	/**
 	 * id for this photo; this is the primary key
 	 * @var Uuid $photoId
@@ -56,7 +57,7 @@ class Photo {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, string $newPhotoUrl, $newPhotoDateTime) {
+	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, string $newPhotoUrl, $newPhotoDateTime = null) {
 		 try {
 			 $this->setPhotoId($newPhotoId);
 			 $this->setphotoProfileId($newPhotoProfileId);
@@ -155,7 +156,7 @@ class Photo {
 	 * @return string value of photo url
 	 **/
 
-	public function getPhotoUrl() : Uuid{
+	public function getPhotoUrl() : string {
 		return($this->photoUrl);
 	}
 	/**
@@ -179,10 +180,10 @@ class Photo {
 	}
 	/**
 	 * accessor method for photo date time
-	 *
-	 * @return string value of photo date time
+
+	 * @return  \DateTime value of photo date time
 	 **/
-	public function getPhotoDatetime() : string {
+	public function getPhotoDatetime() : \DateTime {
 		return($this->photoDateTime);
 	}
 
@@ -194,19 +195,18 @@ class Photo {
 	 * @throws \RangeException if $newPhotoDateTime is > 140 characters
 	 * @throws \TypeError if $newPhotoDateTime is not a string
 	 **/
-	public function setPhotoDateTime(string $newPhotoDateTime) : void {
-		// verify the photo url is secure
-		$newPhotoDateTime = trim($newPhotoDateTime);
-		$newPhotoDateTime = filter_var($newPhotoDateTime, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newPhotoDateTime) === true) {
-			throw(new \InvalidArgumentException("photo date time is empty or insecure"));
+	public function setPhotoDateTime($newPhotoDateTime = null) : void {
+		// base case: if the date is null, use the current date and time
+		if($newPhotoDateTime === null) {
+			$this->photoDateTime = new \DateTime();
+			return;
 		}
-
-		// verify the photo date time will fit in the database
-		if(strlen($newPhotoDateTime) > 140) {
-			throw(new \RangeException("photo date time too large"));
+		try {
+			$newPhotoDateTime= self::validateDateTime($newPhotoDateTime);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-
 		// store the photo date time
 		$this->photoDateTime = $newPhotoDateTime;
 	}
