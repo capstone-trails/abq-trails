@@ -221,7 +221,7 @@ class Photo {
 	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO photo(photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl) VALUES(:photoId, :photoProfileId, :photoTrailId, :photoDateTime, :photoUrl)";
+		$query = "INSERT INTO {photo(photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl) VALUES(:photoId, :photoProfileId, :photoTrailId, :photoDateTime, :photoUrl)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
@@ -280,7 +280,7 @@ class Photo {
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoId = :photoId";
+		$query = "SELECT {photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoId = :photoId";
 		$statement = $pdo->prepare($query);
 		//bind the photo id to the placeholder
 		$parameters = ["photoId" => $photoId->getBytes()];
@@ -316,7 +316,7 @@ class Photo {
 		}
 
 		// create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId";
+		$query = "SELECT {photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId";
 		$statement = $pdo->prepare($query);
 
 		// bind the photo id to the place holder in the template
@@ -356,7 +356,7 @@ class Photo {
 		}
 
 		// create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoTrailId = :photoTrailId";
+		$query = "SELECT {photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoTrailId = :photoTrailId";
 		$statement = $pdo->prepare($query);
 
 		// bind the photo id to the place holder in the template
