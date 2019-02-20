@@ -196,7 +196,7 @@ class Photo {
 	 * mutator method for photo url
 	 *
 	 * @param string $newPhotoUrl new value of photo url
-	 * @throws \RangeException if $newPhotoUrl is not positive
+	 * @throws \InvalidArgumentException if $newPhotoUrl is not positive
 	 * @throws \TypeError if $newPhotoUrl is not an integer
 	 **/
 	public function setPhotoUrl($newPhotoUrl) : void {
