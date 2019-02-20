@@ -42,7 +42,6 @@ class Photo {
 	 * @var string $photoUrl
 	 **/
 	private $photoUrl;
-
 	/**
 	 * constructor for this photo
 	 *
@@ -157,7 +156,7 @@ class Photo {
 	 **/
 
 	public function getPhotoUrl() : Uuid{
-		return($this->photo);
+		return($this->photoUrl);
 	}
 	/**
 	 * mutator method for photo url
@@ -275,47 +274,76 @@ class Photo {
 		$statement->execute($parameters);
 	}
 
-
-
-
-
-
-}
-/**
- * gets the  Photo by PhotoTrailId
- *
- * @param \PDO $pdo PDO connection object
- * @param Uuid|string $photoTrailId trial id to search for
- * @return photo|null photo found or null if not found
- * @throws \PDOException when mySQL related errors occur
- * @throws \TypeError when a variable are not the correct data type
- **/
-public static function getPhotoTrailId(\PDO $pdo, $photoTrialId) : ?Photo {
-	// sanitize the photoTrialId before searching
-	try {
-		$photoTrialId = self::validateUuid($photoTrialId);
-	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-		throw(new \PDOException($exception->getMessage(), 0, $exception));
-	}
-	// create query template
-	$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl";
-	$statement = $pdo->prepare($query);
-	// bind the photo id to the place holder in the template
-	$parameters = ["photoTrailId" => $photoTrailId->getBytes()];
-	$statement->execute($parameters);
-	// grab the photo from mySQL
-	try {
-		$photo = null;
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		$row = $statement->fetch();
-		if($row !== false) {
-			$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrialId"], $row["photoDateTime"], $row["photoUrl"]);
+		/* gets the Photo by profile id
+	*
+	* @param \PDO $pdo PDO connection object
+	* @param Uuid|string $photoProfileId
+	* @return photo if found
+	* @throws \PDOException when mySQL related errors occur
+	* @throws \TypeError when variables are not correct data type
+	**/
+	public static function getPhotoByPhotoProfileId(\PDO $pdo, uuid $photoProfileId): ?Photo {
+		try {
+			$photoProfileId = self::validateUuid($photoProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
-	} catch(\Exception $exception) {
-		// if the row couldn't be converted, rethrow it
-		throw(new \PDOException($exception->getMessage(), 0, $exception));
+		// create query template
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoUrl, photoDateTime FROM photo WHERE photoProfileId = :photoProfileId ";
+		$statement = $pdo->prepare($query);
+		// bind the photo profile id to the place holder in the template
+		$parameters = ["photoProfileId" => $photoProfileId->getBytes()];
+		$statement->execute($parameters);
+		// getting the photo from mySQL
+		try {
+			$photo = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoUrl"], $row["photoDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($photo);
 	}
-	return($photo);
-}
+
+	/**
+	 * gets the  Photo by PhotoTrailId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $photoTrailId trial id to search for
+	 * @return photo|null photo found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getPhotoByPhotoTrailId(\PDO $pdo, $photoTrailId) : ?Photo {
+		// sanitize the photoTrialId before searching
+		try {
+			$photoTrailId = self::validateUuid($photoTrailId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl";
+		$statement = $pdo->prepare($query);
+		// bind the photo id to the place holder in the template
+		$parameters = ["photoTrailId" => $photoTrailId->getBytes()];
+		$statement->execute($parameters);
+		// grab the photo from mySQL
+		try {
+			$photo = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrialId"], $row["photoDateTime"], $row["photoUrl"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($photo);
+	}
 
 }
