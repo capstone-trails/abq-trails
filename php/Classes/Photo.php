@@ -57,13 +57,13 @@ class Photo {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, string $newPhotoUrl, $newPhotoDateTime = null) {
+	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, $newPhotoDateTime, string $newPhotoUrl) {
 		 try {
 			 $this->setPhotoId($newPhotoId);
 			 $this->setPhotoProfileId($newPhotoProfileId);
 			 $this->setPhotoTrailId($newPhotoTrailId);
-			 $this->setPhotoUrl($newPhotoUrl);
 			 $this->setPhotoDateTime($newPhotoDateTime);
+			 $this->setPhotoUrl($newPhotoUrl);
 		 } catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			 $exceptionType = get_class($exception);
 			 throw(new $exceptionType($exception->getMessage(), 0, $exception));
