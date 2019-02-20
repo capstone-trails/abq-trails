@@ -5,7 +5,7 @@ use CapstoneTrails\AbqTrails\Photo;
 use CapstoneTrails\AbqTrails\Profile;
 use CapstoneTrails\AbqTrails\Trail;
 //our autoloader
-require_once(dirname(__DIR__) . "/autoload.php");
+require_once(dirname(__DIR__, 1) . "/autoload.php");
 
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
