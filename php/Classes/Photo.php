@@ -42,7 +42,6 @@ class Photo {
 	 * @var string $photoUrl
 	 **/
 	private $photoUrl;
-
 	/**
 	 * constructor for this photo
 	 *
@@ -57,26 +56,25 @@ class Photo {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, string $newPhotoUrl, $newPhotoDateTime) {
-		try {
-			$this->setPhotoId($newPhotoId);
-			$this->setphotoProfileId($newPhotoProfileId);
-			$this->setPhotoTrailId($newPhotoTrailId);
-			$this->setPhotoUrl($newPhotoUrl);
-			$this->setPhotoDateTime($newPhotoDateTime);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
-		}
-	}
-
+	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, string $newPhotoUrl, $newPhotoDateTime) {
+		 try {
+			 $this->setPhotoId($newPhotoId);
+			 $this->setphotoProfileId($newPhotoProfileId);
+			 $this->setPhotoTrailId($newPhotoTrailId);
+			 $this->setPhotoUrl($newPhotoUrl);
+			 $this->setPhotoDateTime($newPhotoDateTime);
+		 } catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			 $exceptionType = get_class($exception);
+			 throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		 }
+	 }
 	/**
 	 * accessor method for photo id
 	 *
 	 * @return Uuid value of photo id
 	 **/
-	public function getPhotoId(): Uuid {
-		return ($this->photoId);
+	public function getPhotoId() : Uuid {
+		return($this->photoId);
 	}
 
 	/**
@@ -86,7 +84,7 @@ class Photo {
 	 * @throws \RangeException if $newPhotoId is not positive
 	 * @throws \TypeError if $newPhotoId is not a uuid or string
 	 **/
-	public function setPhotoId($newPhotoId): void {
+	public function setPhotoId($newPhotoId) : void {
 		try {
 			$uuid = self::validateUuid($newPhotoId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -97,16 +95,14 @@ class Photo {
 		// convert and store the photo id
 		$this->photoId = $uuid;
 	}
-
 	/**
 	 * accessor method for photo profile user id
 	 *
 	 * @return Uuid value of photo profile user id
 	 **/
-	public function getPhotoProfileId(): Uuid {
-		return ($this->photoProfileId);
+	public function getPhotoProfileId() : Uuid{
+		return($this->photoProfileId);
 	}
-
 	/**
 	 * mutator method for photo profile user id
 	 *
@@ -114,7 +110,7 @@ class Photo {
 	 * @throws \RangeException if $newProfileUserId is not positive
 	 * @throws \TypeError if $newPhotoProfileUserId is not an integer
 	 **/
-	public function setPhotoProfileId($newPhotoProfileId): void {
+	public function setPhotoProfileId( $newPhotoProfileId) : void {
 		try {
 			$uuid = self::validateUuid($newPhotoProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -124,16 +120,14 @@ class Photo {
 		// convert and store the profile user id
 		$this->photoProfileId = $uuid;
 	}
-
 	/**
 	 * accessor method for photo trail id
 	 *
 	 * @return Uuid value of photo profile user id
 	 **/
-	public function getPhotoTrailId(): Uuid {
-		return ($this->photoTrailId);
+	public function getPhotoTrailId() : Uuid{
+		return($this->photoTrailId);
 	}
-
 	/**
 	 * mutator method for photo trail id
 	 *
@@ -141,7 +135,7 @@ class Photo {
 	 * @throws \RangeException if $newProfileUserId is not positive
 	 * @throws \TypeError if $newPhotoProfileUserId is not an integer
 	 **/
-	public function setPhotoTrailId($newPhotoTrailId): void {
+	public function setPhotoTrailId( $newPhotoTrailId) : void {
 		try {
 			$uuid = self::validateUuid($newPhotoTrailId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -151,17 +145,15 @@ class Photo {
 		// convert and store the profile user id
 		$this->photoTrailId = $uuid;
 	}
-
 	/**
 	 * accessor method for photo url
 	 *
 	 * @return string value of photo url
 	 **/
 
-	public function getPhotoUrl(): Uuid {
-		return ($this->photo);
+	public function getPhotoUrl() : Uuid{
+		return($this->photo);
 	}
-
 	/**
 	 * mutator method for photo url
 	 *
@@ -169,26 +161,25 @@ class Photo {
 	 * @throws \RangeException if $newPhotoUrl is not positive
 	 * @throws \TypeError if $newPhotoUrl is not an integer
 	 **/
-	public function setPhotoUrl($newPhotoUrl): void {
+	public function setPhotoUrl($newPhotoUrl) : void {
 		$newPhotoUrl = trim($newPhotoUrl);
 		$newPhotoUrl = filter_var($newPhotoUrl, FILTER_VALIDATE_URL);
 
-		if(strlen($newPhotoUrl) > 255) {
+		if(strlen($newPhotoUrl) > 255){
 			throw(new \RangeException("Url too long"));
 		}
-		if(empty($newPhotoUrl) === true) {
+		if(empty($newPhotoUrl) === true){
 			throw(new \InvalidArgumentException("Url is empty"));
 		}
 		$this->photoUrl = $newPhotoUrl;
 	}
-
 	/**
 	 * accessor method for photo date time
 	 *
 	 * @return string value of photo date time
 	 **/
-	public function getPhotoDatetime(): string {
-		return ($this->photoDateTime);
+	public function getPhotoDatetime() : string {
+		return($this->photoDateTime);
 	}
 
 	/**
@@ -199,7 +190,7 @@ class Photo {
 	 * @throws \RangeException if $newPhotoDateTime is > 140 characters
 	 * @throws \TypeError if $newPhotoDateTime is not a string
 	 **/
-	public function setPhotoDateTime(string $newPhotoDateTime): void {
+	public function setPhotoDateTime(string $newPhotoDateTime) : void {
 		// verify the photo url is secure
 		$newPhotoDateTime = trim($newPhotoDateTime);
 		$newPhotoDateTime = filter_var($newPhotoDateTime, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -217,14 +208,13 @@ class Photo {
 	}
 
 	/**
-	 * <<<<<<< Updated upstream
 	 * inserts Photo into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function insert(\PDO $pdo): void {
+	public function insert(\PDO $pdo) : void {
 		//create query template
 		$query = "INSERT INTO photo(photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl) VALUES(:photoId, :photoProfileId, :photoTrailId, :photoDateTime, :photoUrl)";
 		$statement = $pdo->prepare($query);
@@ -247,7 +237,7 @@ class Photo {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function delete(\PDO $pdo): void {
+	public function delete(\PDO $pdo) : void {
 		//create query template
 		$query = "DELETE FROM photo WHERE photoId = :photoId";
 		$statement = $pdo->prepare($query);
@@ -257,58 +247,46 @@ class Photo {
 		$statement->execute($parameters);
 	}
 
-	/* gets the Photo by profile id
-	*
-	* @param \PDO $pdo PDO connection object
-	* @param Uuid|string $photoProfileId
-	* @return photo if found
-	* @throws \PDOException when mySQL related errors occur
-	* @throws \TypeError when variables are not correct data type
-	**/
-	public static function getPhotoByPhotoProfileId(\PDO $pdo, uuid $photoProfileId): ?Photo {
-		try {
-			$photoProfileId = self::validateUuid($photoProfileId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		// create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoUrl, photoDateTime FROM photo WHERE photoProfileId = :photoProfileId ";
-		$statement = $pdo->prepare($query);
-		// bind the photo profile id to the place holder in the template
-		$parameters = ["photoProfileId" => $photoProfileId->getBytes()];
-		$statement->execute($parameters);
-		// getting the photo from mySQL
-		try {
-			$photo = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoUrl"], $row["photoDateTime"]);
-			}
-		} catch(\Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw (new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return ($photo);
+
+
+
+
+
+
+}
+/**
+ * gets the  Photo by PhotoTrailId
+ *
+ * @param \PDO $pdo PDO connection object
+ * @param Uuid|string $photoTrailId trial id to search for
+ * @return photo|null photo found or null if not found
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when a variable are not the correct data type
+ **/
+public static function getPhotoTrailId(\PDO $pdo, $photoTrialId) : ?Photo {
+	// sanitize the photoTrialId before searching
+	try {
+		$photoTrialId = self::validateUuid($photoTrialId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
 	}
-
-	/**
-	 * gets the  Photo by PhotoTrailId
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $photoTrailId trial id to search for
-	 * @return photo|null photo found or null if not found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when a variable are not the correct data type
-	 **/
-	public static function getPhotoTrailId(\PDO $pdo, $photoTrialId): ?Photo {
-		// sanitize the photoTrialId before searching
-		try {
-			$photoTrialId = self::validateUuid($photoTrialId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
+	// create query template
+	$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl";
+	$statement = $pdo->prepare($query);
+	// bind the photo id to the place holder in the template
+	$parameters = ["photoTrailId" => $photoTrailId->getBytes()];
+	$statement->execute($parameters);
+	// grab the photo from mySQL
+	try {
+		$photo = null;
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		$row = $statement->fetch();
+		if($row !== false) {
+			$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrialId"], $row["photoDateTime"], $row["photoUrl"]);
 		}
-
-
+	} catch(\Exception $exception) {
+		// if the row couldn't be converted, rethrow it
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
 	}
+	return($photo);
 }
