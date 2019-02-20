@@ -6,7 +6,7 @@ require_once("autoload.php");
 //composer autoloader
 require_once(dirname(__DIR__,2) . "/vendor/autoload.php");
 
-use phpDocumentor\Reflection\Types\Integer;
+
 use Ramsey\Uuid\Uuid;
 
 /**

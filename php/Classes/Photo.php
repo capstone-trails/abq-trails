@@ -139,7 +139,7 @@ class Photo {
 	 * @throws \RangeException if $newProfileUserId is not positive
 	 * @throws \TypeError if $newPhotoProfileUserId is not an integer
 	 **/
-	public function setPhotoTrailId( $newPhotoTrailId) : void {
+	public function setPhotoTrailId($newPhotoTrailId) : void {
 		try {
 			$uuid = self::validateUuid($newPhotoTrailId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
