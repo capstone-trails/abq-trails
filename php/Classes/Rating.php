@@ -14,7 +14,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @author Robert Dominguez <rdominguez45@cnm.edu test
  **/
-class rating {
+class Rating implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * id of the profile that rated the trail; this is a foreign key
@@ -297,8 +297,12 @@ public function getRatingProfileId() : Uuid {
 		}
 		return($ratings);
 	}
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
 
+		$fields["ratingProfileId"] = $this->ratingProfileId->toString();
+		$fields["ratingTrailId"] = $this->ratingTrailId->toString();
 
-
-
-}
+		return ($fields);
+		}
+	}

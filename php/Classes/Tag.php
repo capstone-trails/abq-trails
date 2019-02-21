@@ -15,7 +15,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @author Robert Dominguez <rdominguez45@cnm.edu
  **/
-class tag{
+class Tag implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * id for this Tag; this is the primary key
@@ -276,5 +276,12 @@ class tag{
 			}
 		}
 		return ($tags);
+	}
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["tagId"] = $this->tagId->toString();
+
+		return ($fields);
 	}
 }
