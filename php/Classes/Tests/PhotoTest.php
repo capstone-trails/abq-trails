@@ -80,7 +80,6 @@ class PhotoTest extends AbqTrailsTest {
 		$this->VALID_SUNSETDATE = new\DateTime();
 		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
 	}
-
 	/**
 	 * Tests inserting a valid photo and verify that the actual mySQL data matches
 	 **/
@@ -114,7 +113,6 @@ class PhotoTest extends AbqTrailsTest {
 		$photoId = generateUuidV4();
 		$photoId = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photoId->insert($this->getPDO());
-
 		// edit the photo and update it in mySQL
 		$photoId->setPhotoUrl($this->VALID_PHOTO_URL_2);
 		$photoId->update($this->getPDO());
