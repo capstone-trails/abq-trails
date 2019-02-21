@@ -308,7 +308,7 @@ class Photo {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoUrl"], $row["photoDateTime"]);
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoDateTime"], $row["photoUrl"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -346,7 +346,7 @@ class Photo {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrialId"], $row["photoDateTime"], $row["photoUrl"]);
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoDateTime"], $row["photoUrl"]);
 				$photos[$photos->key()] = $photo;
 				$photos->next();
 			} catch(\Exception $exception) {
