@@ -4,6 +4,7 @@ namespace CapstoneTrails\AbqTrails\Tests;
 use CapstoneTrails\AbqTrails\Photo;
 use CapstoneTrails\AbqTrails\Profile;
 use CapstoneTrails\AbqTrails\Trail;
+
 //our autoloader
 require_once(dirname(__DIR__, 1) . "/autoload.php");
 
@@ -149,7 +150,7 @@ class PhotoTest extends AbqTrailsTest {
 		$results = Photo::getPhotoByPhotoProfileId($this->getPDO(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\AbqTrails\\Rating", $results);
+		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\AbqTrails\\Photo", $results);
 		// grab the result from the array and validate it
 		$pdoPhoto = $results[0];
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
@@ -175,7 +176,7 @@ class PhotoTest extends AbqTrailsTest {
 		$results = Photo::getPhotoByPhotoTrailId($this->getPDO(), $this->trail->getTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\AbqTrails\\Rating", $results);
+		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\AbqTrails\\Photo", $results);
 		// grab the result from the array and validate it
 		$pdoPhoto = $results[0];
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
