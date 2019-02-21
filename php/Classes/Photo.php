@@ -227,14 +227,14 @@ class Photo {
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
+		$formattedDate = $this->photoDateTime->format("Y-m-d H:i:s.u");
 		$parameters = [
 			"photoId" => $this->photoId->getBytes(),
 			"photoProfileId" => $this->photoProfileId->getBytes(),
 			"photoTrailId" => $this->photoTrailId->getBytes(),
-			"photoDateTime" => $this->photoDateTime,
+			"photoDateTime" => $formattedDate,
 			"photoUrl" => $this->photoUrl
 		];
-		var_dump($parameters);
 		$statement->execute($parameters);
 	}
 
@@ -266,13 +266,13 @@ class Photo {
 		//create query template
 		$query = "UPDATE photo SET photoProfileId = :photoProfileid, photoTrailId = :photoTrailId, photoDateTime = :photoDateTime, photoUrl = :photoUrl WHERE photoId = :photoId";
 		$statement = $pdo->prepare($query);
-
+		$formattedDate = $this->photoDateTime->format("Y-m-d H:i:s.u");
 		//bind the member variables to the place holders in the template
 		$parameters = [
 			"photoId" => $this->photoId->getBytes(),
 			"photoProfileId" => $this->photoProfileId->getBytes(),
 			"photoTrailId" => $this->photoTrailId->getBytes(),
-			"photoDateTime" => $this->photoDateTime,
+			"photoDateTime" => $formattedDate,
 			"photoUrl" => $this->photoUrl
 		];
 		$statement->execute($parameters);
