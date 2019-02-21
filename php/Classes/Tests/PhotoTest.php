@@ -37,8 +37,16 @@ class PhotoTest extends AbqTrailsTest {
 	 * @var string $VALID_PHOTO
 	 **/
 	protected $VALID_PHOTO_DATE_TIME = null;
+	/*
+	 * Valid timestamp to use as sunrisePhotoDate
+	 */
+	protected $VALID_SUNRISEDATE = null;
+	/**
+	 * Valid timestamp to use as sunsetPhotoDate
+	 */
+	protected $VALID_SUNSETDATE = null;
 
-	protected $VALID_PHOTO_URL = "www.testtest.com";
+	protected $VALID_PHOTO_URL = "www.testtest.com/abcdefghi";
 
 	protected $VALID_PHOTO_URL_2 = "www.newurl.com/aaaa";
 
@@ -64,6 +72,13 @@ class PhotoTest extends AbqTrailsTest {
 		$this->trail->insert($this->getPDO());
 		// calculate the date (just use the time the unit Tests was setup...)
 		$this->VALID_PHOTO_DATE_TIME = new \DateTime();
+		//format the sunrise date to use for testing
+		$this->VALID_SUNRISEDATE = new \DateTime();
+		$this->VALID_SUNRISEDATE->sub(new \DateInterval("P10D"));
+
+		//format the sunset date to use for testing
+		$this->VALID_SUNSETDATE = new\DateTime();
+		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
 	}
 
 	/**
