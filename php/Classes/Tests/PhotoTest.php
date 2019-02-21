@@ -46,9 +46,9 @@ class PhotoTest extends AbqTrailsTest {
 	 */
 	protected $VALID_SUNSETDATE = null;
 
-	protected $VALID_PHOTO_URL = "www.testtest.com/abcdefghi";
+	protected $VALID_PHOTO_URL = "https://media-cdn.tripadvisor.com/media/photo-s/07/52/66/47/new-mexico-rails-to-trails.jpg";
 
-	protected $VALID_PHOTO_URL_2 = "www.newurl.com/aaaa";
+	protected $VALID_PHOTO_URL_2 = "https://media-cdn.tripadvisor.com/media/photo-s/09/3a/b7/5b/turquoise-trail.jpg";
 
 	protected $VALID_PROFILE_HASH;
 
