@@ -50,14 +50,14 @@ class Photo {
 	 * @param string|Uuid $newPhotoProfileId id of the photo trail Id that sent this photo
 	 * @param string|Uuid $newPhotoTrailId id of the photo Trail Id
 	 * @param string $newPhotoUrl string containing actual photo dataTime
-	 * @param \DateTime $newPhotoDateTime date and time photo was sent or null if set to current date and time
+	 * @param \DateTime|string|null $newPhotoDateTime date and time photo was sent or null if set to current date and time
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, $newPhotoDateTime, string $newPhotoUrl) {
+	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, $newPhotoDateTime = null, string $newPhotoUrl) {
 		 try {
 			 $this->setPhotoId($newPhotoId);
 			 $this->setPhotoProfileId($newPhotoProfileId);
@@ -164,8 +164,9 @@ class Photo {
 	 *
 	 * @param \DateTime $newPhotoDateTime new value of photo date time
 	 * @throws \InvalidArgumentException if $newPhotoDateTime is not a string or insecure
-	 * @throws \RangeException if $newPhotoDateTime is > 140 characters
+	 * @throws \RangeException if $newPhotoDateTime if the date time does not exist
 	 * @throws \TypeError if $newPhotoDateTime is not a string
+	 * @throws \Exception if $newPhotoDateTime throws a generic exception
 	 **/
 	public function setPhotoDateTime($newPhotoDateTime = null) : void {
 		// base case: if the date is null, use the current date and time
@@ -173,6 +174,7 @@ class Photo {
 			$this->photoDateTime = new \DateTime();
 			return;
 		}
+		//store the profile date using the validate date trait
 		try {
 			$newPhotoDateTime= self::validateDateTime($newPhotoDateTime);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -232,6 +234,7 @@ class Photo {
 			"photoDateTime" => $this->photoDateTime,
 			"photoUrl" => $this->photoUrl
 		];
+		var_dump($parameters);
 		$statement->execute($parameters);
 	}
 

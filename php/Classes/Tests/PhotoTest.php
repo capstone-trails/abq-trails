@@ -36,15 +36,10 @@ class PhotoTest extends AbqTrailsTest {
 	 * content of the Photo
 	 * @var string $VALID_PHOTO
 	 **/
-	protected $VALID_PHOTO_DATE_TIME = null;
-	/*
-	 * Valid timestamp to use as sunrisePhotoDate
-	 */
-	protected $VALID_SUNRISEDATE = null;
 	/**
-	 * Valid timestamp to use as sunsetPhotoDate
+	 * @var /DateTime photo was created, set to null and assigned later
 	 */
-	protected $VALID_SUNSETDATE = null;
+	protected $VALID_PHOTO_DATE_TIME = null;
 
 	protected $VALID_PHOTO_URL = "https://media-cdn.tripadvisor.com/media/photo-s/07/52/66/47/new-mexico-rails-to-trails.jpg";
 
@@ -72,13 +67,6 @@ class PhotoTest extends AbqTrailsTest {
 		$this->trail->insert($this->getPDO());
 		// calculate the date (just use the time the unit Tests was setup...)
 		$this->VALID_PHOTO_DATE_TIME = new \DateTime();
-		//format the sunrise date to use for testing
-		$this->VALID_SUNRISEDATE = new \DateTime();
-		$this->VALID_SUNRISEDATE->sub(new \DateInterval("P10D"));
-
-		//format the sunset date to use for testing
-		$this->VALID_SUNSETDATE = new\DateTime();
-		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
 	}
 	/**
 	 * Tests inserting a valid photo and verify that the actual mySQL data matches
@@ -99,7 +87,6 @@ class PhotoTest extends AbqTrailsTest {
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
-		var_dump($numRows);
 	}
 
 	/**
