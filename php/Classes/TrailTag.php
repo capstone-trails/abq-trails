@@ -15,7 +15,7 @@ use Ramsey\Uuid\Uuid;
  * @author Cassandra Romero <cromero278@cnm.edu>
  *
  */
-class TrailTag {
+class TrailTag implements \JsonSerializable {
 
 	use ValidateUuid;
 	/**
@@ -308,5 +308,15 @@ class TrailTag {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($trailTag);
+	}
+
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["trailTagTagId"] = $this->trailTagTagId->toString();
+		$fields["trailTagTrailId"] = $this->trailTagProfileId->toString();
+		$fields["trailTagProfileId"] = $this->trailTagProfileId->toString();
+		return($fields);
+
 	}
 }

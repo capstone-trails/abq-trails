@@ -15,7 +15,7 @@ use Ramsey\Uuid\Uuid;
  * @author Ronald Luna rluna41@cnm.edu
  **/
 
-class Photo {
+class Photo implements \JsonSerializable {
 	use ValidateUuid;
 	use ValidateDate;
 	/**
@@ -396,7 +396,6 @@ class Photo {
 		}
 		return($photos);
 	}
-
 	/**
 	 * formats the state variables for JSON serialization
 	 *
@@ -405,7 +404,9 @@ class Photo {
 	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
 		$fields["photoId"] = $this->photoId->toString();
+		//format the date so the front end can consume it
+		$fields["photoDateTime"] = round(floatval($this->photoDateTime->format("U.u")) * 1000);
 		return($fields);
-	}
 
+	}
 }
