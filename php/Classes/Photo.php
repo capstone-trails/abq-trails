@@ -386,7 +386,7 @@ class Photo {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrialId"], $row["photoDateTime"], $row["photoUrl"]);
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoDateTime"], $row["photoUrl"]);
 				$photos[$photos->key()] = $photo;
 				$photos->next();
 			} catch(\Exception $exception) {
