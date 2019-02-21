@@ -99,13 +99,13 @@ class PhotoTest extends AbqTrailsTest {
 
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photoId = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
-		$photoId->insert($this->getPDO());
+		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
+		$photo->insert($this->getPDO());
 		// edit the photo and update it in mySQL
-		$photoId->setPhotoUrl($this->VALID_PHOTO_URL_2);
-		$photoId->update($this->getPDO());
+		$photo->setPhotoUrl($this->VALID_PHOTO_URL_2);
+		$photo->update($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoPhoto = Photo::getphotoByPhotoId($this->getPDO(), $photoId->getPhotoId());
+		$pdoPhoto = Photo::getPhotoByPhotoId($this->getPDO(), $photoId->getPhotoId());
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
