@@ -264,7 +264,7 @@ class Photo {
 	 **/
 	public function update(\PDO $pdo) : void {
 		//create query template
-		$query = "UPDATE photo SET photoProfileId = :photoProfileid, photoTrailId = :photoTrailId, photoDateTime = :photoDateTime, photoUrl = :photoUrl WHERE photoId = :photoId";
+		$query = "UPDATE photo SET photoProfileId = :photoProfileId, photoTrailId = :photoTrailId, photoDateTime = :photoDateTime, photoUrl = :photoUrl WHERE photoId = :photoId";
 		$statement = $pdo->prepare($query);
 		$formattedDate = $this->photoDateTime->format("Y-m-d H:i:s.u");
 		//bind the member variables to the place holders in the template
@@ -338,7 +338,7 @@ class Photo {
 		$statement = $pdo->prepare($query);
 
 		// bind the photo id to the place holder in the template
-		$parameters = ["photoProfile" => $photoProfileId->getBytes()];
+		$parameters = ["photoProfileId" => $photoProfileId->getBytes()];
 		$statement->execute($parameters);
 
 		// build an array of Photos
