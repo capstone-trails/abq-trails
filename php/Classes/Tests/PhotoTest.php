@@ -160,7 +160,13 @@ class PhotoTest extends AbqTrailsTest {
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
 	}
-
+	/**
+	 * public function that gets a photo by a profile that does not exist
+	 */
+	public function testGetInvalidPhotoByProfileId() {
+		$photo = Photo::getPhotoByPhotoProfileId($this->getPDO(), generateUuidV4());
+		$this->assertEmpty($photo);
+	}
 	/**
 	 * Tests inserting a photo and regrabbing it from mySQL
 	 **/
@@ -185,5 +191,12 @@ class PhotoTest extends AbqTrailsTest {
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
+	}
+	/**
+	 * public function that gets a photo by a trail that does not exist
+	 */
+	public function testGetInvalidPhotoByTrailId() {
+		$photo = Photo::getPhotoByPhotoTrailId($this->getPDO(), generateUuidV4());
+		$this->assertEmpty($photo);
 	}
 }
