@@ -316,7 +316,7 @@ class TrailTag implements \JsonSerializable {
 	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
 
-		$fields["trailTagTagId"] = $this->trailTagTagId->toString();
+		$fields["trailTagTagId"] = $this->trailTagTagId->tos;
 		$fields["trailTagTrailId"] = $this->trailTagProfileId->toString();
 		$fields["trailTagProfileId"] = $this->trailTagProfileId->toString();
 		return($fields);

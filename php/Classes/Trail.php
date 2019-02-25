@@ -492,7 +492,7 @@ class Trail implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $trailName trail name for searching
-	 * @return \SplFixedArray SplFixedArray of beers found
+	 * @return \SplFixedArray SplFixedArray of trails found
 	 * @throws \PDOException when mySQL related errors occur
 	 **/
 	public static function getTrailByTrailName(\PDO $pdo, string $trailName) : \SplFixedArray {

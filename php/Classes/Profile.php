@@ -158,7 +158,7 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
  */
 	public function setProfileAvatarUrl (?string $newProfileAvatarUrl) : void {
 		$newProfileAvatarUrl = trim($newProfileAvatarUrl);
-		$newProfileAvatarUrl = filter_var($newProfileAvatarUrl, FILTER_SANITIZE_STRING);
+		$newProfileAvatarUrl = filter_var($newProfileAvatarUrl, FILTER_SANITIZE_URL);
 		if($newProfileAvatarUrl === null) {
 			$this->profileAvatarUrl = null;
 		}
