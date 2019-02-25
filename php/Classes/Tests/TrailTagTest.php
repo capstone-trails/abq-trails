@@ -117,8 +117,11 @@ class TrailTagTest extends  AbqTrailsTest {
 		$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailId(), $this->profile->getProfileId());
 		$trailTag->insert($this->getPDO());
 		//grab the data from mySQL and enforce that fields match our expectations
-		$pdoTrailTag = TrailTag::getTrailTagByTrailTagTagId($this->getPDO(), $this->tag->getTagId());
+		$results = TrailTag::getTrailTagByTrailTagTagId($this->getPDO(), $this->tag->getTagId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trailTag"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\Abqtrails\\TrailTag", $results);
+		$pdoTrailTag = $results[0];
 		$this->assertEquals($pdoTrailTag->getTrailTagTagId(), $this->tag->getTagId());
 		$this->assertEquals($pdoTrailTag->getTrailTagTrailId(), $this->trail->getTrailId());
 		$this->assertEquals($pdoTrailTag->getTrailTagProfileId(), $this->profile->getProfileId());
@@ -133,12 +136,16 @@ class TrailTagTest extends  AbqTrailsTest {
 		$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailId(), $this->profile->getProfileId());
 		$trailTag->insert($this->getPDO());
 		//grab the data from mySQL and enforce that fields match our expectations
-		$pdoTrailTag = TrailTag::getTrailTagByTrailTagTrailId($this->getPDO(), $this->trail->getTrailId());
+		$results = TrailTag::getTrailTagByTrailTagTrailId($this->getPDO(), $this->trail->getTrailId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trailTag"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\Abqtrails\\TrailTag", $results);
+		$pdoTrailTag = $results[0];
 		$this->assertEquals($pdoTrailTag->getTrailTagTagId(), $this->tag->getTagId());
 		$this->assertEquals($pdoTrailTag->getTrailTagTrailId(), $this->trail->getTrailId());
 		$this->assertEquals($pdoTrailTag->getTrailTagProfileId(), $this->profile->getProfileId());
 	}
+
 //	public function testGetValidTrailTagByTrailTagProfileId() : void {
 //		//count the number of rows
 //		$numRows = $this->getConnection()->getRowCount("trailTag");
