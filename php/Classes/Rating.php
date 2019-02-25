@@ -332,10 +332,10 @@ public function getRatingProfileId() : Uuid {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingProfileId = :ratingProfileId";
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingTrailId = :ratingTrailId";
 		$statement = $pdo->prepare($query);
 		// bind the rating profile id to the place holder in the template
-		$parameters = ["$ratingTrailId" => $ratingTrailId->getBytes()];
+		$parameters = ["ratingTrailId" => $ratingTrailId->getBytes()];
 		$statement->execute($parameters);
 		// getting the rating from mySQL
 		try {

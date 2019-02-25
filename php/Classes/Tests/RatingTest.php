@@ -149,6 +149,42 @@ class RatingTest extends AbqTrailsTest {
 
 
 	/**
+	 * test inserting a Rating and regrabbing it from mySQL
+	 **/
+	public function testGetValidRatingByRatingProfileId(): void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("rating");
+		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
+		$rating->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoRating = Rating::getRatingByRatingProfileId($this->getPDO(), $this->profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
+		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
+		$this->assertEquals($pdoRating->getRatingDifficulty(), $this->VALID_DIFFICULTY);
+		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
+	}
+
+
+	/**
+	 * test inserting a Rating and regrabbing it from mySQL
+	 **/
+	public function testGetValidRatingByRatingTrailId(): void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("rating");
+		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
+		$rating->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoRating = Rating::getRatingByRatingTrailId($this->getPDO(), $this->trail->getTrailId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
+		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoRating->getRatingTrailId(), $this->trail->getTrailId());
+		$this->assertEquals($pdoRating->getRatingDifficulty(), $this->VALID_DIFFICULTY);
+		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
+	}
+
+
+	/**
 	 * test grabbing a rating by rating value
 	 **/
 	public function testGetValidRatingByValue() {
