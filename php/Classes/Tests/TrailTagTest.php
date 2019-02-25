@@ -139,17 +139,17 @@ class TrailTagTest extends  AbqTrailsTest {
 		$this->assertEquals($pdoTrailTag->getTrailTagTrailId(), $this->trail->getTrailId());
 		$this->assertEquals($pdoTrailTag->getTrailTagProfileId(), $this->profile->getProfileId());
 	}
-	public function testGetValidTrailTagByTrailTagProfileId() : void {
-		//count the number of rows
-		$numRows = $this->getConnection()->getRowCount("trailTag");
-		//create a new trail tag and insert it into mySQL
-		$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailId(), $this->profile->getProfileId());
-		$trailTag->insert($this->getPDO());
-		//grab the data from mySQL and enforce that fields match our expectations
-		$pdoTrailTag = TrailTag::getTrailTagByTrailTagProfileId($this->getPDO(), $this->profile->getProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trailTag"));
-		$this->assertEquals($pdoTrailTag->getTrailTagTagId(), $this->tag->getTagId());
-		$this->assertEquals($pdoTrailTag->getTrailTagTrailId(), $this->trail->getTrailId());
-		$this->assertEquals($pdoTrailTag->getTrailTagProfileId(), $this->profile->getProfileId());
-	}
+//	public function testGetValidTrailTagByTrailTagProfileId() : void {
+//		//count the number of rows
+//		$numRows = $this->getConnection()->getRowCount("trailTag");
+//		//create a new trail tag and insert it into mySQL
+//		$trailTag = new TrailTag($this->tag->getTagId(), $this->trail->getTrailId(), $this->profile->getProfileId());
+//		$trailTag->insert($this->getPDO());
+//		//grab the data from mySQL and enforce that fields match our expectations
+//		$pdoTrailTag = TrailTag::getTrailTagByTrailTagProfileId($this->getPDO(), $this->profile->getProfileId());
+//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("trailTag"));
+//		$this->assertEquals($pdoTrailTag->getTrailTagTagId(), $this->tag->getTagId());
+//		$this->assertEquals($pdoTrailTag->getTrailTagTrailId(), $this->trail->getTrailId());
+//		$this->assertEquals($pdoTrailTag->getTrailTagProfileId(), $this->profile->getProfileId());
+//	}
 }

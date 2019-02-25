@@ -214,11 +214,11 @@ class TrailTag implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid $trailTagTagId to search by
-	 * @return TrailTag if found
+	 * @return \SplFixedArray of TrailTag if found
 	 * @throws \PDOException when mySQL related issues occur
 	 * @throws \TypeError when variables are not the correct type of data
 	 */
-	public static function getTrailTagByTrailTagTagId(\PDO $pdo, Uuid $trailTagTagId): ?TrailTag {
+	public static function getTrailTagByTrailTagTagId(\PDO $pdo, Uuid $trailTagTagId): \SplFixedArray {
 		try {
 			$trailTagTagId = self::validateUuid($trailTagTagId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -230,17 +230,18 @@ class TrailTag implements \JsonSerializable {
 		$parameters = ["trailTagTagId" => $trailTagTagId->getBytes()];
 		$statement->execute($parameters);
 		//grab trail tag from mySQL
-		try {
-			$trailTag = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		$trailTags = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$trailTag = new TrailTag($row["trailTagTagId"], $row["trailTagTrailId"], $row["trailTagProfileId"]);
+				$trailTags[$trailTags->key()] = $trailTag;
+				$trailTags->next();
+			} catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($trailTag);
+		return($trailTags);
 	}
 
 
@@ -249,11 +250,11 @@ class TrailTag implements \JsonSerializable {
 	 * gets trail tag by trail tag trail id
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid $trailTagTrailId to search by
-	 * @return TrailTag if found
+	 * @return \SplFixedArray of TrailTag if found
 	 * @throws \PDOException when mySQL related issues occur
 	 * @throws \TypeError when variables are not the correct type of data
 	 */
-	public static function getTrailTagByTrailTagTrailId(\PDO $pdo, Uuid $trailTagTrailId): ?TrailTag {
+	public static function getTrailTagByTrailTagTrailId(\PDO $pdo, Uuid $trailTagTrailId): \SplFixedArray {
 		try {
 			$trailTagTrailId = self::validateUuid($trailTagTrailId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -287,31 +288,31 @@ class TrailTag implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related issues occur
 	 * @throws \TypeError when variables are not the correct type of data
 	 */
-	public static function getTrailTagByTrailTagProfileId(\PDO $pdo, Uuid $trailTagProfileId): ?TrailTag {
-		try {
-			$trailTagProfileId = self::validateUuid($trailTagProfileId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		//create query template
-		$query = "SELECT trailTagTagId, trailTagTrailId, trailTagProfileId FROM trailTag WHERE trailTagProfileId = :trailTagProfileId";
-		$statement = $pdo->prepare($query);
-		//bind the trailTagTagId and trailTagTrailId to the placeholder
-		$parameters = ["trailTagProfileId" => $trailTagProfileId->getBytes()];
-		$statement->execute($parameters);
-		//grab trail tag from mySQL
-		try {
-			$trailTag = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$trailTag = new TrailTag($row["trailTagTagId"], $row["trailTagTrailId"], $row["trailTagProfileId"]);
-			}
-		} catch(\Exception $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return ($trailTag);
-	}
+//	public static function getTrailTagByTrailTagProfileId(\PDO $pdo, Uuid $trailTagProfileId): ?TrailTag {
+//		try {
+//			$trailTagProfileId = self::validateUuid($trailTagProfileId);
+//		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+//			throw(new \PDOException($exception->getMessage(), 0, $exception));
+//		}
+//		//create query template
+//		$query = "SELECT trailTagTagId, trailTagTrailId, trailTagProfileId FROM trailTag WHERE trailTagProfileId = :trailTagProfileId";
+//		$statement = $pdo->prepare($query);
+//		//bind the trailTagTagId and trailTagTrailId to the placeholder
+//		$parameters = ["trailTagProfileId" => $trailTagProfileId->getBytes()];
+//		$statement->execute($parameters);
+//		//grab trail tag from mySQL
+//		try {
+//			$trailTag = null;
+//			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+//			$row = $statement->fetch();
+//			if($row !== false) {
+//				$trailTag = new TrailTag($row["trailTagTagId"], $row["trailTagTrailId"], $row["trailTagProfileId"]);
+//			}
+//		} catch(\Exception $exception) {
+//			throw(new \PDOException($exception->getMessage(), 0, $exception));
+//		}
+//		return ($trailTag);
+//	}
 
 	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
