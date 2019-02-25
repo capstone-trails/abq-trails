@@ -267,19 +267,19 @@ class TrailTag implements \JsonSerializable {
 		$parameters = ["trailTagTrailId" => $trailTagTrailId->getBytes()];
 		$statement->execute($parameters);
 		//grab trail tag from mySQL
-		try {
-			$trailTag = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		$trailTags = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$trailTag = new TrailTag($row["trailTagTagId"], $row["trailTagTrailId"], $row["trailTagProfileId"]);
+				$trailTags[$trailTags->key()] = $trailTag;
+				$trailTags->next();
+			} catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($trailTag);
+		return ($trailTags);
 	}
-
 	/**
 	 * gets trail tag by trail tag profile id
 	 * @param \PDO $pdo PDO connection object
