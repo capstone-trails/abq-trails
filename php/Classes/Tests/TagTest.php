@@ -46,6 +46,8 @@ class TagTest extends AbqTrailsTest {
 		$this->assertEquals($pdoTag->getTagId(), $tagId);
 		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
 	}
+
+
 	/**
 	 * Tests inserting a Tag, editing it, and then updating it
 	 **/
@@ -67,6 +69,8 @@ class TagTest extends AbqTrailsTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
 		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME_2);
 	}
+
+
 	/**
 	 * test creating a Tag and then deleting it
 	 **/
@@ -82,6 +86,8 @@ class TagTest extends AbqTrailsTest {
 		// grab the data from mySQL and enforce the Tag does not exist
 		$pdoTag = Tag::getTagByTagId($this->getPDO(), $tag->getTagId());
 	}
+
+
 	/**
 	 * test inserting a Tag and regrabbing it from it from SQL
 	 **/
@@ -97,6 +103,8 @@ class TagTest extends AbqTrailsTest {
 		$this->assertEquals($pdoTag->getTagId(), $tagId);
 		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
 	}
+
+
 	/**
 	 * test grabbing a Tag that does not exist
 	 **/
@@ -106,6 +114,8 @@ class TagTest extends AbqTrailsTest {
 		$tag = Tag::getTagByTagId($this->getPDO(), $fakeTagId);
 		$this->assertNull($tag);
 	}
+
+
 	/**
 	 * test grabbing a Tag by name
 	 **/
@@ -115,17 +125,16 @@ class TagTest extends AbqTrailsTest {
 		$tagId = generateUuidV4();
 		$tag = new Tag($tagId, $this->VALID_TAGNAME);
 		$tag->insert($this->getPDO());
-
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Tag::getTagByTagName($this->getPDO(), $tag->getTagName());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
 		$this->assertCount(1, $results);
-
 		//grab the results of the array and validate it
 		$pdoTag = $results[0];
 		$this->assertEquals($pdoTag->getTagId(), $tagId);
 		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
 	}
+
 
 	/**
 	 * test grabbing a Tag by an name that does not exist
@@ -136,6 +145,26 @@ class TagTest extends AbqTrailsTest {
 		$this->assertCount(0, $tag);
 	}
 
-	//todo test getalltags
 
+	//todo test getalltags
+	/**
+	 * test grabbing all tags
+	 **/
+	public function testGetAllValidTags() : void {
+		// count the number of rows and save it for later
+		$numRows = $this ->getConnection()->getRowCount("tag");
+		// create a new Tag and insert to into mySQL
+		$tagId = generateUuidV4();
+		$tag = new Tag($tagId, $this->VALID_TAGNAME);
+		$tag->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Tag::getAllTags($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tag"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\Abqtrails\\Tag", $results);
+		// grab the result from the array and validate it
+		$pdoTag = $results[0];
+		$this->assertEquals($pdoTag->getTagId(), $tagId);
+		$this->assertEquals($pdoTag->getTagName(), $this->VALID_TAGNAME);
+	}
 }
