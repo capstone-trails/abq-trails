@@ -464,11 +464,11 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
 	 * gets the Profile by profile username
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $profileUsername profile username to search for
-	 * @return Profile|null Profile found or null if not found
+	 * @return \SplFixedArray of Profiles found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getProfileByProfileUsername(\PDO $pdo, string $profileUsername) : ?Profile {
+	public static function getProfileByProfileUsername(\PDO $pdo, string $profileUsername) : \SplFixedArray {
 		// sanitize the description before searching
 		$profileUsername = trim($profileUsername);
 		$profileUsername = filter_var($profileUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -485,17 +485,18 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
 		$parameters = ["profileUsername" => $profileUsername];
 		$statement->execute($parameters);
 		// build an array of profiles
-		try {
-			$profile = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		$profiles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try{
 				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileAvatarUrl"], $row["profileEmail"], $row["profileFirstName"], $row["profileHash"], $row["profileLastName"], $row["profileUsername"]);
+				$profiles[$profiles->key()] = $profile;
+				$profiles->next();
+			} catch(\Exception $exception) {
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($profile);
+		return($profiles);
 	}
 	/**
 	 * formats the state variables for JSON serialization
