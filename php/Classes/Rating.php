@@ -37,6 +37,7 @@ class Rating implements \JsonSerializable {
 	 **/
 	private $ratingValue;
 
+
 	/**
 	 * constructor for this Rating
 	 *
@@ -61,6 +62,8 @@ class Rating implements \JsonSerializable {
 			throw (new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 	}
+
+
 	/**
 	 * accessor method for ratingProfileId
 	 *
@@ -86,6 +89,8 @@ public function getRatingProfileId() : Uuid {
 		//convert and store the profile id
 		$this->ratingProfileId = $uuid;
 	}
+
+
 	/**
 	 * accessor method for ratingTrailId
 	 *
@@ -94,7 +99,6 @@ public function getRatingProfileId() : Uuid {
 	public function getRatingTrailId(): Uuid {
 		return ($this->ratingTrailId);
 	}
-
 	/**
 	 * mutator method for rating trail id
 	 *
@@ -112,6 +116,8 @@ public function getRatingProfileId() : Uuid {
 		//convert and store the trail id
 		$this->ratingTrailId = $uuid;
 	}
+
+
 	/**
 	 * accessor method for rating difficulty
 	 *
@@ -143,6 +149,8 @@ public function getRatingProfileId() : Uuid {
 		// store the rating difficulty
 		$this->ratingDifficulty = $newRatingDifficulty;
 	}
+
+
 	/**
 	 * accessor method for rating value
 	 *
@@ -174,13 +182,16 @@ public function getRatingProfileId() : Uuid {
 		// store the rating value
 		$this->ratingValue = $newRatingValue;
 	}
-	//todo add insert update delete getRatingByRatingProfileIdAndRatingTrailId	/**
-	//	 * inserts this Rating into mySQL
-	//	 *
-	//	 * @param \PDO $pdo PDO connection object
-	//	 * @throws \PDOException when mySQL related errors occurs
-	//	 * @throws \TypeError if $pdo is not a PDO connection object
-	//	 **/
+
+
+	//todo add insert update delete getRatingByRatingProfileIdAndRatingTrailId
+	/**
+	 * inserts this Rating into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occurs
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
 		$query = "INSERT INTO rating(ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue) VALUES(:ratingProfileId, :ratingTrailId, :ratingDifficulty, :ratingValue)";
@@ -211,6 +222,7 @@ public function getRatingProfileId() : Uuid {
 		$statement->execute($parameters);
 	}
 
+
 	/**
 	 * updates this Rating in mySQL
 	 *
@@ -225,6 +237,8 @@ public function getRatingProfileId() : Uuid {
 		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(),"ratingTrailId" => $this->ratingTrailId->getBytes(),"ratingDifficulty" => $this->ratingDifficulty, "ratingValue" => $this->ratingValue];
 		$statement->execute($parameters);
 	}
+
+
 	//todo add getratingbyprofileid, getratingbytrailid
 	/**
 	 * gets the Rating by profile id and trail id
@@ -239,6 +253,7 @@ public function getRatingProfileId() : Uuid {
 	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, uuid $ratingProfileId, uuid $ratingTrailId): ?Rating {
 		try {
 			$ratingProfileId = self::validateUuid($ratingProfileId);
+			$ratingTrailId = self::validateUuid($ratingTrailId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
@@ -247,6 +262,80 @@ public function getRatingProfileId() : Uuid {
 		$statement = $pdo->prepare($query);
 		// bind the rating profile id to the place holder in the template
 		$parameters = ["ratingProfileId" => $ratingProfileId->getBytes(), "ratingTrailId" => $ratingTrailId->getBytes()];
+		$statement->execute($parameters);
+		// getting the rating from mySQL
+		try {
+			$rating = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"], $row["ratingDifficulty"], $row["ratingValue"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($rating);
+	}
+
+
+	/**
+	 * gets the Rating by profile id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $ratingProfileId
+	 * @return Rating if found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getRatingByRatingProfileId(\PDO $pdo, uuid $ratingProfileId): ?Rating {
+		try {
+			$ratingProfileId = self::validateUuid($ratingProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingProfileId = :ratingProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the rating profile id to the place holder in the template
+		$parameters = ["ratingProfileId" => $ratingProfileId->getBytes()];
+		$statement->execute($parameters);
+		// getting the rating from mySQL
+		try {
+			$rating = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$rating = new Rating($row["ratingProfileId"], $row["ratingTrailId"], $row["ratingDifficulty"], $row["ratingValue"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($rating);
+	}
+
+
+	/**
+	 * gets the Rating by trail id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $ratingTrailId
+	 * @return Rating if found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not correct data type
+	 **/
+	public static function getRatingByRatingTrailId(\PDO $pdo, uuid $ratingTrailId): ?Rating {
+		try {
+			$ratingTrailId = self::validateUuid($ratingTrailId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingProfileId = :ratingProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the rating profile id to the place holder in the template
+		$parameters = ["$ratingTrailId" => $ratingTrailId->getBytes()];
 		$statement->execute($parameters);
 		// getting the rating from mySQL
 		try {
@@ -277,12 +366,10 @@ public function getRatingProfileId() : Uuid {
 		// create query template
 		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingValue LIKE :ratingValue";
 		$statement = $pdo->prepare($query);
-
 		// bind the rating value to the place holder in the template
 		$ratingValue = "%$ratingValue%";
 		$parameters = ["ratingValue" => $ratingValue];
 		$statement->execute($parameters);
-
 		//build an array of ratings
 		$ratings = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
@@ -298,12 +385,12 @@ public function getRatingProfileId() : Uuid {
 		}
 		return($ratings);
 	}
+
+
 	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
-
 		$fields["ratingProfileId"] = $this->ratingProfileId->toString();
 		$fields["ratingTrailId"] = $this->ratingTrailId->toString();
-
 		return ($fields);
 		}
 	}

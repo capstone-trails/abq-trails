@@ -31,7 +31,10 @@ class RatingTest extends AbqTrailsTest {
 	protected $VALID_PROFILE_ACTIVATION;
 
 	protected $VALID_PROFILE_HASH;
-
+	/**
+	 * valid rating Difficulty
+	 * @var int $VALID_DIFFICULTY
+	 **/
 	protected $VALID_DIFFICULTY = 3;
 	/**
 	 * content of the updated difficulty
@@ -48,10 +51,8 @@ class RatingTest extends AbqTrailsTest {
 	 * @var int $VALID_VALUE_2
 	 **/
 	protected $VALID_VALUE_2 = 3;
-	/**
-	 * valid rating Difficulty
-	 * @var int $VALID_DIFFICULTY
-	 **/
+
+
 	/**
 	 * create dependent objects before running each test
 	 *
@@ -69,6 +70,8 @@ class RatingTest extends AbqTrailsTest {
 		$this->trail = new Trail(generateUuidV4(), "www.faketrail.com/photo", "This trail is a fine trail", 1234, 35.0792, 5.2, 106.4847, 1254, "Copper Canyon");
 		$this->trail->insert($this->getPDO());
 	}
+
+
 	/**
 	 * test inserting a valid Rating and verify that the actual mySQL matches
 	 **/
@@ -114,20 +117,18 @@ class RatingTest extends AbqTrailsTest {
 	public function testDeleteValidRating(): void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
-
 		//create a new rating and insert it into mySQL
 		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
 		$rating->insert($this->getPDO());
-
 		// delete the Rating from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$rating->delete($this->getPDO());
-
 		// grab the data from mySQL and enforce the Rating does not exist
 		$pdoRating = Rating::getRatingByRatingProfileIdAndRatingTrailId($this->getPDO(), $this->profile->getProfileId(), $this->trail->getTrailId());
 		$this->assertNull($pdoRating);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("rating"));
 	}
+
 
 	/**
 	 * test inserting a Rating and regrabbing it from mySQL
@@ -146,25 +147,22 @@ class RatingTest extends AbqTrailsTest {
 		$this->assertEquals($pdoRating->getRatingValue(), $this->VALID_VALUE);
 	}
 
+
 	/**
 	 * test grabbing a rating by rating value
 	 **/
 	public function testGetValidRatingByValue() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
-
 		//create a new rating and insert it into mySQL
 		$rating = new Rating($this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_DIFFICULTY, $this->VALID_VALUE);
 		$rating->insert($this->getPDO());
-
 		//grab the data from MySQL
 		$results = Rating::getRatingByRatingValue($this->getPDO(), $rating->getRatingValue());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertCount(1, $results);
-
 		//enforce no other objects bleed into the test
 		$this->assertContainsOnlyInstancesOf("CapstoneTrails\\AbqTrails\\Rating", $results);
-
 		//grab the result from the array and validate it
 		$pdoRating = $results[0];
 		$this->assertEquals($pdoRating->getRatingProfileId(), $this->profile->getProfileId());
