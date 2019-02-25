@@ -135,4 +135,7 @@ class TagTest extends AbqTrailsTest {
 		$tag = Tag::getTagByTagName($this->getPDO(), "balls");
 		$this->assertCount(0, $tag);
 	}
+
+	//todo test getalltags
+
 }

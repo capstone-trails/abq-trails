@@ -225,6 +225,7 @@ public function getRatingProfileId() : Uuid {
 		$parameters = ["ratingProfileId" => $this->ratingProfileId->getBytes(),"ratingTrailId" => $this->ratingTrailId->getBytes(),"ratingDifficulty" => $this->ratingDifficulty, "ratingValue" => $this->ratingValue];
 		$statement->execute($parameters);
 	}
+	//todo add getratingbyprofileid, getratingbytrailid
 	/**
 	 * gets the Rating by profile id and trail id
 	 *

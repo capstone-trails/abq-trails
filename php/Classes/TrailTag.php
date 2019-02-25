@@ -207,6 +207,8 @@ class TrailTag implements \JsonSerializable {
 		return ($trailTag);
 	}
 
+	//todo make gettrailtagbytrailtagtagid, trailid, splfixed array
+
 	/**
 	 * gets trail tag by trail tag tag id
 	 *
@@ -240,6 +242,7 @@ class TrailTag implements \JsonSerializable {
 		}
 		return ($trailTag);
 	}
+
 
 
 	/**

@@ -361,6 +361,7 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
 			"profileFirstName" => $this->profileFirstName, "profileHash" => $this->profileHash, "profileLastName" => $this->profileLastName, "profileUsername" => $this->profileUsername, "profileId" => $this->profileId->getBytes()];
 		$statement->execute($parameters);
 	}
+	//todo optional delete getprofilebyprofileusername
 	/**
 	 * gets Profile by profile id
 	 * @param \PDO $pdo PDO connection object

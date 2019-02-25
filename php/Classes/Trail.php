@@ -531,6 +531,8 @@ class Trail implements \JsonSerializable {
 		return($trails);
 	}
 
+	//todo test gettrailbytraillength, search by range
+
 	/**
 	 * get trail by trail length
 	 *
@@ -612,6 +614,6 @@ class Trail implements \JsonSerializable {
 		return($fields);
 	}
 
-	//todo getTrailByRating?? getTrailByDistance??
+	//todo getTrailByRating??
 
 }
