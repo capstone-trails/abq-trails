@@ -205,7 +205,6 @@ class Tag implements \JsonSerializable {
 	}
 
 
-	//todo add getAll and maybe a getByName
 	/**
 	 * gets the Tag by name
 	 *

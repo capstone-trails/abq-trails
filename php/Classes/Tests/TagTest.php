@@ -146,7 +146,6 @@ class TagTest extends AbqTrailsTest {
 	}
 
 
-	//todo test getalltags
 	/**
 	 * test grabbing all tags
 	 **/
