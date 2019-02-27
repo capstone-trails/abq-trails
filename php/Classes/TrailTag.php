@@ -280,6 +280,17 @@ class TrailTag implements \JsonSerializable {
 		}
 		return ($trailTags);
 	}
+
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["trailTagTagId"] = $this->trailTagTagId->tos;
+		$fields["trailTagTrailId"] = $this->trailTagProfileId->toString();
+		$fields["trailTagProfileId"] = $this->trailTagProfileId->toString();
+		return($fields);
+
+	}
+}
 //	/**
 //	 * gets trail tag by trail tag profile id
 //	 * @param \PDO $pdo PDO connection object
@@ -313,14 +324,3 @@ class TrailTag implements \JsonSerializable {
 //		}
 //		return ($trailTag);
 //	}
-
-	public function jsonSerialize() : array {
-		$fields = get_object_vars($this);
-
-		$fields["trailTagTagId"] = $this->trailTagTagId->tos;
-		$fields["trailTagTrailId"] = $this->trailTagProfileId->toString();
-		$fields["trailTagProfileId"] = $this->trailTagProfileId->toString();
-		return($fields);
-
-	}
-}

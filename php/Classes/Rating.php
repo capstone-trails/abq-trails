@@ -358,7 +358,7 @@ public function getRatingProfileId() : Uuid {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $ratingValue
-	 * @return Rating if found
+	 * @return \SplFixedArray Rating if found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not correct data type
 	 **/
@@ -385,7 +385,6 @@ public function getRatingProfileId() : Uuid {
 		}
 		return($ratings);
 	}
-
 
 	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
