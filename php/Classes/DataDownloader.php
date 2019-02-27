@@ -12,14 +12,14 @@ require_once(dirname(__DIR__, 1) . "/lib/uuid.php");
 class DataDownloader {
 
 	public static function pullTrails() {
-	$trailsX = null;
+	$newTrails = null;
 	$urlBase = "https://www.hikingproject.com/data/get-trails?lat=35.085470&lon=-106.649072&maxDistance=25&maxResults=500&key=200416450-0de1cd3b087cf27750e880bc07021975";
-	$trailsX = self::readDataJson($urlBase);
+	$newTrails = self::readDataJson($urlBase);
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort23/trails.ini");
 	$imgCount = 0;
 	$descriptionCount = 0;
 	$trailCount = 0;
-	foreach($trailsX as $value) {
+	foreach($newTrails as $value) {
 		$trailId = generateUuidV4();
 		$trailAvatarUrl = $value->imgMedium;
 		//missing avatar url counter
@@ -29,7 +29,7 @@ class DataDownloader {
 		}
 		$trailDescription = $value->summary;
 		//missing trail description counter
-		if(empty($trailDescription) || $trailDescription === "Needs description")===true {
+		if((empty($trailDescription) || $trailDescription === "Needs description")===true) {
 			$trailDescription = "Trail needs description";
 			$descriptionCount = $descriptionCount + 1;
 		}
@@ -39,6 +39,7 @@ class DataDownloader {
 			$trailLongitude = $value->longitude;
 			$trailLow = $value->low;
 			$trailName = $value->name;
+			//count trails that are being pulled by data downloader
 			$trailCount = $trailCount + 1;
 			try {
 				$trail = new Trail ($trailId, $trailAvatarUrl, $trailDescription, $trailHigh, $trailLatitude, $trailLength, $trailLongitude, $trailLow, $trailName);
@@ -59,10 +60,12 @@ class DataDownloader {
 		$jsonConverted = json_decode($jsonData);
 		//format
 		$jsonFeatures = $jsonConverted->trails;
-		$trailsX = \SplFixedArray::fromArray($jsonFeatures);
+		$newTrails = \SplFixedArray::fromArray($jsonFeatures);
 	} catch(\Exception $exception) {
 		throw(new \PDOException($exception->getMessage(), 0, $exception));
 	}
-	return ($trailsX);
+	return ($newTrails);
 	}
 }
+
+echo DataDownloader::pullTrails().PHP_EOL;
