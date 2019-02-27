@@ -7,7 +7,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 
-use CapstoneTrails\AbqTrails\Photo;
+use CapstoneTrails\AbqTrails\Profile;
 
 /**
  * Cloudinary API for image upload
@@ -48,8 +48,33 @@ try {
 	//make sure the id is valid for methods that require it
 	if($method === "POST") {
 		//verify that the end user has XSRF token
+		verifyXsrf();
+
+		if(empty($_SESSION["profile"]) === true) {
+			throw(new \InvalidArgumentException("You must be logged in to upload images", 401));
+		}
+
+		//assigning variable to the user profile, add image extension
+		$tempUserFileName = $_FILES["image"]["tmp_name"];
+
+		//upload image to Cloudinary and get public id
+		$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 500, "crop" => "scale"));
+
+		//after sending the image to Cloudinary, get the image
+		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
+		if($profile === null) {
+			throw(new RuntimeException("Profile not found", 404));
+		}
+
+		//set image upload to Cloudinary
+		$profile->setProfileImage($cloudinaryResult["secure_url"]);
+		$profile->update($pdo);
+		$reply->message = "Image uploaded successfully!";
 	}
-
-
-
+} catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+
+header("Content-Type: application/json");
+echo json_encode($reply);
