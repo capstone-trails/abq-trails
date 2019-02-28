@@ -33,4 +33,22 @@ $reply->data = null;
 		$trailTagTrailId = $id = filter_input(INPUT_GET, "trailTagTrailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		$trailTagProfileId = $id = filter_input(INPUT_GET, "trailTagProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
+		if($method === "POST") {
+
+			// enforce the user has a XSRF token
+			verifyXsrf();
+			//Retrieve the Json package and store in $requestContent
+			$requestContent = file_get_contents("php://input");
+			// Decode the JSON package and stores that result in $requestObject
+			$requestObject = json_decode($requestContent);
+			if(empty($requestObject->trailTagTagId) === true) {
+				throw (new \InvalidArgumentException("no tag linked to the trail tag", 405));
+			}
+			if(empty($requestObject->trailTagTrailId) === true) {
+				throw (new \InvalidArgumentException("no trail linked to the trail tag", 405));
+			}
+			if(empty($requestObject->trailTagProfileId) === true) {
+				throw (new \InvalidArgumentException("no profile linked to the trail tag", 405)); // todo ASK GEORGE
+			}
+		}
 	}
