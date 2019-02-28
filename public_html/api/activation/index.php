@@ -36,7 +36,7 @@ try {
 	//sanitize and store activation token
 
 	$id = filter_input(INPUT_GET, "activation", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	var_dump($id);
+
 	//make sure the activation token is the correct size
 	if(strlen($id) !== 32) {
 		throw(new \InvalidArgumentException("activation token is not correct length", 405));
