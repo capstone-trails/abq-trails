@@ -53,7 +53,7 @@ try {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 		//profile username is a required field
-		if(empty($requestObject->profileUserName) === true) {
+		if(empty($requestObject->profileUsername) === true) {
 			throw(new \InvalidArgumentException ("Profile username required", 405));
 		}
 		//make sure the password and confirm password match
