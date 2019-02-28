@@ -32,10 +32,6 @@ try {
 		//decode the json and turn it into a php object
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-		//profile username is a required field
-		if(empty($requestObject->profileUserName) === true) {
-			throw(new \InvalidArgumentException ("Profile username required", 405));
-		}
 		//profile email is a required field
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException ("Profile email required", 405));
@@ -55,6 +51,10 @@ try {
 		//verify that profile password is present
 		if(empty($requestObject->profilePasswordConfirm) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
+		}
+		//profile username is a required field
+		if(empty($requestObject->profileUserName) === true) {
+			throw(new \InvalidArgumentException ("Profile username required", 405));
 		}
 		//make sure the password and confirm password match
 		if($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
