@@ -12,7 +12,7 @@ use CapstoneTrails\AbqTrails\{Photo, Profile};
  * Cloudinary API for image upload
  *
  * @author Scott Wells <swells19@cnm.edu>
- * @version 1.02 updated from Brent Kie & Marty Boncacci
+ * @version 1.02 updated from Brent Kie & Marty Bonacci
  **/
 
 //verify the session, start if not active

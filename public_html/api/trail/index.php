@@ -34,14 +34,19 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$trailAvatarUrl = filter_input(INPUT_GET, "trailAvatarUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$trailDescription = filter_input(INPUT_GET, "trailDescription", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$trailHigh = filter_input(INPUT_GET, "trailHigh", FILTER_SANITIZE_NUMBER_INT);
-	$trailLatitude = filter_input(INPUT_GET, "trailLatitude", FILTER_SANITIZE_NUMBER_FLOAT);
-	$trailLength = filter_input(INPUT_GET, "trailLength", FILTER_SANITIZE_NUMBER_FLOAT);
-	$trailLongitude = filter_input(INPUT_GET, "trailLongitude", FILTER_SANITIZE_NUMBER_FLOAT);
-	$trailLow = filter_input(INPUT_GET, "trailLow", FILTER_SANITIZE_NUMBER_INT);
 	$trailName = filter_input(INPUT_GET, "trailName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
+	if($method === "GET") {
+		//set XSRF cookie
+		setXsrfCookie();
 
+		//get a specific trail based on arguments provided
+		if(empty($id) === false) {
+			$reply->data = Trail::getTrailByTrailId($pdo, $id);
+		} else if(empty($trailName) === false) {
+			$reply->data = Trail::getTrailByTrailName($pdo, $trailName)->toArray();
+		} else {
+			$reply->data = Trail::getAllTrails($pdo)->toArray();
+		}
+	}
 }
