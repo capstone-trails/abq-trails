@@ -64,6 +64,8 @@ try {
 
 		$profileActivationToken = bin2hex(random_bytes(16));
 
+		$profileAvatarUrl = null;
+
 		//create the profile object and prepare to insert into the database
 		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileAvatarUrl, $requestObject->profileEmail, $requestObject->profileFristName, $hash, $requestObject->profileLastName, $requestObject->profileUserName);
 		//insert the profile into the database
