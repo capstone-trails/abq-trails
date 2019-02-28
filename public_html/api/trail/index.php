@@ -6,7 +6,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use CapstoneTrails\AbqTrails\{Trail, Profile};
+use CapstoneTrails\AbqTrails\{Trail};
 
 /**
  * api for Trail class
@@ -29,7 +29,7 @@ try {
 	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/trails.ini");
 	$pdo = $secrets->getPdoObject();
 
-	//determine which GTTP method was used
+	//determine which HTTP method was used
 	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
@@ -49,4 +49,15 @@ try {
 			$reply->data = Trail::getAllTrails($pdo)->toArray();
 		}
 	}
+
+	//update the $reply->status $reply->message
+} catch(\Exception | \TypeError $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+
+//encode and return reply to front end caller
+header("Content-type: application/json");
+echo json_encode($reply);
+
+//JSON encodes the $reply object and sends it back to the front end
