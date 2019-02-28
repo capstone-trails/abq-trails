@@ -3,8 +3,9 @@ require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/Secrets.php");
 require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
+
 use CapstoneTrails\AbqTrails\Profile;
 /**
  * api for signing up for ABQ Trails
@@ -23,7 +24,9 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+	$pdo = $secrets->getPdoObject();
+
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	if($method === "POST") {
@@ -38,23 +41,28 @@ try {
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException ("Profile email required", 405));
 		}
-		//verify that profile password is present
-		if(empty($requestObject->profileHash) === true) {
-			throw(new \InvalidArgumentException ("Must input valid password", 405));
+		//profile first name is a required field
+		if(empty($requestObject->profileFirstName) === true) {
+			throw (new \InvalidArgumentException("First name required", 405));
 		}
-		//verify that the confirm password is present
-		if(empty($requestObject->profileHashConfirm) === true) {
+		//profile last name is a required field
+		if(empty($requestObject->profileLastName) === true) {
+			throw (new \InvalidArgumentException("Last name required", 405));
+		}
+		//verify that profile password is present
+		if(empty($requestObject->profilePassword) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 		//make sure the password and confirm password match
-		if ($requestObject->profileHash !== $requestObject->profileHashConfirm) {
-			throw(new \InvalidArgumentException("passwords do not match"));
+		if($requestObject->profilePasswordConfirm !== $requestObject->profileHashConfirm) {
+			throw(new \InvalidArgumentException("Passwords do not match"));
 		}
-		$salt = bin2hex(random_bytes(32));
-		$hash = hash_pbkdf2("sha512", $requestObject->profilePassword, $salt, 262144);
+		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
+
 		$profileActivationToken = bin2hex(random_bytes(16));
+
 		//create the profile object and prepare to insert into the database
-		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileEmail, $hash, $salt, $requestObject->profileUserName);
+		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileAvatarUrl, $requestObject->profileEmail, $requestObject->profileFristName, $hash, $requestObject->profileLastName, $requestObject->profileUserName);
 		//insert the profile into the database
 		$profile->insert($pdo);
 		//compose the email message to send with the activation token
@@ -69,14 +77,14 @@ try {
 		//compose message to send with email
 		$message = <<< EOF
 <h2>Welcome to ABQ Trails!</h2>
-<p>In order to sign in and start rating your favorite trails you must confirm your account.</p>
+<p>In order to sign in and start interacting with your favorite trails you must confirm your account.</p>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 		//create swift email
 		$swiftMessage = new Swift_Message();
 		// attach the sender to the message
 		// this takes the form of an associative array where the email is the key to a real name
-		$swiftMessage->setFrom(["mschmitt5@cnm.edu" => "Mary MacMillan"]);
+		$swiftMessage->setFrom(["romero.cassandra1@gmail.com" => "Cassandra Romero"]);
 		/**
 		 * attach recipients to the message
 		 * notice this is an array that can include or omit the recipient's name
@@ -115,15 +123,14 @@ EOF;
 		 * the send method returns the number of recipients that accepted the Email
 		 * so, if the number attempted is not the number accepted, this is an Exception
 		 **/
-		//TODO do we want this? George has it commented out?
 		if($numSent !== count($recipients)) {
 			// the $failedRecipients parameter passed in the send() method now contains contains an array of the Emails that failed
 			throw(new RuntimeException("unable to send email", 400));
 		}
 		// update reply
-		$reply->message = "Thank you for creating a profile with ABQ Street Art! Please check your email to confirm your account.";
+		$reply->message = "Thank you for creating a profile with ABQ Trails, please check your email to confirm your account.";
 	} else {
-		throw (new InvalidArgumentException("invalid http request"));
+		throw (new InvalidArgumentException("Invalid http request"));
 	}
 } catch(\Exception |\TypeError $exception) {
 	$reply->status = $exception->getCode();
