@@ -24,14 +24,19 @@ $reply->data = null;
 //grab the mySQL connection
 	try {
 		//grab the mySQL connection
-		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+		$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+		$pdo = $secrets->getPdoObject();
 
 		$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 		//sanitize the search parameters
 		$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 		$trailTagTagId = $id = filter_input(INPUT_GET, "trailTagTagId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		$trailTagTrailId = $id = filter_input(INPUT_GET, "trailTagTrailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		$trailTagProfileId = $id = filter_input(INPUT_GET, "trailTagProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$trailTagProfileId = filter_input(INPUT_GET, "trailTagProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(($method === "DELETE") && (empty($id) === $trailTag)){
+			throw(new \InvalidArgumentException("Id cannot be empty", 405));
+			}
 
 		if($method === "POST") {
 
@@ -55,10 +60,36 @@ $reply->data = null;
 				throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
 			}
 
-			$trailTag = new TrailTag($requestObject->trailTagTagId, $requestObject->tralTagTrailId, $_SESSION["profile"]->getProfileId);
+			$trailTag = new TrailTag(generateUuidV4(), generateUuidV4(), $_SESSION["profile"]->getProfileId);
 			$trailTag->insert($pdo);
 
 			//tag reply
 			$reply->message = "Tag added to trail";
+		} else if($method === "DELETE") {
+
+			//enforce that the end user has a XSRF token.
+			verifyXsfr();
+
+			//get the trail tag that needs to be deleted
+
+			$trailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($pdo, $id, $id);
+			if($trailTag === null) {
+				throw (new RuntimeException("Trail tag does not exist", 404));
+			}
+
+			//enforce that the user is signed in to un-tag the trail
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $trailTag->getTrailTagProfileId()) {
+				throw(new \InvalidArgumentException("Whoops! You are not allowed to un-tag this", 403));
+			}
+			$trailTag->delete($pdo);
+
+			$reply->message = "Trail tag removed";
 		}
-	}
+			// update the $reply->status $reply->message
+		}catch(\Exception | \TypeError $exception) {
+			$reply->status = $exception->getCode();
+			$reply->message = $exception->getMessage();
+}
+		// encode and return reply to front end caller
+		header("Content-type: application/json");
+		echo json_encode($reply);

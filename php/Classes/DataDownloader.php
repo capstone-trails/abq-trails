@@ -15,8 +15,11 @@ class DataDownloader {
 	$newTrails = null;
 	$urlBase = "https://www.hikingproject.com/data/get-trails?lat=35.085470&lon=-106.649072&maxDistance=25&maxResults=500&key=200416450-0de1cd3b087cf27750e880bc07021975";
 	$newTrails = self::readDataJson($urlBase);
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort23/trails.ini");
-	$imgCount = 0;
+
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+	$pdo = $secrets->getPdoObject();
+
+	$avatarCount = 0;
 	$descriptionCount = 0;
 	$trailCount = 0;
 	foreach($newTrails as $value) {
@@ -25,7 +28,7 @@ class DataDownloader {
 		//missing avatar url counter
 		if(empty($value->imgMedium) === true) {
 			$trailAvatarUrl = "Trail needs an avatar";
-			$imgCount = $imgCount + 1;
+			$avatarCount = $avatarCount + 1;
 		}
 		$trailDescription = $value->summary;
 		//missing trail description counter
