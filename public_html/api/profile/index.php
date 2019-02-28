@@ -66,7 +66,26 @@ try {
 		}
 
 		//update all attributes
+		$profile->setProfileAvatarUrl($requestObject->profileAvatarUrl);
+		$profile->setProfileEmail($requestObject->profileEmail);
+		$profile->setProfileFirstName($requestObject->profileFirstName);
+		$profile->setProfileLastName($requestObject->profileLastName);
+		$profile->setProfileUsername($requestObject->profileUsername);
+		$profile->update($pdo);
 
+		//update reply message
+		$reply->message = "Profile updated!";
 	}
 
+//update the $reply->status $reply->message
+} catch(\Exception | \TypeError $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+
+//encode and return a reply to front end caller
+header("Content-type: application/json");
+echo json_encode($reply);
+
+//JSON encodes the $reply object and sends it back to the front end.
+
