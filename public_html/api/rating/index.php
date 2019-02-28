@@ -70,25 +70,22 @@ try {
 		// Decode the JSON package and stores that result in $requestObject
 		$requestObject = json_decode($requestContent);
 
-		if(empty($requestObject->trailTagTagId) === true) {
-			throw (new \InvalidArgumentException("No tag linked to the trail tag", 405));
+		if(empty($requestObject->ratingProfileId) === true) {
+			throw (new \InvalidArgumentException("No profile linked to the rating", 405));
 		}
-		if(empty($requestObject->trailTagTrailId) === true) {
-			throw (new \InvalidArgumentException("No trail linked to the trail tag", 405));
-		}
-		if(empty($requestObject->trailTagProfileId) === true) {
-			throw (new \InvalidArgumentException("No profile linked to the trail tag", 405));
+		if(empty($requestObject->ratingTrailId) === true) {
+			throw (new \InvalidArgumentException("No trail linked to the rating", 405));
 		}
 		//enforce the user is signed in to tag the trail
 		if(empty($_SESSION ["profile"]) === true) {
 			throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
 		}
 
-		$trailTag = new TrailTag($requestObject->trailTagTagId, $requestObject->trailTagTrailId, $_SESSION["profile"]->getProfileId);
-		$trailTag->insert($pdo);
+		$rating = new Rating($requestObject->ratingProfileId, $requestObject->ratingTrailId, $_SESSION["profile"]->getProfileId);
+		$rating->insert($pdo);
 
-		//tag reply
-		$reply->message = "Tag added to trail";
+		//rating reply
+		$reply->message = "rating added";
 
 
 	}
