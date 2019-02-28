@@ -40,7 +40,7 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 
-		//get a specific trail based on arguments provided
+		//get a specific trail based on arguments provided and update reply
 		if(empty($id) === false) {
 			$reply->data = Trail::getTrailByTrailId($pdo, $id);
 		} else if(empty($trailName) === false) {

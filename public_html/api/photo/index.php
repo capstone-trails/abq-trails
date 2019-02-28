@@ -12,7 +12,7 @@ use CapstoneTrails\AbqTrails\{Photo, Profile};
  * Cloudinary API for image upload
  *
  * @author Scott Wells <swells19@cnm.edu>
- * @version 1.02 updated from Brent Kie & Marty Bonacci
+ * @version 1.03 updated from Brent Kie & Marty Bonacci
  **/
 
 //verify the session, start if not active
@@ -27,14 +27,16 @@ $reply->data = null;
 
 try {
 	//grab mysql connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+	$pdo = $secrets->getPdoObject();
 
 	//determine which HTTP method is being used
-	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
 
 	//sanitize inputs
-	$profileId = filter_input(INPUT_GET, "profileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$trailId = filter_input(INPUT_GET, "trailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$profileId = filter_input(INPUT_GET, "profileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	$config = readConfig("/etc/apache2/capstone-mysql/cohort23/trails.ini");
 	$cloudinary = json_decode($config["cloudinary"]);
@@ -45,7 +47,31 @@ try {
 	]);
 
 	//make sure the id is valid for methods that require it
-	if($method === "POST") {
+	if(($method === "DELETE") && (empty($id) === true)) {
+		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
+	}
+
+	//process actual GET, POST, DELETE methods
+	if($method === "GET") {
+		//set XSRF token
+		setXsrfCookie();
+
+		//get a photo by id and update reply
+		if(empty($id) === false) {
+			$photo = Photo::getPhotoByPhotoId($pdo, $id);
+		} else if(empty($trailId) === false) {
+			$reply->data = Photo::getPhotoByPhotoTrailId($pdo, $trailId)->toArray();
+		} else if(empty($profileId) === false) {
+			$reply->data = Photo::getPhotoByPhotoProfileId($pdo, $profileId)->toArray();
+		}
+	} else if($method === "DELETE") {
+
+	}
+
+
+
+
+
 		//verify that the end user has XSRF token
 		verifyXsrf();
 
