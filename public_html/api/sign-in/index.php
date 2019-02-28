@@ -31,7 +31,8 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	//grab the database connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/");
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+	$pdo = $secrets->getPdoObject();
 	//determine which HTTP method, store the result in $method
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	if($method === "POST") {
