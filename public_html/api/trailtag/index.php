@@ -28,24 +28,26 @@ $reply->data = null;
 		$pdo = $secrets->getPdoObject();
 
 		$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+
 		//sanitize the search parameters
-		$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+
+		//		$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 		$trailTagTagId = $id = filter_input(INPUT_GET, "trailTagTagId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		$trailTagTrailId = $id = filter_input(INPUT_GET, "trailTagTrailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		$trailTagProfileId = filter_input(INPUT_GET, "trailTagProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-		if(($method === "DELETE") && (empty($id) === $trailTag)){
+		if(($method === "DELETE") && (empty($id) === true)){
 			throw(new \InvalidArgumentException("Id cannot be empty", 405));
 			}
 
 		if($method === "POST") {
-
 			// enforce the user has a XSRF token
 			verifyXsrf();
 			//Retrieve the Json package and store in $requestContent
 			$requestContent = file_get_contents("php://input");
 			// Decode the JSON package and stores that result in $requestObject
 			$requestObject = json_decode($requestContent);
+
 			if(empty($requestObject->trailTagTagId) === true) {
 				throw (new \InvalidArgumentException("No tag linked to the trail tag", 405));
 			}
@@ -60,11 +62,13 @@ $reply->data = null;
 				throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
 			}
 
-			$trailTag = new TrailTag(generateUuidV4(), generateUuidV4(), $_SESSION["profile"]->getProfileId);
+			$trailTag = new TrailTag($requestObject->trailTagTagId, $requestObject->trailTagTrailId, $_SESSION["profile"]->getProfileId);
 			$trailTag->insert($pdo);
 
 			//tag reply
 			$reply->message = "Tag added to trail";
+
+
 		} else if($method === "DELETE") {
 
 			//enforce that the end user has a XSRF token.
@@ -72,7 +76,7 @@ $reply->data = null;
 
 			//get the trail tag that needs to be deleted
 
-			$trailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($pdo, $id, $id);
+			$trailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($pdo, $requestObject->trailTagTagId, $requestObject->trailTagTrailId);
 			if($trailTag === null) {
 				throw (new RuntimeException("Trail tag does not exist", 404));
 			}
