@@ -5,10 +5,11 @@ require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
-use Edu\Cnm\AbqStreetArt\Profile;
+use CapstoneTrails\AbqTrails\Profile;
 /**
- * api for signing up for ABQ Street Art
+ * api for signing up for ABQ Trails
  *
+ * @author Robert Dominguez
  * @author Mary MacMillan <mschmitt5@cnm.edu>
  * @author Gkephart <GKephart@cnm.edu>
  **/
@@ -22,7 +23,7 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort23/trails.ini");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	if($method === "POST") {
@@ -38,15 +39,15 @@ try {
 			throw(new \InvalidArgumentException ("Profile email required", 405));
 		}
 		//verify that profile password is present
-		if(empty($requestObject->profilePassword) === true) {
+		if(empty($requestObject->profileHash) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 		//verify that the confirm password is present
-		if(empty($requestObject->profilePasswordConfirm) === true) {
+		if(empty($requestObject->profileHashConfirm) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 		//make sure the password and confirm password match
-		if ($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
+		if ($requestObject->profileHash !== $requestObject->profileHashConfirm) {
 			throw(new \InvalidArgumentException("passwords do not match"));
 		}
 		$salt = bin2hex(random_bytes(32));
@@ -57,7 +58,7 @@ try {
 		//insert the profile into the database
 		$profile->insert($pdo);
 		//compose the email message to send with the activation token
-		$messageSubject = "Thank you for signing up for ABQ Street Art! Please confirm your email in order to sign in.";
+		$messageSubject = "Thank you for signing up for ABQ Trails! Please confirm your email in order to sign in.";
 		//building the activation link that can travel to another server and still work. This is the link that will be clicked to confirm the account.
 		//make sure URL is /public_html/api/activation/$activation
 		$basePath = dirname($_SERVER["SCRIPT_NAME"], 3);
@@ -67,8 +68,8 @@ try {
 		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
 		//compose message to send with email
 		$message = <<< EOF
-<h2>Welcome to ABQ Street Art!</h2>
-<p>In order to sign in and start bookmarking your favorite art locations you must confirm your account.</p>
+<h2>Welcome to ABQ Trails!</h2>
+<p>In order to sign in and start rating your favorite trails you must confirm your account.</p>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 		//create swift email
