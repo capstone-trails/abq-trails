@@ -1,13 +1,12 @@
 <?php
-
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/Classes/autoload.php");
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use CapstoneTrails\AbqTrails\Profile;
+use CapstoneTrails\AbqTrails\{Photo, Profile};
 
 /**
  * Cloudinary API for image upload
@@ -16,7 +15,7 @@ use CapstoneTrails\AbqTrails\Profile;
  * @version 1.02 updated from Brent Kie & Marty Boncacci
  **/
 
-//start session
+//verify the session, start if not active
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
