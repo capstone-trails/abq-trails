@@ -94,3 +94,46 @@ if($reply->data === null) {
 }
 
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+		<!-- JSON encode the $reply object and console.log it -->
+		<script>console.log(<?php echo json_encode($reply);?>);</script>
+
+		<title>ABQ Trails | Activate Account</title>
+	</head>
+
+	<!-- STYLE THIS FOR APP	-->
+	<body>
+		<div class="container">
+			<div class="jumbotron my-5">
+				<h1>ABQ Trails | Activate Account</h1>
+				<hr>
+				<p class="lead d-flex">
+
+					<!-- echo the $reply message to the front end -->
+					<?php
+					//            echo $reply->message . "&nbsp;";
+					if($reply->status === 200) {
+						echo "<span class=\"align-self-center badge badge-success\">Success! Use this code to sign in to your profile!</span>";
+					} else {
+						echo "<span class=\"align-self-center badge badge-danger\">Code:&nbsp;" . $reply->status . "</span>";
+					}
+					?>
+
+				</p>
+				<div class="mt-4">
+					<a class="btn btn-lg" href="https://bootcamp-coders.cnm.edu/~mschmitt5/abq-street-art/public_html/"><i class="fa fa-sign-in"></i>&nbsp;Sign In</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
