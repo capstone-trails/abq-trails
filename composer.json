@@ -1,12 +1,13 @@
 {
   "require": {
-    "php": "7.3",
+    "php": "7.*",
     "ext-json": "*",
     "ext-pdo": "*",
     "ramsey/uuid": "@stable",
     "phpunit/dbunit": "@stable",
     "phpunit/phpunit": "@stable",
-    "lcobucci/jwt": "3.2"
+    "lcobucci/jwt": "3.2",
+    "swiftmailer/swiftmailer": "@stable"
   },
 
   "scripts": {
