@@ -64,14 +64,36 @@ try {
 		} else if(empty($profileId) === false) {
 			$reply->data = Photo::getPhotoByPhotoProfileId($pdo, $profileId)->toArray();
 		}
+
 	} else if($method === "DELETE") {
+		//verify that the end user has XSRF token
+		verifyXsrf();
 
-	}
+		//retrieve the Photo to be deleted
+		$photo = Photo::getPhotoByPhotoId($pdo, $id);
+		if($photo === null) {
+			throw(new \RuntimeException("Photo does not exist", 404));
+		}
 
+		//enforce user is signed in and only trying to delete their own photo
+		//use the photo id to get trail id to get profile id; compare it to the session profile id
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== Trail::getTrailByTrailId($pdo, $photo->getPhotoTrailId())->getPhotoProfileId()) {
+			throw(new \InvalidArgumentException("Only the user can delete this image", 403));
+		}
 
+		//enforce the user has a JWT token
+		validateJwtHeader();
 
+		//delete image from Cloudinary
+		$cloudinaryResult = \Cloudinary\Uploader::destroy($photo->getPhotoCloudinaryToken());
 
+		//delete photo database
+		$photo->delete($pdo);
 
+		//update reply
+		$reply->message = "Photo deleted";
+
+	} else if($method === "POST") {
 		//verify that the end user has XSRF token
 		verifyXsrf();
 
@@ -96,6 +118,7 @@ try {
 		$profile->update($pdo);
 		$reply->message = "Image uploaded successfully!";
 	}
+
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
