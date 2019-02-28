@@ -33,6 +33,9 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 		//profile email is a required field
+		if(empty($requestObject->profileAvatarUrl) === true) {
+			$requestObject->profileAvatarUrl = null;
+		}
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException ("Profile email required", 405));
 		}
@@ -64,7 +67,6 @@ try {
 
 		$profileActivationToken = bin2hex(random_bytes(16));
 
-		$profileAvatarUrl = null;
 
 		//create the profile object and prepare to insert into the database
 		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileAvatarUrl, $requestObject->profileEmail, $requestObject->profileFirstName, $hash, $requestObject->profileLastName, $requestObject->profileUsername);
