@@ -42,13 +42,23 @@ $reply->data = null;
 			// Decode the JSON package and stores that result in $requestObject
 			$requestObject = json_decode($requestContent);
 			if(empty($requestObject->trailTagTagId) === true) {
-				throw (new \InvalidArgumentException("no tag linked to the trail tag", 405));
+				throw (new \InvalidArgumentException("No tag linked to the trail tag", 405));
 			}
 			if(empty($requestObject->trailTagTrailId) === true) {
-				throw (new \InvalidArgumentException("no trail linked to the trail tag", 405));
+				throw (new \InvalidArgumentException("No trail linked to the trail tag", 405));
 			}
 			if(empty($requestObject->trailTagProfileId) === true) {
-				throw (new \InvalidArgumentException("no profile linked to the trail tag", 405)); // todo ASK GEORGE
+				throw (new \InvalidArgumentException("No profile linked to the trail tag", 405));
 			}
+			//enforce the user is signed in to tag the trail
+			if(empty($_SESSION ["profile"]) === true) {
+				throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
+			}
+
+			$trailTag = new TrailTag($requestObject->trailTagTagId, $requestObject->tralTagTrailId, $_SESSION["profile"]->getProfileId);
+			$trailTag->insert($pdo);
+
+			//tag reply
+			$reply->message = "Tag added to trail";
 		}
 	}
