@@ -165,9 +165,9 @@ public function __construct($newProfileId, ?string $newProfileActivationToken, ?
 		if(strlen ($newProfileAvatarUrl) > 255) {
 			throw(new \RangeException("avatar url is too long"));
 		}
-		if(empty($newProfileAvatarUrl) === true) {
-			throw (new \InvalidArgumentException("profile avatar URL is empty"));
-		}
+//		if(empty($newProfileAvatarUrl) === true) {
+//			throw (new \InvalidArgumentException("profile avatar URL is empty"));
+//		}
 		$this->profileAvatarUrl = $newProfileAvatarUrl;
 	}
 /**
