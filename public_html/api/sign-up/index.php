@@ -53,8 +53,12 @@ try {
 		if(empty($requestObject->profilePassword) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
+		//verify that profile password is present
+		if(empty($requestObject->profilePasswordConfirm) === true) {
+			throw(new \InvalidArgumentException ("Must input valid password", 405));
+		}
 		//make sure the password and confirm password match
-		if($requestObject->profilePasswordConfirm !== $requestObject->profileHashConfirm) {
+		if($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
 			throw(new \InvalidArgumentException("Passwords do not match"));
 		}
 		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
