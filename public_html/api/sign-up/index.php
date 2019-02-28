@@ -67,7 +67,7 @@ try {
 		$profileAvatarUrl = null;
 
 		//create the profile object and prepare to insert into the database
-		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileAvatarUrl, $requestObject->profileEmail, $requestObject->profileFirstName, $hash, $requestObject->profileLastName, $requestObject->profileUserName);
+		$profile = new Profile(generateUuidV4(), $profileActivationToken, $requestObject->profileAvatarUrl, $requestObject->profileEmail, $requestObject->profileFirstName, $hash, $requestObject->profileLastName, $requestObject->profileUsername);
 		//insert the profile into the database
 		$profile->insert($pdo);
 		//compose the email message to send with the activation token
