@@ -126,7 +126,6 @@ class Profile implements \JsonSerializable {
 	public function getProfileActivationToken(): ?string {
 		return ($this->profileActivationToken);
 	}
-
 	/**
 	 * mutator method for profile activation token
 	 *
@@ -134,19 +133,17 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if activation token is not 32 characters
 	 * @throws \TypeError if activation token is not a string
 	 */
-	public function setProfileActivationToken(?string $newProfileActivationToken) {
-		if($newProfileActivationToken === null) {
-			$this->profileActivationToken = null;
-			return;
+	public function setProfileActivationToken (?string $newProfileActivationToken) {
+			if($newProfileActivationToken === null) {
+				$this->profileActivationToken = null;
+				return;
+			}
+			$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+			if(ctype_xdigit($newProfileActivationToken) === false) {
+				throw(new\RangeException("user activation is not valid"));
+			}
+			$this->profileActivationToken = $newProfileActivationToken;
 		}
-
-		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
-		if(ctype_xdigit($newProfileActivationToken) === false) {
-			throw(new\RangeException("user activation is not valid"));
-		}
-		$this->profileActivationToken = $newProfileActivationToken;
-	}
-
 	/**
 	 * accessor method for profile avatar url
 	 *
@@ -216,7 +213,6 @@ class Profile implements \JsonSerializable {
 	public function getProfileFirstName(): string {
 		return ($this->profileFirstName);
 	}
-
 	/**
 	 * mutator method for profile first name
 	 *

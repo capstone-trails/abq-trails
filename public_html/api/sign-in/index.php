@@ -2,11 +2,12 @@
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/Classes/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
+require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
-use Edu\Cnm\AbqTrails\{
-	Profile
-};
+
+use CapstoneTrails\AbqTrails\Profile;
+
 /**
  * API for app sign in, Profile class
  *
@@ -54,32 +55,37 @@ try {
 			$profileEmail = filter_var($requestObject->profileEmail, FILTER_SANITIZE_EMAIL);
 		}
 		//grab the profile by email address
-		$profile = Profile::getProfileByProfileId($pdo, $profileId);
+		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 		if(empty($profile) === true) {
-			throw (new \RuntimeException("Invalid username Snacks", 401));
+			throw (new \RuntimeException("Invalid email", 401));
 		}
-		//check if the password hash matches what is in MySQL
-		if($hash !== $profile->getProfileHash()) {
-			throw (new \InvalidArgumentException("Invalid username or password.", 401));
-		}
-		//grab profile by profileId from MySQL and put into the session
-		$profile = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
+
 		//check if user still has an outstanding activation token. User must validate token before signing in.
-		if(!empty($profile->getProfileActivationToken()) || $profile->getProfileActivationToken() !== null) {throw (new \RuntimeException("Please check your email to activate your account before logging in.", 403));
+		if($profile->getProfileActivationToken() !== null){
+			throw (new \RuntimeException("Please check your email to activate your account before logging in.", 403));
 		}
+		//verify hash is correct
+		if(password_verify($requestObject->profilePassword, $profile->getProfileHash()) === false) {
+			throw(new \InvalidArgumentException("Password or email is incorrect.", 401));
+		}
+
+		//grab profile from database and put into a session
+		$profile = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
+
 		//add profile to session upon successful sign-in
 		$_SESSION["profile"] = $profile;
+
 		//create the auth payload
 		$authObject = (object) [
 			"profileId" => $profile->getProfileId(),
 			"profileUsername" => $profile->getProfileUsername()
 		];
 		//create & set the JWT
-		setJwtAndAuthHeader("auth", $authObject);
+//		setJwtAndAuthHeader("auth", $authObject);
 		//update reply
 		$reply->message = "Welcome! Sign in successful.";
 	} else {
-		throw (new \InvalidArgumentException("Invalid HTTP request!"));
+		throw (new \InvalidArgumentException("Invalid HTTP request!", 418));
 	}
 } catch(\Exception | \TypeError $exception) {
 	$reply->status = $exception->getCode();
