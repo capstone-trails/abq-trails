@@ -250,7 +250,9 @@ public function getRatingProfileId() : Uuid {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not correct data type
 	 **/
-	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, uuid $ratingProfileId, uuid $ratingTrailId): ?Rating {
+	//changed uuid type to string
+
+	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, string $ratingProfileId, string $ratingTrailId): ?Rating {
 		try {
 			$ratingProfileId = self::validateUuid($ratingProfileId);
 			$ratingTrailId = self::validateUuid($ratingTrailId);
@@ -288,7 +290,7 @@ public function getRatingProfileId() : Uuid {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not correct data type
 	 **/
-	public static function getRatingByRatingProfileId(\PDO $pdo, uuid $ratingProfileId): ?Rating {
+	public static function getRatingByRatingProfileId(\PDO $pdo, string $ratingProfileId): ?Rating {
 		try {
 			$ratingProfileId = self::validateUuid($ratingProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -325,7 +327,7 @@ public function getRatingProfileId() : Uuid {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not correct data type
 	 **/
-	public static function getRatingByRatingTrailId(\PDO $pdo, uuid $ratingTrailId): ?Rating {
+	public static function getRatingByRatingTrailId(\PDO $pdo, string $ratingTrailId): ?Rating {
 		try {
 			$ratingTrailId = self::validateUuid($ratingTrailId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
