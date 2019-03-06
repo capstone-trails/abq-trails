@@ -252,7 +252,7 @@ public function getRatingProfileId() : Uuid {
 	 **/
 	//changed uuid type to string
 
-	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, string $ratingProfileId, string $ratingTrailId): ?Rating {
+	public static function getRatingByRatingProfileIdAndRatingTrailId(\PDO $pdo, $ratingProfileId, $ratingTrailId): ?Rating {
 		try {
 			$ratingProfileId = self::validateUuid($ratingProfileId);
 			$ratingTrailId = self::validateUuid($ratingTrailId);

@@ -37,10 +37,6 @@ try {
 	$ratingProfileId = $id = filter_input(INPUT_GET, "ratingProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$ratingTrailId = $id = filter_input(INPUT_GET, "ratingTrailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-	//make sure id is valid for methods that require it
-	if(($method === "DELETE") && (empty($id) === true)){
-		throw(new \InvalidArgumentException("Id cannot be empty", 405));
-	}
 
 	//process actual GET and POST methods
 	if($method === "GET") {
@@ -57,14 +53,15 @@ try {
 
 			//if none of the search parameters are met throw an exception
 		} else if(empty($ratingProfileId) === false) {
-			$reply->data = Rating::getRatingByRatingProfileId($pdo, $ratingProfileId)->toArray();
+			$reply->data = Rating::getRatingByRatingProfileId($pdo, $ratingProfileId);
 		} else if(empty($ratingTrailId) === false) {
-			$reply->data = Rating::getRatingByRatingTrailId($pdo, $ratingTrailId)->toArray();
-		}
+			$reply->data = Rating::getRatingByRatingTrailId($pdo, $ratingTrailId);
+		} else {
+		throw new InvalidArgumentException("incorrect search parameters ", 404);
+	}
 
 	} else if($method === "POST") {
 		// enforce the user has a XSRF token
-		verifyXsrf();
 
 		//Retrieve the Json package and store in $requestContent
 		$requestContent = file_get_contents("php://input");
@@ -77,18 +74,25 @@ try {
 		if(empty($requestObject->ratingTrailId) === true) {
 			throw (new \InvalidArgumentException("No trail linked to the rating", 405));
 		}
-		//enforce the user is signed in to tag the trail
-		if(empty($_SESSION ["profile"]) === true) {
-			throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
+
+		if($method === "POST") {
+
+			//verify Xsrf
+			verifyXsrf();
+
+			//enforce the user is signed in to tag the trail
+			if(empty($_SESSION ["profile"]) === true) {
+				throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
+			}
+
+			validateJwtHeader();
+
+			$rating = new Rating($_SESSION["profile"]->getProfileId, $requestObject->ratingTrailId, $requestObject->ratingDifficulty, $requestObject->ratingValue);
+			$rating->insert($pdo);
+
+			//rating reply
+			$reply->message = "Rating added";
 		}
-
-		validateJwtHeader();
-
-		$rating = new Rating($_SESSION["profile"]->getProfileId, $requestObject->ratingTrailId, $requestObject->ratingDifficulty, $requestObject->ratingValue);
-		$rating->insert($pdo);
-
-		//rating reply
-		$reply->message = "Rating added";
 	}
 
 } catch(Exception $exception) {
