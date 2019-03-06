@@ -7,7 +7,9 @@ require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
-use CapstoneTrails\AbqTrails\Rating;
+use CapstoneTrails\AbqTrails\{
+	Rating, Profile, Trail
+};
 
 
 /**
@@ -87,7 +89,7 @@ try {
 
 			validateJwtHeader();
 
-			$rating = new Rating($_SESSION["profile"]->getProfileId, $requestObject->ratingTrailId, $requestObject->ratingDifficulty, $requestObject->ratingValue);
+			$rating = new Rating($_SESSION["profile"]->getProfileId(), $requestObject->ratingTrailId, $requestObject->ratingDifficulty, $requestObject->ratingValue);
 			$rating->insert($pdo);
 
 			//rating reply
