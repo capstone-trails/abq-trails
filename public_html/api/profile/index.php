@@ -117,6 +117,8 @@ try {
 
 		//update reply message
 		$reply->message = "Profile updated!";
+	} else {
+		throw(new \InvalidArgumentException("Invalid HTTP request", 400));
 	}
 
 //update the $reply->status $reply->message
