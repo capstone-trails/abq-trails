@@ -7,7 +7,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
-use CapstoneTrails\AbqTrails\{Profile, Trail};
+use CapstoneTrails\AbqTrails\Rating;
 
 
 /**
@@ -20,28 +20,24 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
-// verify the session, start if not active
-if (session_status() !== PHP_SESSION_ACTIVE){
-	session_start();
-}
-
 // prepare an empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
 try {
-	// grab the mySQl connection
-	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/rating.ini");
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/cohort23/rating.ini");
+	//grab mysql connection
+	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+	$pdo = $secrets->getPdoObject();
 
-	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+	//determine which HTTP method was used
+	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
 
-	//sanitize the search parameters
-	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	//sanitize the inputs
 	$ratingProfileId = $id = filter_input(INPUT_GET, "ratingProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$ratingTrailId = $id = filter_input(INPUT_GET, "ratingTrailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
+	//make sure id is valid for methods that require it
 	if(($method === "DELETE") && (empty($id) === true)){
 		throw(new \InvalidArgumentException("Id cannot be empty", 405));
 	}
@@ -52,16 +48,24 @@ try {
 		setXsrfCookie();
 
 		//get a rating by id and update reply
-		if(empty($id) === false) {
-			$rating = Rating::getRatingByRatingProfileIdAndRatingTrailId($pdo, $id);
+		if($ratingProfileId !== null && $ratingTrailId !== null) {
+			$rating = Rating::getRatingByRatingProfileIdAndRatingTrailId($pdo, $ratingProfileId, $ratingTrailId);
+
+			if($rating !== null) {
+				$reply->data = $rating;
+			}
+
+			//if none of the search parameters are met throw an exception
 		} else if(empty($ratingProfileId) === false) {
 			$reply->data = Rating::getRatingByRatingProfileId($pdo, $ratingProfileId)->toArray();
 		} else if(empty($ratingTrailId) === false) {
 			$reply->data = Rating::getRatingByRatingTrailId($pdo, $ratingTrailId)->toArray();
 		}
+
 	} else if($method === "POST") {
 		// enforce the user has a XSRF token
 		verifyXsrf();
+
 		//Retrieve the Json package and store in $requestContent
 		$requestContent = file_get_contents("php://input");
 		// Decode the JSON package and stores that result in $requestObject
@@ -78,15 +82,16 @@ try {
 			throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
 		}
 
-		$rating = new Rating($requestObject->ratingProfileId, $requestObject->ratingTrailId, $_SESSION["profile"]->getProfileId);
+		validateJwtHeader();
+
+		$rating = new Rating($_SESSION["profile"]->getProfileId, $requestObject->ratingTrailId, $requestObject->ratingDifficulty, $requestObject->ratingValue);
 		$rating->insert($pdo);
 
 		//rating reply
-		$reply->message = "rating added";
-
-
+		$reply->message = "Rating added";
 	}
-}catch(Exception $exception) {
+
+} catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 }
