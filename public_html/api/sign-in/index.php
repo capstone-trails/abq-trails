@@ -81,7 +81,7 @@ try {
 			"profileUsername" => $profile->getProfileUsername()
 		];
 		//create & set the JWT
-//		setJwtAndAuthHeader("auth", $authObject);
+		setJwtAndAuthHeader("auth", $authObject);
 		//update reply
 		$reply->message = "Welcome! Sign in successful.";
 	} else {
