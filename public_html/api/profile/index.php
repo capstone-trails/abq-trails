@@ -2,6 +2,7 @@
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/Classes/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
+require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
@@ -38,10 +39,26 @@ try {
 	if(($method === "PUT") && (empty($id) === true)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
+	if($method === "GET"){
 
-	if($method === "PUT") {
-		//verify the user has a XSRF token
+		//set Xsrf cookie
+		setXsrfCookie();
+
+		//gets a profile
+		if(empty($id) === false) {
+			$reply->data = Profile::getProfileByProfileId($pdo, $id);
+		}
+	}else if($method === "PUT") {
+		//verify the user has a XSRF token and validate Jwt Header;
 		verifyXsrf();
+
+		//enforce the user is signed in and can only update their own profile
+		if(empty($_SESSION["profile"]) === true) {
+			throw(new \InvalidArgumentException("You have to be logged in to edit this profile", 403));
+		}
+
+
+		validateJwtHeader();
 
 		/**
 		 * Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input")
@@ -60,9 +77,34 @@ try {
 			throw(new RuntimeException("Profile does not exist", 404));
 		}
 
-		//enforce the user is signed in and can only update their own profile
-		if(empty($_SESSION["profile"]) === true) {
-			throw(new \InvalidArgumentException("You have to be logged in to edit this profile", 403));
+		//if profile avatar url is empty, use the one already in the data base
+
+		if(empty($requestObject->profileAvatarUrl) === true) {
+			$requestObject->profileAvatarUrl = $profile->getProfileAvatarUrl();
+		}
+
+		//if profile email is empty, use the one already in the data base
+
+		if(empty($requestObject->profileEmail) === true) {
+			$requestObject->profileEmail = $profile->getProfileEmail();
+		}
+
+		//if profile first name is empty, use the one already in the data base
+
+		if(empty($requestObject->profileFirstName) === true) {
+			$requestObject->profileFirstName = $profile->getProfileFirstName();
+		}
+
+		//if profile last name is empty, use the one already in the data base
+
+		if(empty($requestObject->profileLastName) === true) {
+			$requestObject->profileLastName = $profile->getProfileLastName();
+		}
+
+		//if profile username is empty, use the one already in the data base
+
+		if(empty($requestObject->profileUsername) === true) {
+			$requestObject->profileUsername = $profile->getProfileUsername();
 		}
 
 		//update all attributes
