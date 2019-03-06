@@ -34,12 +34,8 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-
-	//make sure id is valid for methods that require it
-	if(($method === "PUT") && (empty($id) === true)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
-	if($method === "GET"){
+	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_EMAIL, FILTER_FLAG_NO_ENCODE_QUOTES);
+	if($method === "GET") {
 
 		//set Xsrf cookie
 		setXsrfCookie();
@@ -48,6 +44,15 @@ try {
 		if(empty($id) === false) {
 			$reply->data = Profile::getProfileByProfileId($pdo, $id);
 		}
+
+		if(empty($profileEmail) === false) {
+			$reply->data = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+		}
+	}
+
+	//make sure id is valid for methods that require it
+	if(($method === "PUT") && (empty($id) === true)) {
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}else if($method === "PUT") {
 		//verify the user has a XSRF token and validate Jwt Header;
 		verifyXsrf();
