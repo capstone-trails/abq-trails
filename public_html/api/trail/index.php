@@ -48,6 +48,8 @@ try {
 		} else {
 			$reply->data = Trail::getAllTrails($pdo)->toArray();
 		}
+	} else {
+		throw(new \InvalidArgumentException("Invalid HTTP request", 400));
 	}
 
 	//update the $reply->status $reply->message
