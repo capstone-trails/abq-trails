@@ -39,7 +39,7 @@ try {
 		//get a specific trail based on arguments provided and update reply
 		if(empty($id) === false) {
 			$reply->data = Tag::getTagByTagId($pdo, $id);
-		} else if(empty($agName) === false) {
+		} else if(empty($tagName) === false) {
 			$reply->data = Tag::getTagByTagName($pdo, $tagName)->toArray();
 		} else {
 			$reply->data = Tag::getAllTags($pdo)->toArray();
