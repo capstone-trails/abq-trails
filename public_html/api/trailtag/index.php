@@ -55,9 +55,6 @@ $reply->data = null;
 			if(empty($requestObject->trailTagTrailId) === true) {
 				throw (new \InvalidArgumentException("No trail linked to the trail tag", 405));
 			}
-			if(empty($requestObject->trailTagProfileId) === true) {
-				throw (new \InvalidArgumentException("No profile linked to the trail tag", 405));
-			}
 			if($method === "POST") {
 				//verif xsrf
 				verifyXsrf();
