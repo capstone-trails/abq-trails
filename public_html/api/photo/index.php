@@ -2,8 +2,8 @@
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/Classes/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
+require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
-require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
 
@@ -39,62 +39,16 @@ try {
 	$trailId = filter_input(INPUT_GET, "trailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileId = filter_input(INPUT_GET, "profileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-	$config = readConfig("/etc/apache2/capstone-mysql/cohort23/trails.ini");
+	$config = parse_ini_file("/etc/apache2/capstone-mysql/cohort23/trails.ini");
 	$cloudinary = json_decode($config["cloudinary"]);
+
 	\Cloudinary::config([
 		"cloud_name" => $cloudinary->cloudName,
 		"api_key" => $cloudinary->apiKey,
 		"api_secret" => $cloudinary->apiSecret
 	]);
 
-	//make sure the id is valid for methods that require it
-	if(($method === "DELETE") && (empty($id) === true)) {
-		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
-	}
-
-	//process actual GET, POST, DELETE methods
-	if($method === "GET") {
-		//set XSRF token
-		setXsrfCookie();
-
-		//get a photo by id and update reply
-		if(empty($id) === false) {
-			$photo = Photo::getPhotoByPhotoId($pdo, $id);
-		} else if(empty($trailId) === false) {
-			$reply->data = Photo::getPhotoByPhotoTrailId($pdo, $trailId)->toArray();
-		} else if(empty($profileId) === false) {
-			$reply->data = Photo::getPhotoByPhotoProfileId($pdo, $profileId)->toArray();
-		}
-
-	} else if($method === "DELETE") {
-		//verify that the end user has XSRF token
-		verifyXsrf();
-
-		//retrieve the Photo to be deleted
-		$photo = Photo::getPhotoByPhotoId($pdo, $id);
-		if($photo === null) {
-			throw(new \RuntimeException("Photo does not exist", 404));
-		}
-
-		//enforce user is signed in and only trying to delete their own photo
-		//use the photo id to get trail id to get profile id; compare it to the session profile id
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== Trail::getTrailByTrailId($pdo, $photo->getPhotoTrailId())->getPhotoProfileId()) {
-			throw(new \InvalidArgumentException("Only the user can delete this image", 403));
-		}
-
-		//enforce the user has a JWT token
-		validateJwtHeader();
-
-		//delete image from Cloudinary
-		$cloudinaryResult = \Cloudinary\Uploader::destroy($photo->getPhotoCloudinaryToken());
-
-		//delete photo database
-		$photo->delete($pdo);
-
-		//update reply
-		$reply->message = "Photo deleted";
-
-	} else if($method === "POST") {
+	if($method === "POST") {
 		//verify that the end user has XSRF token
 		verifyXsrf();
 
@@ -115,10 +69,59 @@ try {
 		}
 
 		//set image upload to Cloudinary
-		$profile->setProfileImage($cloudinaryResult["secure_url"]);
+		$profile->setProfileAvatarUrl($cloudinaryResult["secure_url"]);
 		$profile->update($pdo);
 		$reply->message = "Image uploaded successfully!";
 	}
+
+//	//make sure the id is valid for methods that require it
+//	if(($method === "DELETE") && (empty($id) === true)) {
+//		throw(new \InvalidArgumentException("id cannot be empty or negative", 405));
+//	}
+//
+//	//process actual GET, POST, DELETE methods
+//	if($method === "GET") {
+//		//set XSRF token
+//		setXsrfCookie();
+//
+//		//get a photo by id and update reply
+//		if(empty($id) === false) {
+//			$photo = Photo::getPhotoByPhotoId($pdo, $id);
+//		} else if(empty($trailId) === false) {
+//			$reply->data = Photo::getPhotoByPhotoTrailId($pdo, $trailId)->toArray();
+//		} else if(empty($profileId) === false) {
+//			$reply->data = Photo::getPhotoByPhotoProfileId($pdo, $profileId)->toArray();
+//		}
+//
+//	} else if($method === "DELETE") {
+//		//verify that the end user has XSRF token
+//		verifyXsrf();
+//
+//		//retrieve the Photo to be deleted
+//		$photo = Photo::getPhotoByPhotoId($pdo, $id);
+//		if($photo === null) {
+//			throw(new \RuntimeException("Photo does not exist", 404));
+//		}
+//
+//		//enforce user is signed in and only trying to delete their own photo
+//		//use the photo id to get trail id to get profile id; compare it to the session profile id
+//		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== Trail::getTrailByTrailId($pdo, $photo->getPhotoTrailId())->getPhotoProfileId()) {
+//			throw(new \InvalidArgumentException("Only the user can delete this image", 403));
+//		}
+//
+//		//enforce the user has a JWT token
+//		validateJwtHeader();
+//
+//		//delete image from Cloudinary
+//		$cloudinaryResult = \Cloudinary\Uploader::destroy($photo->getPhotoCloudinaryToken());
+//
+//		//delete photo database
+//		$photo->delete($pdo);
+//
+//		//update reply
+//		$reply->message = "Photo deleted";
+//	}
+
 
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
