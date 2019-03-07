@@ -176,7 +176,7 @@ class TrailTag implements \JsonSerializable {
 	 * @throws \TypeError when variables are not the correct data type
 	 *
 	 */
-	public static function getTrailTagByTrailTagTagIdAndTrailTagTrailId(\PDO $pdo, Uuid $trailTagTagId, Uuid $trailTagTrailId): ?TrailTag {
+	public static function getTrailTagByTrailTagTagIdAndTrailTagTrailId(\PDO $pdo, $trailTagTagId, $trailTagTrailId): ?TrailTag {
 		try {
 			$trailTagTagId = self::validateUuid($trailTagTagId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -218,7 +218,7 @@ class TrailTag implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related issues occur
 	 * @throws \TypeError when variables are not the correct type of data
 	 */
-	public static function getTrailTagByTrailTagTagId(\PDO $pdo, Uuid $trailTagTagId): \SplFixedArray {
+	public static function getTrailTagByTrailTagTagId(\PDO $pdo, string $trailTagTagId): \SplFixedArray {
 		try {
 			$trailTagTagId = self::validateUuid($trailTagTagId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -254,7 +254,7 @@ class TrailTag implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related issues occur
 	 * @throws \TypeError when variables are not the correct type of data
 	 */
-	public static function getTrailTagByTrailTagTrailId(\PDO $pdo, Uuid $trailTagTrailId): \SplFixedArray {
+	public static function getTrailTagByTrailTagTrailId(\PDO $pdo, string $trailTagTrailId): \SplFixedArray {
 		try {
 			$trailTagTrailId = self::validateUuid($trailTagTrailId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {

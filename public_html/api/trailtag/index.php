@@ -2,6 +2,7 @@
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/Classes/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
+require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
@@ -39,11 +40,10 @@ $reply->data = null;
 
 		if(($method === "DELETE") && (empty($id) === true)){
 			throw(new \InvalidArgumentException("Id cannot be empty", 405));
-			}
 
-		if($method === "POST") {
-			// enforce the user has a XSRF token
-			verifyXsrf();
+
+		}else if($method === "POST") {
+
 			//Retrieve the Json package and store in $requestContent
 			$requestContent = file_get_contents("php://input");
 			// Decode the JSON package and stores that result in $requestObject
@@ -58,22 +58,28 @@ $reply->data = null;
 			if(empty($requestObject->trailTagProfileId) === true) {
 				throw (new \InvalidArgumentException("No profile linked to the trail tag", 405));
 			}
-			//enforce the user is signed in to tag the trail
-			if(empty($_SESSION ["profile"]) === true) {
-				throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
+			if($method === "POST") {
+				//verif xsrf
+				verifyXsrf();
+
+				if(empty($_SESSION ["profile"]) === true) {
+					throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
+				}
+
+				//enforce the end user has a JWT token
+				validateJwtHeader();
+
+				$trailTag = new TrailTag($requestObject->trailTagTagId, $requestObject->trailTagTrailId, $_SESSION["profile"]->getProfileId());
+				$trailTag->insert($pdo);
+
+				//tag reply
+				$reply->message = "Tag added to trail";
+
 			}
-
-			$trailTag = new TrailTag($requestObject->trailTagTagId, $requestObject->trailTagTrailId, $_SESSION["profile"]->getProfileId);
-			$trailTag->insert($pdo);
-
-			//tag reply
-			$reply->message = "Tag added to trail";
-
-
 		} else if($method === "DELETE") {
 
 			//enforce that the end user has a XSRF token.
-			verifyXsfr();
+			verifyXsrf();
 
 			//get the trail tag that needs to be deleted
 
