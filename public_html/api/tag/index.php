@@ -30,20 +30,22 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	//sanitize the search parameters
 	$id = $tagId = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING);
+	$tagName = filter_input(INPUT_GET, "tagName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
-		//gets a specific tag based on its tagId
-		if(empty($tagId) === false) {
-			$tag = Tag::getTagByTagId($pdo, $tagId);
-			if($tag !== null) {
-				$reply->data = $tag;
-			}
+
+		//get a specific trail based on arguments provided and update reply
+		if(empty($id) === false) {
+			$reply->data = Tag::getTagByTagId($pdo, $id);
+		} else if(empty($agName) === false) {
+			$reply->data = Tag::getTagByTagName($pdo, $tagName)->toArray();
 		} else {
-			$reply->data = null;
+			$reply->data = Tag::getAllTags($pdo)->toArray();
 		}
-		/**
+
+	/**
 		 * Post for tag
 		 **/
 	} else if($method === "POST") {
