@@ -48,7 +48,6 @@ try {
 		//get a rating by id and update reply
 		if($ratingProfileId !== null && $ratingTrailId !== null) {
 			$rating = Rating::getRatingByRatingProfileIdAndRatingTrailId($pdo, $ratingProfileId, $ratingTrailId);
-
 			if($rating !== null) {
 				$reply->data = $rating;
 			}

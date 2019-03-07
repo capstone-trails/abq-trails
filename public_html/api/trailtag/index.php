@@ -38,11 +38,8 @@ $reply->data = null;
 		$trailTagTrailId = $id = filter_input(INPUT_GET, "trailTagTrailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		$trailTagProfileId = filter_input(INPUT_GET, "trailTagProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-		if(($method === "DELETE") && (empty($id) === true)){
-			throw(new \InvalidArgumentException("Id cannot be empty", 405));
 
-
-		}else if($method === "POST") {
+		if($method === "POST" || $method === "PUT") {
 
 			//Retrieve the Json package and store in $requestContent
 			$requestContent = file_get_contents("php://input");
@@ -55,10 +52,12 @@ $reply->data = null;
 			if(empty($requestObject->trailTagTrailId) === true) {
 				throw (new \InvalidArgumentException("No trail linked to the trail tag", 405));
 			}
+
 			if($method === "POST") {
-				//verif xsrf
+				//verify xsrf
 				verifyXsrf();
 
+				//enforce the user is signed in
 				if(empty($_SESSION ["profile"]) === true) {
 					throw(new \InvalidArgumentException("You must be logged in to tag a trail", 403));
 				}
@@ -66,38 +65,49 @@ $reply->data = null;
 				//enforce the end user has a JWT token
 				validateJwtHeader();
 
-				$trailTag = new TrailTag($requestObject->trailTagTagId, $requestObject->trailTagTrailId, $_SESSION["profile"]->getProfileId());
+				$trailTag = new TrailTag($_SESSION["profile"]->getProfileId(), $requestObject->trailTagTagId, $requestObject->trailTagTrailId);
 				$trailTag->insert($pdo);
 
 				//tag reply
 				$reply->message = "Tag added to trail";
 
+
+			} else if($method === "PUT") {
+
+				//enforce that the end user has a XSRF token.
+				verifyXsrf();
+
+				//enforce the end user has a JWT token
+				validateJwtHeader();
+
+				//grab the trailtag by its composite key
+				$trailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($pdo, $requestObject->trailTagTagId, $requestObject->trailTagTrailId);
+				if($trailTag === null) {
+					throw (new \RuntimeException("Trail tag does not exist", 404));
+				}
+
+				//enforce that the user is signed in to un-tag the trail
+				if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $trailTag->getTrailTagProfileId()) {
+					throw(new \InvalidArgumentException("Whoops! You are not allowed to un-tag this", 403));
+				}
+
+				//perform the actual delete
+				$trailTag->delete($pdo);
+
+				//update the message
+				$reply->message = "Trail tag removed";
 			}
-		} else if($method === "DELETE") {
 
-			//enforce that the end user has a XSRF token.
-			verifyXsrf();
-
-			//get the trail tag that needs to be deleted
-
-			$trailTag = TrailTag::getTrailTagByTrailTagTagIdAndTrailTagTrailId($pdo, $requestObject->trailTagTagId, $requestObject->trailTagTrailId);
-			if($trailTag === null) {
-				throw (new RuntimeException("Trail tag does not exist", 404));
-			}
-
-			//enforce that the user is signed in to un-tag the trail
-			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $trailTag->getTrailTagProfileId()) {
-				throw(new \InvalidArgumentException("Whoops! You are not allowed to un-tag this", 403));
-			}
-			$trailTag->delete($pdo);
-
-			$reply->message = "Trail tag removed";
+			//if any other HTTP request is sent throw an exception
+		} else {
+			throw(new \InvalidArgumentException("Invalid HTTP request", 400));
 		}
-			// update the $reply->status $reply->message
-		}catch(\Exception | \TypeError $exception) {
-			$reply->status = $exception->getCode();
-			$reply->message = $exception->getMessage();
-}
-		// encode and return reply to front end caller
-		header("Content-type: application/json");
-		echo json_encode($reply);
+
+		// update the $reply->status $reply->message
+	} catch(\Exception | \TypeError $exception) {
+		$reply->status = $exception->getCode();
+		$reply->message = $exception->getMessage();
+	}
+	// encode and return reply to front end caller
+	header("Content-type: application/json");
+	echo json_encode($reply);
