@@ -7,7 +7,8 @@
     "phpunit/dbunit": "@stable",
     "phpunit/phpunit": "@stable",
     "lcobucci/jwt": "3.2",
-    "swiftmailer/swiftmailer": "@stable"
+    "swiftmailer/swiftmailer": "@stable",
+    "cloudinary/cloudinary_php": "dev-master"
   },
 
   "scripts": {

@@ -87,7 +87,7 @@ $reply->data = null;
 				}
 
 				//enforce that the user is signed in to un-tag the trail
-				if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $trailTag->getTrailTagProfileId()) {
+				if(empty($_SESSION["profile"]) === true) {
 					throw(new \InvalidArgumentException("Whoops! You are not allowed to un-tag this", 403));
 				}
 
