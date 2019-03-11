@@ -9,6 +9,7 @@ require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
 use CapstoneTrails\AbqTrails\{Photo, Profile};
 
+
 /**
  * Cloudinary API for image upload
  *
@@ -42,11 +43,11 @@ try {
 	$config = parse_ini_file("/etc/apache2/capstone-mysql/cohort23/trails.ini");
 	$cloudinary = json_decode($config["cloudinary"]);
 
-	\Cloudinary::config([
-		"cloud_name" => $cloudinary->cloudName,
-		"api_key" => $cloudinary->apiKey,
-		"api_secret" => $cloudinary->apiSecret
-	]);
+	\Cloudinary::config(array(
+		"cloud_name" => "my_cloud_name",
+		"api_key" => "my_api_key",
+		"api_secret" => "my_api_secret"
+	));
 
 	if($method === "POST") {
 		//verify that the end user has XSRF token
