@@ -17,7 +17,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form>profileUsername
+					<form>
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label for="inputEmail">Email</label>
