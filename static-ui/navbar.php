@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-6">
+		<div class="col">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 					<a class="navbar-brand" href="#"><i class="fas fa-mountain"></i></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,12 +32,12 @@
 						</ul>
 					</div>
 		</div>
-					<div class="col-sm-6">
-						<form class="form-inline">
-							<input class="form-control" type="search" placeholder="Search" aria-label="Search">
-							<button class="btn" type="submit"><i class="fas fa-search"></i></button>
-						</form>
-					</div>
+<!--					<div class="col-sm-6">-->
+<!--						<form class="form-inline">-->
+<!--							<input class="form-control" type="search" placeholder="Search" aria-label="Search">-->
+<!--							<button class="btn" type="submit"><i class="fas fa-search"></i></button>-->
+<!--						</form>-->
+<!--					</div>-->
 			</nav>
 	</div>
 </div>
