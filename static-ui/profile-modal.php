@@ -4,7 +4,7 @@
 <main>
 	<div class="container-fluid">
 		<img src="https://via.placeholder.com/80" class="rounded mx-auto d-block" alt="...">
-		<h1 class="text-center">Profile Name</h1>
+		<h2 class="text-center">Profile Name</h2>
 
 		<!-- Equal width cols, same on all screen sizes -->
 		<div class="container">
@@ -21,7 +21,7 @@
 		</div>
 
 
-		<h1 align="center">My Photos</h1>
+		<h2 align="center">My Photos</h2>
 		<div class="container">
 			<div class="row">
 				<div class="col">
