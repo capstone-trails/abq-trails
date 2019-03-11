@@ -31,13 +31,8 @@
 							</li>
 						</ul>
 					</div>
-		</div>
-<!--					<div class="col-sm-6">-->
-<!--						<form class="form-inline">-->
-<!--							<input class="form-control" type="search" placeholder="Search" aria-label="Search">-->
-<!--							<button class="btn" type="submit"><i class="fas fa-search"></i></button>-->
-<!--						</form>-->
-<!--					</div>-->
 			</nav>
+		</div>
 	</div>
 </div>
+
