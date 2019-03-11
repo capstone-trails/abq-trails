@@ -3,22 +3,43 @@
 
 <main>
 	<div class="container-fluid">
-		<img src="https://via.placeholder.com/150" class="rounded mx-auto d-block" alt="...">
+		<img src="https://via.placeholder.com/250" class="rounded mx-auto d-block" alt="...">
 		<h1 class="text-center">Profile Name</h1>
 
-		<h2 align="center">My Photos</h2>
-		<div class="row">
-			<div class="col-md-3 col-sm-4 col-xs-6">
-				<a href="{site_url}scents/baobab/pearls/black-pearls"><img src="https://via.placeholder.com/100"></a>
+		<!-- Equal width cols, same on all screen sizes -->
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<h2 align="left">FirstLastName</h2>
+				</div>
+				<div class="col">
+				</div>
+				<div class="col">
+					<h2 align="right">Email@email.com</h2>
+				</div>
 			</div>
-			<div class="col-md-3 col-sm-4 col-xs-6">
-				<a href="{site_url}scents/baobab/pearls/black-pearls"><img src="https://via.placeholder.com/100"></a>
+		</div>
+
+
+		<h1 align="center">My Photos</h1>
+		<div class="card-deck">
+			<div class="card">
+				<img class="card-img-top" src="https://via.placeholder.com/100" alt="Card image cap">
+				<div class="card-body">
+
+				</div>
 			</div>
-			<div class="col-md-3 col-sm-4 col-xs-6">
-				<a href="{site_url}scents/baobab/pearls/black-pearls"><img src="https://via.placeholder.com/100"></a>
+			<div class="card">
+				<img class="card-img-top" src="https://via.placeholder.com/100" alt="Card image cap">
+				<div class="card-body">
+
+				</div>
 			</div>
-			<div class="col-md-3 col-sm-4 col-xs-6">
-				<a href="{site_url}scents/baobab/pearls/black-pearls"><img src="https://via.placeholder.com/1"></a>
+			<div class="card">
+				<img class="card-img-top" src="https://via.placeholder.com/100" alt="Card image cap">
+				<div class="card-body">
+
+				</div>
 			</div>
 		</div>
 
