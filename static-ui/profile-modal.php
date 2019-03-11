@@ -3,7 +3,7 @@
 <main>
 	<!-- Button trigger modal -->
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-		Launch demo modal
+		Profile
 	</button>
 
 	<!-- Modal -->
@@ -42,21 +42,20 @@
 						<div class="container">
 							<div class="row">
 								<div class="col">
-									<img src="https://via.placeholder.com/95" class="rounded mx-auto d-block" alt="...">
+									<img src="https://via.placeholder.com/75" class="rounded mx-auto d-block" alt="...">
 								</div>
 								<div class="col order-12">
-									<img src="https://via.placeholder.com/95" class="rounded mx-auto d-block" alt="...">
+									<img src="https://via.placeholder.com/75" class="rounded mx-auto d-block" alt="...">
 								</div>
 								<div class="col order-1">
-									<img src="https://via.placeholder.com/95" class="rounded mx-auto d-block" alt="...">
+									<img src="https://via.placeholder.com/75" class="rounded mx-auto d-block" alt="...">
 								</div>
 							</div>
 						</div>
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<button type="button" class="btn btn-primary">Edit Profile</button>
 				</div>
 			</div>
 		</div>
