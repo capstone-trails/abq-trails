@@ -37,7 +37,6 @@
 							</div>
 						</div>
 
-
 						<h2 align="center">My Photos</h2>
 						<div class="container">
 							<div class="row">
