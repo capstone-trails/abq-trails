@@ -8,7 +8,7 @@
 			<div class="input-group col-lg-12">
 				<input name="searchtext" style="width:100%" value="" class="form-control" type="text">
 				<span class="input-group-btn">
-					<button class="btn" type="submit"><i class="fas fa-search"></i></button>
+					<button class="btn btn-light" type="submit"><i class="fas fa-search"></i></button>
     			</span>
 			</div>
 	</div>
