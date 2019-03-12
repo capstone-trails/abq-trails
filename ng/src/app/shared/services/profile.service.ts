@@ -15,7 +15,7 @@ export class ProfileService  {
 	private profileUrl = "api/profile/";
 
 	// call to the Profile API and edit the profile in question
-	editProfile(profile: Profile) : Observable<Status> {
+	updateProfile(profile: Profile) : Observable<Status> {
 		return(this.http.put<Status>(this.profileUrl, profile));
 	}
 
