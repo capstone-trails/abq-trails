@@ -16,25 +16,25 @@ export class ApiService {
 
 
 	// call to the Tag API and create the tag in question
-	createTag(user : User) : Observable<Status> {
-		return(this.http.post<Status>(this.tagUrl, user));
+	createTag(tag : Tag) : Observable<Status> {
+		return(this.http.post<Status>(this.tagUrl, tag));
 	}
 
 	// call to the Tag API and get a tag object based on its Id
-	getTag(userId : string) : Observable<User> {
-		return(this.http.get<User>(this.tagUrl + userId));
+	getTag(userId : string) : Observable<Tag> {
+		return(this.http.get<Tag>(this.tagUrl + userId));
 
 	}
 
 	// call to the API and get an array of tags based off the profileId
-	getDetailedTag(userId : string) : Observable<UserPosts[]> {
-		return(this.http.get<UserPosts[]>(this.tagUrl + "?postUserId=" + userId ));
+	getDetailedTag(userId : string) : Observable<TagPosts[]> {
+		return(this.http.get<TagPosts[]>(this.tagUrl + "?postUserId=" + userId ));
 
 	}
 
 	//call to the API and get an array of all the tags in the database
-	getAllTags() : Observable<User> {
-		return(this.http.get<User>(this.tagUrl));
+	getAllTags() : Observable<Tag> {
+		return(this.http.get<Tag>(this.tagUrl));
 
 	}
 
