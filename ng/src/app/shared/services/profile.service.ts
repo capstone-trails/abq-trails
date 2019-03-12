@@ -11,7 +11,7 @@ export class ProfileService  {
 
 	}
 
-	//define the API endpoint test
+	//define the API endpoint test test
 	private profileUrl = "api/profile/";
 
 	//reach out to the profile  API and delete the profile in question
