@@ -2,15 +2,15 @@
 import {Injectable} from "@angular/core";
 
 
-import {Profile} from "../interfaces/profile";
-
+import {Status} from "../interfaces/status";
+import {SignUp} from "../interfaces/sign-up";
 
 
 import {Observable} from "rxjs/internal/Observable";
 import {HttpClient} from "@angular/common/http";
 
 @Injectable()
-export class ApiService {
+export class SignUpService {
 
 	constructor(protected http : HttpClient) {}
 
@@ -18,10 +18,8 @@ export class ApiService {
 	private apiUrl = "https://bootcamp-coders.cnm.edu/~swells19/abq-trails/public_html/api/";
 
 	// Sign-Up API -- POST
-	postSignUp(signUp : SignUp) : Observable<Status> {
+	createProfile(signUp : SignUp) : Observable<Status> {
 		return(this.http.post<Status>(this.apiUrl, signUp));
 	}
 
-	// Sign-In API -- POST
-	postSignIn(signIn : )
 }
