@@ -10,7 +10,7 @@ export class SignUpService {
 	}
 
 	//define the API endpoint
-	private signUpUrl = "https://bootcamp-coders.cnm.edu/~swells19/abq-trails/public_html/api/";
+	private signUpUrl = "/api/sign-up/";
 
 	// Sign-Up API -- POST
 	createProfile(signUp : SignUp) : Observable<Status> {
