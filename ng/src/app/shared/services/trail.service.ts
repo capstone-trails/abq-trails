@@ -13,12 +13,12 @@ export class ApiService {
 	private trailUrl = "/api/trail/";
 
 	//call to the trail API and get the trail
-	getTrailById(trailId : string) : Observable<Status> {
-		return(this.http.get<Status>(this.trailUrl), trailId);
+	getTrailById(trailId : string) : Observable<Trail> {
+		return(this.http.get<Trail>(this.trailUrl + trailId));
 	}
 
-	getTrailsByName(trail: Trail) : Observable<Trail[]> {
-		return(this.http.get<Trail[]>(this.trailUrl, trail));
+	getTrailsByName(trailName : string) : Observable<Trail[]> {
+		return(this.http.get<Trail[]>(this.trailUrl + trailName));
 	}
 
 	getAllTrails() : Observable<Trail[]> {
