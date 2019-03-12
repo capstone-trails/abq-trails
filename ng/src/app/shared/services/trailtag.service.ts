@@ -5,12 +5,12 @@ import {Observable} from "rxjs/internal/Observable";
 import {Trailtag} from "../interfaces/trailtag";
 
 @Injectable()
-export class ApiService {
+export class TrailtagService {
 	constructor(protected http: HttpClient) {
 	}
 
 	//define API endpoint
-	private trailTagUrl = "api/trailtag/";
+	private trailTagUrl = "https://bootcamp-coders.cnm.edu/~cromero278/abq-trails/public_html/api/trailtag/";;
 
 	//call the trail tag API and create a new trail tag
 	createTrailTag(trailTag : Trailtag) : Observable<Status> {
