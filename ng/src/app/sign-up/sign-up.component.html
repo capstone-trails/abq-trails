@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>Title</title>
-	</head>
-	<body>
-		
-	</body>
-</html>
+<form [formGroup]="signUpForm" (submit)="createSignUp()" novalidate>
+	<div class="form-row">
+		<div class="form-group col-md-6">
+			<label for="email">Email</label>
+			<input type="email" id="email" name="email" formControlName="email" class="form-control">
+		</div>
+		<div class="form-group col-md-6">
+			<label for="username">Username</label>
+			<input type="text" id="username" name="username" formControlName="username" class="form-control">
+		</div>
+
+		<div class="form-group col-md-6">
+			<label for="password">Password</label>
+			<input type="password" class="form-control" id="password" name="password" formControlName="password">
+		</div>
+		<div class="form-group col-md-6">
+			<label for="passwordConfirm">Confirm Password</label>
+			<input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" formControlName="passwordConfirm">
+		</div>
+
+		<div class="form-group col-md-6">
+			<label for="firstName">First Name</label>
+			<input type="text" class="form-control" id="firstName" name="firstName" formControlName="firstName">
+		</div>
+		<div class="form-group col-md-6">
+			<label for="lastName">Last Name</label>
+			<input type="text" class="form-control" id="lastName" name="lastName" formControlName="lastName">
+		</div>
+		<button type="button" class="btn btn-secondary">Add a photo</button>
+	</div>
+</form>
