@@ -4,7 +4,6 @@
 
 //import needed modules for the sign-up component
 import {Component, OnInit, ViewChild,} from "@angular/core";
-import {Observable} from "rxjs/internal/Observable";
 import {Router} from "@angular/router";
 import {Status} from "../shared/interfaces/status"
 import {SignUp} from "../shared/interfaces/sign-up";
@@ -28,7 +27,7 @@ export class SignUpComponent implements OnInit{
 
 	ngOnInit() : void {
 		this.signUpForm = this.formBuilder.group({
-			avatarUrl: ["", [Validators.maxLength(255)]],
+			avatarUrl : ["", [Validators.maxLength(255)]],
 			email: ["", [Validators.maxLength(128), Validators.required]],
 			firstName: ["", [Validators.maxLength(32), Validators.required]],
 			lastName: ["", [Validators.maxLength(32), Validators.required]],
@@ -39,7 +38,7 @@ export class SignUpComponent implements OnInit{
 		this.status = {status: null, message: null, type: null}
 	}
 	createSignUp() : void {
-		let signUp : SignUp = {profileAvatarUrl: "http://kittens.photo", profileEmail : this.signUpForm.value.email, profileFirstName : this.signUpForm.value.firstName, profileLastName : this.signUpForm.value.lastName, profilePassword : this.signUpForm.value.password, profilePasswordConfirm : this.signUpForm.value.passwordConfirm, profileUsername : this.signUpForm.value.username};
+		let signUp : SignUp = {profileAvatarUrl : "http://kittens.photo", profileEmail : this.signUpForm.value.email, profileFirstName : this.signUpForm.value.firstName, profileLastName : this.signUpForm.value.lastName, profilePassword : this.signUpForm.value.password, profilePasswordConfirm : this.signUpForm.value.passwordConfirm, profileUsername : this.signUpForm.value.username};
 		this.signUpService.createProfile(signUp).subscribe(status=> {
 			this.status = status;
 

@@ -11,6 +11,7 @@ import {SignUpService} from "./shared/services/sign-up.service";
 import {TagService} from "./shared/services/tag.service";
 import {TrailtagService} from "./shared/services/trailtag.service";
 import {TrailService} from "./shared/services/trail.service";
+import {SessionService} from "./shared/services/session.services";
 
 
 export const allAppComponents = [AppComponent, SignUpComponent, SplashComponent];
@@ -21,7 +22,7 @@ export const routes: Routes = [
 
 ];
 
-export const appRoutingProviders: any[] = [ProfileService, RatingService, SignInService, SignUpService, TagService, TrailtagService, TrailService
+export const appRoutingProviders: any[] = [ProfileService, RatingService, SignInService, SignUpService, TagService, TrailtagService, TrailService, SessionService
 ];
 
 export const routing = RouterModule.forRoot(routes);
