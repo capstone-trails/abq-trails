@@ -27,29 +27,11 @@ export class SignInComponent {
 	constructor(private formBuilder : FormBuilder, private signInService : SignInService, private router: Router, private cookieService: CookieService){
 	}
 
-	ngOnInit() : void {
-		this.signInForm = this.formBuilder.group({
-			avatarUrl : ["", [Validators.maxLength(255)]],
-			email: ["", [Validators.maxLength(128), Validators.required]],
-			firstName: ["", [Validators.maxLength(32), Validators.required]],
-			lastName: ["", [Validators.maxLength(32), Validators.required]],
-			password: ["", [Validators.maxLength(128), Validators.required]],
-			passwordConfirm: ["", [Validators.maxLength(128), Validators.required]],
-			username: ["", [Validators.maxLength(32), Validators.required]],
-		});
-		this.status = {status: null, message: null, type: null}
-	}
-	createSignIn() : void {
-		let signUp : SignIn = {profileAvatarUrl : "http://kittens.photo", profileEmail : this.signInForm.value.email, profileFirstName : this.signUpForm.value.firstName, profileLastName : this.signUpForm.value.lastName, profilePassword : this.signUpForm.value.password, profilePasswordConfirm : this.signUpForm.value.passwordConfirm, profileUsername : this.signUpForm.value.username};
-		this.signInService.createProfile(signUp).subscribe(status=> {
+	signIn() : void {
+		localStorage.removeItem("jwt-token");
+		this.SignInService.postSignIn(this.signin).subscribe(status => {
 			this.status = status;
-
-			if(this.status.status === 200){
-				alert(status.message);
-
-			}
-		})
+		});
 	}
-
 
 }
