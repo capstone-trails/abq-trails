@@ -6,22 +6,6 @@
 		Profile
 	</button>
 
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Your Profile</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<table border="1"
-					<table class="container-fluid">
-						<img src="https://via.placeholder.com/85" class="rounded mx-auto d-block" alt="...">
-						<h2 class="text-center">Profile Name</h2>
-
 						<!-- Equal width cols, same on all screen sizes -->
 
 						<div class="container">
@@ -51,12 +35,5 @@
 								</div>
 							</div>
 						</div>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">Edit Profile</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
 </main>

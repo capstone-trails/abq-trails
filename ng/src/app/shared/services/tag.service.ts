@@ -36,6 +36,4 @@ export class TagService {
 		return(this.http.get<Tag>(this.tagUrl));
 
 	}
-
-
 }

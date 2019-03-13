@@ -1,6 +1,7 @@
 {
   "/api": {
     "target": "https://bootcamp-coders.cnm.edu/~cromero278/abq-trails/public_html/",
-    "secure": "false"
+    "change origin": "true",
+    "secure": "true"
   }
 }
