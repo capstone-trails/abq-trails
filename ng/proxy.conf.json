@@ -1,7 +1,8 @@
 {
   "/api": {
-    "target": "https://bootcamp-coders.cnm.edu/~swells19/abq-trails/public_html/",
+    "target": "https://bootcamp-coders.cnm.edu/~rluna41/abq-trails/public_html/",
     "changeOrigin": "true",
     "secure": "true"
   }
 }
+

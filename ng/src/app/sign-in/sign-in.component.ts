@@ -6,27 +6,29 @@
 import {Component, OnInit, ViewChild,} from "@angular/core";
 import {Router} from "@angular/router";
 import {Status} from "../shared/interfaces/status"
-import {SignUp} from "../shared/interfaces/sign-up";
+import {SignIn} from "../shared/interfaces/sign-in";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SignUpService} from "../shared/services/sign-up.service";
+import {CookieService} from "ng2-cookies";
+import {SignInService} from "../shared/services/sign-in.service";
+
 
 @Component({
-	templateUrl:"./sign-up.component.html"
+	templateUrl:"./sign-in.component.html"
 })
 
 //set template URL and the selector for the ng powered html
 
-export class SignUpComponent implements OnInit{
+export class SignInComponent {
 
 
-	signUpForm : FormGroup;
+	signInForm : FormGroup;
 	status : Status = {status: null, message: null, type: null};
 
-	constructor(private formBuilder : FormBuilder, private signUpService : SignUpService){
+	constructor(private formBuilder : FormBuilder, private signInService : SignInService, private router: Router, private cookieService: CookieService){
 	}
 
 	ngOnInit() : void {
-		this.signUpForm = this.formBuilder.group({
+		this.signInForm = this.formBuilder.group({
 			avatarUrl : ["", [Validators.maxLength(255)]],
 			email: ["", [Validators.maxLength(128), Validators.required]],
 			firstName: ["", [Validators.maxLength(32), Validators.required]],
@@ -37,9 +39,9 @@ export class SignUpComponent implements OnInit{
 		});
 		this.status = {status: null, message: null, type: null}
 	}
-	createSignUp() : void {
-		let signUp : SignUp = {profileAvatarUrl : "http://kittens.photo", profileEmail : this.signUpForm.value.email, profileFirstName : this.signUpForm.value.firstName, profileLastName : this.signUpForm.value.lastName, profilePassword : this.signUpForm.value.password, profilePasswordConfirm : this.signUpForm.value.passwordConfirm, profileUsername : this.signUpForm.value.username};
-		this.signUpService.createProfile(signUp).subscribe(status=> {
+	createSignIn() : void {
+		let signUp : SignIn = {profileAvatarUrl : "http://kittens.photo", profileEmail : this.signInForm.value.email, profileFirstName : this.signUpForm.value.firstName, profileLastName : this.signUpForm.value.lastName, profilePassword : this.signUpForm.value.password, profilePasswordConfirm : this.signUpForm.value.passwordConfirm, profileUsername : this.signUpForm.value.username};
+		this.signInService.createProfile(signUp).subscribe(status=> {
 			this.status = status;
 
 			if(this.status.status === 200){
