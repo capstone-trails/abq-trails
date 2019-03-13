@@ -5,7 +5,7 @@ import {Trail} from "../interfaces/trail";
 import {Observable} from "rxjs/internal/Observable";
 
 @Injectable()
-export class ApiService {
+export class TrailService {
 
 	constructor(protected http: HttpClient) {}
 
