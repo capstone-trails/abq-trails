@@ -1,10 +1,6 @@
 <?php require_once ("head-utils.php");?>
 
 <main>
-	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-		Profile
-	</button>
 
 						<!-- Equal width cols, same on all screen sizes -->
 
