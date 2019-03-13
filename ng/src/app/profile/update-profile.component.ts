@@ -23,4 +23,7 @@ export class UpdateProfileComponent implements OnInit {
 
 	constructor(private formBuilder : FormBuilder, private profileService : ProfileService){
 	}
-}
+
+	ngOnInit() : void {
+	}
+	}
