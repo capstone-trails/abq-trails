@@ -31,8 +31,8 @@ export class SignUpComponent implements OnInit{
 			email: ["", [Validators.maxLength(128), Validators.required]],
 			firstName: ["", [Validators.maxLength(32), Validators.required]],
 			lastName: ["", [Validators.maxLength(32), Validators.required]],
-			password: ["", [Validators.maxLength(128)], Validators.required],
-			passwordConfirm: ["", [Validators.maxLength(128)], Validators.required],
+			password: ["", [Validators.maxLength(128), Validators.required]],
+			passwordConfirm: ["", [Validators.maxLength(128), Validators.required]],
 			username: ["", [Validators.maxLength(32), Validators.required]],
 		});
 		this.status = {status: null, message: null, type: null}
