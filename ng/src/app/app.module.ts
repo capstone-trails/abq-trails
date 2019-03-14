@@ -7,7 +7,6 @@ import {JwtModule} from "@auth0/angular-jwt";
 import {allAppComponents, appRoutingProviders, routing} from "./app.routes.module";
 import { AppComponent } from './app.component';
 
-const moduleDeclarations = [AppComponent];
 
 const JwtHelper = JwtModule.forRoot({
 	config: {

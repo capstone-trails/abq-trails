@@ -14,6 +14,7 @@ import {SignInComponent} from "./sign-in/sign-in.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {DeepDiveInterceptor} from "./shared/interceptors/interceptor";
 import {AuthService} from "./shared/services/auth-service";
+import {ProfileComponent} from "./profile/profile.component";
 
 
 export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, SplashComponent];
@@ -21,6 +22,7 @@ export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent,
 export const routes: Routes = [
 	{path: "sign-up", component: SignUpComponent},
 	{path: "sign-in", component: SignInComponent},
+	{path: "profile", component: ProfileComponent},
 	{path: "", component: SplashComponent}
 
 ];

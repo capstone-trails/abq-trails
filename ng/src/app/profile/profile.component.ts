@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit{
 
 	status: Status = null;
 
-	authService : AuthService = null;
+	authService : AuthService;
 
 	constructor(protected profileService: ProfileService, authService : AuthService) {}
 
