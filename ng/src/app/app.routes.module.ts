@@ -13,6 +13,7 @@ import {SessionService} from "./shared/services/session.services";
 import {SignInComponent} from "./sign-in/sign-in.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {DeepDiveInterceptor} from "./shared/interceptors/interceptor";
+import {AuthService} from "./shared/services/auth-service";
 
 
 export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, SplashComponent];
@@ -25,7 +26,7 @@ export const routes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
-	ProfileService, RatingService, SignInService, SignUpService, TagService, TrailtagService, TrailService, SessionService,
+	ProfileService, RatingService, SignInService, SignUpService, TagService, TrailtagService, TrailService, SessionService, AuthService,
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true}
 ];
 
