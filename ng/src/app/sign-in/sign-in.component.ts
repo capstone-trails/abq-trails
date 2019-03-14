@@ -17,8 +17,7 @@ import {SessionService} from "../shared/services/session.services";
 export class SignInComponent implements OnInit {
 
 	signInForm : FormGroup;
-
-	signIn : SignIn = new SignIn(null, null);
+	signIn : SignIn = {profileEmail: null, profilePassword: null};
 	status : Status = null;
 
 	constructor(
