@@ -16,7 +16,7 @@ export class ProfileService  {
 
 	// call to the Profile API and edit the profile in question
 	updateProfile(profile: Profile) : Observable<Status> {
-		return(this.http.put<Status>(this.profileUrl, profile));
+		return(this.http.put<Status>(this.profileUrl + profile.id, profile));
 	}
 
 	// call to the Profile API and get a Profile object by its id

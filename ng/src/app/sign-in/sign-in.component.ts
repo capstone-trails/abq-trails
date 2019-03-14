@@ -45,6 +45,7 @@ export class SignInComponent implements OnInit {
 	}
 
 	submitSignIn(): void {
+		window.localStorage.clear();
 		this.signInService.postSignIn(this.signIn)
 			.subscribe(status => {
 				this.status = status;

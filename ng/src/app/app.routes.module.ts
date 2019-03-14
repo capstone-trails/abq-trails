@@ -16,6 +16,8 @@ import {TrailService} from "./shared/services/trail.service";
 import {ProfileComponent} from "./profile/profile.component";
 import {SignInComponent} from "./sign-in/sign-in.component";
 import {SignUpComponent} from "./sign-up/sign-up.component";
+import {UpdateProfileComponent} from "./update-profile/update-profile.component";
+
 
 import {SplashComponent} from "./splash/splash.component";
 import{AppComponent} from "./app.component";
@@ -23,12 +25,13 @@ import{AppComponent} from "./app.component";
 
 
 
-export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, SplashComponent];
+export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, SplashComponent];
 
 export const routes: Routes = [
 	{path: "sign-up", component: SignUpComponent},
 	{path: "sign-in", component: SignInComponent},
 	{path: "profile", component: ProfileComponent},
+	{path:"update-profile", component: UpdateProfileComponent},
 	{path: "", component: SplashComponent}
 
 ];

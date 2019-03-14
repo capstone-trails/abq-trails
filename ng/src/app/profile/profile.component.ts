@@ -47,11 +47,11 @@ export class ProfileComponent implements OnInit {
 	// 	this.profileService.getProfile(this.profileId)
 	// 		.subscribe(profile => this.profile = profile);
 	// }
+		}
+}
 
-}}
 
-
-
+// old code, will possibly implement when live
 
 	// getProfileId() : string {
 	// 	if(this.authService.decodeJwt()) {
