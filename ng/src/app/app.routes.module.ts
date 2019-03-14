@@ -2,7 +2,6 @@ import {RouterModule, Routes} from "@angular/router";
 import {SplashComponent} from "./splash/splash.component";
 import{AppComponent} from "./app.component"
 
-import {APP_BASE_HREF} from "@angular/common";
 import {SignUpComponent} from "./sign-up/sign-up.component";
 import {ProfileService} from "./shared/services/profile.service";
 import {RatingService} from "./shared/services/rating.service";
