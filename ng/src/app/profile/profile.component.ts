@@ -11,7 +11,7 @@ import {ProfileService} from "../shared/services/profile.service";
 
 
 export class ProfileComponent implements OnInit{
-	profile : Profile = {id:null,profileAvatarUrl:null,profileEmail:null,profileFirstName:null,profileLastName:null,profileUsername:null};
+	profile : Profile = {id:null,avatarUrl:null,email:null,firstName:null,lastName:null,username:null};
 
 	status: Status = null;
 
