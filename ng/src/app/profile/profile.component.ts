@@ -11,38 +11,68 @@ import {JwtModule} from "@auth0/angular-jwt";
 })
 
 
-export class ProfileComponent implements OnInit{
+export class ProfileComponent implements OnInit {
 
-	profile : Profile = {id:null, profileAvatarUrl:null, profileEmail:null, profileFirstName:null, profileLastName:null, profilePassword:null, profilePasswordConfirm: null, profileUsername:null};
+	profile: Profile = {
+		id: null,
+		profileAvatarUrl: null,
+		profileEmail: null,
+		profileFirstName: null,
+		profileLastName: null,
+		profilePassword: null,
+		profilePasswordConfirm: null,
+		profileUsername: null
+	};
 
 	status: Status = null;
 
-	authService : AuthService;
 
-	constructor(protected profileService: ProfileService, authService : AuthService) {}
+	tempId: string = this.authService.decodeJwt().auth.profileId;
 
 
-	ngOnInit():void {
-	}
-
-	getProfileId() : string {
-		if(this.authService.decodeJwt()) {
-			return this.authService.decodeJwt().auth.profileId;
-		} else {
-			return ''
-		}
-	}
-
-	getProfileByProfileId(id : string) : void {
-		this.profileService.getProfileByProfileId(id).subscribe(reply => {
-			this.profile = reply;
-		})
-
+	constructor(protected profileService: ProfileService, private authService: AuthService) {
 	}
 
 
+	ngOnInit(): void {
+		this.getProfile();
+	}
 
-}
+	getProfile (): void {
+		//for testing
+		this.profileService.getProfileByProfileId(this.tempId)
+			.subscribe(profile => this.profile = profile);
+
+		//live
+	// 	this.profileService.getProfile(this.profileId)
+	// 		.subscribe(profile => this.profile = profile);
+	// }
+
+}}
+
+
+
+
+	// getProfileId() : string {
+	// 	if(this.authService.decodeJwt()) {
+	// 		return this.authService.decodeJwt().auth.profileId;
+	// 	} else {
+	// 		return ''
+	// 	}
+	// }
+
+
+
+// 	getProfileByProfileId(id : string) : void {
+// 		this.profileService.getProfileByProfileId(id).subscribe(reply => {
+// 			this.profile = reply;
+// 		})
+//
+// 	}
+//
+//
+//
+// }
 
 
 
