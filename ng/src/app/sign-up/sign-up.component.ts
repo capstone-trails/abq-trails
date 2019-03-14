@@ -4,7 +4,6 @@
 
 //import needed modules for the sign-up component
 import {Component, OnInit, ViewChild,} from "@angular/core";
-import {Router} from "@angular/router";
 import {Status} from "../shared/interfaces/status"
 import {SignUp} from "../shared/interfaces/sign-up";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";

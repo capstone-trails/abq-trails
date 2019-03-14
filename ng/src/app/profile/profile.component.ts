@@ -3,8 +3,7 @@ import {Status} from "../shared/interfaces/status";
 import {Profile} from "../shared/interfaces/profile";
 import {ProfileService} from "../shared/services/profile.service";
 import {AuthService} from "../shared/services/auth-service";
-import {JwtHelperService} from '@auth0/angular-jwt';
-
+import {JwtModule} from "@auth0/angular-jwt";
 
 
 @Component({

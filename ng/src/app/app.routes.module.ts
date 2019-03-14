@@ -23,7 +23,7 @@ import{AppComponent} from "./app.component";
 
 
 
-export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, SplashComponent];
+export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, SplashComponent];
 
 export const routes: Routes = [
 	{path: "sign-up", component: SignUpComponent},

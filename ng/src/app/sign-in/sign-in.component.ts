@@ -44,7 +44,7 @@ export class SignInComponent implements OnInit {
 		});
 	}
 
-	createSignIn(): void {
+	submitSignIn(): void {
 		this.signInService.postSignIn(this.signIn)
 			.subscribe(status => {
 				this.status = status;
@@ -53,6 +53,8 @@ export class SignInComponent implements OnInit {
 					this.sessionService.setSession();
 					this.signInForm.reset();
 					location.reload();
+
+					this.router.navigate(["/profile"]);
 				}
 			});
 	}

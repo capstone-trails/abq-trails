@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 
 
 const JwtHelper = JwtModule.forRoot({
-	config: {
+	config : {
 		tokenGetter: () => {
 			return localStorage.getItem("jwt-token");
 		},
