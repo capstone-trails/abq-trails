@@ -6,7 +6,6 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {JwtModule} from "@auth0/angular-jwt";
 import {allAppComponents, appRoutingProviders, routing} from "./app.routes.module";
 import { AppComponent } from './app.component'
-import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 
 
 const JwtHelper = JwtModule.forRoot({
@@ -26,6 +25,5 @@ const JwtHelper = JwtModule.forRoot({
 	declarations: [ ...allAppComponents, AppComponent],
 	bootstrap:    [ AppComponent ],
 	providers:    [appRoutingProviders],
-	entryComponents: [ UpdateProfileComponent ],
 })
 export class AppModule { }

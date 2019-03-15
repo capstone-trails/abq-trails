@@ -9,7 +9,7 @@ import {UpdateProfileComponent} from "../update-profile/update-profile.component
 
 @Component({
 	templateUrl: "./profile.component.html",
-	selector: 'ngbd-modal-basic'
+	selector: 'ngb-modal-basic'
 })
 
 
@@ -52,6 +52,7 @@ export class ProfileComponent implements OnInit {
 		}
 	open() {
 		const modalRef = this.modalService.open(UpdateProfileComponent);
+		modalRef.componentInstance.name = 'World';
 	}
 }
 
