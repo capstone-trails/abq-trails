@@ -52,7 +52,6 @@ export class ProfileComponent implements OnInit {
 		}
 	open() {
 		const modalRef = this.modalService.open(UpdateProfileComponent);
-		modalRef.componentInstance.name = 'World';
 	}
 }
 

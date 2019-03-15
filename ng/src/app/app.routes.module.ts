@@ -33,6 +33,7 @@ export const routes: Routes = [
 	{path: "sign-in", component: SignInComponent},
 	{path: "profile", component: ProfileComponent},
 	{path: "trail", component: TrailComponent},
+	{path: "update-profile", component: UpdateProfileComponent},
 	{path: "", component: SplashComponent}
 
 ];
