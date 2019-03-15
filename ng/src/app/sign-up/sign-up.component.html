@@ -4,6 +4,12 @@
 			<label for="email">Email</label>
 			<input type="email" id="email" name="email" formControlName="email" class="form-control">
 		</div>
+
+		<div class="alert alert-danger" *ngIf="signUpForm.controls.email?.invalid && signUpForm.controls.email?.touched">
+			<p *ngIf="signUpForm.controls.email?.errors.required">An email is required</p>
+			<p *ngIf="signUpForm.controls.email?.errors.maxlength">The email is too long</p>
+		</div>
+
 		<div class="form-group col-md-6">
 			<label for="username">Username</label>
 			<input type="text" id="username" name="username" formControlName="username" class="form-control">
@@ -31,3 +37,9 @@
 	</div>
 	<button type="submit" class="btn btn-secondary my-5">Submit</button>
 </form>
+
+<div *ngIf="status !== null" class="alert alert-dismissible" [ngClass]="status.type" role="alert">
+	<button type="button" class="close" aria-label="Close" (click)="status = null;"><span
+		aria-hidden="true">&times;</span></button>
+	{{ status.message }}
+</div>
