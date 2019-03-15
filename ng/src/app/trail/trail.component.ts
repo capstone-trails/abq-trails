@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Status} from "../shared/interfaces/status";
 import {Trail} from "../shared/interfaces/trail";
 import {TrailService} from "../shared/services/trail.service";
-import {Router} from "@angular/router";
+import {Rating} from "../shared/interfaces/rating";
 
 @Component({
 	templateUrl: "./trail.component.html",
@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 
 export class TrailComponent implements OnInit {
 
+	rating : Rating = {ratingProfileId: null, ratingTrailId: null};
 
 	trail: Trail = {id: null, trailAvatarUrl: null, trailDescription: null, trailHigh: null, trailLatitude: null, trailLength: null, trailLongitude: null, trailLow:null, trailName:null};
 
@@ -21,7 +22,7 @@ export class TrailComponent implements OnInit {
 
 
 
-	constructor(protected trailService: TrailService, private router : Router) {
+	constructor(protected trailService: TrailService) {
 	}
 
 	ngOnInit(): void {
