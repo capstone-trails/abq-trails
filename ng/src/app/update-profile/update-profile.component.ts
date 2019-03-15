@@ -3,6 +3,7 @@ import {Status} from "../shared/interfaces/status"
 import {Profile} from "../shared/interfaces/profile";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProfileService} from "../shared/services/profile.service";
+import {AuthService} from "../shared/services/auth-service";
 
 @Component({
 	templateUrl:"./update-profile.component.html"
@@ -15,8 +16,10 @@ export class UpdateProfileComponent implements OnInit{
 
 	updateProfileForm : FormGroup;
 	status : Status = {status: null, message: null, type: null};
+	tempId: string = this.authService.decodeJwt().auth.profileId;
 
-	constructor(private formBuilder : FormBuilder, private profileService : ProfileService){
+
+	constructor(private formBuilder : FormBuilder, private profileService : ProfileService, private authService: AuthService){
 	}
 
 	ngOnInit() : void {
@@ -31,7 +34,7 @@ export class UpdateProfileComponent implements OnInit{
 	}
 	updateProfile() : void {
 		let profile: Profile = {
-			id: null,
+			id: this.tempId,
 			profileAvatarUrl: "http://kittens.photo",
 			profileEmail: this.updateProfileForm.value.email,
 			profileFirstName: this.updateProfileForm.value.firstName,

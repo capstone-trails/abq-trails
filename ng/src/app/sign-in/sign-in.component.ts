@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
 	signInForm : FormGroup;
 	signIn : SignIn = {profileEmail: null, profilePassword: null};
 	status : Status = null;
-e
+
 	constructor(
 		private formBuilder : FormBuilder,
 		private router : Router,

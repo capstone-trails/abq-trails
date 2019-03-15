@@ -2,8 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Status} from "../shared/interfaces/status";
 import {Trail} from "../shared/interfaces/trail";
 import {TrailService} from "../shared/services/trail.service";
-import {AuthService} from "../shared/services/auth-service";
-import {JwtModule} from "@auth0/angular-jwt";
+import {Router} from "@angular/router";
 
 @Component({
 	templateUrl: "./trail.component.html",
@@ -12,41 +11,28 @@ import {JwtModule} from "@auth0/angular-jwt";
 
 export class TrailComponent implements OnInit {
 
-	profile: Trail = {
-		id: null,
-		trailAvatarUrl: null,
-		trailDescription: null,
-		trailHigh: null,
-		trailLow: null,
-		trailLatitude: null,
-		trailLength: null,
-		trailLongitude: null,
-		trailLow: null,
-		trailName: null,
-	};
+
+	trail: Trail = {id: null, trailAvatarUrl: null, trailDescription: null, trailHigh: null, trailLatitude: null, trailLength: null, trailLongitude: null, trailLow:null, trailName:null};
+
+	trails: Trail[] = [];
 
 	status: Status = null;
 
 
-	tempId: string = this.authService.decodeJwt().auth.trailId;
 
 
-	constructor(protected profileService: TrailService, private authService: AuthService) {
+	constructor(protected trailService: TrailService, private router : Router) {
 	}
-
 
 	ngOnInit(): void {
-		this.getTrail();
+		this.getAllTrails();
 	}
 
-	getTrail (): void {
-		//for testing
-		this.trailService.getTrailsByName(this.tempId)
-			.subscribe(trail => this.trail = trail);
+	getAllTrails (): void {
 
-		//live
-		// 	this.profileService.getProfile(this.profileId)
-		// 		.subscribe(profile => this.profile = profile);
-		// }
+		this.trailService.getAllTrails()
+			.subscribe(trail => {
+				this.trails= trail;
+			});
 	}
 }

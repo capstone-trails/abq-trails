@@ -21,17 +21,19 @@ import {UpdateProfileComponent} from "./update-profile/update-profile.component"
 
 import {SplashComponent} from "./splash/splash.component";
 import{AppComponent} from "./app.component";
+import {TrailComponent} from "./trail/trail.component";
 
 
 
 
-export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, SplashComponent];
+export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, TrailComponent, SplashComponent];
 
 export const routes: Routes = [
 	{path: "sign-up", component: SignUpComponent},
 	{path: "sign-in", component: SignInComponent},
 	{path: "profile", component: ProfileComponent},
 	{path:"update-profile", component: UpdateProfileComponent},
+	{path: "trail", component: TrailComponent},
 	{path: "", component: SplashComponent}
 
 ];
