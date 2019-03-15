@@ -39,7 +39,7 @@ export class SignInComponent implements OnInit {
 	applyFormChanges() : void {
 		this.signInForm.valueChanges.subscribe(values => {
 			for(let field in values) {
-				this.signIn[field] = values[field];
+				this.signIn [field] = values[field];
 			}
 		});
 	}
