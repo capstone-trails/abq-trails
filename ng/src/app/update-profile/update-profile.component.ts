@@ -6,7 +6,8 @@ import {ProfileService} from "../shared/services/profile.service";
 import {AuthService} from "../shared/services/auth-service";
 
 @Component({
-	templateUrl:"./update-profile.component.html"
+	templateUrl:"./update-profile.component.html",
+	selector: "update-profile"
 })
 
 //set template URL and the selector for the ng powered html

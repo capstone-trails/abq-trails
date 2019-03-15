@@ -3,11 +3,13 @@ import {Status} from "../shared/interfaces/status";
 import {Profile} from "../shared/interfaces/profile";
 import {ProfileService} from "../shared/services/profile.service";
 import {AuthService} from "../shared/services/auth-service";
-import {JwtModule} from "@auth0/angular-jwt";
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {UpdateProfileComponent} from "../update-profile/update-profile.component";
 
 
 @Component({
 	templateUrl: "./profile.component.html",
+	selector: 'ngbd-modal-basic'
 })
 
 
@@ -30,7 +32,7 @@ export class ProfileComponent implements OnInit {
 	tempId: string = this.authService.decodeJwt().auth.profileId;
 
 
-	constructor(protected profileService: ProfileService, private authService: AuthService) {
+	constructor(protected profileService: ProfileService, private authService: AuthService, private modalService: NgbModal) {
 	}
 
 
@@ -48,7 +50,12 @@ export class ProfileComponent implements OnInit {
 	// 		.subscribe(profile => this.profile = profile);
 	// }
 		}
+	open() {
+		const modalRef = this.modalService.open(UpdateProfileComponent);
+		modalRef.componentInstance.name = 'World';
+	}
 }
+
 
 
 // old code, will possibly implement when live
