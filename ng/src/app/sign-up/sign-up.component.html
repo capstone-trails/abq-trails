@@ -7,6 +7,7 @@
 			<div class="alert alert-danger" *ngIf="signUpForm.controls.email?.invalid && signUpForm.controls.email?.touched">
 				<p *ngIf="signUpForm.controls.email?.errors.required">An email is required</p>
 				<p *ngIf="signUpForm.controls.email?.errors.maxlength">The email is too long</p>
+				<p *ngIf="signUpForm.controls.email?.errors.email">Please enter a valid email</p>
 			</div>
 		</div>
 
@@ -25,6 +26,7 @@
 			<div class="alert alert-danger" *ngIf="signUpForm.controls.password?.invalid && signUpForm.controls.password?.touched">
 				<p *ngIf="signUpForm.controls.password?.errors.required">A password is required</p>
 				<p *ngIf="signUpForm.controls.password?.errors.maxlength">The password is too long</p>
+				<p *ngIf="signUpForm.controls.password?.errors.minlength">Your Password must be more that 8 characters long.</p>
 			</div>
 		</div>
 
@@ -34,6 +36,7 @@
 			<div class="alert alert-danger" *ngIf="signUpForm.controls.passwordConfirm?.invalid && signUpForm.controls.passwordConfirm?.touched">
 				<p *ngIf="signUpForm.controls.passwordConfirm?.errors.required">A password is required</p>
 				<p *ngIf="signUpForm.controls.passwordConfirm?.errors.maxlength">The password is too long</p>
+				<p *ngIf="signUpForm.controls.passwordConfirm?.errors.minlength">Your Password must be more that 8 characters long.</p>
 			</div>
 		</div>
 
