@@ -23,12 +23,13 @@ import {TrailDetailComponent} from "./trail/trail-detail.component";
 
 import {SplashComponent} from "./splash/splash.component";
 import{AppComponent} from "./app.component";
+import {MapComponent} from "ngx-mapbox-gl";
 
 
 
 
 
-export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, TrailComponent, TrailDetailComponent, SplashComponent];
+export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, TrailComponent, TrailDetailComponent, MapComponent, SplashComponent];
 
 export const routes: Routes = [
 	{path: "sign-up", component: SignUpComponent},
@@ -36,7 +37,7 @@ export const routes: Routes = [
 	{path: "profile", component: ProfileComponent},
 	{path: "trail", component: TrailComponent},
 	{path: "trail-detail", component: TrailDetailComponent},
-	{path: "", component: SplashComponent},
+	{path: "map", component: MapComponent},
 	{path: "", component: SplashComponent}
 
 ];

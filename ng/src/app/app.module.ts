@@ -8,9 +8,11 @@ import { allAppComponents, appRoutingProviders, routing } from "./app.routes.mod
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {UpdateProfileComponent} from "./profile/update-profile/update-profile.component";
+import {NgxMapboxGLModule} from "ngx-mapbox-gl";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
-let mapBoxConfig = NgxMapBoxGLModule.writeConfig()
+let mapBoxConfig = NgxMapboxGLModule.withConfig({accessToken: "pk.eyJ1IjoiZWZ3ZWxsczEwMSIsImEiOiJjanJxbjl1cGcwMTNlM3lycTUxamd6NzhsIn0.-VL8-BnHyxPU4vqChYesjQ"});
 
 const JwtHelper = JwtModule.forRoot({
 	config : {
@@ -25,7 +27,7 @@ const JwtHelper = JwtModule.forRoot({
 });
 
 @NgModule({
-	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbModule],
+	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbModule, NgxMapboxGLModule, FontAwesomeModule],
 	declarations: [ ...allAppComponents, AppComponent],
 	entryComponents: [UpdateProfileComponent],
 	bootstrap:    [ AppComponent ],
