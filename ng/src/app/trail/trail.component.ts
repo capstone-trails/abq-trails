@@ -9,7 +9,6 @@ import {TrailService} from "../shared/services/trail.service";
 
 @Component({
 	templateUrl: "./trail.component.html",
-	styleUrls: [""],
 	selector: "trails"
 })
 
