@@ -14,7 +14,7 @@ import {TrailtagService} from "../shared/services/trailtag.service";
 
 export class TrailDetailComponent implements OnInit {
 
-	trail: Trail = {
+	trail : Trail = {
 		id: null,
 		trailAvatarUrl: null,
 		trailDescription: null,
@@ -26,11 +26,13 @@ export class TrailDetailComponent implements OnInit {
 		trailName: null
 	};
 
-	rating: Rating = {ratingProfileId: null, ratingTrailId: null};
+	rating : Rating = {ratingProfileId: null, ratingTrailId: null};
 
-	trailtag: Trailtag = {trailTagTagId: null, trailTagTrailId: null};
+	trailtag : Trailtag = {trailTagTagId: null, trailTagTrailId: null};
 
-	status: Status = null;
+	trailtags : Trailtag[] = [];
+
+	status : Status = null;
 
 
 	constructor(protected trailService: TrailService) {

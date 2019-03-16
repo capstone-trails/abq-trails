@@ -1,35 +1,27 @@
 <main class="trail-detail">
 	<section class="container mt-3">
 		<div class="container text-center mb-3">
-			<img src="https://via.placeholder.com/75" alt=""/>
-			<h1>Some Trail</h1>
+			<img [src]="trail.trailAvatarUrl" alt=""/>
+			<h1>{{trail.trailName}}</h1>
 		</div>
 		<div class="container text-center">
-			<img src="https://via.placeholder.com/300x150"/>
+			<img src="https://via.placeholder.com/300x150" alt="THIS IS MAPBOX"/>
 		</div>
 		<div class="container text-left my-3">
-			<p>Pastrami swine filet mignon pork porchetta rump pork loin. Bacon frankfurter pancetta ham hock alcatra capicola short loin rump bresaola meatball salami sausage tri-tip pork chop.</p>
+			<p>{{trail.trailDescription}}</p>
 		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col my-3 d-flex justify-content-center">
-					<img class="px-3" src="https://via.placeholder.com/50" alt=""/>
-					<img class="px-3" src="https://via.placeholder.com/50" alt=""/>
-					<img class="px-3" src="https://via.placeholder.com/50" alt=""/>
+					<p>{{rating.ratingTrailId}}</p>
 				</div>
 			</div>
 		</div>
 		<div class="container">
 			<p class="text-center">Info at a glance:</p>
 			<div class="row">
-				<div class="col text-center">
-					<a href="#" class="badge badge-secondary">tag name</a>
-					<a href="#" class="badge badge-secondary">tag name</a>
-					<a href="#" class="badge badge-secondary">tag name</a>
-					<a href="#" class="badge badge-secondary">tag name</a>
-					<a href="#" class="badge badge-secondary">tag name</a>
-					<a href="#" class="badge badge-secondary">tag name</a>
-					<a href="#" class="badge badge-secondary">tag name</a>
+				<div class="col text-center" *ngFor="let trailtag of trailtags">
+					<a href="#" class="badge badge-secondary">{{trailtag.trailTagTrailId}}</a>
 				</div>
 			</div>
 		</div>
