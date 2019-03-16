@@ -6,19 +6,6 @@ import {Trail} from "../shared/interfaces/trail";
 
 @Component({
 	templateUrl:"./map.component.html",
-	styles: [`
-		mgl-map {
-			height: 80vh;
-			width: 80vw;
-		}
-		mgl-marker {
-			width: 15px;
-			height: 15px;
-			border-radius: 50%;
-			background-color: red;
-		}
-	`]
-
 })
 
 export class MapComponent implements OnInit {
@@ -27,7 +14,6 @@ export class MapComponent implements OnInit {
 	lat: number = 35.0856181;
 	lng: number = -106.6493357;
 
-	faPaw : faPaw;
 	trails: Trail[] = [];
 
 

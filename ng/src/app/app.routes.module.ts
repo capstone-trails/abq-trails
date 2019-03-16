@@ -23,13 +23,13 @@ import {TrailDetailComponent} from "./trail/trail-detail.component";
 
 import {SplashComponent} from "./splash/splash.component";
 import{AppComponent} from "./app.component";
-import {MapComponent} from "ngx-mapbox-gl";
+import {MapComponent, MapService} from "ngx-mapbox-gl";
 
 
 
 
 
-export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, TrailComponent, TrailDetailComponent, MapComponent, SplashComponent];
+export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, TrailComponent, TrailDetailComponent, SplashComponent];
 
 export const routes: Routes = [
 	{path: "sign-up", component: SignUpComponent},
@@ -43,7 +43,7 @@ export const routes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
-	ProfileService, RatingService, SignInService, SignUpService, TagService, TrailtagService, TrailService, SessionService, AuthService,
+	ProfileService, RatingService, SignInService, SignUpService, TagService, TrailtagService, TrailService, SessionService, AuthService, MapService,
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true}
 ];
 

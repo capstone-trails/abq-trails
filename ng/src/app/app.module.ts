@@ -10,9 +10,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {UpdateProfileComponent} from "./profile/update-profile/update-profile.component";
 import {NgxMapboxGLModule} from "ngx-mapbox-gl";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {MapComponent} from "./map/map.component";
 
 
-let mapBoxConfig = NgxMapboxGLModule.withConfig({accessToken: "pk.eyJ1IjoiZWZ3ZWxsczEwMSIsImEiOiJjanJxbjl1cGcwMTNlM3lycTUxamd6NzhsIn0.-VL8-BnHyxPU4vqChYesjQ"});
+let mapBoxConfig = NgxMapboxGLModule.withConfig({accessToken: "pk.eyJ1IjoiZWZ3ZWxsczEwMSIsImEiOiJjanRjMWdsajgwcng5M3lsNmowYXFkMGd1In0.kDpP4-fvmo9YhuNN4RJE-Q"});
 
 const JwtHelper = JwtModule.forRoot({
 	config : {
@@ -27,8 +28,8 @@ const JwtHelper = JwtModule.forRoot({
 });
 
 @NgModule({
-	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbModule, NgxMapboxGLModule, FontAwesomeModule],
-	declarations: [ ...allAppComponents, AppComponent],
+	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbModule, mapBoxConfig, FontAwesomeModule],
+	declarations: [ ...allAppComponents, AppComponent, MapComponent],
 	entryComponents: [UpdateProfileComponent],
 	bootstrap:    [ AppComponent ],
 	providers:    [ appRoutingProviders],

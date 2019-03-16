@@ -2,19 +2,7 @@
 	<div class="row">
 
 		<h2>Yay Map fun !!</h2>
-		<mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [center]="[lng, lat]" [zoom]="[9]" position="top-bottom"
-					(load)="map = $event">
-
-
-			<ng-container *ngFor="let trail of trails">
-				<mgl-marker [lngLat]="[trail.trailLongitude, trail.trailLatitude]" #myMarker>
-
-					<fa-icon [icon]=faPaw></fa-icon>
-				</mgl-marker>
-				<mgl-popup [marker]="myMarker">
-					<p>{{trail.trailName}}</p>
-				</mgl-popup>
-			</ng-container>
+		<mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [center]="[lng, lat]" [zoom]="[9]">
 		</mgl-map>
 	</div>
 </div>
