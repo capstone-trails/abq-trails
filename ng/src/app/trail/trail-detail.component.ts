@@ -29,7 +29,7 @@ export class TrailDetailComponent implements OnInit {
 	};
 
 
-	rating : Rating = {ratingProfileId: null, ratingTrailId: null};
+	// rating : Rating = {ratingProfileId: null, ratingTrailId: null};
 
 	trailtag : Trailtag = {trailTagTagId: null, trailTagTrailId: null};
 

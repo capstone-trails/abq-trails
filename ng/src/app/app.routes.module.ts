@@ -16,7 +16,7 @@ import {TrailService} from "./shared/services/trail.service";
 import {ProfileComponent} from "./profile/profile.component";
 import {SignInComponent} from "./sign-in/sign-in.component";
 import {SignUpComponent} from "./sign-up/sign-up.component";
-import {UpdateProfileComponent} from "./update-profile/update-profile.component";
+import {UpdateProfileComponent} from "./profile/update-profile/update-profile.component";
 import {TrailComponent} from "./trail/trail.component";
 import {TrailDetailComponent} from "./trail/trail-detail.component";
 

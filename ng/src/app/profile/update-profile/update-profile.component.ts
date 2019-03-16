@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild,} from "@angular/core";
-import {Status} from "../shared/interfaces/status"
-import {Profile} from "../shared/interfaces/profile";
+import {Status} from "../../shared/interfaces/status"
+import {Profile} from "../../shared/interfaces/profile";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ProfileService} from "../shared/services/profile.service";
-import {AuthService} from "../shared/services/auth-service";
+import {ProfileService} from "../../shared/services/profile.service";
+import {AuthService} from "../../shared/services/auth-service";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
 	templateUrl:"./update-profile.component.html",
@@ -20,7 +21,7 @@ export class UpdateProfileComponent implements OnInit{
 	tempId: string = this.authService.decodeJwt().auth.profileId;
 
 
-	constructor(private formBuilder : FormBuilder, private profileService : ProfileService, private authService: AuthService){
+	constructor(private formBuilder : FormBuilder, private profileService : ProfileService, private authService: AuthService, private activeModal: NgbActiveModal){
 	}
 
 	ngOnInit() : void {
@@ -52,6 +53,10 @@ export class UpdateProfileComponent implements OnInit{
 
 			}
 		})
+	}
+
+	closeModalButton(){
+		this.activeModal.dismiss("Cross click")
 	}
 	}
 

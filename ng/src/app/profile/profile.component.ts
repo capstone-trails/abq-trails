@@ -4,45 +4,7 @@ import {Profile} from "../shared/interfaces/profile";
 import {ProfileService} from "../shared/services/profile.service";
 import {AuthService} from "../shared/services/auth-service";
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-//modal testing
-@Component({
-	selector: 'ngbd-modal-content',
-	template: "../update-profile/update-profile.component.html"
-})
-
-export class NgbdModalContent {
-	@Input() name;
-
-	constructor(public activeModal: NgbActiveModal) {}
-}
-
-@Component({
-	selector: 'ngbd-modal-component',
-	templateUrl: './profile.component.html'
-})
-export class NgbdModalComponent {
-	constructor(private modalService: NgbModal) {}
-
-	open() {
-		const modalRef = this.modalService.open(NgbdModalContent);
-		modalRef.componentInstance.name = 'World';
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 
 
 ///this works
@@ -72,7 +34,7 @@ export class ProfileComponent implements OnInit {
 	tempId: string = this.authService.decodeJwt().auth.profileId;
 
 
-	constructor(protected profileService: ProfileService, private authService: AuthService) {
+	constructor(protected profileService: ProfileService, private authService: AuthService, private modalService: NgbModal) {
 	}
 
 
@@ -91,7 +53,9 @@ export class ProfileComponent implements OnInit {
 		// }
 
 		}
-
+	openUpdateProfileModal() {
+		this.modalService.open(UpdateProfileComponent);
+	}
 }
 
 

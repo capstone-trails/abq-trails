@@ -7,9 +7,10 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { allAppComponents, appRoutingProviders, routing } from "./app.routes.module";
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdModalComponent, NgbdModalContent } from './profile/profile.component';
+import {UpdateProfileComponent} from "./profile/update-profile/update-profile.component";
 
 
+let mapBoxConfig = NgxMapBoxGLModule.writeConfig()
 
 const JwtHelper = JwtModule.forRoot({
 	config : {
@@ -25,8 +26,8 @@ const JwtHelper = JwtModule.forRoot({
 
 @NgModule({
 	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbModule],
-	declarations: [ ...allAppComponents, AppComponent, NgbdModalComponent, NgbdModalContent],
-	entryComponents: [NgbdModalContent],
+	declarations: [ ...allAppComponents, AppComponent],
+	entryComponents: [UpdateProfileComponent],
 	bootstrap:    [ AppComponent ],
 	providers:    [ appRoutingProviders],
 
