@@ -17,7 +17,7 @@ import {TrailService} from "../shared/services/trail.service";
 export class TrailDetailComponent implements OnInit {
 
 	trail : Trail = {
-		id: null,
+		id: "0acd1043-aea9-4eb9-9e14-245b3c45c1e3",
 		trailAvatarUrl: null,
 		trailDescription: null,
 		trailHigh: null,
