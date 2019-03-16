@@ -6,16 +6,17 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
 import { allAppComponents, appRoutingProviders, routing } from "./app.routes.module";
 import { AppComponent } from './app.component'
+import { NgbdModalComponent, NgbdModalContent } from './profile/profile.component';
 
 
 
-/* MAP BOX STUFF */
-import { MapService, NgxMapboxGLModule } from "ngx-mapbox-gl";
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-
-let ngxMapboxConfig = NgxMapboxGLModule.withConfig({
-	accessToken: 'pk.eyJ1IjoiZ2Vvcmdla2VwaGFydCIsImEiOiJjanQ4cmdmYjkwYnZnNDNwNDF4NXFiMTJmIn0.MwDDiyszR0QFmMYMNvzi1Q',
-});
+// /* MAP BOX STUFF */
+// import { MapService, NgxMapboxGLModule } from "ngx-mapbox-gl";
+// import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+//
+// let ngxMapboxConfig = NgxMapboxGLModule.withConfig({
+// 	accessToken: 'pk.eyJ1IjoiZ2Vvcmdla2VwaGFydCIsImEiOiJjanQ4cmdmYjkwYnZnNDNwNDF4NXFiMTJmIn0.MwDDiyszR0QFmMYMNvzi1Q',
+// });
 
 
 
@@ -32,10 +33,11 @@ const JwtHelper = JwtModule.forRoot({
 });
 
 @NgModule({
-	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, ngxMapboxConfig, FontAwesomeModule, ],
-	declarations: [ ...allAppComponents, AppComponent],
+	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbdModalContent],
+	declarations: [ ...allAppComponents, AppComponent, NgbdModalComponent, NgbdModalContent],
+	entryComponents: [NgbdModalContent],
 	bootstrap:    [ AppComponent ],
-	providers:    [ appRoutingProviders, MapService, ],
+	providers:    [ appRoutingProviders],
 })
 
 export class AppModule { }
