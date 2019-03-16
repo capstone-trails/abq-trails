@@ -10,6 +10,7 @@ import {SessionService} from "../shared/services/session.services";
 
 @Component({
 	templateUrl: "./sign-in.component.html",
+	styleUrls: [""],
 	selector: "sign-in"
 })
 

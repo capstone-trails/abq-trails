@@ -10,7 +10,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SignUpService} from "../shared/services/sign-up.service";
 
 @Component({
-	templateUrl:"./sign-up.component.html"
+	templateUrl:"./sign-up.component.html",
+	styleUrls: [""],
+	selector: "sign-up"
 })
 
 //set template URL and the selector for the ng powered html

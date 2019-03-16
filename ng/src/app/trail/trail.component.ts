@@ -1,19 +1,32 @@
 import {Component, OnInit} from "@angular/core";
 import {Status} from "../shared/interfaces/status";
 import {Trail} from "../shared/interfaces/trail";
-import {TrailService} from "../shared/services/trail.service";
 import {Rating} from "../shared/interfaces/rating";
 import {Trailtag} from "../shared/interfaces/trailtag";
-import {TrailtagService} from "../shared/services/trailtag.service";
+
+import {TrailService} from "../shared/services/trail.service";
+
 
 @Component({
 	templateUrl: "./trail.component.html",
+	styleUrls: [""],
+	selector: "trails"
 })
 
 
 export class TrailComponent implements OnInit {
 
-	trail: Trail = {id: null, trailAvatarUrl: null, trailDescription: null, trailHigh: null, trailLatitude: null, trailLength: null, trailLongitude: null, trailLow:null, trailName:null};
+	trail: Trail = {
+		id: null,
+		trailAvatarUrl: null,
+		trailDescription: null,
+		trailHigh: null,
+		trailLatitude: null,
+		trailLength: null,
+		trailLongitude: null,
+		trailLow:null,
+		trailName:null
+	};
 
 	trails: Trail[] = [];
 
@@ -30,7 +43,7 @@ export class TrailComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getAllTrails();
-		this.getTrailByName();
+		this.getTrailByName(this.trail.trailName);
 	}
 
 	getAllTrails (): void {

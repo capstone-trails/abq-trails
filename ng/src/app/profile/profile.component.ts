@@ -3,13 +3,15 @@ import {Status} from "../shared/interfaces/status";
 import {Profile} from "../shared/interfaces/profile";
 import {ProfileService} from "../shared/services/profile.service";
 import {AuthService} from "../shared/services/auth-service";
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UpdateProfileComponent} from "../update-profile/update-profile.component";
 
 
 @Component({
 	templateUrl: "./profile.component.html",
-	selector: 'ngb-modal-basic'
+	styleUrls: [""],
+	selector: "profile",
+	//'ngb-modal-basic'
 })
 
 
@@ -49,7 +51,9 @@ export class ProfileComponent implements OnInit {
 	// 	this.profileService.getProfile(this.profileId)
 	// 		.subscribe(profile => this.profile = profile);
 	// }
-		}
+	}
+
+
 	open() {
 		const modalRef = this.modalService.open(UpdateProfileComponent);
 		modalRef.componentInstance.name = 'World';
@@ -57,29 +61,6 @@ export class ProfileComponent implements OnInit {
 }
 
 
-
-// old code, will possibly implement when live
-
-	// getProfileId() : string {
-	// 	if(this.authService.decodeJwt()) {
-	// 		return this.authService.decodeJwt().auth.profileId;
-	// 	} else {
-	// 		return ''
-	// 	}
-	// }
-
-
-
-// 	getProfileByProfileId(id : string) : void {
-// 		this.profileService.getProfileByProfileId(id).subscribe(reply => {
-// 			this.profile = reply;
-// 		})
-//
-// 	}
-//
-//
-//
-// }
 
 
 

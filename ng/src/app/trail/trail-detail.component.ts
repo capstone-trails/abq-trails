@@ -1,14 +1,17 @@
 import {Component, OnInit} from "@angular/core";
 import {Status} from "../shared/interfaces/status";
 import {Trail} from "../shared/interfaces/trail";
-import {TrailService} from "../shared/services/trail.service";
 import {Rating} from "../shared/interfaces/rating";
 import {Trailtag} from "../shared/interfaces/trailtag";
-import {TrailtagService} from "../shared/services/trailtag.service";
+
+import {TrailService} from "../shared/services/trail.service";
+
 
 
 @Component({
 	templateUrl: "./trail-detail.component.html",
+	styleUrls: [""],
+	selector: "trail-detail"
 })
 
 
@@ -26,6 +29,7 @@ export class TrailDetailComponent implements OnInit {
 		trailName: null
 	};
 
+
 	rating : Rating = {ratingProfileId: null, ratingTrailId: null};
 
 	trailtag : Trailtag = {trailTagTagId: null, trailTagTrailId: null};
@@ -40,7 +44,7 @@ export class TrailDetailComponent implements OnInit {
 
 
 	ngOnInit(): void {
-		this.getTrailById();
+		this.getTrailById(this.trail.id);
 	}
 
 	getTrailById(id: string): void {
