@@ -7,7 +7,6 @@ import {AuthService} from "../shared/services/auth-service";
 
 @Component({
 	templateUrl:"./update-profile.component.html",
-	styleUrls: [""],
 	selector: "update-profile"
 })
 

@@ -37,6 +37,8 @@ export const routes: Routes = [
 	{path: "trail", component: TrailComponent},
 	{path: "trail-detail", component: TrailDetailComponent},
 	{path: "", component: SplashComponent},
+	{path: "", component: SplashComponent}
+
 ];
 
 export const appRoutingProviders: any[] = [

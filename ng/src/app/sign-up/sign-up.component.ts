@@ -11,7 +11,6 @@ import {SignUpService} from "../shared/services/sign-up.service";
 
 @Component({
 	templateUrl:"./sign-up.component.html",
-	styleUrls: [""],
 	selector: "sign-up"
 })
 

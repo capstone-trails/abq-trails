@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SessionService } from "./shared/services/session.services";
-import  { Status } from "./shared/interfaces/status";
+import {SessionService} from "./shared/services/session.services";
+import  {Status} from "./shared/interfaces/status";
 
 // import { MapService } from "ngx-mapbox-gl";
 // import { faPaw } from "@fortawesome/free-solid-svg-icons";
