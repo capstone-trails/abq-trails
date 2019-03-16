@@ -13,7 +13,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {MapComponent} from "./map/map.component";
 
 
-let mapBoxConfig = NgxMapboxGLModule.withConfig({accessToken: "pk.eyJ1IjoiZWZ3ZWxsczEwMSIsImEiOiJjanRjMWdsajgwcng5M3lsNmowYXFkMGd1In0.kDpP4-fvmo9YhuNN4RJE-Q"});
+let mapBoxConfig = NgxMapboxGLModule.withConfig({accessToken: "pk.eyJ1IjoiY3JvbWVybzI3OCIsImEiOiJjanRjMmY0dWswczV2M3lucmljdzZqMm95In0.z7Io2Wm8GbfFpepbUmjUwQ"});
 
 const JwtHelper = JwtModule.forRoot({
 	config : {

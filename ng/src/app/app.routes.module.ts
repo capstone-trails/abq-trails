@@ -23,7 +23,8 @@ import {TrailDetailComponent} from "./trail/trail-detail.component";
 
 import {SplashComponent} from "./splash/splash.component";
 import{AppComponent} from "./app.component";
-import {MapComponent, MapService} from "ngx-mapbox-gl";
+import {MapService} from "ngx-mapbox-gl";
+import {MapComponent} from "./map/map.component";
 
 
 

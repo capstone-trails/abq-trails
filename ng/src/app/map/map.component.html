@@ -2,7 +2,7 @@
 	<div class="row">
 
 		<h2>Yay Map fun !!</h2>
-		<mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [center]="[lng, lat]" [zoom]="[9]">
+		<mgl-map [style]="'mapbox://styles/mapbox/streets-v9'" [center]="[lng, lat]" [zoom]="[9]" (load)="map= $event">
 		</mgl-map>
 	</div>
 </div>

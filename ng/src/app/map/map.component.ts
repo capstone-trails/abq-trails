@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {MapService} from "ngx-mapbox-gl";
-import {faPaw} from "@fortawesome/fontawesome-free-solid";
 import  {TrailService} from "../shared/services/trail.service";
 import {Trail} from "../shared/interfaces/trail";
 
