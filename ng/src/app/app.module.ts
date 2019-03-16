@@ -5,7 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
 import { allAppComponents, appRoutingProviders, routing } from "./app.routes.module";
-import { AppComponent } from './app.component'
+import { AppComponent } from './app.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalComponent, NgbdModalContent } from './profile/profile.component';
 
 
 
@@ -22,8 +24,9 @@ const JwtHelper = JwtModule.forRoot({
 });
 
 @NgModule({
-	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper],
-	declarations: [ ...allAppComponents, AppComponent],
+	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbModule],
+	declarations: [ ...allAppComponents, AppComponent, NgbdModalComponent, NgbdModalContent],
+	entryComponents: [NgbdModalContent],
 	bootstrap:    [ AppComponent ],
 	providers:    [ appRoutingProviders],
 
