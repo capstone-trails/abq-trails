@@ -24,14 +24,12 @@ export class TrailComponent implements OnInit {
 	status: Status = null;
 
 
-
-
 	constructor(protected trailService: TrailService) {
 	}
 
+
 	ngOnInit(): void {
 		this.getAllTrails();
-		this.getTrailById();
 		this.getTrailByName();
 	}
 
@@ -41,19 +39,11 @@ export class TrailComponent implements OnInit {
 		})
 	}
 
-	getTrailById(id: string): void {
-		this.trailService.getTrailById(id)
-			.subscribe(trail=>
-				this.trail= trail
-		);
-	}
-
 	getTrailByName(trailName: string) : void {
 		this.trailService.getTrailsByName(trailName).subscribe(trail => {
 			this.trails = trail;
 		})
 	}
-
 
 
 
