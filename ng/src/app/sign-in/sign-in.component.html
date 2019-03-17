@@ -4,19 +4,19 @@
 			<div class="form-group">
 				<label for="email">Email address</label>
 				<input type="email" class="form-control" id="email" formControlName="profileEmail" aria-describedby="emailHelp">
-				<div class="alert alert-danger" *ngIf="signInForm.controls.email?.invalid && signInForm.controls.email?.touched">
-					<p *ngIf="signInForm.controls.email?.errors.required">An email is required</p>
-					<p *ngIf="signInForm.controls.email?.errors.maxlength">The email is too long</p>
-					<p *ngIf="signInForm.controls.email?.errors.email">Please enter a valid email</p>
+				<div class="alert alert-danger" *ngIf="signInForm.controls.profileEmail?.invalid && signInForm.controls.profileEmail?.touched">
+					<p *ngIf="signInForm.controls.profileEmail?.errors.required">An email is required</p>
+					<p *ngIf="signInForm.controls.profileEmail?.errors.maxlength">The email is too long</p>
+					<p *ngIf="signInForm.controls.profileEmail?.errors.email">Please enter a valid email</p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="password">Password</label>
 				<input type="password" class="form-control" id="password" formControlName="profilePassword">
-				<div class="alert alert-danger" *ngIf="signInForm.controls.password?.invalid && signInForm.controls.password?.touched">
-					<p *ngIf="signInForm.controls.password?.errors.required">A password is required</p>
-					<p *ngIf="signInForm.controls.password?.errors.maxlength">The password is too long</p>
-					<p *ngIf="signInForm.controls.password?.errors.minlength">Your Password must be more that 8 characters long.</p>
+				<div class="alert alert-danger" *ngIf="signInForm.controls.profilePassword?.invalid && signInForm.controls.profilePassword?.touched">
+					<p *ngIf="signInForm.controls.profilePassword?.errors.required">A password is required</p>
+					<p *ngIf="signInForm.controls.profilePassword?.errors.maxlength">The password is too long</p>
+					<p *ngIf="signInForm.controls.profilePassword?.errors.minlength">Your Password must be more that 8 characters long.</p>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-info">Submit</button>
