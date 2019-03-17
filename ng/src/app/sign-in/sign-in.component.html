@@ -1,17 +1,33 @@
 <main>
+	<div class="container p-4">
+		<form [formGroup]="signInForm" (submit)="submitSignIn()" novalidate>
+			<div class="form-group">
+				<label for="email">Email address</label>
+				<input type="email" class="form-control" id="email" formControlName="profileEmail" aria-describedby="emailHelp">
+				<div class="alert alert-danger" *ngIf="signInForm.controls.email?.invalid && signInForm.controls.email?.touched">
+					<p *ngIf="signInForm.controls.email?.errors.required">An email is required</p>
+					<p *ngIf="signInForm.controls.email?.errors.maxlength">The email is too long</p>
+					<p *ngIf="signInForm.controls.email?.errors.email">Please enter a valid email</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" id="password" formControlName="profilePassword">
+				<div class="alert alert-danger" *ngIf="signInForm.controls.password?.invalid && signInForm.controls.password?.touched">
+					<p *ngIf="signInForm.controls.password?.errors.required">A password is required</p>
+					<p *ngIf="signInForm.controls.password?.errors.maxlength">The password is too long</p>
+					<p *ngIf="signInForm.controls.password?.errors.minlength">Your Password must be more that 8 characters long.</p>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-info">Submit</button>
+		</form>
 
-					<form [formGroup]="signInForm" (submit)="submitSignIn()" novalidate>
-						<div class="form-group">
-							<label for="email">Email address</label>
-							<input type="email" class="form-control" id="email" formControlName="profileEmail" aria-describedby="emailHelp" placeholder="Enter email">
-							<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-						</div>
-						<div class="form-group">
-							<label for="password">Password</label>
-							<input type="password" class="form-control" id="password" formControlName="profilePassword" placeholder="Password">
-						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</form>
+		<div *ngIf="status !== null" class="alert alert-dismissible" [ngClass]="status.type" role="alert">
+			<button type="button" class="close" aria-label="Close" (click)="status = null;"><span
+				aria-hidden="true">&times;</span></button>
+			{{ status.message }}
+		</div>
+	</div>
 
 
 </main>
