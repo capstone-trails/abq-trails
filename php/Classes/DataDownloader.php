@@ -33,7 +33,7 @@ class DataDownloader {
 		$trailDescription = $value->summary;
 		//missing trail description counter
 		if((empty($trailDescription) || $trailDescription === "Needs description")===true) {
-			$trailDescription = "Trail needs description";
+			$trailDescription = "This trail does not yet have a description";
 			$descriptionCount = $descriptionCount + 1;
 		}
 			$trailHigh = $value->high;

@@ -5,3 +5,10 @@ mgl-map {
 	height: 80vh;
 	width: 80vw;
 }
+
+mgl-marker {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background-color: red;
+}
