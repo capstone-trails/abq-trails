@@ -13,12 +13,12 @@ export class TrailtagService {
 	private trailTagUrl = "https://bootcamp-coders.cnm.edu/~cromero278/abq-trails/public_html/api/trailtag/";;
 
 	//call the trail tag API and create a new trail tag
-	createTrailTag(trailTag : Trailtag) : Observable<Status> {
+	addTrailTag(trailTag : Trailtag) : Observable<Status> {
 		return (this.http.post<Status>(this.trailTagUrl, trailTag))
 	}
 
 	//call the trail tag API and delete the tag
-	deleteTrailTag(trailTag : Trailtag) :Observable<Status> {
+	removeTrailTag(trailTag : Trailtag) :Observable<Status> {
 		return (this.http.put<Status>(this.trailTagUrl, trailTag))
 	}
 }

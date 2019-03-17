@@ -1,18 +1,55 @@
-<div class="container">
-	<h4>Welcome {{profile.profileFirstName}}</h4>
+<section class="profile p-2">
+
+	<div class="container text-center mt-3">
+		<img src="https://via.placeholder.com/75" class="rounded mb-2 mx-auto d-block" alt="...">
+		<h4>{{profile.profileUsername}}</h4>
+	</div>
+
+	<div class="container">
+		<div class="row mx-auto ">
+			<p align="left">{{profile.profileFirstName}} {{profile.profileLastName}}</p>
+
+			<p align="right">{{profile.profileEmail}}</p>
+		</div>
+	</div>
 
 
-	<div class="card-columns">
-		<div class="card">
-			<div class="card-body">
-				<p class="card-text">{{profile.profileFirstName}}</p>
-				<p class="card-text">{{profile.profileLastName}}</p>
-				<p class="card-text">{{profile.profileEmail}}</p>
-
+	<div class="container mt-4">
+		<h2 align="center">My Photos</h2>
+		<div class="row my-4">
+			<div class="col">
+				<img src="https://via.placeholder.com/75" class="rounded mx-auto d-block" alt="...">
+			</div>
+			<div class="col order-12">
+				<img src="https://via.placeholder.com/75" class="rounded mx-auto d-block" alt="...">
+			</div>
+			<div class="col order-1">
+				<img src="https://via.placeholder.com/75" class="rounded mx-auto d-block" alt="...">
 			</div>
 		</div>
 	</div>
-</div>
 
 
-<button class="btn btn-lg btn-outline-primary" (click)="openUpdateProfileModal()">Update Profile</button>
+
+
+
+	<!--<div class="container text-left mt-3 p-5">-->
+		<!--<h4>Welcome {{profile.profileFirstName}}</h4>-->
+
+
+		<!--<div class="card-columns">-->
+			<!--<div class="card border-0">-->
+				<!--<div class="card-body">-->
+					<!--<p class="card-text">{{profile.profileFirstName}}</p>-->
+					<!--<p class="card-text">{{profile.profileLastName}}</p>-->
+					<!--<p class="card-text">{{profile.profileEmail}}</p>-->
+
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+
+	<div class="container text-center mt-4">
+		<button class="btn btn-info btn-md" (click)="openUpdateProfileModal()">Update Profile</button>
+	</div>
+</section>

@@ -10,6 +10,7 @@ import {UpdateProfileComponent} from "./update-profile/update-profile.component"
 ///this works
 @Component({
 	templateUrl: "./profile.component.html",
+	styleUrls: ["./profile.component.css"],
 	selector: "profile",
 	//'ngb-modal-basic'
 })
