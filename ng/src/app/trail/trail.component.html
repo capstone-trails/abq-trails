@@ -1,6 +1,8 @@
 <div class="container-fluid mb-2">
-	<div class="card" *ngFor="let trail of trails">
-		<img [src]="trail.trailAvatarUrl" class="card-img-top" alt="...">
+	<div class="card"  *ngFor="let trail of trails">
+		<div class="container">
+			<img [src]="trail.trailAvatarUrl" class="card-img-top" alt="...">
+		</div>
 		<div class="card-body">
 			<h5 class="card-title">{{trail.trailName}}</h5>
 			<p class="card-text">{{trail.trailDescription}}</p>
