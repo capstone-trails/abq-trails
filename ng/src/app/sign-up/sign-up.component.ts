@@ -1,12 +1,8 @@
-/*
- this component is for signing up to use the site.
- */
 
-//import needed modules for the sign-up component
 import {Component, OnInit, ViewChild,} from "@angular/core";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Status} from "../shared/interfaces/status"
 import {SignUp} from "../shared/interfaces/sign-up";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SignUpService} from "../shared/services/sign-up.service";
 
 @Component({
