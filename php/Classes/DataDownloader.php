@@ -24,16 +24,13 @@ class DataDownloader {
 	$trailCount = 0;
 	foreach($newTrails as $value) {
 		$trailId = generateUuidV4();
-		$trailAvatarUrl = $value->imgMedium;
+		$trailAvatarUrl = $value->imgSmall ?? "https://res.cloudinary.com/abq-trails/image/upload/v1552941635/abqtrail-logo-sm.jpg";
 		//missing avatar url counter
-		if(empty($value->imgMedium) === true) {
-			$trailAvatarUrl = "Trail needs an avatar";
-			$avatarCount = $avatarCount + 1;
-		}
+
 		$trailDescription = $value->summary;
 		//missing trail description counter
 		if((empty($trailDescription) || $trailDescription === "Needs description")===true) {
-			$trailDescription = "This trail does not yet have a description";
+			$trailDescription = "This trail does not have a description.";
 			$descriptionCount = $descriptionCount + 1;
 		}
 			$trailHigh = $value->high;
