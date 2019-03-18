@@ -12,6 +12,8 @@ import {SignUpService} from "./shared/services/sign-up.service";
 import {TagService} from "./shared/services/tag.service";
 import {TrailtagService} from "./shared/services/trailtag.service";
 import {TrailService} from "./shared/services/trail.service";
+import {MapService} from "ngx-mapbox-gl";
+
 
 import {ProfileComponent} from "./profile/profile.component";
 import {SignInComponent} from "./sign-in/sign-in.component";
@@ -19,12 +21,12 @@ import {SignUpComponent} from "./sign-up/sign-up.component";
 import {UpdateProfileComponent} from "./profile/update-profile/update-profile.component";
 import {TrailComponent} from "./trail/trail.component";
 import {TrailDetailComponent} from "./trail/trail-detail.component";
+import {MapComponent} from "./map/map.component";
 
 
 import {SplashComponent} from "./splash/splash.component";
 import{AppComponent} from "./app.component";
-import {MapService} from "ngx-mapbox-gl";
-import {MapComponent} from "./map/map.component";
+
 
 
 
@@ -37,7 +39,7 @@ export const routes: Routes = [
 	{path: "sign-in", component: SignInComponent},
 	{path: "profile", component: ProfileComponent},
 	{path: "trail", component: TrailComponent},
-	{path: "trail-detail", component: TrailDetailComponent},
+	{path: "trail-detail/:id", component: TrailDetailComponent},
 	{path: "map", component: MapComponent},
 	{path: "", component: SplashComponent}
 

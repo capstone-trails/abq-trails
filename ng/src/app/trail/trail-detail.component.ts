@@ -22,7 +22,6 @@ import {ProfileService} from "../shared/services/profile.service";
 export class TrailDetailComponent implements OnInit {
 
 	trail : Trail = {
-		// id: "0acd1043-aea9-4eb9-9e14-245b3c45c1e3",
 		id: null,
 		trailAvatarUrl: null,
 		trailDescription: null,
@@ -43,7 +42,7 @@ export class TrailDetailComponent implements OnInit {
 
 	status : Status = null;
 
-	tempId: string = this.authService.decodeJwt().auth.profileId;
+	// tempId: string = this.authService.decodeJwt().auth.profileId;
 
 	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService, private profileService: ProfileService) {
 	}
@@ -55,7 +54,7 @@ export class TrailDetailComponent implements OnInit {
 		this.trailService.getTrailById(this.trail.id);
 		//this.createRating();
 		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId);
-		this.ratingService.getRatingByProfileId(this.tempId);
+		// this.ratingService.getRatingByProfileId(this.tempId);
 		// this.ratingService.getRatingByProfileId(this.rating.ratingProfileId);
 		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);
 	}
@@ -70,7 +69,9 @@ export class TrailDetailComponent implements OnInit {
 
 
 	createRating(): void {
+
 		let rating: Rating;
+
 		this.ratingService.createRating(rating)
 			.subscribe(status => {
 				this.status = status;
@@ -86,9 +87,9 @@ export class TrailDetailComponent implements OnInit {
 	}
 
 
-	getRatingByProfileId(): void {
-		this.ratingService.getRatingByProfileId(this.tempId);
-	}
+	// getRatingByProfileId(): void {
+	// 	this.ratingService.getRatingByProfileId(this.tempId);
+	// }
 
 	getRatingByTrailId(): void {
 		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);

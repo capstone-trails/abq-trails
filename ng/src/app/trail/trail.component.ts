@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, Input} from "@angular/core";
 import {Router} from "@angular/router";
 import {Status} from "../shared/interfaces/status";
 import {Trail} from "../shared/interfaces/trail";
@@ -31,7 +31,6 @@ export class TrailComponent implements OnInit {
 
 	trails: Trail[] = [];
 
-	// rating : Rating = {ratingProfileId: null, ratingTrailId: null};
 
 	trailtag : Trailtag = {trailTagTagId: null, trailTagTrailId: null};
 

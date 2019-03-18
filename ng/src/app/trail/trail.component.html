@@ -1,10 +1,10 @@
 <div class="container-fluid mb-2">
-	<div class="card"  *ngFor="let trail of trails" (click)="getDetailedTrailView(trail)" >
+	<div class="card" *ngFor="let trail of trails">
 		<div class="container">
 			<img [src]="trail.trailAvatarUrl" class="card-img-top" alt="...">
 		</div>
 		<div class="card-body">
-			<h5 class="card-title">{{trail.trailName}}</h5>
+			<h5 class="card-title" (click)="getDetailedTrailView(trail)">{{trail.trailName}}</h5>
 			<p class="card-text">{{trail.trailDescription}}</p>
 			<div class="row">
 				<div class="col text-left">
