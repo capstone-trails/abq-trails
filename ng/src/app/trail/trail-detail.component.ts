@@ -49,7 +49,7 @@ export class TrailDetailComponent implements OnInit {
 	ngOnInit(): void {
 		this.getTrailById(this.trailId);
 		this.sessionService.setSession();
-		this.trailService.getTrailByTrailId(this.trail.id);
+		this.trailService.getTrailById(this.trail.id);
 		//this.createRating();
 		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId);
 		// this.ratingService.getRatingByProfileId(this.tempId);
@@ -59,7 +59,7 @@ export class TrailDetailComponent implements OnInit {
 
 
 	getTrailById(id: string): void {
-		this.trailService.getTrailByTrailId(id)
+		this.trailService.getTrailById(id)
 			.subscribe(trail =>
 				this.trail = trail
 			);
