@@ -4,7 +4,10 @@ import {Trail} from "../shared/interfaces/trail";
 import {Rating} from "../shared/interfaces/rating";
 import {Trailtag} from "../shared/interfaces/trailtag";
 
+import {RatingService} from "../shared/services/rating.service";
 import {TrailService} from "../shared/services/trail.service";
+import {AuthService} from "../shared/services/auth-service";
+import {SessionService} from "../shared/services/session.services";
 
 
 
@@ -30,7 +33,9 @@ export class TrailDetailComponent implements OnInit {
 	};
 
 
-	// rating : Rating = {ratingProfileId: null, ratingTrailId: null};
+	rating : Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: null, ratingValue: null};
+
+	ratings : Rating[] = [];
 
 	trailtag : Trailtag = {trailTagTagId: null, trailTagTrailId: null};
 
@@ -38,13 +43,17 @@ export class TrailDetailComponent implements OnInit {
 
 	status : Status = null;
 
+	tempId: string = this.authService.decodeJwt().auth.profileId;
 
-	constructor(protected trailService: TrailService) {
+	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService) {
 	}
 
 
 	ngOnInit(): void {
 		this.getTrailById(this.trail.id);
+		this.sessionService.setSession();
+		this.trailService.getTrailById(this.trail.id).subscribe(reply => this.trail = reply);
+		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId).subscribe(reply => this.rating = reply);
 	}
 
 	getTrailById(id: string): void {
@@ -54,5 +63,32 @@ export class TrailDetailComponent implements OnInit {
 			);
 	}
 
+	getJwtProfileId() : any {
+		if(this.authService.decodeJwt()) {
+			return this.authService.decodeJwt().auth.profileId;
+		} else {
+			return false
+		}
+	}
+
+	createRating() : any {
+		if(!this.getJwtProfileId()) {
+			return false
+		}
+
+		let newRatingProfileId = this.getJwtProfileId();
+
+		rating: Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: null, ratingValue: this.createRating()};
+
+		this.ratingService.createRating(rating)
+			.subscribe(status => {
+				this.status = status;
+				if(status.status === 200) {
+					this.rating.reset();
+				} else {
+					return false
+				}
+			})
+	}
 
 }
