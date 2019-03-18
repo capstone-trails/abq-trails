@@ -7,7 +7,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once("/etc/apache2/capstone-mysql/Secrets.php");
 
 
-use CapstoneTrails\AbqTrails\{Photo, Profile};
+use CapstoneTrails\AbqTrails\{Photo, Profile, Trail};
 
 
 /**
@@ -31,6 +31,7 @@ try {
 	//grab mysql connection
 	$secrets = new \Secrets("/etc/apache2/capstone-mysql/cohort23/trails.ini");
 	$pdo = $secrets->getPdoObject();
+	$cloudinary = $secrets->getSecret("cloudinary");
 
 	//determine which HTTP method is being used
 	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];

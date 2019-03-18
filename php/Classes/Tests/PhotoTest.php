@@ -40,6 +40,9 @@ class PhotoTest extends AbqTrailsTest {
 	/**
 	 * @var /DateTime photo was created, set to null and assigned later
 	 */
+
+	protected $VALID_CLOUDINARY_TOKEN = "t9BbCIzd9F7PPlkvA9kJ";
+
 	protected $VALID_PHOTO_DATE_TIME = null;
 
 	protected $VALID_PHOTO_URL = "https://media-cdn.tripadvisor.com/media/photo-s/07/52/66/47/new-mexico-rails-to-trails.jpg";
@@ -77,7 +80,7 @@ class PhotoTest extends AbqTrailsTest {
 		$numRows = $this->getConnection()->getRowCount("photo");
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
+		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_CLOUDINARY_TOKEN, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoPhoto = Photo::getPhotoByPhotoId($this->getPDO(), $photo->getPhotoId());
@@ -85,6 +88,7 @@ class PhotoTest extends AbqTrailsTest {
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoPhoto->getPhotoTrailId(), $this->trail->getTrailId());
+		$this->assertEquals($pdoPhoto->getPhotoCloudinaryToken(), $this->VALID_CLOUDINARY_TOKEN);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
@@ -99,7 +103,7 @@ class PhotoTest extends AbqTrailsTest {
 
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
+		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_CLOUDINARY_TOKEN, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
 		// edit the photo and update it in mySQL
 		$photo->setPhotoUrl($this->VALID_PHOTO_URL_2);
@@ -110,6 +114,7 @@ class PhotoTest extends AbqTrailsTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoPhoto->getPhotoTrailId(), $this->trail->getTrailId());
+		$this->assertEquals($pdoPhoto->getPhotoCloudinaryToken(), $this->VALID_CLOUDINARY_TOKEN);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL_2);
@@ -124,7 +129,7 @@ class PhotoTest extends AbqTrailsTest {
 
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
+		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_CLOUDINARY_TOKEN, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
 		// delete the photo from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("photo"));
@@ -144,7 +149,7 @@ class PhotoTest extends AbqTrailsTest {
 		$numRows = $this->getConnection()->getRowCount("photo");
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
+		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_CLOUDINARY_TOKEN, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Photo::getPhotoByPhotoProfileId($this->getPDO(), $this->profile->getProfileId());
@@ -156,6 +161,7 @@ class PhotoTest extends AbqTrailsTest {
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoPhoto->getPhotoTrailId(), $this->trail->getTrailId());
+		$this->assertEquals($pdoPhoto->getPhotoCloudinaryToken(), $this->VALID_CLOUDINARY_TOKEN);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
@@ -175,7 +181,7 @@ class PhotoTest extends AbqTrailsTest {
 		$numRows = $this->getConnection()->getRowCount("photo");
 		// create a new photo and insert to into mySQL
 		$photoId = generateUuidV4();
-		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
+		$photo = new Photo($photoId, $this->profile->getProfileId(), $this->trail->getTrailId(), $this->VALID_CLOUDINARY_TOKEN, $this->VALID_PHOTO_DATE_TIME, $this->VALID_PHOTO_URL);
 		$photo->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -188,6 +194,7 @@ class PhotoTest extends AbqTrailsTest {
 		$this->assertEquals($pdoPhoto->getPhotoId(), $photoId);
 		$this->assertEquals($pdoPhoto->getPhotoProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoPhoto->getPhotoTrailId(), $this->trail->getTrailId());
+		$this->assertEquals($pdoPhoto->getPhotoCloudinaryToken(), $this->VALID_CLOUDINARY_TOKEN);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoPhoto->getPhotoDateTime()->getTimestamp(), $this->VALID_PHOTO_DATE_TIME->getTimestamp());
 		$this->assertEquals($pdoPhoto->getPhotoUrl(), $this->VALID_PHOTO_URL);
