@@ -8,6 +8,7 @@ import {RatingService} from "../shared/services/rating.service";
 import {TrailService} from "../shared/services/trail.service";
 import {AuthService} from "../shared/services/auth-service";
 import {SessionService} from "../shared/services/session.services";
+import {ProfileService} from "../shared/services/profile.service";
 
 
 
@@ -33,9 +34,7 @@ export class TrailDetailComponent implements OnInit {
 	};
 
 
-	rating : Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: null, ratingValue: null};
-
-	ratings : Rating[] = [];
+	rating : Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: 2, ratingValue: 5};
 
 	trailtag : Trailtag = {trailTagTagId: null, trailTagTrailId: null};
 
@@ -45,23 +44,21 @@ export class TrailDetailComponent implements OnInit {
 
 	tempId: string = this.authService.decodeJwt().auth.profileId;
 
-	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService) {
+	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService, private profileService: ProfileService) {
 	}
 
 
 	ngOnInit(): void {
 		this.getTrailById(this.trail.id);
 		this.sessionService.setSession();
-		this.trailService.getTrailById(this.trail.id).subscribe(reply => this.trail = reply);
-		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId).subscribe(reply => this.rating = reply);
+		this.trailService.getTrailById(this.trail.id);
+		//this.createRating();
+		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId);
+		this.ratingService.getRatingByProfileId(this.tempId);
+		// this.ratingService.getRatingByProfileId(this.rating.ratingProfileId);
+		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);
 	}
 
-	getTrailById(id: string): void {
-		this.trailService.getTrailById(id)
-			.subscribe(trail =>
-				this.trail = trail
-			);
-	}
 
 	getJwtProfileId() : any {
 		if(this.authService.decodeJwt()) {
@@ -71,24 +68,43 @@ export class TrailDetailComponent implements OnInit {
 		}
 	}
 
-	createRating() : any {
-		if(!this.getJwtProfileId()) {
-			return false
-		}
+	getTrailById(id: string): void {
+		this.trailService.getTrailById(id)
+			.subscribe(trail =>
+				this.trail = trail
+			);
+	}
 
-		let newRatingProfileId = this.getJwtProfileId();
 
-		rating: Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: null, ratingValue: this.createRating()};
+	createRating(): void {
+
+		let rating: Rating;
 
 		this.ratingService.createRating(rating)
 			.subscribe(status => {
 				this.status = status;
-				if(status.status === 200) {
-					this.rating.reset();
-				} else {
-					return false
+				if(this.status.status === 200) {
+					alert(this.status.message);
 				}
-			})
+			});
 	}
+
+
+	getRatingByProfileIdAndTrailId(): void {
+		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId).subscribe(rating => this.rating = rating);
+	}
+
+
+	getRatingByProfileId(): void {
+		this.ratingService.getRatingByProfileId(this.tempId);
+	}
+
+	getRatingByTrailId(): void {
+		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);
+	}
+
+
+
+
 
 }
