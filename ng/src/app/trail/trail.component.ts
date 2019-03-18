@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 import {Status} from "../shared/interfaces/status";
 import {Trail} from "../shared/interfaces/trail";
 import {Rating} from "../shared/interfaces/rating";
@@ -37,7 +38,7 @@ export class TrailComponent implements OnInit {
 	status: Status = null;
 
 
-	constructor(protected trailService: TrailService) {
+	constructor(private router: Router, private trailService: TrailService) {
 	}
 
 
@@ -46,11 +47,12 @@ export class TrailComponent implements OnInit {
 		this.getTrailByName(this.trail.trailName);
 	}
 
-	getAllTrails (): void {
+	getAllTrails(): void {
 		this.trailService.getAllTrails().subscribe(trail => {
 			this.trails= trail;
 		})
 	}
+
 
 	getTrailByName(trailName: string) : void {
 		this.trailService.getTrailsByName(trailName).subscribe(trail => {
@@ -58,6 +60,11 @@ export class TrailComponent implements OnInit {
 		})
 	}
 
+
+
+	getDetailedTrailView(trail : Trail) : void {
+		this.router.navigate(["/trail-detail/", trail.id]);
+	}
 
 
 }

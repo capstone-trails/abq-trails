@@ -1,5 +1,5 @@
 <div class="container-fluid mb-2">
-	<div class="card"  *ngFor="let trail of trails" id="{{trail.trailName}}">
+	<div class="card"  *ngFor="let trail of trails" (click)="getDetailedTrailView(trail)" >
 		<div class="container">
 			<img [src]="trail.trailAvatarUrl" class="card-img-top" alt="...">
 		</div>
