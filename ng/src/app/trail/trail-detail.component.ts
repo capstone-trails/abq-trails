@@ -34,7 +34,7 @@ export class TrailDetailComponent implements OnInit {
 		trailName: null
 	};
 
-	trailId = this.activatedRoute.snapshot.params["trailId"];
+	id = this.activatedRoute.snapshot.params["id"];
 
 	rating : Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: 2, ratingValue: 5};
 
@@ -47,7 +47,7 @@ export class TrailDetailComponent implements OnInit {
 
 
 	ngOnInit(): void {
-		this.getTrailById(this.trailId);
+		this.getTrailById(this.id);
 		this.sessionService.setSession();
 		this.trailService.getTrailById(this.trail.id);
 		//this.createRating();

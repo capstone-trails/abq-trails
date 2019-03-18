@@ -57,13 +57,7 @@ export class ProfileComponent implements OnInit {
 
 		}
 
-	signOut() : void {
-		this.signInService.getSignOut();
-		window.localStorage.clear();
-		location.reload();
-		this.router.navigate(["/map"]);
-		alert("You have signed out!");
-	}
+
 
 	openUpdateProfileModal() {
 		this.modalService.open(UpdateProfileComponent);
