@@ -36,10 +36,6 @@ export class TrailDetailComponent implements OnInit {
 
 	rating : Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: 2, ratingValue: 5};
 
-	trailtag : Trailtag = {trailTagTagId: null, trailTagTrailId: null};
-
-	trailtags : Trailtag[] = [];
-
 	status : Status = null;
 
 	// tempId: string = this.authService.decodeJwt().auth.profileId;
@@ -51,7 +47,7 @@ export class TrailDetailComponent implements OnInit {
 	ngOnInit(): void {
 		this.getTrailById(this.trail.id);
 		this.sessionService.setSession();
-		this.trailService.getTrailById(this.trail.id);
+		this.trailService.getTrailByTrailId(this.trail.id);
 		//this.createRating();
 		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId);
 		// this.ratingService.getRatingByProfileId(this.tempId);
@@ -61,7 +57,7 @@ export class TrailDetailComponent implements OnInit {
 
 
 	getTrailById(id: string): void {
-		this.trailService.getTrailById(id)
+		this.trailService.getTrailByTrailId(id)
 			.subscribe(trail =>
 				this.trail = trail
 			);

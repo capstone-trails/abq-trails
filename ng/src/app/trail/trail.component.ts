@@ -32,8 +32,6 @@ export class TrailComponent implements OnInit {
 	trails: Trail[] = [];
 
 
-	trailtag : Trailtag = {trailTagTagId: null, trailTagTrailId: null};
-
 	status: Status = null;
 
 
@@ -61,8 +59,7 @@ export class TrailComponent implements OnInit {
 
 
 	getDetailedTrailView(trail: Trail) : void {
-		this.router.navigate(["/trail-detail/" + this.trailService.getTrailById()]);
-	}
+		this.router.navigate(["/trail-detail/" + trail.id]);}
 
 
 }

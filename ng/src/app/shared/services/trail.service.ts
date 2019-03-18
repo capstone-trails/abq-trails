@@ -14,8 +14,8 @@ export class TrailService {
 
 
 	//call to the trail API and get the trail
-	getTrailById(trailId : string) : Observable<Trail> {
-		return(this.http.get<Trail>(this.trailUrl + trailId));
+	getTrailByTrailId(id : string) : Observable<Trail> {
+		return(this.http.get<Trail>(this.trailUrl + id));
 	}
 
 	getTrailsByName(trailName : string) : Observable<Trail[]> {
