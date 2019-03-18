@@ -60,14 +60,6 @@ export class TrailDetailComponent implements OnInit {
 	}
 
 
-	getJwtProfileId() : any {
-		if(this.authService.decodeJwt()) {
-			return this.authService.decodeJwt().auth.profileId;
-		} else {
-			return false
-		}
-	}
-
 	getTrailById(id: string): void {
 		this.trailService.getTrailById(id)
 			.subscribe(trail =>

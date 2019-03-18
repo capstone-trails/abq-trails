@@ -1,10 +1,12 @@
 import {Component, OnInit, Input} from "@angular/core";
+import {Router} from "@angular/router";
 import {Status} from "../shared/interfaces/status";
 import {Profile} from "../shared/interfaces/profile";
 import {ProfileService} from "../shared/services/profile.service";
 import {AuthService} from "../shared/services/auth-service";
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {UpdateProfileComponent} from "./update-profile/update-profile.component";
+import {SignInService} from "../shared/services/sign-in.service";
 
 
 ///this works
@@ -35,7 +37,7 @@ export class ProfileComponent implements OnInit {
 	tempId: string = this.authService.decodeJwt().auth.profileId;
 
 
-	constructor(protected profileService: ProfileService, private authService: AuthService, private modalService: NgbModal) {
+	constructor(private router: Router, private profileService: ProfileService, private authService: AuthService, private modalService: NgbModal, private signInService: SignInService) {
 	}
 
 
@@ -54,6 +56,17 @@ export class ProfileComponent implements OnInit {
 		// }
 
 		}
+
+
+	signOut() : void {
+		this.signInService.getSignOut();
+		window.localStorage.clear();
+		location.reload();
+		this.router.navigate(["/map"]);
+		alert("You have signed out!");
+	}
+
+
 	openUpdateProfileModal() {
 		this.modalService.open(UpdateProfileComponent);
 	}
