@@ -69,9 +69,7 @@ export class TrailDetailComponent implements OnInit {
 
 
 	createRating(): void {
-
 		let rating: Rating;
-
 		this.ratingService.createRating(rating)
 			.subscribe(status => {
 				this.status = status;

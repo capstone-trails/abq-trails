@@ -25,4 +25,8 @@ export class TrailService {
 		return(this.http.get<Trail[]>(this.trailUrl));
 	}
 
+	getDetailedTrailView() : Observable<Trail> {
+		return(this.http.get<Trail>(this.trailUrl));
+	}
+
 }
