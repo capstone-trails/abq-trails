@@ -72,3 +72,4 @@ class DataDownloader {
 }
 
 echo DataDownloader::pullTrails().PHP_EOL;
+
