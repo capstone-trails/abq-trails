@@ -22,7 +22,8 @@ import {ProfileService} from "../shared/services/profile.service";
 export class TrailDetailComponent implements OnInit {
 
 	trail : Trail = {
-		id: "0acd1043-aea9-4eb9-9e14-245b3c45c1e3",
+		// id: "0acd1043-aea9-4eb9-9e14-245b3c45c1e3",
+		id: null,
 		trailAvatarUrl: null,
 		trailDescription: null,
 		trailHigh: null,

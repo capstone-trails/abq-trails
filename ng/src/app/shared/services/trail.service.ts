@@ -12,6 +12,7 @@ export class TrailService {
 	//define the API endpoint
 	private trailUrl = "/api/trail/";
 
+
 	//call to the trail API and get the trail
 	getTrailById(trailId : string) : Observable<Trail> {
 		return(this.http.get<Trail>(this.trailUrl + trailId));
@@ -25,8 +26,5 @@ export class TrailService {
 		return(this.http.get<Trail[]>(this.trailUrl));
 	}
 
-	getDetailedTrailView() : Observable<Trail> {
-		return(this.http.get<Trail>(this.trailUrl));
-	}
 
 }
