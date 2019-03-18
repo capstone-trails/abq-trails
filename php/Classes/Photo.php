@@ -264,7 +264,7 @@ class Photo implements \JsonSerializable {
 			"photoId" => $this->photoId->getBytes(),
 			"photoProfileId" => $this->photoProfileId->getBytes(),
 			"photoTrailId" => $this->photoTrailId->getBytes(),
-			"photoCloudinaryToken" => this->$this->photoCloudinaryToken,
+			"photoCloudinaryToken" => $this->photoCloudinaryToken,
 			"photoDateTime" => $formattedDate,
 			"photoUrl" => $this->photoUrl
 		];
@@ -297,7 +297,7 @@ class Photo implements \JsonSerializable {
 	 **/
 	public function update(\PDO $pdo) : void {
 		//create query template
-		$query = "UPDATE photo SET photoProfileId = :photoProfileId, photoTrailId = :photoTrailId, photoDateTime = :photoDateTime, photoUrl = :photoUrl WHERE photoId = :photoId";
+		$query = "UPDATE photo SET photoProfileId = :photoProfileId, photoTrailId = :photoTrailId, photoCloudinaryToken = :photoCloudinaryToken, photoDateTime = :photoDateTime, photoUrl = :photoUrl WHERE photoId = :photoId";
 		$statement = $pdo->prepare($query);
 		$formattedDate = $this->photoDateTime->format("Y-m-d H:i:s.u");
 		//bind the member variables to the place holders in the template
@@ -305,6 +305,7 @@ class Photo implements \JsonSerializable {
 			"photoId" => $this->photoId->getBytes(),
 			"photoProfileId" => $this->photoProfileId->getBytes(),
 			"photoTrailId" => $this->photoTrailId->getBytes(),
+			"photoCloudinaryToken" => $this->photoCloudinaryToken,
 			"photoDateTime" => $formattedDate,
 			"photoUrl" => $this->photoUrl
 		];
@@ -328,7 +329,7 @@ class Photo implements \JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoId = :photoId";
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoCloudinaryToken, photoDateTime, photoUrl FROM photo WHERE photoId = :photoId";
 		$statement = $pdo->prepare($query);
 
 		//bind the photo id to the placeholder
@@ -341,7 +342,7 @@ class Photo implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoDateTime"], $row["photoUrl"]);
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoCloudinaryToken"], $row["photoDateTime"], $row["photoUrl"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -367,7 +368,7 @@ class Photo implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId";
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoCloudinaryToken, photoDateTime, photoUrl FROM photo WHERE photoProfileId = :photoProfileId";
 		$statement = $pdo->prepare($query);
 
 		// bind the photo id to the place holder in the template
@@ -379,7 +380,7 @@ class Photo implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoDateTime"], $row["photoUrl"]);
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoCloudinaryToken"], $row["photoDateTime"], $row["photoUrl"]);
 				$photos[$photos->key()] = $photo;
 				$photos->next();
 			} catch(\Exception $exception) {
@@ -407,7 +408,7 @@ class Photo implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl FROM photo WHERE photoTrailId = :photoTrailId";
+		$query = "SELECT photoId, photoProfileId, photoTrailId, photoCloudinaryToken, photoDateTime, photoUrl FROM photo WHERE photoTrailId = :photoTrailId";
 		$statement = $pdo->prepare($query);
 
 		// bind the photo id to the place holder in the template
@@ -419,7 +420,7 @@ class Photo implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoDateTime"], $row["photoUrl"]);
+				$photo = new Photo($row["photoId"], $row["photoProfileId"], $row["photoTrailId"], $row["photoCloudinaryToken"], $row["photoDateTime"], $row["photoUrl"]);
 				$photos[$photos->key()] = $photo;
 				$photos->next();
 			} catch(\Exception $exception) {
