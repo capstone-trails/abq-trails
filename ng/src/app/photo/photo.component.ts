@@ -45,6 +45,10 @@ export class PhotoComponent implements OnInit {
 		this.photoService.getPhotoByPhotoId(this.photo.id);
 	}
 
+	uploadPhoto(): void {
+		this.photoService.uploadPhoto(this.photo.id);
+	}
+
 }
 
 

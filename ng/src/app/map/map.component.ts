@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 
 @Component({
 	templateUrl:"./map.component.html",
+	selector: "map"
 })
 
 export class MapComponent implements OnInit {
