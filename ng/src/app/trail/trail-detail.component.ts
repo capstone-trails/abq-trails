@@ -9,6 +9,7 @@ import {TrailService} from "../shared/services/trail.service";
 import {AuthService} from "../shared/services/auth-service";
 import {SessionService} from "../shared/services/session.services";
 import {ProfileService} from "../shared/services/profile.service";
+import {ActivatedRoute} from "@angular/router";
 
 
 
@@ -33,6 +34,7 @@ export class TrailDetailComponent implements OnInit {
 		trailName: null
 	};
 
+	trailId = this.activatedRoute.snapshot.params["trailId"];
 
 	rating : Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: 2, ratingValue: 5};
 
@@ -40,12 +42,12 @@ export class TrailDetailComponent implements OnInit {
 
 	// tempId: string = this.authService.decodeJwt().auth.profileId;
 
-	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService, private profileService: ProfileService) {
+	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService, private profileService: ProfileService, private activatedRoute: ActivatedRoute) {
 	}
 
 
 	ngOnInit(): void {
-		this.getTrailById(this.trail.id);
+		this.getTrailById(this.trailId);
 		this.sessionService.setSession();
 		this.trailService.getTrailByTrailId(this.trail.id);
 		//this.createRating();
@@ -82,10 +84,6 @@ export class TrailDetailComponent implements OnInit {
 		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId).subscribe(rating => this.rating = rating);
 	}
 
-
-	// getRatingByProfileId(): void {
-	// 	this.ratingService.getRatingByProfileId(this.tempId);
-	// }
 
 	getRatingByTrailId(): void {
 		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);

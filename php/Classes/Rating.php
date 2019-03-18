@@ -334,7 +334,7 @@ public function getRatingProfileId() : Uuid {
 			throw (new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT ratingProfileId, ratingTrailId, ratingDifficulty, ratingValue FROM rating WHERE ratingTrailId = :ratingTrailId";
+		$query = "SELECT ratingProfileId, ratingTrailId, AVG(ratingDifficulty), AVG(ratingValue) FROM rating WHERE ratingTrailId = :ratingTrailId";
 		$statement = $pdo->prepare($query);
 		// bind the rating profile id to the place holder in the template
 		$parameters = ["ratingTrailId" => $ratingTrailId->getBytes()];

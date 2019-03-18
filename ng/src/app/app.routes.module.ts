@@ -39,7 +39,7 @@ export const routes: Routes = [
 	{path: "sign-in", component: SignInComponent},
 	{path: "profile", component: ProfileComponent},
 	{path: "trail", component: TrailComponent},
-	{path: "trail-detail/:id", component: TrailDetailComponent},
+	{path: "trail-detail/:trailId", component: TrailDetailComponent},
 	{path: "map", component: MapComponent},
 	{path: "", component: SplashComponent}
 
