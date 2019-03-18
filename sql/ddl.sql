@@ -45,6 +45,7 @@ CREATE TABLE photo (
 	photoId BINARY(16) NOT NULL,
 	photoProfileId BINARY(16) NOT NULL,
 	photoTrailId BINARY(16) NOT NULL,
+	photoCloudinaryToken VARCHAR(255) NOT NULL,
 	photoDateTime DATETIME(6) NOT NULL,
 	photoUrl VARCHAR(255) NOT NULL,
 	INDEX (photoProfileId),

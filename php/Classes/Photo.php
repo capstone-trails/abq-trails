@@ -34,6 +34,11 @@ class Photo implements \JsonSerializable {
 	 **/
 	private $photoTrailId;
 	/**
+	 * photo Cloudinary token for uploading pictures to Cloudinary photo api
+	 * @var string $photoCloudinaryToken
+	 **/
+	private $photoCloudinaryToken;
+	/**
 	 * photo date and time this photo was sent, in a PHP photoDateTime object
 	 * @var \DateTime $photoDatetime
 	 **/
@@ -49,19 +54,21 @@ class Photo implements \JsonSerializable {
 	 * @param string|Uuid $newPhotoId id of this photo or null if a new photo
 	 * @param string|Uuid $newPhotoProfileId id of the photo trail Id that sent this photo
 	 * @param string|Uuid $newPhotoTrailId id of the photo Trail Id
-	 * @param string $newPhotoUrl string containing actual photo dataTime
+	 * @param string $newPhotoCloudinaryToken activation token for photo upload to Cloudinary api
 	 * @param \DateTime|string|null $newPhotoDateTime date and time photo was sent or null if set to current date and time
+	 * @param string $newPhotoUrl string containing http link to photo
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, $newPhotoDateTime = null, string $newPhotoUrl) {
+	 public function __construct($newPhotoId, $newPhotoProfileId, $newPhotoTrailId, string $newPhotoCloudinaryToken, $newPhotoDateTime = null, string $newPhotoUrl) {
 		 try {
 			 $this->setPhotoId($newPhotoId);
 			 $this->setPhotoProfileId($newPhotoProfileId);
 			 $this->setPhotoTrailId($newPhotoTrailId);
+			 $this->setPhotoCloudinaryToken($newPhotoCloudinaryToken);
 			 $this->setPhotoDateTime($newPhotoDateTime);
 			 $this->setPhotoUrl($newPhotoUrl);
 		 } catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -151,6 +158,31 @@ class Photo implements \JsonSerializable {
 	}
 
 	/**
+	 * accessor method for photo cloudinary token
+	 *
+	 * @return string value of photo cloudinary token
+	 **/
+	public function getPhotoCloudinaryToken() : string {
+		return($this->photoCloudinaryToken);
+	}
+
+	/**
+	 * mutator method for photo cloudinary token
+	 * @param string $newPhotoCloudinaryToken new value of photo cloudinary token
+	 * @throws \InvalidArgumentException if $newPhotoCloudinaryToken uses invalid characters or is too big
+	 * @throws \TypeError if $newPhotoCloudinaryToken is not a string
+	 **/
+	public function setPhotoCloudinaryToken(string $newPhotoCloudinaryToken) : void {
+		$newPhotoCloudinaryToken = filter_var($newPhotoCloudinaryToken, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newPhotoCloudinaryToken) === true) {
+			throw(new \InvalidArgumentException("photo cloudinary token is empty or insecure"));
+		}
+
+		// store the image cloudinary token
+		$this->photoCloudinaryToken = $newPhotoCloudinaryToken;
+	}
+
+	/**
 	 * accessor method for photo date time
 
 	 * @return  \DateTime value of photo date time
@@ -223,7 +255,7 @@ class Photo implements \JsonSerializable {
 	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO photo(photoId, photoProfileId, photoTrailId, photoDateTime, photoUrl) VALUES(:photoId, :photoProfileId, :photoTrailId, :photoDateTime, :photoUrl)";
+		$query = "INSERT INTO photo(photoId, photoProfileId, photoTrailId, photoCloudinaryToken, photoDateTime, photoUrl) VALUES(:photoId, :photoProfileId, :photoTrailId, :photoCloudinaryToken :photoDateTime, :photoUrl)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
@@ -232,6 +264,7 @@ class Photo implements \JsonSerializable {
 			"photoId" => $this->photoId->getBytes(),
 			"photoProfileId" => $this->photoProfileId->getBytes(),
 			"photoTrailId" => $this->photoTrailId->getBytes(),
+			"photoCloudinaryToken" => this->$this->photoCloudinaryToken,
 			"photoDateTime" => $formattedDate,
 			"photoUrl" => $this->photoUrl
 		];

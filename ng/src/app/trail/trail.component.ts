@@ -61,7 +61,7 @@ export class TrailComponent implements OnInit {
 
 
 	getDetailedTrailView(trail: Trail) : void {
-		this.router.navigate(["/trail-detail/" + this.trailService.getTrailById(this.trail.id)]);
+		this.router.navigate(["/trail-detail/" + this.trailService.getTrailById()]);
 	}
 
 
