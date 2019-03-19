@@ -24,6 +24,7 @@ import {TrailComponent} from "./trail/trail.component";
 import {TrailDetailComponent} from "./trail/trail-detail.component";
 import {MapComponent} from "./map/map.component";
 import {PhotoComponent} from "./photo/photo.component";
+import {SearchComponent} from "./search/search.component";
 
 
 import {SplashComponent} from "./splash/splash.component";
@@ -34,7 +35,7 @@ import{AppComponent} from "./app.component";
 
 
 
-export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, TrailComponent, TrailDetailComponent, PhotoComponent, SplashComponent];
+export const allAppComponents = [AppComponent, SignUpComponent, SignInComponent, ProfileComponent, UpdateProfileComponent, TrailComponent, TrailDetailComponent, PhotoComponent, SearchComponent, SplashComponent];
 
 export const routes: Routes = [
 	{path: "sign-up", component: SignUpComponent},
@@ -44,7 +45,9 @@ export const routes: Routes = [
 	{path: "trail-detail/:id", component: TrailDetailComponent},
 	{path: "map", component: MapComponent},
 	{path: "photo", component: PhotoComponent},
-	{path: "", component: SplashComponent}
+	{path: "", component: SplashComponent},
+	{path: "search", component: SearchComponent}
+
 
 ];
 
