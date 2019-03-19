@@ -15,7 +15,7 @@ a {
 }
 
 main {
-	height: 90vh;
+	height: 100vh;
 	width: 97vw;
 }
 
@@ -24,10 +24,6 @@ main {
 .navbar {
 	background-color: #F4F0DE;
 	font-weight: 700;
-	height: 10vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 .nav-link {
