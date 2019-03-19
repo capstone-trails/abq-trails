@@ -18,17 +18,6 @@ const trails = ["test", "best", "vest", "rest"];
 
 export class SearchComponent {
 
-	trail: Trail = {
-		trailId: null,
-		trailAvatarUrl: null,
-		trailDescription: null,
-		trailHigh: null,
-		trailLatitude: null,
-		trailLength: null,
-		trailLongitude: null,
-		trailLow:null,
-		trailName:null
-	};
 
 	trails: Trail[] = [];
 
@@ -39,10 +28,16 @@ export class SearchComponent {
 			debounceTime(200),
 			distinctUntilChanged(),
 			map(term => term.length < 2 ? []
-				: trails.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+				: trails.filter(trails => trails.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
 		);
 
 	constructor( private trailService: TrailService) {
+	}
+
+	getAllTrails(): void {
+		this.trailService.getAllTrails().subscribe(trail => {
+			this.trails= trail;
+		})
 	}
 
 	getTrailByName(trailName: string) : void {
