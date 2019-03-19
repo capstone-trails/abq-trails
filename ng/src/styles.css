@@ -16,13 +16,13 @@ a {
 
 main {
 	height: 100vh;
-	width: 97vw;
+	width: 100vw;
 }
 
 
 /* NAVBAR */
 .navbar {
-	background-color: #F4F0DE;
+	/*background: #F4F0DE;*/
 	font-weight: 700;
 }
 

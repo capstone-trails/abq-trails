@@ -6,8 +6,6 @@ import {TrailService} from "../shared/services/trail.service";
 import {Trail} from "../shared/interfaces/trail";
 
 
-const trails = ["La Luz", "Elena Gallegos", "Copper Trailhead", "10K Trailhead", "Tree Springs", "Bosque River"];
-
 @Component({
 	templateUrl: "./search.component.html",
 	styleUrls: ["./search.component.css"],
@@ -26,22 +24,18 @@ export class SearchComponent {
 			debounceTime(200),
 			distinctUntilChanged(),
 			map(term => term.length < 2 ? []
-				: trails.filter(trails => trails.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+				: this.trails.filter(trail => trail.trailName.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
 		);
 
 	constructor( private trailService: TrailService) {
 	}
 
 
-	getAllTrails(): void {
-		this.trailService.getAllTrails().subscribe(trail => {
-			this.trails= trail;
-		})
-	}
-
-	getTrailByName(trailName: string) : void {
-		this.trailService.getTrailsByName(trailName).subscribe(trail => {
+	getTrailByName(event) : void {
+		if(event.key === "Enter") {
+		this.trailService.getTrailsByName(this.model).subscribe(trail => {
 			this.trails = trail;
 		})
+		}
 	}
 }
