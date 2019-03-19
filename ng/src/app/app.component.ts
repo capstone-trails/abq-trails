@@ -6,7 +6,6 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {Router} from "@angular/router";
 import {SignInComponent} from "./sign-in/sign-in.component";
 
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
