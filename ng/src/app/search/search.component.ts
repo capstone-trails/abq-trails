@@ -11,6 +11,7 @@ const trails = ["test", "best", "vest", "rest"];
 
 @Component({
 	templateUrl: "./search.component.html",
+	styleUrls: ["./search.component.css"],
 	selector: "search"
 })
 
