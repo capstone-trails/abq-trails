@@ -4,6 +4,7 @@ import {Trail} from "../shared/interfaces/trail";
 import {Rating} from "../shared/interfaces/rating";
 import {Trailtag} from "../shared/interfaces/trailtag";
 
+import {MapService} from "ngx-mapbox-gl";
 import {RatingService} from "../shared/services/rating.service";
 import {TrailService} from "../shared/services/trail.service";
 import {AuthService} from "../shared/services/auth-service";
@@ -20,8 +21,14 @@ import {ActivatedRoute} from "@angular/router";
 })
 
 
+
 export class TrailDetailComponent implements OnInit {
 
+	map: any;
+	lat: number = 35.0856181;
+	lng: number = -106.6493357;
+
+	trails: Trail[] = [];
 	trail : Trail = {
 		trailId: null,
 		trailAvatarUrl: null,
@@ -42,7 +49,7 @@ export class TrailDetailComponent implements OnInit {
 
 	// tempId: string = this.authService.decodeJwt().auth.profileId;
 
-	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService, private profileService: ProfileService, private activatedRoute: ActivatedRoute) {
+	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService, private profileService: ProfileService, private activatedRoute: ActivatedRoute, private mapSerivce: MapService) {
 	}
 
 
