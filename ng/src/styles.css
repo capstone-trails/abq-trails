@@ -38,8 +38,3 @@ div > ul > li > a:hover {
 nav > button:hover{
 	background-color: #eeeff0;
 }
-
-/* TOGGLE */
-button{
-	background-color: #02B29F;
-}
