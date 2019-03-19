@@ -1,41 +1,42 @@
+<main>
+	<!-- NAVBAR -->
+	<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
 
-<!-- NAVBAR -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#"><i class="fas fa-mountain"></i> ABQ TRAILS</a>
 
-	<a class="navbar-brand" href="#"><i class="fas fa-mountain"></i> ABQ TRAILS</a>
+		<button class="navbar-toggler btn-primary mt-1" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-	<button class="navbar-toggler btn-primary mt-1" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
-		<span class="navbar-toggler-icon"></span>
-	</button>
+		<div [ngbCollapse]="!isNavbarCollapsed" class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link text-dark" href="./sign-up">Trails</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-dark" href="./sign-up">Sign Up</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-dark" data-toggle="modal"(click)="openSignInModal()">Sign In</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-dark" data-toggle="modal" (click)="openAddImageModal()">Add Image</a>
+				</li>
+			</ul>
 
-	<div [ngbCollapse]="!isNavbarCollapsed" class="collapse navbar-collapse" id="navbarNav">
-		<ul class="navbar-nav ml-auto">
-			<li class="nav-item">
-				<a class="nav-link text-dark" href="./sign-up">Trails</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-dark" href="./sign-up">Sign Up</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-dark" data-toggle="modal"(click)="openSignInModal()">Sign In</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-dark" data-toggle="modal" (click)="openAddImageModal()">Add Image</a>
-			</li>
-		</ul>
+			<form class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-sm btn-info my-2 my-sm-0" type="submit">Search</button>
+			</form>
+		</div>
 
-		<form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-			<button class="btn btn-sm btn-info my-2 my-sm-0" type="submit">Search</button>
-		</form>
+	</nav>
+
+	<!-- MAPBOX -->
+	<map></map>
+
+	<!-- TRAIL LIST TOGGLE -->
+	<div class="container">
+		<a href="./trail">View All Trails</a>
 	</div>
-
-</nav>
-
-<!-- MAPBOX -->
-<map></map>
-
-<!-- TRAIL LIST TOGGLE -->
-<div class="container">
-	<a href="./trail">View All Trails</a>
-</div>
+</main>
