@@ -1,7 +1,17 @@
 /* MAPBOX */
+
+body {
+	margin:0;
+	padding:0;
+}
+
+#map {
+	top:0;
+	bottom:0;
+	width:100%; }
+
 mgl-map {
-	height: 80vh;
-	width: 80vw;
+	height: 85vh;
 }
 
 mgl-marker {
