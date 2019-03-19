@@ -36,6 +36,8 @@ export class TrailComponent implements OnInit {
 
 
 	constructor(private router: Router, private trailService: TrailService) {
+		// this.getAllTrails();
+		// this.getTrailByName(this.trail.trailName);
 	}
 
 

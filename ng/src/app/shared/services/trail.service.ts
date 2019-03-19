@@ -7,7 +7,7 @@ import {Observable} from "rxjs/internal/Observable";
 @Injectable()
 export class TrailService {
 
-	constructor(protected http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
 	//define the API endpoint
 	private trailUrl = "/api/trail/";
