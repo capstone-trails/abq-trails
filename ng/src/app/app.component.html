@@ -3,7 +3,7 @@
 
 	<a class="navbar-brand" href="#"><i class="fas fa-mountain"></i> ABQ TRAILS</a>
 
-	<button class="navbar-toggler btn-primary mt-1" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
+	<button class="navbar-toggler mt-1" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" >
 		<span class="navbar-toggler-icon"></span>
 	</button>
 
@@ -16,10 +16,10 @@
 				<a class="nav-link text-dark" [routerLink]="['/sign-up']">Sign Up</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link text-dark"(click)="openSignInModal()">Sign In</a>
+				<a class="nav-link text-dark" (click)="openSignInModal()">Sign In</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link text-dark"(click)="signOut()">Sign Out</a>
+				<a class="nav-link text-dark" (click)="signOut()">Sign Out</a>
 			</li>
 		</ul>
 

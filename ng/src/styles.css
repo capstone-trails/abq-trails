@@ -17,3 +17,11 @@ mgl-marker {
 	background-color: blue;
 }
 
+div > ul > li > a:hover{
+	background-color: #eeeff0;
+	border-radius: .25em;
+}
+
+nav > button:hover{
+	background-color: #eeeff0;
+}
