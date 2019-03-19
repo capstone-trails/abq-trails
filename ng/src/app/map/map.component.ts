@@ -13,8 +13,8 @@ import {Router} from "@angular/router";
 export class MapComponent implements OnInit {
 
 	map: any;
-	lat: number = 35.0856181;
-	lng: number = -106.6493357;
+	lat: number = 35.173785;
+	lng: number = -106.545212;
 
 	trails: Trail[] = [];
 

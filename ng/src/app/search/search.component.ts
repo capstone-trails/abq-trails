@@ -6,8 +6,7 @@ import {TrailService} from "../shared/services/trail.service";
 import {Trail} from "../shared/interfaces/trail";
 
 
-const trails = ["test", "best", "vest", "rest"];
-
+const trails = ["La Luz", "Elena Gallegos", "Copper Trailhead", "10K Trailhead", "Tree Springs", "Bosque River"];
 
 @Component({
 	templateUrl: "./search.component.html",
@@ -16,9 +15,7 @@ const trails = ["test", "best", "vest", "rest"];
 })
 
 
-
 export class SearchComponent {
-
 
 	trails: Trail[] = [];
 
@@ -34,6 +31,7 @@ export class SearchComponent {
 
 	constructor( private trailService: TrailService) {
 	}
+
 
 	getAllTrails(): void {
 		this.trailService.getAllTrails().subscribe(trail => {
