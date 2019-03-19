@@ -23,7 +23,7 @@ import {ActivatedRoute} from "@angular/router";
 export class TrailDetailComponent implements OnInit {
 
 	trail : Trail = {
-		id: null,
+		trailId: null,
 		trailAvatarUrl: null,
 		trailDescription: null,
 		trailHigh: null,
@@ -49,7 +49,7 @@ export class TrailDetailComponent implements OnInit {
 	ngOnInit(): void {
 		this.getTrailById(this.id);
 		this.sessionService.setSession();
-		this.trailService.getTrailById(this.trail.id);
+		this.trailService.getTrailById(this.trail.trailId);
 		//this.createRating();
 		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId);
 		// this.ratingService.getRatingByProfileId(this.tempId);

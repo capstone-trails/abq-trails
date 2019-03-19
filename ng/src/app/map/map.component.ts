@@ -27,7 +27,9 @@ export class MapComponent implements OnInit {
 	}
 
 
-
+	goToTrail(trail: Trail): void {
+		this.router.navigate(["/trail-detail/", trail.trailId]);
+	}
 
 
 	getAllTrails (): void {

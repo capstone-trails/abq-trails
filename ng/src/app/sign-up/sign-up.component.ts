@@ -34,7 +34,16 @@ export class SignUpComponent implements OnInit{
 		this.status = {status: null, message: null, type: null}
 	}
 	createSignUp() : void {
-		let signUp : SignUp = {profileAvatarUrl : "http://kittens.photo", profileEmail : this.signUpForm.value.email, profileFirstName : this.signUpForm.value.firstName, profileLastName : this.signUpForm.value.lastName, profilePassword : this.signUpForm.value.password, profilePasswordConfirm : this.signUpForm.value.passwordConfirm, profileUsername : this.signUpForm.value.username};
+		let signUp : SignUp = {
+			profileAvatarUrl : "http://kittens.photo",
+			profileEmail : this.signUpForm.value.email,
+			profileFirstName : this.signUpForm.value.firstName,
+			profileLastName : this.signUpForm.value.lastName,
+			profilePassword : this.signUpForm.value.password,
+			profilePasswordConfirm : this.signUpForm.value.passwordConfirm,
+			profileUsername : this.signUpForm.value.username
+		};
+
 		this.signUpService.createProfile(signUp).subscribe(status=> {
 			this.status = status;
 

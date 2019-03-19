@@ -6,7 +6,7 @@
 
 		</mgl-marker>
 		<mgl-popup [marker]="myMarker">
-			<a href="/trail#{{trail.trailName}}">{{trail.trailName}}</a>
+			<a (click)="goToTrail(trail)">{{trail.trailName}}</a>
 		</mgl-popup>
 	</ng-container>
 

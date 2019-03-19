@@ -18,7 +18,7 @@ import {TrailService} from "../shared/services/trail.service";
 export class TrailComponent implements OnInit {
 
 	trail: Trail = {
-		id: null,
+		trailId: null,
 		trailAvatarUrl: null,
 		trailDescription: null,
 		trailHigh: null,
@@ -61,7 +61,8 @@ export class TrailComponent implements OnInit {
 
 
 	getDetailedTrailView(trail: Trail) : void {
-		this.router.navigate(["/trail-detail/", trail.id]);
+		console.log(trail);
+		this.router.navigate(["/trail-detail/", trail.trailId]);
 	}
 
 
