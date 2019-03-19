@@ -25,8 +25,8 @@ import {ActivatedRoute} from "@angular/router";
 export class TrailDetailComponent implements OnInit {
 
 	map: any;
-	lat: number = 35.0856181;
-	lng: number = -106.6493357;
+	// lat: number = 35.0856181;
+	// lng: number = -106.6493357;
 
 	trails: Trail[] = [];
 	trail : Trail = {
