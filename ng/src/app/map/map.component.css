@@ -20,3 +20,8 @@ mgl-marker {
 	border-radius: 50%;
 	background-color: #02B29F;
 }
+
+.popup {
+	width: 100px;
+	height: 100px;
+}
