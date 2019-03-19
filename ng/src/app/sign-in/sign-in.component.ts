@@ -6,7 +6,7 @@ import {Status} from "../shared/interfaces/status"
 import {SignIn} from "../shared/interfaces/sign-in";
 import {SignInService} from "../shared/services/sign-in.service";
 import {SessionService} from "../shared/services/session.services";
-
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
 	templateUrl: "./sign-in.component.html",
@@ -21,10 +21,12 @@ export class SignInComponent implements OnInit {
 	status : Status = null;
 
 	constructor(
+
 		private formBuilder : FormBuilder,
 		private router : Router,
 		private signInService : SignInService,
-		private sessionService : SessionService
+		private sessionService : SessionService,
+		private activeModal: NgbActiveModal
 	) {}
 
 	ngOnInit() : void {
@@ -34,6 +36,10 @@ export class SignInComponent implements OnInit {
 			}
 		);
 		this.applyFormChanges();
+	}
+
+	closeModalButton(){
+		this.activeModal.dismiss("Cross click")
 	}
 
 	applyFormChanges() : void {
@@ -58,6 +64,7 @@ export class SignInComponent implements OnInit {
 					this.router.navigate(["/profile"]);
 				}
 			});
+
 	}
 
 
