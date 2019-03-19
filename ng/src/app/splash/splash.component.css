@@ -1,0 +1,9 @@
+
+main div div .container-fluid {
+	max-height: 20vh;
+	width: 100vw;
+}
+
+.trail-toggle-btn {
+	padding: 0;
+}

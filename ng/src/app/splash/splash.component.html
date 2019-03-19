@@ -1,12 +1,18 @@
 <main>
-
-
-	<!-- MAPBOX -->
-	<map></map>
-
-	<!-- TRAIL LIST TOGGLE -->
-	<div class="container-fluid" style="padding: 0">
-		<button type="button" class="btn btn-info btn-lg btn-block" [routerLink]="['/trail']">View All Trails</button>
+	<div class="container mx-auto">
+		<div class="row">
+			<div class="col-6">
+				<div class="map-box">
+					<map></map>
+				</div>
+			</div>
 	</div>
-
+	<div class="container mx-auto">
+		<div class="trail-toggle-btn">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-info btn-lg btn-block" [routerLink]="['/trail']">View All Trails</button>
+			</div>
+		</div>
+	</div>
+	</div>
 </main>

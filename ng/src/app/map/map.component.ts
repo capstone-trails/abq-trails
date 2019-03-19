@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 
 @Component({
 	templateUrl:"./map.component.html",
+	styleUrls: ["./map.component.css"],
 	selector: "map"
 })
 
