@@ -440,6 +440,7 @@ class Photo implements \JsonSerializable {
 		$fields["photoId"] = $this->photoId->toString();
 		//format the date so the front end can consume it
 		$fields["photoDateTime"] = round(floatval($this->photoDateTime->format("U.u")) * 1000);
+		unset($fields["photoCloudinaryToken"]);
 		return($fields);
 
 	}
