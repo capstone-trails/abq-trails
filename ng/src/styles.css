@@ -17,6 +17,7 @@ a {
 
 .app-root {
 	background: #dbd9ce;
+	min-height: 110vh;
 }
 
 /* NAVBAR */

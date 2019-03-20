@@ -3,6 +3,7 @@ import {MapService} from "ngx-mapbox-gl";
 import  {TrailService} from "../shared/services/trail.service";
 import {Trail} from "../shared/interfaces/trail";
 import {Router} from "@angular/router";
+import {Marker} from "mapbox-gl";
 
 @Component({
 	templateUrl:"./map.component.html",

@@ -1,5 +1,5 @@
 
-<div class="search-bar container m-0 p-0">
+<div class="search-bar container-fluid m-0 p-0">
 
 	<input (keyup)="searchTrailByName($event)" (keypress)="getDetailedTrailView($event)" [resultFormatter]="formatter" id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" placeholder="Search"/>
 

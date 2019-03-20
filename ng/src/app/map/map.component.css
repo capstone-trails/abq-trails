@@ -14,11 +14,11 @@ mgl-map {
 	height: 78vh;
 }
 
-mgl-marker {
+.marker {
 	width: 15px;
 	height: 15px;
 	border-radius: 50%;
-	background-color: #02B29F;
+	fill: #D95011;
 }
 
 .popup {
