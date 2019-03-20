@@ -13,7 +13,6 @@ import {ProfileService} from "../shared/services/profile.service";
 import {ActivatedRoute} from "@angular/router";
 
 
-
 @Component({
 	templateUrl: "./trail-detail.component.html",
 	styleUrls: ["./trail-detail.component.css"],
