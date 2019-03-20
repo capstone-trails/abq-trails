@@ -24,10 +24,11 @@ import {PhotoComponent} from "./photo/photo.component";
 	selector: "trail-detail",
 	styles: [`    .star {
 		font-size: 1.5rem;
-		color: #D9A28A;
+		color: rgba(0, 140, 125, 0.51);
 	}
+
 	.filled {
-		color: #D95011;
+		color: #008c7d;
 	}
 	`]
 })
