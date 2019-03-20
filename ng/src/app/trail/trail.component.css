@@ -1,7 +1,7 @@
 
 .trail-list .trail-avatar {
 	height: 20vh;
-	width: 100vw;
+	width: 100%;
 	background: no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
