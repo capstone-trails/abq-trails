@@ -17,6 +17,18 @@ export class SearchComponent {
 
 	trails: Trail[] = [];
 
+	trail: Trail = {
+		trailId: null,
+		trailAvatarUrl: null,
+		trailDescription: null,
+		trailHigh: null,
+		trailLatitude: null,
+		trailLength: null,
+		trailLongitude: null,
+		trailLow:null,
+		trailName:null
+	};
+
 	public model: any;
 
 	search = (text$: Observable<string>) =>
@@ -27,15 +39,42 @@ export class SearchComponent {
 				: this.trails.filter(trail => trail.trailName.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
 		);
 
-	constructor( private trailService: TrailService) {
+
+	constructor( private trailService: TrailService, private router: Router) {
 	}
 
-
-	getTrailByName(event) : void {
-		if(event.key === "Enter") {
-		this.trailService.getTrailsByName(this.model).subscribe(trail => {
-			this.trails = trail;
-		})
+	formatter = (result: Trail) => {
+		if(result !== undefined) {
+			console.log(result);
+			return(result.trailName.toLowerCase());
 		}
 	}
+
+
+	searchTrailByName(event: any) : void {
+		// if(event.key === "Enter") {
+		// 	this.trailService.searchTrailsByName(this.model).subscribe(trail => {
+		// 		this.trails = trail;
+		// 	})
+		// }
+		this.trailService.searchTrailsByName(this.model).subscribe(trail => {
+			this.trails = trail;
+		})
+	}
+
+	// getTrailById(event: any, id: string): void {
+	// 	if(event.key === "Enter") {
+	// 		this.trailService.getTrailById(this.model)
+	// 			.subscribe(trail =>
+	// 				this.trail = trail
+	// 		);
+	// 	}
+	// }
+
+	getDetailedTrailView(event: any) : void {
+		if(event.keypress === "Enter") {
+			this.router.navigate(["/trail-detail/", this.trail.trailId]);
+		}
+	}
+
 }

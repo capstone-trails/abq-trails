@@ -19,7 +19,11 @@ export class TrailService {
 	}
 
 	getTrailsByName(trailName : string) : Observable<Trail[]> {
-		return(this.http.get<Trail[]>(this.trailUrl + "?trailName=" + trailName));
+		return(this.http.get<Trail[]>(this.trailUrl + trailName));
+	}
+
+	searchTrailsByName(trailName : string) : Observable<Trail[]> {
+		return (this.http.get<Trail[]>(this.trailUrl + "?trailName=" + trailName));
 	}
 
 	getAllTrails() : Observable<Trail[]> {
