@@ -25,6 +25,7 @@
 					<mgl-marker [lngLat]="[trail.trailLongitude, trail.trailLatitude]" #myMarker></mgl-marker>
 					<mgl-popup [marker]="myMarker">
 						<a>{{trail.trailName}}</a>
+						<p>Trail location: {{trail.trailLongitude}}, {{trail.trailLatitude}}</p>
 					</mgl-popup>
 				</ng-container>
 			</mgl-map>
@@ -48,11 +49,14 @@
 					</div>
 				</div>
 			</div>
-
+			<p class="text-center">Info at a glance: <br>
+				Trail High: {{trail.trailHigh}} ft.,
+				Trail Low: {{trail.trailLow}} ft.<br>
+				Trail Length: {{trail.trailLength}} miles
 			<div class="trail-detail-tags container mt-2 mb-5">
-				<p class="text-center">Info at a glance:</p>
+
 				<div class="row justify-content-center">
-					<div class="col-xs-12 col-md-4 d-flex flex-wrap justify-content-between">
+				<div class="col-xs-12 col-md-6 d-flex flex-wrap justify-content-between">
 						<a href="#" class="badge badge-secondary m-1">paved</a>
 						<a href="#" class="badge badge-secondary m-1">camping</a>
 						<a href="#" class="badge badge-secondary m-1">dogs</a>

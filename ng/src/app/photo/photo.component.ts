@@ -1,7 +1,6 @@
 import {Component, OnInit, Input} from "@angular/core";
 import {Router} from "@angular/router";
 import {Status} from "../shared/interfaces/status";
-import {Profile} from "../shared/interfaces/profile";
 import {ProfileService} from "../shared/services/profile.service";
 import {Photo} from "../shared/interfaces/photo";
 import {PhotoService} from "../shared/services/photo.service";
@@ -23,7 +22,7 @@ export class PhotoComponent implements OnInit {
 		id: null,
 		photoProfileId: null,
 		photoTrailId: null,
-		photoCloudinaryToken: null,
+		cloudinaryResult: null,
 		photoDateTime: null,
 		photoUrl: null
 	};
@@ -50,12 +49,6 @@ export class PhotoComponent implements OnInit {
 
 
 	ngOnInit(): void {
-		this.getPhotoByPhotoId();
-
-	}
-
-	getPhotoByPhotoId (): void {
-		this.photoService.getPhotoByPhotoId(this.photo.id);
 	}
 
 	uploadPhoto(): void {

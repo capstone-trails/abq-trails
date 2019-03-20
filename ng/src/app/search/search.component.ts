@@ -29,6 +29,8 @@ export class SearchComponent {
 		trailName:null
 	};
 
+
+
 	public model: any;
 
 	search = (text$: Observable<string>) =>

@@ -35,17 +35,8 @@ export class PhotoComponent implements OnInit {
 
 	status: Status = null;
 
-	public uploader: FileUploader = new FileUploader(
-		{
-			itemAlias: 'photo',
-			url: './api/photo/',
-			headers: [
-				//you will alos want to include a JWT-TOKEN
-				{name: 'X-XSRF-TOKEN', value: this.cookieService.get('XSRF-TOKEN')}
-			],
-			additionalParameter: {trailId: this.trailId},
-		}
-	);
+	uploader: FileUploader = null;
+
 
 
 	constructor(
@@ -60,6 +51,17 @@ export class PhotoComponent implements OnInit {
 
 
 	ngOnInit(): void {
+	this.uploader = new FileUploader(
+			{
+				itemAlias: 'photo',
+				url: './api/photo/',
+				headers: [
+					//you will alos want to include a JWT-TOKEN
+					{name: 'X-XSRF-TOKEN', value: this.cookieService.get('XSRF-TOKEN')}
+				],
+				additionalParameter: {trailId: this.trailId},
+			}
+		);
 	}
 
 
