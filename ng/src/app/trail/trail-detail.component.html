@@ -42,10 +42,18 @@
 
 				<div class="row">
 					<div class="col d-flex justify-content-center">
-						<ngb-rating [rate]="rating.ratingValue"></ngb-rating>
+						<ngb-rating [(rate)]="rating.ratingValue">
+							<ng-template let-fill="fill" let-index="index">
+								<span class="star" [class.filled]="fill === 100">&#9733;</span>
+							</ng-template>
+						</ngb-rating>
 					</div>
 					<div class="col d-flex justify-content-center">
-						<ngb-rating [rate]="rating.ratingDifficulty"></ngb-rating>
+						<ngb-rating [(rate)]="rating.ratingDifficulty">
+							<ng-template let-fill="fill" let-index="index">
+								<span class="star" [class.filled]="fill === 100">&#9733;</span>
+							</ng-template>
+						</ngb-rating>
 					</div>
 				</div>
 			</div>

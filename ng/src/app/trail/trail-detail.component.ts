@@ -21,7 +21,15 @@ import {PhotoComponent} from "./photo/photo.component";
 @Component({
 	templateUrl: "./trail-detail.component.html",
 	styleUrls: ["./trail-detail.component.css"],
-	selector: "trail-detail"
+	selector: "trail-detail",
+	styles: [`    .star {
+		font-size: 1.5rem;
+		color: #D9A28A;
+	}
+	.filled {
+		color: #D95011;
+	}
+	`]
 })
 
 
