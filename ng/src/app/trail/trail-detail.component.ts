@@ -12,6 +12,12 @@ import {SessionService} from "../shared/services/session.services";
 import {ProfileService} from "../shared/services/profile.service";
 import {ActivatedRoute} from "@angular/router";
 
+import {Photo} from "../shared/interfaces/photo";
+import {PhotoService} from "../shared/services/photo.service";
+import {FileUploader} from "ng2-file-upload";
+import {CookieService} from "ngx-cookie";
+
+
 
 @Component({
 	templateUrl: "./trail-detail.component.html",
@@ -26,6 +32,26 @@ export class TrailDetailComponent implements OnInit {
 	map: any;
 	// lat: number = 35.0856181;
 	// lng: number = -106.6493357;
+
+	photo: Photo = {
+		id: null,
+		photoProfileId: null,
+		photoTrailId: null,
+		cloudinaryResult: null,
+		photoDateTime: null,
+		photoUrl: null
+	};
+
+	public uploader: FileUploader = new FileUploader(
+		{
+			itemAlias: 'photo',
+			url: './api/photo/',
+			headers: [
+				//you will alos want to include a JWT-TOKEN
+				{name: 'X-XSRF-TOKEN', value: this.cookieService.get('XSRF-TOKEN')}
+			],
+		}
+	);
 
 	trails: Trail[] = [];
 
@@ -49,9 +75,17 @@ export class TrailDetailComponent implements OnInit {
 
 	// tempId: string = this.authService.decodeJwt().auth.profileId;
 
-	constructor(private trailService: TrailService, private authService: AuthService, private ratingService: RatingService, private sessionService: SessionService, private profileService: ProfileService, private activatedRoute: ActivatedRoute, private mapSerivce: MapService) {
+	constructor(
+		private trailService: TrailService,
+		private authService: AuthService,
+		private ratingService: RatingService,
+		private sessionService: SessionService,
+		private profileService: ProfileService,
+		private activatedRoute: ActivatedRoute,
+		private mapSerivce: MapService,
+		private cookieService: CookieService,
+		private photoService: PhotoService) {
 	}
-
 
 	ngOnInit(): void {
 		this.getTrailById(this.id);
@@ -64,7 +98,6 @@ export class TrailDetailComponent implements OnInit {
 		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);
 	}
 
-
 	getTrailById(id: string): void {
 		this.trailService.getTrailById(id)
 			.subscribe(trail =>
@@ -72,6 +105,16 @@ export class TrailDetailComponent implements OnInit {
 			);
 	}
 
+	uploadPhoto(): void {
+		console.log(this.uploader);
+		this.uploader.uploadAll();
+	}
+
+
+}
+
+	/**
+	 * TODOs
 
 	createRating(): void {
 
@@ -96,9 +139,9 @@ export class TrailDetailComponent implements OnInit {
 		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);
 	}
 
+	 **/
 
 
 
 
-}
 

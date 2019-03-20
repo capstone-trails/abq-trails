@@ -46,16 +46,19 @@ try {
 	//process GET requests
 	if($method === "GET") {
 		setXsrfCookie();
-		$reply->data = photo::getPhotoByPhotoId($pdo)->toArray();
-
+		if(empty($trailId) === false) {
+			$reply->data = Photo::getPhotoByPhotoTrailId($pdo, $trailId);
+		}
 	} else if($method === "POST") {
+		var_dump($_FILES);
 		verifyXsrf();
-		$photoId = filter_input(INPUT_POST, "photoId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		$tempUserFileName = $_FILES["image"]["temp_name"];
+		$photoTrailId = filter_input(INPUT_POST, "photoTrailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$photoUrl = filter_input(INPUT_POST, "photoUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$tempUserFileName = $_FILES["photo"]["tmp_name"];
 		$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 200, "crop" => "scale"));
-		$image = new Image(generateUuidV4(), $photoId, $cloudinaryResult["signature"], $cloudinaryResult["secure_url"]);
-		$image->insert($pdo);
-		var_dump($image);
+		$photo = new Photo(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $photoTrailId, $cloudinaryResult["signature"], new \DateTime(), $cloudinaryResult["secure_url"]);
+		$photo->insert($pdo);
+		var_dump($photo);
 		$reply->message = "Image uploaded!";
 	}
 

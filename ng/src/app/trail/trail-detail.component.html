@@ -62,6 +62,30 @@
 				</div>
 			</div>
 
+			<div class="row">
+				<div class="col d-flex justify-content-center">
+					<form>
+						<div class="inline">
+							<input
+								type="file"
+								accept="image/*"
+								name="image"
+								id="image"
+								ng2FileSelect
+								[uploader]="uploader"
+								aria-describedby="petHelp"
+							/>
+						</div>
+						<div class="my-1">
+							<button type="button" class="btn btn-success btn-s"
+									  (click)="uploadPhoto()" [disabled]="!uploader.getNotUploadedItems().length">
+								<span class="glyphicon glyphicon-upload"></span> Upload
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
 			<div class="container-fluid mb-3">
 				<div class="row">
 					<div class="trail-toggle-btn col">

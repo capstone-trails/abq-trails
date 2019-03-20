@@ -23,13 +23,12 @@ export class PhotoComponent implements OnInit {
 		id: null,
 		photoProfileId: null,
 		photoTrailId: null,
-		photoCloudinaryToken: null,
+		cloudinaryResult: null,
 		photoDateTime: null,
 		photoUrl: null
 	};
 
 	status: Status = null;
-
 
 	tempId: string = this.authService.decodeJwt().auth.profileId;
 
@@ -50,7 +49,6 @@ export class PhotoComponent implements OnInit {
 
 
 	ngOnInit(): void {
-		this.getPhotoByPhotoId();
 	}
 
 	getPhotoByPhotoId (): void {
@@ -58,7 +56,8 @@ export class PhotoComponent implements OnInit {
 	}
 
 	uploadPhoto(): void {
-		this.photoService.uploadPhoto(this.photo.id);
+		console.log(this.uploader);
+		this.uploader.uploadAll();
 	}
 
 }
