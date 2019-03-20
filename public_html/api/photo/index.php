@@ -13,6 +13,8 @@ use CapstoneTrails\AbqTrails\{Photo, Profile, Trail};
 /**
  * Cloudinary API for image upload
  *
+ * DEAR FUTURE CODERS: NOTHING WORKS, MAYBE YOU SHOULD GO OFF A DIFFERENT EXAMPLE :-)
+ *
  * @author Scott Wells <swells19@cnm.edu>
  * @version 1.03 updated from Brent Kie & Marty Bonacci
  **/

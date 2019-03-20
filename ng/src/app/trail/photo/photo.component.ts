@@ -1,5 +1,5 @@
 import {Component, OnInit, Input} from "@angular/core";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Status} from "../../shared/interfaces/status";
 import {Profile} from "../../shared/interfaces/profile";
 import {ProfileService} from "../../shared/services/profile.service";
@@ -9,6 +9,7 @@ import {AuthService} from "../../shared/services/auth-service";
 import {FileUploader} from "ng2-file-upload";
 import {CookieService} from "ngx-cookie";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Import} from "@angular/compiler-cli/src/ngtsc/host";
 
 
 ///this works
@@ -29,9 +30,11 @@ export class PhotoComponent implements OnInit {
 		photoUrl: null
 	};
 
+	trailId = this.activatedRoute.snapshot.params["id"];
+
+
 	status: Status = null;
 
-	trailId = {photoTrailId: "86bf1c24-0d40-453f-8836-35c012440b7c"};
 	public uploader: FileUploader = new FileUploader(
 		{
 			itemAlias: 'photo',
@@ -40,7 +43,7 @@ export class PhotoComponent implements OnInit {
 				//you will alos want to include a JWT-TOKEN
 				{name: 'X-XSRF-TOKEN', value: this.cookieService.get('XSRF-TOKEN')}
 			],
-			additionalParameter: this.trailId,
+			additionalParameter: {trailId: this.trailId},
 		}
 	);
 
@@ -51,7 +54,8 @@ export class PhotoComponent implements OnInit {
 		private authService: AuthService,
 		private cookieService: CookieService,
 		private photoService: PhotoService,
-		private activeModal: NgbActiveModal
+		private activeModal: NgbActiveModal,
+		private activatedRoute: ActivatedRoute,
 	) {}
 
 
