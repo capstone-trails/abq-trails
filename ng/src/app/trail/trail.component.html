@@ -1,4 +1,6 @@
-<div class="trail-list container-fluid">
+<section class="trail-list container-fluid ">
+	<div class="row">
+
 			<div class="card" *ngFor="let trail of trails">
 				<div class="trail-avatar container" [ngStyle]="{ 'background-image': 'url(' + trail.trailAvatarUrl + ')'}">
 					<!--<img [src]="trail.trailAvatarUrl" class="card-img-top" alt="...">-->
@@ -8,21 +10,19 @@
 					<p class="card-text">{{trail.trailDescription}}</p>
 					<div class="row">
 						<div class="col text-left">
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
-							<i class="fas fa-star"></i>
+							<ngb-rating [rate]="(' + rating.ratingValue + ')"></ngb-rating>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col text-left">
-							<a href="#" class="badge badge-secondary">paved</a>
-							<a href="#" class="badge badge-secondary">camping</a>
-							<a href="#" class="badge badge-secondary">dog-friendly</a>
-
+					<div class="row justify-content-start">
+						<div class="col-xs-12 col-md-4">
+							<a href="#" class="badge badge-secondary mr-1">paved</a>
+							<a href="#" class="badge badge-secondary mr-1">camping</a>
+							<a href="#" class="badge badge-secondary mr-1">dogs</a>
+							<a href="#" class="badge badge-secondary mr-1">fire</a>
+							<a href="#" class="badge badge-secondary mr-1" >unpaved</a>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
 	</div>
-</div>
+</section>
