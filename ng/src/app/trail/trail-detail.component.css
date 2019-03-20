@@ -1,7 +1,11 @@
 
+.trail-detail {
+	background: #f8f7f2;
+}
+
 .trail-detail .trail-avatar {
 	height: 20vh;
-	width: 80vw;
+	width: 50%;
 	background: no-repeat center center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -20,4 +24,5 @@ p {
 
 mgl-map {
 	height: 20vh;
+	width: 100%;
 }
