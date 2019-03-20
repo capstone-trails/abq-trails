@@ -1,6 +1,8 @@
 
-
-
-.trail-toggle-btn {
+main div div .trail-toggle-btn {
 	padding: 0;
+}
+
+main div div .trail-toggle-btn button {
+	background-color: #db6013;
 }

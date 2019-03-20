@@ -15,31 +15,46 @@ a {
 	font-family: 'Rubik', sans-serif;
 }
 
-main {
+.app-root {
 	height: 100vh;
 	width: 100vw;
+	background: #F8F7F2;
 }
 
 /* NAVBAR */
 .navbar {
-	/*background: #F4F0DE;*/
+	background: #F8F7F2;
+}
+
+.navbar .navbar-brand {
+	color: black;
 	font-weight: 700;
 }
 
-.nav-link {
+.navbar .navbar-nav .nav-item a {
+	color: black;
 	font-weight: 300;
 }
 
-div > ul > li > a:hover {
-	background-color: #eeeff0;
-	border-radius: .25em;
-}
+/*.navbar .navbar-nav .nav-item a:hover,*/
+/*.navbar .navbar-nav .nav-item a:active {*/
+	/*display: inline;*/
+	/*text-decoration: underline #1e4b66;*/
+/*}*/
 
-nav > button:hover{
-	background-color: #eeeff0;
+.navbar-toggler {
+	background: white;
 }
 
 .app-root nav a img {
+	/*filter: invert(1);*/
 	height: 25px;
 	transform: translateY(-5px);
+}
+
+
+
+
+
+@media (min-width: 768px) {
 }
