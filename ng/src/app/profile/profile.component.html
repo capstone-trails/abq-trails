@@ -1,42 +1,43 @@
 <section class="profile">
+	<div class="row">
+		<div class="col">
+		</div>
+		<div class="col-12 col-sm-10 col-md-8 col-lg-5">
+			<div class="container text-center my-3">
+				<img src="https://res.cloudinary.com/abq-trails/image/upload/v1553050967/avatar.png" class="rounded mb-3 mx-auto d-block" alt="...">
+				<h4>{{profile.profileUsername}}</h4>
+			</div>
 
-	<div class="container text-center my-3">
-		<img src="https://res.cloudinary.com/abq-trails/image/upload/v1553050967/avatar.png" class="rounded mb-3 mx-auto d-block" alt="...">
-		<h4>{{profile.profileUsername}}</h4>
-	</div>
+			<div class="profile-details container text-center mt-3 mb-5">
+				<div class="row">
+					<div class="col">
+						<p>{{profile.profileFirstName}} {{profile.profileLastName}}</p>
+					</div>
+				</div>
+					<div class="col">
+						<p>{{profile.profileEmail}}</p>
+					</div>
+			</div>
 
-	<div class="profile-details container text-center mt-3 mb-5">
-		<div class="row">
-			<div class="col">
-				<p>{{profile.profileFirstName}} {{profile.profileLastName}}</p>
+			<div class="container mt-4" >
+				<h2 align="center">My Photos</h2>
+				<div class="row">
+					<div class="col d-flex flex-wrap justify-content-between">
+						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
+						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
+						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
+						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
+						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
+						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
+					</div>
+				</div>
+			</div>
+
+			<div class="container text-center mt-4">
+				<button class="btn btn-info btn-md" (click)="openUpdateProfileModal()">Update Profile</button>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col">
-				<p>{{profile.profileEmail}}</p>
-			</div>
+		<div class="col">
 		</div>
 	</div>
-
-
-	<div class="container mt-4" >
-		<h2 align="center">My Photos</h2>
-		<div class="row">
-			<div class="col d-flex flex-wrap justify-content-between">
-				<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-				<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-				<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-				<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-				<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-				<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-			</div>
-		</div>
-	</div>
-
-
-	<div class="container text-center mt-4">
-		<button class="btn btn-info btn-md" (click)="openUpdateProfileModal()">Update Profile</button>
-	</div>
-
-
 </section>
