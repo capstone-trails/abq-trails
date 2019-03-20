@@ -10,6 +10,7 @@ import {AuthService} from "../shared/services/auth-service";
 import {SessionService} from "../shared/services/session.services";
 import {ProfileService} from "../shared/services/profile.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 import {ActivatedRoute} from "@angular/router";
 
 import {PhotoComponent} from "./photo/photo.component";
@@ -62,8 +63,12 @@ export class TrailDetailComponent implements OnInit {
 		private profileService: ProfileService,
 		private activatedRoute: ActivatedRoute,
 		private mapSerivce: MapService,
-		private modalService: NgbModal
-	) {}
+		private modalService: NgbModal,
+		private config: NgbRatingConfig,
+	) {
+		config.max = 5;
+		config.readonly = true;
+	}
 
 	ngOnInit(): void {
 		this.getTrailById(this.id);
