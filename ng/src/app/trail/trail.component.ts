@@ -4,6 +4,7 @@ import {Status} from "../shared/interfaces/status";
 import {Trail} from "../shared/interfaces/trail";
 import {Rating} from "../shared/interfaces/rating";
 import {Trailtag} from "../shared/interfaces/trailtag";
+import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import {TrailService} from "../shared/services/trail.service";
 
@@ -11,7 +12,16 @@ import {TrailService} from "../shared/services/trail.service";
 @Component({
 	templateUrl: "./trail.component.html",
 	styleUrls: ["./trail.component.css"],
-	selector: "trails"
+	selector: "trails",
+	styles: [`    .star {
+		font-size: 1.5rem;
+		color: rgba(0, 140, 125, 0.51);
+	}
+
+	.filled {
+		color: #008c7d;
+	}
+	`]
 })
 
 
@@ -31,13 +41,18 @@ export class TrailComponent implements OnInit {
 
 	trails: Trail[] = [];
 
+	rating : Rating = {ratingProfileId: null, ratingTrailId: null, ratingDifficulty: 2, ratingValue: 5};
 
 	status: Status = null;
 
 
-	constructor(private router: Router, private trailService: TrailService) {
-		// this.getAllTrails();
-		// this.getTrailByName(this.trail.trailName);
+	constructor(
+		private router: Router,
+		private trailService: TrailService,
+		private config: NgbRatingConfig,
+	) {
+	config.max = 5;
+	config.readonly = true;
 	}
 
 
