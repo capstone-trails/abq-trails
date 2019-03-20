@@ -47,6 +47,7 @@ try {
 	if($method === "GET") {
 		setXsrfCookie();
 		$reply->data = photo::getPhotoByPhotoId($pdo)->toArray();
+
 	} else if($method === "POST") {
 		verifyXsrf();
 		$photoId = filter_input(INPUT_POST, "photoId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);

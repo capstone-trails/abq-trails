@@ -6,7 +6,8 @@ import {ProfileService} from "../shared/services/profile.service";
 import {Photo} from "../shared/interfaces/photo";
 import {PhotoService} from "../shared/services/photo.service";
 import {AuthService} from "../shared/services/auth-service";
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {FileUploader} from "ng2-file-upload";
+import {CookieService} from "ngx-cookie";
 
 
 ///this works
@@ -32,8 +33,19 @@ export class PhotoComponent implements OnInit {
 
 	tempId: string = this.authService.decodeJwt().auth.profileId;
 
+	public uploader: FileUploader = new FileUploader(
+		{
+			itemAlias: 'photo',
+			url: './api/photo/',
+			headers: [
+				//you will alos want to include a JWT-TOKEN
+				{name: 'X-XSRF-TOKEN', value: this.cookieService.get('XSRF-TOKEN')}
+			],
+		}
+	);
 
-	constructor(private router: Router, private profileService: ProfileService, private authService: AuthService, private modalService: NgbModal, private photoService: PhotoService) {
+
+	constructor(private router: Router, private profileService: ProfileService, private authService: AuthService, private cookieService: CookieService, private photoService: PhotoService) {
 	}
 
 

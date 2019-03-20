@@ -11,6 +11,9 @@ import {UpdateProfileComponent} from "./profile/update-profile/update-profile.co
 import {NgxMapboxGLModule} from "ngx-mapbox-gl";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {MapComponent} from "./map/map.component";
+import {CookieModule} from "ngx-cookie";
+import { FileUploadModule } from 'ng2-file-upload';
+
 
 
 let mapBoxConfig = NgxMapboxGLModule.withConfig({accessToken: "pk.eyJ1IjoiY3JvbWVybzI3OCIsImEiOiJjanRjMmY0dWswczV2M3lucmljdzZqMm95In0.z7Io2Wm8GbfFpepbUmjUwQ"});
@@ -28,7 +31,7 @@ const JwtHelper = JwtModule.forRoot({
 });
 
 @NgModule({
-	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbModule, mapBoxConfig, FontAwesomeModule],
+	imports:      [ BrowserModule, FormsModule, HttpClientModule, routing, ReactiveFormsModule, JwtHelper, NgbModule, mapBoxConfig, FontAwesomeModule, CookieModule.forRoot(), FileUploadModule],
 	declarations: [ ...allAppComponents, AppComponent, MapComponent],
 	entryComponents: [UpdateProfileComponent],
 	bootstrap:    [ AppComponent ],

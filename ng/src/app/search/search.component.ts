@@ -48,7 +48,7 @@ export class SearchComponent {
 			console.log(result);
 			return(result.trailName.toLowerCase());
 		}
-	}
+	};
 
 
 	searchTrailByName(event: any) : void {

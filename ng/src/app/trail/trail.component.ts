@@ -47,7 +47,7 @@ export class TrailComponent implements OnInit {
 	}
 
 	getAllTrails(): void {
-		this.trailService.getAllTrails().subscribe(trail => {
+		this.trailService.getAllTrails().subscribe(trail  => {
 			this.trails= trail;
 		})
 	}
