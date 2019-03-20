@@ -23,7 +23,7 @@ import {UpdateProfileComponent} from "./profile/update-profile/update-profile.co
 import {TrailComponent} from "./trail/trail.component";
 import {TrailDetailComponent} from "./trail/trail-detail.component";
 import {MapComponent} from "./map/map.component";
-import {PhotoComponent} from "./photo/photo.component";
+import {PhotoComponent} from "./trail/photo/photo.component";
 import {SearchComponent} from "./search/search.component";
 
 

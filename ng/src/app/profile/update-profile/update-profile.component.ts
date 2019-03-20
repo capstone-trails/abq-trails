@@ -58,7 +58,7 @@ export class UpdateProfileComponent implements OnInit{
 	closeModalButton(){
 		this.activeModal.dismiss("Cross click")
 	}
-	}
+}
 
 
 

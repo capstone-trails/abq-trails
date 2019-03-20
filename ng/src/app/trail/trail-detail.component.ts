@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {Status} from "../shared/interfaces/status";
 import {Trail} from "../shared/interfaces/trail";
 import {Rating} from "../shared/interfaces/rating";
-import {Trailtag} from "../shared/interfaces/trailtag";
 
 import {MapService} from "ngx-mapbox-gl";
 import {RatingService} from "../shared/services/rating.service";
@@ -10,12 +9,10 @@ import {TrailService} from "../shared/services/trail.service";
 import {AuthService} from "../shared/services/auth-service";
 import {SessionService} from "../shared/services/session.services";
 import {ProfileService} from "../shared/services/profile.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute} from "@angular/router";
 
-import {Photo} from "../shared/interfaces/photo";
-import {PhotoService} from "../shared/services/photo.service";
-import {FileUploader} from "ng2-file-upload";
-import {CookieService} from "ngx-cookie";
+import {PhotoComponent} from "./photo/photo.component";
 
 
 
@@ -33,25 +30,6 @@ export class TrailDetailComponent implements OnInit {
 	// lat: number = 35.0856181;
 	// lng: number = -106.6493357;
 
-	photo: Photo = {
-		id: null,
-		photoProfileId: null,
-		photoTrailId: null,
-		cloudinaryResult: null,
-		photoDateTime: null,
-		photoUrl: null
-	};
-
-	public uploader: FileUploader = new FileUploader(
-		{
-			itemAlias: 'photo',
-			url: './api/photo/',
-			headers: [
-				//you will alos want to include a JWT-TOKEN
-				{name: 'X-XSRF-TOKEN', value: this.cookieService.get('XSRF-TOKEN')}
-			],
-		}
-	);
 
 	trails: Trail[] = [];
 
@@ -83,18 +61,14 @@ export class TrailDetailComponent implements OnInit {
 		private profileService: ProfileService,
 		private activatedRoute: ActivatedRoute,
 		private mapSerivce: MapService,
-		private cookieService: CookieService,
-		private photoService: PhotoService) {
-	}
+		private modalService: NgbModal
+	) {}
 
 	ngOnInit(): void {
 		this.getTrailById(this.id);
 		this.sessionService.setSession();
 		this.trailService.getTrailById(this.trail.trailId);
-		//this.createRating();
 		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId);
-		// this.ratingService.getRatingByProfileId(this.tempId);
-		// this.ratingService.getRatingByProfileId(this.rating.ratingProfileId);
 		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);
 	}
 
@@ -105,9 +79,8 @@ export class TrailDetailComponent implements OnInit {
 			);
 	}
 
-	uploadPhoto(): void {
-		console.log(this.uploader);
-		this.uploader.uploadAll();
+	openUploadPhotoModal() {
+		this.modalService.open(PhotoComponent);
 	}
 
 

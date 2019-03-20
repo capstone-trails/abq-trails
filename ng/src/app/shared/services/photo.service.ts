@@ -13,11 +13,11 @@ export class PhotoService {
 	//define the API endpoint
 	private photoUrl = "api/photo/";
 
-	getPhotoByPhotoId(photoId: string): Observable<Photo[]> {
-		return (this.http.get<Photo[]>(this.photoUrl + "?photoProfileId="  + photoId));
+	getPhotoByPhotoTrailId(photoId: string): Observable<Photo[]> {
+		return (this.http.get<Photo[]>(this.photoUrl + "?photoTrailId="  + photoId));
 	}
 
-	uploadPhoto(photoId: string): Observable<Photo> {
-		return(this.http.post<Photo>(this.photoUrl, photoId));
+	uploadPhoto(photo: Photo): Observable<Photo> {
+		return(this.http.post<Photo>(this.photoUrl, photo));
 	}
 }
