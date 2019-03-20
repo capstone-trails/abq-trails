@@ -31,7 +31,7 @@ export class PhotoComponent implements OnInit {
 
 	status: Status = null;
 
-	trailId = {trailId: "86bf1c24-0d40-453f-8836-35c012440b7c"};
+	trailId = {photoTrailId: "86bf1c24-0d40-453f-8836-35c012440b7c"};
 	public uploader: FileUploader = new FileUploader(
 		{
 			itemAlias: 'photo',
