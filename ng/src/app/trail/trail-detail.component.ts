@@ -16,6 +16,7 @@ import {PhotoComponent} from "./photo/photo.component";
 
 
 
+
 @Component({
 	templateUrl: "./trail-detail.component.html",
 	styleUrls: ["./trail-detail.component.css"],

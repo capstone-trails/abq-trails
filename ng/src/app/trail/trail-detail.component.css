@@ -26,3 +26,13 @@ mgl-map {
 	height: 20vh;
 	width: 100%;
 }
+
+.trail-detail div div .trail-detail-tags div div .badge {
+	background: #D95011;
+}
+
+
+.trail-detail div div div div button {
+	color: white;
+	background: #008C7D;
+}

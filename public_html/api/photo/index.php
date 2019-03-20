@@ -54,7 +54,7 @@ try {
 	} else if($method === "POST") {
 		var_dump($_FILES);
 		verifyXsrf();
-		$photoTrailId = filter_input(INPUT_POST, "photoTrailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$photoTrailId = filter_input(INPUT_POST, "trailId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		$photoUrl = filter_input(INPUT_POST, "photoUrl", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		$tempUserFileName = $_FILES["photo"]["tmp_name"];
 		$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 200, "crop" => "scale"));
