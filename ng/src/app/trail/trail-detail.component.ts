@@ -29,6 +29,7 @@ export class TrailDetailComponent implements OnInit {
 	// lng: number = -106.6493357;
 
 	trails: Trail[] = [];
+
 	trail : Trail = {
 		trailId: null,
 		trailAvatarUrl: null,

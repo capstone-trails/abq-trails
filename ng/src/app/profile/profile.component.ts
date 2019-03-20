@@ -9,12 +9,10 @@ import {UpdateProfileComponent} from "./update-profile/update-profile.component"
 import {SignInService} from "../shared/services/sign-in.service";
 
 
-///this works
 @Component({
 	templateUrl: "./profile.component.html",
 	styleUrls: ["./profile.component.css"],
 	selector: "profile",
-	//'ngb-modal-basic'
 })
 
 
@@ -33,7 +31,6 @@ export class ProfileComponent implements OnInit {
 
 	status: Status = null;
 
-
 	tempId: string = this.authService.decodeJwt().auth.profileId;
 
 
@@ -44,6 +41,7 @@ export class ProfileComponent implements OnInit {
 	ngOnInit(): void {
 		this.getProfile();
 	}
+
 
 	getProfile (): void {
 		//for testing
@@ -58,10 +56,11 @@ export class ProfileComponent implements OnInit {
 		}
 
 
-
 	openUpdateProfileModal() {
 		this.modalService.open(UpdateProfileComponent);
 	}
+
+
 }
 
 

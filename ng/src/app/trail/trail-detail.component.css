@@ -1,4 +1,17 @@
 
+.trail-detail .trail-avatar {
+	height: 20vh;
+	width: 80vw;
+	background: no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.trail-detail .trail-description {
+}
+
 p {
 	font-weight: 300;
 }

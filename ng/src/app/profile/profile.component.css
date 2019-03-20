@@ -1,0 +1,13 @@
+
+.profile div img {
+	height: 100px;
+	width: 100px;
+}
+
+p {
+	font-weight: 300;
+}
+
+.profile-details p {
+	margin: 0 auto;
+}

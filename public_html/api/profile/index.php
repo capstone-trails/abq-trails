@@ -86,6 +86,8 @@ try {
 		//if profile avatar url is empty, use the one already in the data base
 		if(empty($requestObject->profileAvatarUrl) === true) {
 			$requestObject->profileAvatarUrl = $profile->getProfileAvatarUrl();
+//			$requestObject->profileAvatarUrl = "https://res.cloudinary.com/abq-trails/image/upload/v1553050967/avatar.png";
+
 		}
 
 		//if profile email is empty, use the one already in the data base
