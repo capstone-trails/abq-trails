@@ -17,15 +17,15 @@ a {
 .app-root {
 	background:
 		linear-gradient(
-			rgba(112, 92, 80, 0.7),
+			rgba(112, 92, 80, 0.5),
 			rgba(112, 92, 80, 0.5)
 		),
-		url('https://res.cloudinary.com/abq-trails/image/upload/v1553184388/abq-trail-lg.jpg');
+		url('https://res.cloudinary.com/abq-trails/image/upload/v1553193515/abq-trail-lg-02.jpg');
 	background-attachment: scroll;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	min-height: 105vh;
+	min-height: 100vh;
 }
 
 /* NAVBAR */
