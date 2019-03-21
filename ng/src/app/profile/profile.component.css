@@ -15,3 +15,13 @@ p {
 .centerprofile {
 	background-color: #f8f7f2;
 }
+
+.profile-avatar {
+	height: 200px;
+	width: 200px;
+	background: url('https://res.cloudinary.com/abq-trails/image/upload/v1553120753/kim-gallegos-02.jpg') no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
