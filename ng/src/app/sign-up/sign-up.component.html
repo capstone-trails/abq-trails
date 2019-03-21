@@ -1,9 +1,6 @@
-<form [formGroup]="signUpForm" (submit)="createSignUp()" novalidate class="row">
-	<div class="col">
+<form [formGroup]="signUpForm" (submit)="createSignUp()" novalidate>
+	<div class="form-row col-12 col-sm-10 col-md-8 col-lg-5 mx-auto">
 
-	</div>
-	<div class="form-row col-12 col-sm-10 col-md-8 col-lg-5">
-<!--test-->
 		<div class="form-group col-md-6">
 			<label for="email">Email</label>
 			<input type="email" id="email" name="email" formControlName="email" class="form-control">
@@ -60,12 +57,8 @@
 				<p *ngIf="signUpForm.controls.lastName?.errors.maxlength">Your last name is too long</p>
 			</div>
 		</div>
-
 		<button type="button" class="btn btn-secondary mx-1 my-5">Add a photo</button>
 		<button type="submit" class="btn btn-secondary mx-1 my-5">Submit</button>
-	</div>
-	<div class="col">
-
 	</div>
 </form>
 
