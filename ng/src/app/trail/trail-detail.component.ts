@@ -26,6 +26,9 @@ import {PhotoComponent} from "./photo/photo.component";
 		font-size: 1.5rem;
 		color: rgba(0, 140, 125, 0.51);
 	}
+	.filled {
+		color: #008c7d;
+	}
 	`]
 })
 
