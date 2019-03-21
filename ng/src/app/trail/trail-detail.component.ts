@@ -94,6 +94,8 @@ export class TrailDetailComponent implements OnInit {
 			);
 	}
 
+
+
 	openUploadPhotoModal() {
 		this.modalService.open(PhotoComponent);
 	}
