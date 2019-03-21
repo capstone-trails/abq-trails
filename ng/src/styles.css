@@ -15,7 +15,17 @@ a {
 }
 
 .app-root {
-	background: #dbd9ce;
+	/*background: #dbd9c */
+	background:
+		linear-gradient(
+			rgba(112, 92, 80, 0.7),
+			rgba(112, 92, 80, 0.5)
+		),
+		url('https://res.cloudinary.com/abq-trails/image/upload/v1553184388/abq-trail-lg.jpg');
+	background-attachment: scroll;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 	min-height: 105vh;
 }
 
