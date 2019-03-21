@@ -1,33 +1,37 @@
 <section class="profile">
-		<div class="col-12 col-sm-10 col-md-8 col-lg-5 centerprofile mx-auto">
-			<div class="container text-center my-3">
-				<div class="profile-avatar container text-center my-3">
-				</div>
-				<!--<img [src]="profile.profileAvatarUrl" class="rounded mb-3 mx-auto d-block" alt="...">-->
-				<h4>{{profile.profileUsername}}</h4>
-			</div>
-
-			<div class="profile-details container text-center mt-3 mb-5">
+		<div class="center-profile col-12 col-sm-10 col-md-8 col-lg-5 mx-auto">
 				<div class="row">
-					<div class="col">
-						<p>{{profile.profileFirstName}} {{profile.profileLastName}}</p>
+					<div class="col-8 mt-4 mx-auto text-center">
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_fill,g_custom:face,h_150,r_10,w_150/v1553120753/kim-gallegos-02.jpg" alt="...">
+					</div>
+					<div class="container mt-2 text-center">
+						<h4>{{profile.profileUsername}}</h4>
+					</div>
+					<div class="profile-details container text-center mt-1 mb-5">
+						<div class="row">
+							<div class="col">
+								<p>{{profile.profileFirstName}} {{profile.profileLastName}}</p>
+							</div>
+						</div>
+							<div class="col">
+								<p>{{profile.profileEmail}}</p>
+							</div>
 					</div>
 				</div>
-					<div class="col">
-						<p>{{profile.profileEmail}}</p>
-					</div>
-			</div>
 
 			<div class="container mt-4" >
-				<h2 align="center">My Photos</h2>
+				<h4 align="center">My Photos</h4>
 				<div class="row">
-					<div class="col d-flex flex-wrap justify-content-between">
-						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
-						<img src="https://via.placeholder.com/75" class="rounded m-2 " alt="...">
+					<div class="col d-flex flex-wrap justify-content-center">
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_scale,h_100,w_100/v1553130886/kim-photo-01.jpg" class="rounded m-2 " alt="..." />
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_scale,h_100,w_100/v1553130886/kim-photo-04.jpg" class="rounded m-2" alt="..." />
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_scale,h_100,w_100/v1553130886/kim-photo-03.jpg" class="rounded m-2 " alt="..." />
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_scale,h_100,w_100/v1553116135/trail-01.jpg" class="rounded m-2 " alt="..." />
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_scale,h_100,w_100/v1553130886/kim-photo-06.jpg" class="rounded m-2 " alt="..." />
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_scale,h_100,w_100/v1553130886/kim-photo-05.jpg" class="rounded m-2 " alt="..." />
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_scale,h_100,w_100/v1553182762/kim-photo-07.jpg" class="rounded m-2 " alt="..." />
+						<img src="https://res.cloudinary.com/abq-trails/image/upload/c_scale,h_100,w_100/v1553182762/kim-photo-02.jpg" class="rounded m-2 " alt="..." />
+
 					</div>
 				</div>
 			</div>

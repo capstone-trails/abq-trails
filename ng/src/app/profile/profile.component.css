@@ -1,27 +1,14 @@
 
-.profile div img {
-	height: 15%;
-	width: auto;
-}
-
 p {
 	font-weight: 300;
+}
+
+.center-profile {
+	min-height: 110vh;
+	background-color: #f8f7f2;
 }
 
 .profile-details p {
 	margin: 0 auto;
 }
 
-.centerprofile {
-	background-color: #f8f7f2;
-}
-
-.profile-avatar {
-	height: 200px;
-	width: 200px;
-	background: url('https://res.cloudinary.com/abq-trails/image/upload/v1553120753/kim-gallegos-02.jpg') no-repeat center center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
