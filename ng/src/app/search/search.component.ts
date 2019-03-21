@@ -48,7 +48,7 @@ export class SearchComponent {
 	formatter = (result: Trail) => {
 		if(result !== undefined) {
 			console.log(result);
-			return(result.trailName.toLowerCase());
+			return(result.trailName.toUpperCase());
 		}
 	};
 

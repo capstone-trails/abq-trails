@@ -69,9 +69,9 @@ try {
 		// Decode the JSON package and stores that result in $requestObject
 		$requestObject = json_decode($requestContent);
 
-		if(empty($requestObject->ratingProfileId) === true) {
-			throw (new \InvalidArgumentException("No profile linked to the rating", 405));
-		}
+//		if(empty($requestObject->ratingProfileId) === true) {
+//			throw (new \InvalidArgumentException("No profile linked to the rating", 405));
+//		}
 		if(empty($requestObject->ratingTrailId) === true) {
 			throw (new \InvalidArgumentException("No trail linked to the rating", 405));
 		}
