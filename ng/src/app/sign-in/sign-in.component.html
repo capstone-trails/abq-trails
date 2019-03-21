@@ -27,8 +27,6 @@
 				</div>
 			</div>
 			<button type="submit" class="btn btn-info">Submit</button>
-
-			<p>Don't have a profile yet? Sign Up!</p>
 		</form>
 
 		<div *ngIf="status !== null" class="alert alert-dismissible" [ngClass]="status.type" role="alert">
@@ -36,5 +34,9 @@
 				aria-hidden="true">&times;</span></button>
 			{{ status.message }}
 		</div>
+	<div>
+		Don't have a profile yet? <a class="link" [routerLink]="['/sign-up']">Sign Up!</a>
+	</div>
+
 	</div>
 
