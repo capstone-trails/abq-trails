@@ -2,7 +2,6 @@
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css?family=Rubik:300,500,700');
 
-
 .navbar,
 h1,
 h2,
@@ -17,7 +16,7 @@ a {
 
 .app-root {
 	background: #dbd9ce;
-	min-height: 110vh;
+	min-height: 100vh;
 }
 
 /* NAVBAR */
@@ -35,14 +34,11 @@ a {
 	font-weight: 300;
 }
 
-/*.navbar .navbar-nav .nav-item a:hover,*/
-/*.navbar .navbar-nav .nav-item a:active {*/
-	/*display: inline;*/
-	/*text-decoration: underline #1e4b66;*/
-/*}*/
-
 .navbar-toggler {
 	background: white;
+}
+.navbar-toggler:hover {
+	background: #e6e6e6;
 }
 
 .app-root nav a img {
@@ -50,10 +46,6 @@ a {
 	height: 25px;
 	transform: translateY(-5px);
 }
-
-
-
-
 
 @media (min-width: 768px) {
 }
