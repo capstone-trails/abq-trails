@@ -2,7 +2,6 @@
 		<div class="col-12 col-sm-10 col-md-8 col-lg-5 mx-auto">
 			<div class="card " *ngFor="let trail of trails">
 				<div class="trail-avatar container" [ngStyle]="{ 'background-image': 'url(' + trail.trailAvatarUrl + ')'}">
-					<!--<img [src]="trail.trailAvatarUrl" class="card-img-top" alt="...">-->
 				</div>
 				<div class="card-body">
 					<h5 class="card-title" (click)="getDetailedTrailView(trail)">{{trail.trailName}}</h5>
