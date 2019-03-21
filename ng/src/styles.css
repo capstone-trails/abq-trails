@@ -34,6 +34,11 @@ a {
 	font-weight: 300;
 }
 
+.navbar .navbar-nav .nav-item a:hover {
+	background-color: #e6e6e6;
+	border-radius: .25em;
+}
+
 .navbar-toggler {
 	background: white;
 }
