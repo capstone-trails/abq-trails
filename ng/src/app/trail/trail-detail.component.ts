@@ -26,10 +26,6 @@ import {PhotoComponent} from "./photo/photo.component";
 		font-size: 1.5rem;
 		color: rgba(0, 140, 125, 0.51);
 	}
-
-	.filled {
-		color: #008c7d;
-	}
 	`]
 })
 
@@ -83,8 +79,8 @@ export class TrailDetailComponent implements OnInit {
 		this.getTrailById(this.id);
 		this.sessionService.setSession();
 		this.trailService.getTrailById(this.trail.trailId);
-		this.ratingService.getRatingByProfileIdAndTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId);
-		this.ratingService.getRatingByTrailId(this.rating.ratingTrailId);
+		this.ratingService.getRatingByRatingProfileIdAndRatingTrailId(this.rating.ratingProfileId, this.rating.ratingTrailId);
+		this.ratingService.getRatingByRatingTrailId(this.rating.ratingTrailId);
 	}
 
 	getTrailById(id: string): void {
@@ -94,7 +90,9 @@ export class TrailDetailComponent implements OnInit {
 			);
 	}
 
-
+	getRatingByRatingTrailId(ratingTrailId: string): void {
+		this.ratingService.getRatingByRatingTrailId(this.rating.ratingTrailId);
+	}
 
 	openUploadPhotoModal() {
 		this.modalService.open(PhotoComponent);

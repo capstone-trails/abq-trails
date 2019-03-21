@@ -17,15 +17,15 @@ export class RatingService {
 		return(this.http.post<Status>(this.ratingUrl, rating));
 	}
 
-	getRatingByProfileIdAndTrailId(ratingProfileId : string, ratingTrailId : string) : Observable<Rating> {
+	getRatingByRatingProfileIdAndRatingTrailId(ratingProfileId : string, ratingTrailId : string) : Observable<Rating> {
 		return(this.http.get<Rating>(this.ratingUrl, {params: new HttpParams().set("ratingProfileId", ratingProfileId).set("ratingTrailId", ratingTrailId)}));
 	}
 
-	getRatingByProfileId(ratingProfileId : string) : Observable<Rating[]> {
+	getRatingByRatingProfileId(ratingProfileId : string) : Observable<Rating[]> {
 		return(this.http.get<Rating[]>(this.ratingUrl, {params: new HttpParams().set("ratingProfileId", ratingProfileId)}));
 	}
 
-	getRatingByTrailId(ratingTrailId : string) : Observable<Rating[]> {
+	getRatingByRatingTrailId(ratingTrailId : string) : Observable<Rating[]> {
 		return(this.http.get<Rating[]>(this.ratingUrl, {params: new HttpParams().set("ratingTrailId", ratingTrailId)}));
 	}
 }
